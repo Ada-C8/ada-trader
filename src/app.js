@@ -1,11 +1,19 @@
+// CSS
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+// Vendor Modules
 import $ from 'jquery';
+import _ from 'underscore';
 
-import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
+// Models
+import Simulator from './models/simulator';
+import QuoteList from './collections/quote_list';
 
+// Views
+import QuoteListView from './views/quote_list_view';
+
+// Vars
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -25,11 +33,23 @@ const quoteData = [
   },
 ];
 
+const quoteList = new QuoteList(quoteData);
+let quoteTemplate;
+
 $(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
-    quotes: quotes,
+    quotes: quoteList,
   });
 
   simulator.start();
+
+  quoteTemplate = _.template($('#quote-template').html());
+
+  const quoteListView = new QuoteListView({
+    model: quoteList,
+    template: quoteTemplate,
+    el: 'main'
+  });
+
+  quoteListView.render();
 });
