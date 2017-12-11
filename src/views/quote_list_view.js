@@ -17,9 +17,14 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote'
       })
-    })
 
+      this.$('#quotes-list-container').append(quoteView.render().$el);
+
+    })
+    return this
   },
 
 
 })
+
+export default QuoteListView;
