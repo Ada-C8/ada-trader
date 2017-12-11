@@ -1,3 +1,5 @@
+// collections/quote_list
+
 import Backbone from 'backbone';
 import Quote from 'models/quote';
 
