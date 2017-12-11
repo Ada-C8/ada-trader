@@ -7,12 +7,17 @@ import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import TradeList from 'collections/trade_list';
+
 
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 
-const quoteList = new QuoteList();
+import TradeView from './views/trade_view';
+import TradeListView from './views/trade_list_view';
 
+const quoteList = new QuoteList();
+const trades = new TradeList();
 
 const quoteData = [
   {
@@ -44,8 +49,14 @@ $(document).ready(function() {
     template: _.template($('#quote-template').html()),
     el: 'main'
   });
-
   quoteListView.render();
+
+  const tradeListView = new TradeListView({
+    model: trades,
+    template: _.template($('#trade-template').html()),
+    el: 'main'
+  });
+  tradeListView.render();
 
 
 

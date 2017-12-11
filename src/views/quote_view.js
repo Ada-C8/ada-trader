@@ -17,6 +17,8 @@ const QuoteView = Backbone.View.extend({
   },
   buyStock: function() {
     this.model.buy();
+    let trade = new Trade() 
+
   },
   sellStock: function() {
     this.model.sell();
