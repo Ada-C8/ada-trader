@@ -13,7 +13,7 @@ import QuoteList from './collections/quote_list';
 // Views
 import QuoteListView from './views/quote_list_view';
 
-// Vars
+// Data
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -33,21 +33,20 @@ const quoteData = [
   },
 ];
 
-const quoteList = new QuoteList(quoteData);
-let quoteTemplate;
 
 $(document).ready(function() {
+
+  const quoteList = new QuoteList(quoteData);
+
   const simulator = new Simulator({
     quotes: quoteList,
   });
 
   simulator.start();
 
-  quoteTemplate = _.template($('#quote-template').html());
-
   const quoteListView = new QuoteListView({
     model: quoteList,
-    template: quoteTemplate,
+    template: _.template($('#quote-template').html()),
     el: 'main'
   });
 
