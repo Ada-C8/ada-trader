@@ -4,7 +4,9 @@ import 'css/app.css';
 import $ from 'jquery';
 
 import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
+
+import Quote from './models/quote'
+import QuoteList from './collections/quote_list';
 
 const quoteData = [
   {
@@ -25,11 +27,22 @@ const quoteData = [
   },
 ];
 
+const quoteList = new QuoteList(quoteData);
+
 $(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
+
+
   const simulator = new Simulator({
-    quotes: quotes,
+    quotes: quoteList,
   });
+
+  const quoteListView = new QuoteListView({
+    model: quoteList,
+    template: _.template($('#quote-template')),
+    el: '.quotes-list-container'
+  })
+
+  quoteListView.render();
 
   simulator.start();
 });
