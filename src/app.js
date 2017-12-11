@@ -30,7 +30,7 @@ const quoteData = [
   },
 ];
 
-const quoteList = new QuoteList()
+const quoteList = new QuoteList(quoteData)
 
 $(document).ready(function() {
   const quoteTemplate = _.template($('#quote-template').html());
@@ -38,8 +38,9 @@ $(document).ready(function() {
     model: quoteList,
     template: quoteTemplate,
     el: 'main'
-  })
+  });
 
+  console.log(quoteList);
   // const quotes = new QuoteList(quoteData);
   // const simulator = new Simulator({
   //   quotes: quotes,
