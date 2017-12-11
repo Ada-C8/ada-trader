@@ -11,17 +11,17 @@ const QuoteView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
-  // events: {
-  //   'click button.delete': 'deleteTask',
-  //   'click button.toggle-complete': 'toggleCompletionStatus'
-  // },
-  // deleteTask: function(event) {
-  //   this.model.destroy();
-  //   this.remove();
-  // },
-  // toggleCompletionStatus: function(event) {
-  //   this.model.set('is-complete', !this.model.get('is_complete'));
-  // },
+  events: {
+    'click button.btn-buy': 'buyStock',
+    'click button.btn-sell': 'sellStock',
+  },
+  buyStock: function() {
+    this.model.buy();
+  },
+  sellStock: function() {
+    this.model.sell();
+  },
+
 });
 
 export default QuoteView;

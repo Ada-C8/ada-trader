@@ -22,7 +22,7 @@ const QuoteListView = Backbone.View.extend({
       });
       // Then render the TaskView
       // And append the resulting HTML to the DOM.
-      this.$('#quotes-container').append(quoteView.render().$el);
+      this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
   },

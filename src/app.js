@@ -44,7 +44,7 @@ $(document).ready(function() {
     template: _.template($('#quote-template').html()),
     el: 'main'
   });
-  
+
   quoteListView.render();
 
 
