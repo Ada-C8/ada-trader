@@ -36,7 +36,7 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: quoteTemplate,
-    el: '#quotes-container'
+    el: 'main',
   });
 
   const simulator = new Simulator({
