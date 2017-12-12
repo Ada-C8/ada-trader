@@ -3,8 +3,11 @@ import 'css/app.css';
 
 import $ from 'jquery';
 
-import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
+import Quote from './models/quote';
+import Simulator from './models/simulator';
+import QuoteList from './collections/quote_list';
+
+import QuoteView from './views/quote_view'
 
 const quoteData = [
   {
