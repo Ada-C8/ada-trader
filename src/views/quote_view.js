@@ -10,19 +10,21 @@ const QuoteView = Backbone.View.extend({
   render(){
     const compiledTemplate =  this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
-
     return this;
   },
-  // events:{
-  //   'click button.btn-buy': this.buyQuote(),
-  //   'click button.btn-sell': this.sellQuote(),
-  // },
-  // buyQuote(event){
-  //   this.model.buy();
-  // },
-  // sellQuote(event){
-  //   this.model.sell();
-  // },
+  events:{
+    'click button.btn-buy': 'buyQuote',
+    'click button.btn-sell': 'sellQuote',
+  },
+  buyQuote(){
+    console.log('banana');
+    this.model.buy();
+    return this;
+  },
+  sellQuote(){
+    this.model.sell();
+    return this;
+  },
 
 });
 export default QuoteView;

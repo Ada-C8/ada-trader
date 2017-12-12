@@ -66,6 +66,7 @@ const QuoteListView = Backbone.View.extend({
       });
       this.$('#quotes').append(quoteView.render().$el);
     });
+    
     return this;
   },
 });

@@ -34,12 +34,14 @@ const quoteData = [
 $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
   const quotes = new QuoteList(quoteData);
+  console.log(quotes);
+  console.log('those are quotes');
   const simulator = new Simulator({
     quotes: quotes,
   });
   const quoteListView = new QuoteListView({
-    el: 'quotes',
-    model: quoteList,
+    el: 'main',
+    model: quotes,
     template: quoteTemplate,
 
   });
