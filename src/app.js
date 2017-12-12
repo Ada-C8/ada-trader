@@ -34,12 +34,13 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
-  simulator.start();
-
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
-    el: "main"
+    el: '#quotes-container'
   });
+
+  quoteListView.render();
+  simulator.start();
 
 });
