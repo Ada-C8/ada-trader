@@ -9,12 +9,17 @@ const QuoteView = Backbone.View.extend({
   render() {
     const compileTemplate = this.template(this.model.toJSON());
     this.$el.html(compileTemplate);
-
     return this;
   },
   events: {
-    // 'click button.delete': 'deleteTask',
-    // 'click button.toggle-complete': 'toggleTask'
+    'click button.btn-buy': 'buyQuote',
+    'click button.btn-sell': 'sellQuote'
+  },
+  buyQuote: function(e) {
+    this.model.buy();
+  },
+  sellQuote: function(e) {
+    this.model.sell();
   },
 
 });

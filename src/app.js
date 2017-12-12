@@ -6,8 +6,9 @@ import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
+import QuoteView from 'views/quote_view';
 import QuoteList from 'collections/quote_list';
-import QuoteListView from './views/quote_list_view';
+import QuoteListView from 'views/quote_list_view';
 
 const quoteList = new QuoteList();
 
