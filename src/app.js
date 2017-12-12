@@ -2,9 +2,13 @@ import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import Quote from 'models/quote';
+import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view';
 
 const quoteData = [
   {
@@ -25,11 +29,78 @@ const quoteData = [
   },
 ];
 
+const quoteList = new QuoteList();
+let quoteTemplate;
+
+const renderList = function(quoteList) {
+  const $quoteList = $('#quotes');
+  $quoteList.empty();
+
+  quoteList.forEach((quote) =>{
+
+    const quoteView = new QuoteView({
+      model: quote,
+      template: _.template($('#quote-template').html()),
+      tagName: 'li',
+      className: 'quote',
+    });
+    // THESE ARE THE THINGS THAT BACKBONE EXPECTS except for template, which is why we initialized template.
+
+    $quoteList.append(quoteView.render().$el);
+
+    // const taskHtml = $(taskTemplate(task.attributes));
+    // $taskList.append(taskHtml);
+    //
+    // taskHtml.find('.delete').click({task: task}, (params) => {
+    //   const task = params.data.task;
+    //   taskList.remove(task);
+    //   updateStatusMessageWith(`The task "${task.get('task_name')}" has been deleted`)
+    // });
+    //
+    // taskHtml.on('click', '.toggle-complete', {task: task}, function(params) {
+    //   params.data.task.set('is_complete', !params.data.task.get('is_complete'));
+    //   $(this).closest('.task').toggleClass('is-complete')
+    // });
+  });
+}
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
+  const $quoteList = $('#quotes');
+
+  const quoteView = new QuoteView({
+    model: quotes.at(0),
+    template: _.template($('#quote-template').html()),
+    tagName: 'li',
+    className: 'quote',
+  });
+  // THESE ARE THE THINGS THAT BACKBONE EXPECTS except for template, which is why we initialized template.
+
+  $quoteList.append(quoteView.render().$el);
+
 
   simulator.start();
+
+  renderList(quotes);
+
+  // quoteTemplate = _.template($('#quote-template').html());
+  //
+  // const quoteListView = new QuoteListView({
+  //   el: '#quotes-container',
+  //   model: quoteList,
+  //   template: quoteTemplate,
+  // });
+  //
+  // quoteListView.render();
+
+  // const quoteView = new QuoteView({
+  //   el: 'ul',
+  //   model: quote,
+  //   template: quoteTemplate,
+  // });
+  //
+  // quoteView.render();
 });
