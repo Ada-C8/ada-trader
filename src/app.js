@@ -5,9 +5,10 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from './models/simulator';
-import Quote from './models/quote';
+//import Quote from './models/quote';
 import QuoteList from './collections/quote_list';
-import QuoteView from './views/quote_view';
+//import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view';
 
 const quoteData = [
   {
@@ -28,29 +29,20 @@ const quoteData = [
   },
 ];
 
-let quoteTemplate;
-
-const renderList = (quoteList) => {
-  const $quoteList = $('#quotes');
-  $quoteList.empty();
-
-  quoteList.forEach((quote) => {
-    const quoteView = new QuoteView({
-      model: quote,
-      template: _.template($('#quote-template').html()),
-      tagName: 'li',
-      className: 'quote',
-    });
-    $quoteList.append(quoteView.render().$el);
-  });
-};
+const quotes = new QuoteList(quoteData);
 
 $(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
+
   const simulator = new Simulator({
     quotes: quotes,
   });
 
   simulator.start();
-  renderList(quotes);
+  const quoteListView = new QuoteListView ({
+    model: quotes,
+    template: _.template($('#quote-template').html()),
+    el: 'div.quotes-list-container',
+  });
+
+  quoteListView.render();
 });
