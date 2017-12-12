@@ -1,5 +1,7 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
+import $ from 'jquery';
+
 import OrderView from '../views/order_view';
 import Order from '../models/order'
 
@@ -26,27 +28,38 @@ const OrderListView = Backbone.View.extend({
     });
     return this;
   },
-  // events: {
-  //   'click #add-new-task': 'addTask'
-  // },
-  // addTask: function(event) {
-  //   event.preventDefault();
-  //   const taskData = {};
-  //   ['task_name', 'assignee'].forEach( (field) => {
-  //     const val = this.$(`#add-task-form input[name=${field}]`).val();
-  //     if (val != '') {
-  //       taskData[field] = val;
-  //     }
-  //   });
-  //   const newTask = new Task(taskData);
-  //
-  //   if (newTask.isValid()) {
-  //     this.model.add(newTask);
-  //     this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
-  //   } else {
-  //     this.updateStatusMessageFrom(newTask.validationError);
-  //   }
-  // },
+  events: {
+    'click #order-form .btn-buy': 'orderBuy',
+    'click button.btn-sell': 'orderSell',
+  },
+  orderBuy: function(event) {
+    event.preventDefault();
+    const buyData = {};
+    ['symbol', 'targetPrice'].forEach( (field) => {
+      const val = $(`#${field}`).val();
+      console.log(val);
+      if (field == 'targetPrice') {
+        console.log('inside the targetPrice field')
+        buyData[field] = parseInt(val);
+      }
+      else {
+        buyData[field] = val;
+      }
+    });
+    buyData['buy'] = true;
+
+    const newOrder = new Order(buyData);
+    console.log(newOrder);
+
+    if (newOrder.isValid()) {
+      console.log('IS VALID');
+      this.model.add(newOrder);
+      // this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
+    } else {
+      console.log('FAIL');
+      // this.updateStatusMessageFrom(newTask.validationError);
+    }
+  },
   // updateStatusMessageFrom: function(messageHash) {
   //   const statusMessagesEl = this.$('#status-messages');
   //   statusMessagesEl.empty();
