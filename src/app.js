@@ -1,11 +1,16 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import QuoteListView from './views/quote_list_view';
 
+let quoteTemplate;
+const quoteList = new QuoteList();
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -25,11 +30,20 @@ const quoteData = [
   },
 ];
 
+
 $(document).ready(function() {
+  quoteTemplate = _.template($('#quote-template').html());
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
+  const quoteListView = new QuoteListView({
+    el: 'quotes',
+    model: quoteList,
+    template: quoteTemplate,
+
+  });
+  quoteListView.render();
 
   simulator.start();
 });
