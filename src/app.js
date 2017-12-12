@@ -32,7 +32,11 @@ const quoteData = [
 
 const quoteList = new QuoteList(quoteData)
 
-$(document).ready(function() {
+$(document).ready(() => {
+  const simulator = new Simulator({
+    quotes: quoteList,
+  });
+
   const quoteTemplate = _.template($('#quote-template').html());
   const quoteListView = new QuoteListView({
     model: quoteList,
@@ -40,11 +44,6 @@ $(document).ready(function() {
     el: 'main'
   });
 
-  console.log(quoteList);
-  // const quotes = new QuoteList(quoteData);
-  // const simulator = new Simulator({
-  //   quotes: quotes,
-  // });
-
+  quoteListView.render()
   // simulator.start();
 });

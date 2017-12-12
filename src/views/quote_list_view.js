@@ -9,7 +9,7 @@ const QuoteListView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render)
   },
   render() {
-    // this.$('').empty();
+    this.$('#quotes').empty();
     this.model.each((quote) => {
       const quoteView = new QuoteView ({
         model: quote,
@@ -17,9 +17,7 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote'
       })
-
-      this.$('#quotes-list-container').append(quoteView.render().$el);
-
+      this.$('#quotes').append(quoteView.render().$el);
     })
     return this
   },

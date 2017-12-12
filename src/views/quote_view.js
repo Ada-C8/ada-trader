@@ -4,8 +4,6 @@ import _ from 'underscore';
 
 const QuoteView = Backbone.View.extend({
   initialize(params){
-    console.log("I'm in initialize:")
-    console.log(params.template)
     this.template = params.template,
     this.listenTo(this.model, 'change', this.render)
   },
@@ -14,7 +12,21 @@ const QuoteView = Backbone.View.extend({
     const compiledTemplate = this.template(this.model.toJSON())
     this.$el.html(compiledTemplate);
     return this
+  },
+
+  events: {
+    'click button.btn-buy': 'buyShare',
+    'click button.btn-sell': 'sellShare'
+  },
+
+  buyShare(e) {
+    this.model.buy();
+  },
+
+  sellShare(e){
+    this.model.sell();
   }
+
 });
 
 export default QuoteView;
