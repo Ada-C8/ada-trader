@@ -17,7 +17,6 @@ import TradeView from './views/trade_view';
 import TradeListView from './views/trade_list_view';
 
 const quoteList = new QuoteList();
-let TRADESLIST = new TradeList();
 
 const quoteData = [
   {
@@ -39,6 +38,8 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+  let TRADESLIST = new TradeList();
+
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
