@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import QuoteView from './views/quote_view';
 
 const quoteData = [
   {
@@ -24,6 +25,37 @@ const quoteData = [
     price: 83.10,
   },
 ];
+
+const renderList = (quoteList) => {
+
+  const $quoteList = $('#quotes');
+  $quoteList.empty();
+
+  $quoteList.forEach((quote) => {
+
+    const quoteView = new QuoteView({
+      model: quote,
+      template: _.template($('#quote-template').html()),
+      tagName: 'li',
+      className: 'quote',
+
+    });
+
+    $quoteList.append(quoteView.render().$el);
+  }); // for each
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
