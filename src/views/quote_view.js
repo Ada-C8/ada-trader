@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-// import Task from '../models/task';
+import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
@@ -18,18 +18,10 @@ const QuoteView = Backbone.View.extend({
     // }
     return this;
   },
-  // events: {
-  //   'click button.delete': 'deleteQuote',
-  //   'click .toggle-complete': 'toggleComplete',
-  // },
-  // deleteQuote: function() {
-  //   this.model.destroy();
-  //   this.remove();
-  // },
-  // toggleComplete: function() {
-  //   this.model.set('is_complete', !this.model.get('is_complete'));
-  //   // this.$el.toggleClass('is-complete');
-  // }
+  events: {
+    'click button.btn-buy': function() {this.model.buy();},
+    'click .btn-sell': function() {this.model.sell();},
+  },
 });
 
 export default QuoteView;
