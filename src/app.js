@@ -45,5 +45,5 @@ $(document).ready(() => {
   });
 
   quoteListView.render()
-  // simulator.start();
+  simulator.start();
 });
