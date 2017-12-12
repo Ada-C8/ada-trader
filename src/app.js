@@ -13,6 +13,7 @@ import TradeHistoryView from 'views/trade_history_view';
 
 let quoteViewTemplate;
 let tradeTemplate;
+let quotes;
 // let quoteViewListTemplate;
 
 const quoteData = [
@@ -34,13 +35,21 @@ const quoteData = [
   },
 ];
 
+const populateForm = function populateForm (e) {
+  const $form_select = $('#order-form select[name="symbol"]');
+  quotes.each((quote) => {
+    const symbol = quote.get('symbol');
+    $form_select.append(`<option value="${symbol}">${symbol}</option>`);
+  });
+};
+
 $(document).ready(function() {
   let bus = {};
   _.extend(bus, Backbone.Events);
 
   quoteViewTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
-  const quotes = new QuoteList(quoteData);
+  quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     bus: bus,
     quotes: quotes,
@@ -57,7 +66,13 @@ $(document).ready(function() {
     template: tradeTemplate,
   });
 
-  simulator.start();
 
+  const orderForm = $('#order-form');
+  _.extend(orderForm, Backbone.Events);
+  orderForm.listenTo(quotes, 'add', populateForm);
+  orderForm.listenTo(quotes, 'remove', populateForm);
+  populateForm();
+
+  simulator.start();
   quotesView.render();
 });

@@ -27,9 +27,6 @@ const QuoteListView = Backbone.View.extend({
 
     return this;
   },
-  boughtReact() {
-    console.log("it was bought!!");
-  },
 });
 
 export default QuoteListView;
