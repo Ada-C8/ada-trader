@@ -9,6 +9,12 @@ import Quote from 'models/quote';
 import QuoteView from 'views/quote_view';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
+import OrderView from 'views/order_view';
+import OrderListView from 'views/order_list_view';
+
+
 
 const quoteList = new QuoteList();
 
@@ -31,6 +37,13 @@ const quoteData = [
   },
 ];
 
+// const order = new Order();
+// const orderView = new OrderView({
+//   model: order,
+//   template: _.template($('#task-template').html()),
+//   el: 'main',
+// });
+
 $(document).ready(function() {
 
   const quotes = new QuoteList(quoteData);
@@ -45,6 +58,15 @@ $(document).ready(function() {
   template: _.template($('#quote-template').html()),
   el: '#quotes-container',
 });
-
   quoteListView.render();
+
+  const orders = new OrderList();
+  const orderListView = new OrderListView({
+    model: orders,
+    symbols: quotes,
+    template: _.template($('#order-template').html()),
+    el: '#order-workspace',
+  })
+
+  // OrderListView.render();
 });
