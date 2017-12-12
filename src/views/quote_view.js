@@ -9,7 +9,7 @@ initialize(params) {
 // params is an object we pass in
 // contains standard values bb expects
 // out params will contain an underscore template
-//in initialze we store the template from params in its own property called template. One per each view. 
+//in initialze we store the template from params in its own property called template. One per each view.
 }, //init
 
 render() {
@@ -17,7 +17,7 @@ render() {
   this.template(this.model.toJSON());
 
   this.$el.html(compiledTemplate);
-
+  this.listenTo(this.model, "change", this.render);
 
   return this;
 
