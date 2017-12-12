@@ -14,14 +14,21 @@ const QuoteView = Backbone.View.extend({
     return this;
   },
 
-  // events: {
-  //   'click button.delete': 'deleteTask'
-  // },
-  // deleteTask: function(e) {
-  //   this.model.destroy();
-  //   this.remove();
-  // },
-// }};
+  events: {
+    'click button.btn-buy': 'buyQuote',
+    'click button.btn-sell': 'sellQuote'
+  },
+
+  sellQuote(event){
+    console.log('the sell button has been clicked');
+    this.model.sell();
+  },
+
+  buyQuote(event){
+    console.log('the buy button has been clicked');
+    this.model.buy();
+  },
+
 
 
 
