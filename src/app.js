@@ -40,11 +40,12 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
-  //console.log(quotes);
+  console.log(quotes);
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
-    el: '#quotes-container',
+    tradeTemplate: _.template($('#trade-template').html()),
+    el: 'main',
   });
   //console.log('TEST');
 

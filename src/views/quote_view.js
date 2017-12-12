@@ -21,10 +21,12 @@ const QuoteView = Backbone.View.extend({
   buyQuote: function(e) {
     console.log('Buy Button Clicked');
     this.model.buy();
+    this.trigger('clickedBuyOrSellQuote', this);
   },
   sellQuote: function(e) {
     console.log('Sell Button Clicked');
     this.model.sell();
+    this.trigger('clickedBuyOrSellQuote', this);
   },
 });
 
