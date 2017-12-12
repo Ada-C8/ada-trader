@@ -8,6 +8,7 @@ import Quote from './models/quote';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view'
 
 let quoteTemplate;
 
@@ -30,26 +31,6 @@ const quoteData = [
   },
 ];
 
-const renderQuoteList = function renderQuoteList(quotes) {
-  const $quotes = $('#quotes');
-  $quotes.empty();
-
-  quotes.forEach((quote) =>{
-    console.log('In renderQuoteList');
-
-    //make new QuoteView
-    const quoteView = new QuoteView({
-      model: quote,
-      template: _.template($('#quote-template').html()),
-      tagName: 'li',
-      className: 'quote',
-    });
-
-    $quotes.append(quoteView.render().$el);
-    console.log('In renderQuoteList after');
-  });
-};
-
 $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
 
@@ -58,8 +39,40 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  const quoteListView = new QuoteListView({
+    el: 'main',
+    model: quotes,
+    template: quoteTemplate,
+  });
+
+  quoteListView.render();
+
   // quotes.on('update', renderQuoteList, quotes);
-  renderQuoteList(quotes);
+  // renderQuoteList(quotes);
   simulator.start();
 
 });
+
+
+
+
+
+// const renderQuoteList = function renderQuoteList(quotes) {
+//   const $quotes = $('#quotes');
+//   $quotes.empty();
+//
+//   quotes.forEach((quote) =>{
+//     console.log('In renderQuoteList');
+//
+//     //make new QuoteView
+//     const quoteView = new QuoteView({
+//       model: quote,
+//       template: _.template($('#quote-template').html()),
+//       tagName: 'li',
+//       className: 'quote',
+//     });
+//
+//     $quotes.append(quoteView.render().$el);
+//     console.log('In renderQuoteList after');
+//   });
+// };
