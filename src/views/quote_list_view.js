@@ -6,6 +6,8 @@ const QuoteListView = Backbone.View.extend({
   initialize(params) {
     // save template
     this.template = params.template;
+
+    this.listenTo(this.model, 'update', this.render);
   },
 
   render() {
@@ -24,7 +26,6 @@ const QuoteListView = Backbone.View.extend({
       // Then render the  Quote and append the resulting HTML to the document
       this.$('#quotes').append(quoteView.render().$el);
     });
-    console.log(`in the end of the quote list view render function`);
     return this;
   },
 });

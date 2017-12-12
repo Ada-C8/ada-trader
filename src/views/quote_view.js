@@ -5,6 +5,8 @@ const QuoteView = Backbone.View.extend({
   // this will run any time you create a new instance
   initialize(params) {
     this.template = params.template;
+
+    this.listenTo(this.model, 'change', this.render);
   },
 
   render() {
