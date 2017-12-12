@@ -23,7 +23,7 @@ const QuoteView = Backbone.View.extend({
     this.model.set('buy', true);
 
     let tradeTemplate = _.template($('#trade-template').html());
-    $('#trades').append(tradeTemplate(this.model.attributes));
+    $('#trades').prepend(tradeTemplate(this.model.attributes));
     this.model.buy();
 
   },
@@ -31,7 +31,7 @@ const QuoteView = Backbone.View.extend({
     this.model.set('buy', false);
 
     let tradeTemplate = _.template($('#trade-template').html());
-    $('#trades').append(tradeTemplate(this.model.attributes));
+    $('#trades').prepend(tradeTemplate(this.model.attributes));
     this.model.sell();
 
   },
