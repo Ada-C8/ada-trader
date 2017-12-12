@@ -1,6 +1,5 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
-import Quote from '../models/quote';
+//import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
@@ -17,10 +16,11 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote'
   },
   buyQuote: function() {
+    this.trigger('buy', this);
     this.model.buy();
-    this.trigger('buy', this)
   },
   sellQuote: function() {
+    this.trigger('sell', this);
     this.model.sell();
   },
 })

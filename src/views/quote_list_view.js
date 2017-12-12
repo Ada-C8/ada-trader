@@ -1,7 +1,6 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
 import QuoteView from './quote_view';
-import Quote from '../models/quote';
+//import Quote from '../models/quote';
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
@@ -19,7 +18,9 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote',
       });
-      this.listenTo(quoteView, 'buy', this.displayBuy)
+      this.listenTo(quoteView, 'buy', this.displayBuy);
+
+      this.listenTo(quoteView, 'sell', this.displaySell);
 
       this.$('#quotes').append(quoteView.render().$el);
 
@@ -27,7 +28,10 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
   displayBuy(quoteView) {
-    this.$('#trades').append(this.tradeTemplate({buy: true, symbol: quoteView.model.get('symbol'), price: quoteView.model.get('price')}))
+    this.$('#trades').prepend(this.tradeTemplate({buy: true, symbol: quoteView.model.get('symbol'), price: quoteView.model.get('price')}))
+  },
+  displaySell(quoteView) {
+    this.$('#trades').prepend(this.tradeTemplate({buy: false, symbol: quoteView.model.get('symbol'), price: quoteView.model.get('price')}))
   }
 });
 
