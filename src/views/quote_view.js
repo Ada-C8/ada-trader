@@ -20,12 +20,12 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote: function() {
-    const addBuy = $.extend(this.model.toJSON(), {buy: true});
+    const addBuy = _.extend(this.model.toJSON(), {buy: true});
     $('#trades').prepend(this.tradeTemplate(addBuy));
     this.model.buy();
   },
   sellQuote: function() {
-    const addSell = $.extend(this.model.toJSON(), {buy: false});
+    const addSell = _.extend(this.model.toJSON(), {buy: false});
     $('#trades').prepend(this.tradeTemplate(addSell));
     this.model.sell();
   },

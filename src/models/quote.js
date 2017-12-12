@@ -5,11 +5,9 @@ const Quote = Backbone.Model.extend({
     symbol: 'UNDEF',
     price: 0.00
   },
-  buy(attributes) {
+  buy() {
     // Implement this function to increase the price by $1.00
-    // console.log(this.get('price'));
     this.set('price', this.get('price') + 1);
-    // console.log(this.get('price'));
   },
 
   sell() {
