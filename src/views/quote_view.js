@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import _ from 'underscore';
 import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
@@ -17,6 +18,7 @@ const QuoteView = Backbone.View.extend({
   },
   buyQuote: function() {
     this.model.buy();
+    this.trigger('buy', this)
   },
   sellQuote: function() {
     this.model.sell();
