@@ -4,11 +4,10 @@ import 'css/app.css';
 import $ from 'jquery';
 import _ from 'underscore';
 
-import Quote from './models/quote';
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
 
-import QuoteView from './views/quote_view'
+import QuoteListView from './views/quote_list_view';
 
 const quoteData = [
   {
@@ -29,31 +28,18 @@ const quoteData = [
   },
 ];
 
-const quoteList = new QuoteList(quoteData);
-
-const renderList = function(quoteList) {
-  const $quoteList = $('#quotes');
-  $quoteList.empty();
-
-  quoteList.forEach((quote) =>{
-    const quoteView = new QuoteView({
-      model: quote,
-      template: _.template($('#quote-template').html()),
-      tagName: 'li',
-      className: 'quote'
-    });
-
-    $quoteList.append(quoteView.render().$el);
-  });
-}
-
 $(document).ready(function() {
-  // const quotes = new QuoteList(quoteData);
-  // const simulator = new Simulator({
-  //   quotes: quotes,
-  // });
-  //
-  // simulator.start();
+  const quotes = new QuoteList(quoteData);
+  const simulator = new Simulator({
+    quotes: quotes,
+  });
 
-  renderList(quoteList);
+  simulator.start();
+
+  const quoteListView = new QuoteListView({
+    model: quotes,
+    template: _.template($('#quote-template').html()),
+    el: "main"
+  });
+
 });

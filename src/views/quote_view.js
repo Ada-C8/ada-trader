@@ -17,7 +17,7 @@ const QuoteView = Backbone.View.extend({
   },
 
   buyQuote: function(event){
-
+  
   },
 
   sellQuote: function(event){
