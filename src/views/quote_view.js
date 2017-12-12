@@ -5,6 +5,7 @@ const QuoteView = BackBone.View.extend({
 
   initialize(params) {
     this.template = params.template;
+    this.bus = params.bus;
 
     this.listenTo(this.model, 'change', this.render);
   },
@@ -12,11 +13,13 @@ const QuoteView = BackBone.View.extend({
   buyQuote(event) {
     console.log('In buyQuote');
     this.model.buy();
+    this.bus.trigger('add_me_to_trade_hist', this.model);
   },
 
   sellQuote(event) {
     console.log('In sellQuote');
     this.model.sell();
+    this.bus.trigger('add_me_to_trade_hist', this.model);
   },
 
   events: {
