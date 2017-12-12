@@ -6,6 +6,8 @@ import $ from 'jquery';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 
+import QuoteListView from './views/quote_list_view';
+
 const quoteData = [
   {
     symbol: 'HUMOR',
