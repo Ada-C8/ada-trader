@@ -1,18 +1,17 @@
-import Backbone from 'backbone'
+import Backbone from 'backbone';
 import QuoteView from '../views/quote_view';
 
 const QuoteListView = Backbone.View.extend({
 
   initialize(params){
     this.template = params.template;
-    // this.listenTo(this.model, 'update', this.render);
-    this.render();
+    this.listenTo(this.model, 'update', this.render);
   },
 
   render(){
     this.$('#quotes').empty();
 
-    this.model.each((quote) => {
+    this.model.forEach((quote) => {
       const quoteView = new QuoteView({
         model: quote,
         template: this.template,
