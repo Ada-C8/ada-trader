@@ -9,6 +9,21 @@ const QuoteView = BackBone.View.extend({
     this.listenTo(this.model, 'change', this.render);
   },
 
+  buyQuote(event) {
+    console.log('In buyQuote');
+    this.model.buy();
+  },
+
+  sellQuote(event) {
+    console.log('In sellQuote');
+    this.model.sell();
+  },
+
+  events: {
+    'click button.btn-buy': 'buyQuote',
+    'click button.btn-sell': 'sellQuote',
+  },
+
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
 
@@ -19,16 +34,6 @@ const QuoteView = BackBone.View.extend({
     return this;
   },
 
-  events: {
-    //listen for buy and sell buttons
-  },
-
-  //buy method
-
-  //sell method
-
-
-
-})
+});
 
 export default QuoteView;
