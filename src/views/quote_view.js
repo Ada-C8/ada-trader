@@ -17,7 +17,9 @@ const QuoteView = Backbone.View.extend({
   },
   buyQuote: function(e) {
     this.model.set('price', (this.model.get('price') + 1));
-    console.log('hullo');
+  },
+  sellQuote: function(e) {
+    this.model.set('price', (this.model.get('price') - 1));
   }
 });
 
