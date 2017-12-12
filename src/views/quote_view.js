@@ -10,7 +10,7 @@ const QuoteView = Backbone.View.extend({
   },
 
   render() {
-    const compiledTemplate = this.template(this.model.toJSON());
+    const compiledTemplate = this.template(this.model.toJSON()); //Don't understand exactly how this works
 
     this.$el.html(compiledTemplate);
 
@@ -28,13 +28,8 @@ const QuoteView = Backbone.View.extend({
   sell(event) {
     console.log(event);
     this.model.sell();
-  }
-  // toggleComplete() {
-  //   console.log('Toggling');
-  //   this.model.toggleComplete();
-  //   // this.$el.toggleClass('is-complete');  MOVED THIS TO RENDER BECAUSE THIS ONLY CHANGES WITH THE CLICK OF THE BUTTON and not if something else changed the status (IE an external source through the API)
-  //
-  // },
+  },
+
 
 });
 
