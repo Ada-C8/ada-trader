@@ -10,6 +10,9 @@ import QuoteList from 'collections/quote_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
 
+import Trade from 'models/trade';
+import TradeView from 'views/trade_view';
+
 let quoteTemplate;
 
 const quoteData = [
@@ -33,6 +36,9 @@ const quoteData = [
 
 
 $(document).ready(function() {
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
+
   quoteTemplate = _.template($('#quote-template').html());
 
   const quotes = new QuoteList(quoteData);

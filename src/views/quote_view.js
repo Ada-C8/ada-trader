@@ -12,9 +12,10 @@ const QuoteView = Backbone.View.extend({
     'click .btn-sell': 'sellQuote',
   },
 
-  buyQuote(event) { // TODO: Why do we need to pass in event as a parameter?
+  buyQuote(event) {
     // Call the quote model method
     this.model.buy();
+    this.trigger('add_quote', this.model);
   },
 
   sellQuote(event) {
