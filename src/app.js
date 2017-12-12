@@ -10,6 +10,8 @@ import QuoteList from 'collections/quote_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
 
+const quoteList = new QuoteList();
+
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -34,6 +36,14 @@ $(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
+
+  const quoteListView = new QuoteListView({
+    model: quotes,
+    template: _.template($('#quote-template').html()),
+    el: '#quotes-container',
+  });
+
+  quoteListView.render();
 
   simulator.start();
 });
