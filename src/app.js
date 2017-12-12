@@ -1,11 +1,19 @@
+// CSS
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+//Vendor modules
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Simulator from 'models/simulator';
+import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
+import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view';
 
+// let quoteTemplate;
+const quoteList = new QuoteList();
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -25,11 +33,37 @@ const quoteData = [
   },
 ];
 
+const renderList = (quoteList) => {
+  // Clear the unordered list
+  const $quoteList = $('#quotes');
+  $quoteList.empty();
+
+  quoteList.forEach((quote) => {
+    const quoteView = new QuoteView({
+      model: quote,
+      template: _.template($('#quote-template').html()),
+      tagName: 'li',
+      className: 'quote',
+    });
+
+    $quoteList.append(quoteView.render().$el);
+
+  });
+};
+
+
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
+  quoteList.add(quotes);
+  quoteList.add(new Quote({symbol: "wtf", price: 100}));
+    console.log(quoteList)
+  renderList(quoteList)
 
+
+  quoteList.on('update', renderList, quoteList);
   simulator.start();
 });
