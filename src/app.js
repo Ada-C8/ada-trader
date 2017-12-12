@@ -1,10 +1,19 @@
+// Vendor Modules
+import $ from 'jquery';
+import _ from 'underscore';
+
+// CSS
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
-import $ from 'jquery';
-
+// Models
+import Quote from 'models/quote';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+
+// Views
+import QuoteView from 'views/quote_view';
+import QuoteListView from 'views/quote_list_view';
 
 const quoteData = [
   {
@@ -31,5 +40,15 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  console.log(quotes);
+  const quoteListView = new QuoteListView({
+    model: quotes,
+    template: _.template($('#quote-template').html()),
+    el: '#quotes-container',
+  });
+  console.log('TEST');
+
+
+  quoteListView.render();
   simulator.start();
 });
