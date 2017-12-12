@@ -12,6 +12,8 @@ import Quote from './models/quote';
 import QuoteView from './views/quote_view';
 // import TaskListView from './views/task_list_view';
 import QuoteListView from './views/quote_list_view';
+import TradeListView from './views/trade_list_view';
+
 
 
 const quoteData = [
@@ -35,20 +37,30 @@ const quoteData = [
 
 const quoteList = new QuoteList();
 let quoteTemplate;
+let tradeTemplate;
 
 $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
+
+  tradeTemplate = _.template($('#trade-template').html());
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
 
-  // Tasklistview will encompass the main tag
+  // Quotelistview will encompass the main tag
   const quoteListView = new QuoteListView({
     el: 'main',
     model: quotes,
     template: quoteTemplate,
+  });
+
+  // TradeHistoryView will encompass the main tag
+  const tradelistView = new TradeListView({
+    el: 'main',
+    model: quotes,
+    template: tradeTemplate,
   });
 
   quoteListView.render();

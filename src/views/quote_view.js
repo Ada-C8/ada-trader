@@ -14,21 +14,10 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote() {
-    console.log('buying quote');
-    console.log(this.model.get('price'));
-    // $()
-    let newPrice = this.model.get('price') + 1;
-    this.model.set({price: newPrice});
-    console.log(this.model.get('price'));
-
+    this.model.buy();
   },
   sellQuote() {
-    console.log('selling quote');
-    console.log(this.model.get('price'));
-    let newPrice = this.model.get('price') - 1;
-    this.model.set({price: newPrice});
-    console.log(this.model.get('price'));
-
+    this.model.sell();
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
