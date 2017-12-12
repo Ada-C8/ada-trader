@@ -39,21 +39,16 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  quotes.each(function (quote) {
+    $('#order-form-symbols').append(`<option value=${quote.attributes.symbol}>${quote.attributes.symbol}</option>`);
+  });
+
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
     el: 'main'
   });
   quoteListView.render();
-
-  const tradeListView = new TradeListView({
-    model: TRADESLIST,
-    template: _.template($('#trade-template').html()),
-    el: 'main'
-  });
-  tradeListView.render();
-
-
 
   simulator.start();
 });
