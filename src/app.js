@@ -2,6 +2,7 @@ import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Quote from './models/quote';
 import Simulator from './models/simulator';
@@ -28,11 +29,31 @@ const quoteData = [
   },
 ];
 
-$(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
-  const simulator = new Simulator({
-    quotes: quotes,
-  });
+const quoteList = new QuoteList(quoteData);
 
-  simulator.start();
+const renderList = function(quoteList) {
+  const $quoteList = $('#quotes');
+  $quoteList.empty();
+
+  quoteList.forEach((quote) =>{
+    const quoteView = new QuoteView({
+      model: quote,
+      template: _.template($('#quote-template').html()),
+      tagName: 'li',
+      className: 'quote'
+    });
+
+    $quoteList.append(quoteView.render().$el);
+  });
+}
+
+$(document).ready(function() {
+  // const quotes = new QuoteList(quoteData);
+  // const simulator = new Simulator({
+  //   quotes: quotes,
+  // });
+  //
+  // simulator.start();
+
+  renderList(quoteList);
 });
