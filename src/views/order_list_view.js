@@ -45,7 +45,8 @@ const OrderListView = Backbone.View.extend({
     });
     buyData['buy'] = true;
 
-    const newOrder = new Order(buyData);
+    let newOrder = new Order(buyData);
+    newOrder.set('quotes', this.quotes);
     console.log(newOrder);
 
     if (newOrder.isValid()) {
@@ -79,32 +80,32 @@ const OrderListView = Backbone.View.extend({
     if (newOrder.isValid()) {
       console.log('IS VALID');
       this.model.add(newOrder);
-      // this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
+      this.updateStatusMessageWith(`New order added for ${newOrder.get('symbol')}`);
     } else {
       console.log('FAIL');
-      // this.updateStatusMessageFrom(newTask.validationError);
+      this.updateStatusMessageFrom(newOrder.validationError);
     }
   },
   cancelOrder(order) {
     order.remove();
     order.model.destroy();
   },
-  // updateStatusMessageFrom: function(messageHash) {
-  //   const statusMessagesEl = this.$('#status-messages');
-  //   statusMessagesEl.empty();
-  //   _.each(messageHash, (messageType) => {
-  //     messageType.forEach((message) => {
-  //       statusMessagesEl.append(`<li>${message}</li>`);
-  //     })
-  //   });
-  //   statusMessagesEl.show();
-  // },
-  // updateStatusMessageWith: function(message) {
-  //   const statusMessagesEl = this.$('#status-messages');
-  //   statusMessagesEl.empty();
-  //   statusMessagesEl.append(`<li>${message}</li>`);
-  //   statusMessagesEl.show();
-  // }
+  updateStatusMessageFrom: function(messageHash) {
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    _.each(messageHash, (messageType) => {
+      messageType.forEach((message) => {
+        statusMessagesEl.append(`<li>${message}</li>`);
+      })
+    });
+    statusMessagesEl.show();
+  },
+  updateStatusMessageWith: function(message) {
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    statusMessagesEl.append(`<li>${message}</li>`);
+    statusMessagesEl.show();
+  }
 });
 
 export default OrderListView;

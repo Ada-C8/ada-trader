@@ -64,6 +64,7 @@ $(document).ready(function() {
     template: _.template($('#order-template').html()),
     el: 'main'
   });
+  orderListView.quotes = quotes;
   orderListView.render();
 
   simulator.start();
