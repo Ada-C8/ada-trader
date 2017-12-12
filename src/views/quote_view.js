@@ -11,6 +11,16 @@ const QuoteView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
+  events: {
+    'click .btn-buy': 'buyQuote',
+    'click .btn-sell': 'sellQuote',
+  },
+  buyQuote() {
+    this.model.buy();
+  },
+  sellQuote() {
+    this.model.sell();
+  },
 });
 
 export default QuoteView;
