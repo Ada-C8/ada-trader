@@ -6,7 +6,9 @@ import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 import QuoteListView from 'views/quote_list_view';
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -29,6 +31,7 @@ const quoteData = [
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
+
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -42,5 +45,15 @@ $(document).ready(function() {
   });
 
   quotesView.render();
+
+  const orders = new OrderList();
+  const ordersView = new OrderListView({
+    model: orders,
+    symbols: quotes,
+    template: _.template($('#order-template').html()),
+    el: '#order-workspace',
+  });
+
+  ordersView.render();
 
 });
