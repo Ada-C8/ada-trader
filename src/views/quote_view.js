@@ -19,12 +19,13 @@ const QuoteView = Backbone.View.extend({
   buyShare: function(event) {
     event.preventDefault();
     this.model.buy();
+    this.trigger('showTrade', this);
   },
   sellShare: function(event) {
     event.preventDefault();
     this.model.sell();
+    this.trigger('showTrade', this);
   }
-
 })
 
 export default QuoteView;

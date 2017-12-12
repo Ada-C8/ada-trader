@@ -1,6 +1,7 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+import Backbone from 'backbone';
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -40,10 +41,13 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quoteList,
     template: _.template($('#quote-template').html()),
-    el: '.quotes-list-container'
+    tradeTemplate: _.template($('#trade-template').html()),
+    el: 'main',
   })
 
   quoteListView.render();
 
   simulator.start();
 });
+
+// wave 2: add and clone into a new collection?
