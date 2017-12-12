@@ -1,10 +1,11 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
-
+import _ from 'underscore';
 import $ from 'jquery';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import QuoteListView from './views/quote_list_view';
 
 const quoteData = [
   {
@@ -25,11 +26,20 @@ const quoteData = [
   },
 ];
 
+const quoteList = new QuoteList(quoteData);
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
-    quotes: quotes,
+    quotes: quoteList,
   });
 
+  const quoteListView = new QuoteListView({
+   model: quoteList,
+   template: _.template($('#quote-template').html()),
+   el: '.quotes-list-container'
+ });
+ 
+  quoteListView.render();
   simulator.start();
 });
