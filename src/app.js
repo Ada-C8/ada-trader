@@ -7,6 +7,8 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
+import TradeList from 'collections/trade_list';
+import TradeListView from 'views/trade_list_view';
 
 const quoteData = [
   {
@@ -27,6 +29,19 @@ const quoteData = [
   },
 ];
 
+const tradeData = [
+  {
+    symbol: 'ABCD',
+    buy: true,
+    price: 10.02,
+  },
+  {
+    symbol: 'XYZ',
+    buy: false,
+    price: 15.02,
+  },
+]
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -40,6 +55,14 @@ $(document).ready(function() {
   });
 
   quoteListView.render();
+
+  const tradeList = new TradeList(tradeData);
+  const tradeListView = new TradeListView({
+    model: tradeList,
+    template: _.template($('#trade-template').html()),
+    el: 'main',
+  })
+  tradeListView.render();
 
   simulator.start();
 });

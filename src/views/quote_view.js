@@ -6,8 +6,7 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render);
   },
   render() {
-    // const compiledTemplate = this.template(this.model.toJSON());
-    const compiledTemplate = this.template(this.model.attributes);
+    const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;
   },
