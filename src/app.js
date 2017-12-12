@@ -3,6 +3,7 @@ import 'css/app.css';
 
 import $ from 'jquery';
 import _ from 'underscore';
+import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
@@ -32,15 +33,20 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+  let bus = {};
+  _.extend(bus, Backbone.Events);
+
   quoteViewTemplate = _.template($('#quote-template').html());
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
+    bus: bus,
   });
   const quotesView = new QuoteListView({
     model: quotes,
     el: 'main',
     template: quoteViewTemplate,
+    bus: bus,
   });
 
   simulator.start();

@@ -4,6 +4,7 @@ import _ from 'underscore';
 const Simulator = Backbone.Model.extend({
   initialize(params) {
     this.quotes = params.quotes;
+    this.bus = params.bus;
   },
 
   start() {

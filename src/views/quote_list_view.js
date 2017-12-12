@@ -8,6 +8,7 @@ const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render);
+    this.bus = params.bus;
   },
   render() {
     const $quoteList = this.$('#quotes');
@@ -19,11 +20,15 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote',
         template: this.template,
+        bus: this.bus,
       });
       $quoteList.append(quoteView.render().$el);
     });
 
     return this;
+  },
+  boughtReact() {
+    console.log("it was bought!!");
   },
 });
 

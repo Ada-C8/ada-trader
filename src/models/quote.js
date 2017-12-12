@@ -17,6 +17,7 @@ const Quote = Backbone.Model.extend({
     const newPrice = (this.get('price') - 1);
     this.set('price', newPrice);
   },
+
 });
 
 export default Quote;
