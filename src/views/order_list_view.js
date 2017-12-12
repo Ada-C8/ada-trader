@@ -9,28 +9,25 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'change', this.render);
+
   },
   render() {
-    // Clear the unordered list
     // this.$('#quotes-container').empty();
-    // Iterate through the list rendering each Task
     this.model.each((order) => {
-      // Create a new TaskView with the model & template
       const orderView = new OrderView({
         model: order,
         template: this.template,
-        // tagName: 'li',
         className: 'order',
       });
-      // Then render the TaskView
-      // And append the resulting HTML to the DOM.
+      this.listenTo(orderView, 'cancelMe', this.cancelOrder)
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
   },
   events: {
     'click #order-form .btn-buy': 'orderBuy',
-    'click button.btn-sell': 'orderSell',
+    'click #order-form .btn-sell': 'orderSell',
   },
   orderBuy: function(event) {
     event.preventDefault();
@@ -59,6 +56,38 @@ const OrderListView = Backbone.View.extend({
       console.log('FAIL');
       // this.updateStatusMessageFrom(newTask.validationError);
     }
+  },
+  orderSell: function(event) {
+    event.preventDefault();
+    const buyData = {};
+    ['symbol', 'targetPrice'].forEach( (field) => {
+      const val = $(`#${field}`).val();
+      console.log(val);
+      if (field == 'targetPrice') {
+        console.log('inside the targetPrice field')
+        buyData[field] = parseInt(val);
+      }
+      else {
+        buyData[field] = val;
+      }
+    });
+    buyData['buy'] = false;
+
+    const newOrder = new Order(buyData);
+    console.log(newOrder);
+
+    if (newOrder.isValid()) {
+      console.log('IS VALID');
+      this.model.add(newOrder);
+      // this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
+    } else {
+      console.log('FAIL');
+      // this.updateStatusMessageFrom(newTask.validationError);
+    }
+  },
+  cancelOrder(order) {
+    order.remove();
+    order.model.destroy();
   },
   // updateStatusMessageFrom: function(messageHash) {
   //   const statusMessagesEl = this.$('#status-messages');
