@@ -3,7 +3,6 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Quote from '../models/quote';
-import Trade from '../models/trade';
 
 
 const QuoteView = Backbone.View.extend({
@@ -21,14 +20,20 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellStock',
   },
   buyStock: function() {
-    this.model.buy();
+    this.model.set('buy', true);
+
     let tradeTemplate = _.template($('#trade-template').html());
     $('#trades').append(tradeTemplate(this.model.attributes));
+    this.model.buy();
+
   },
   sellStock: function() {
-    this.model.sell();
+    this.model.set('buy', false);
+
     let tradeTemplate = _.template($('#trade-template').html());
     $('#trades').append(tradeTemplate(this.model.attributes));
+    this.model.sell();
+
   },
 
 });
