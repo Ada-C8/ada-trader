@@ -30,7 +30,7 @@ const quoteData = [
     price: 83.10,
   },
 ];
-// should be able to delete this 
+// should be able to delete this
 const renderList = function(quoteList) {
   const $quoteList = $('#quotes');
   $quoteList.empty();
@@ -55,7 +55,7 @@ $(document).ready(function() {
   simulator.start();
 
   const quoteListView = new QuoteListView({
-    model: quoteList,
+    model: quotes,
     template: quoteTemplate,
     el: 'main'
   });

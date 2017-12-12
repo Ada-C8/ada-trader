@@ -9,8 +9,10 @@ const QuoteListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
+    // console.log('rendering listView');
       this.$('#quotes').empty();
       this.model.each((quote) => {
+        // console.log(quote.get('symbol'));
         const quoteView = new QuoteView({
           model: quote,
           template: this.template,
