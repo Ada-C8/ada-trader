@@ -7,12 +7,21 @@ const QuoteView = Backbone.View.extend({
   },
   render() {
     // TODO: confirm that .toJSON() is necessary
-    // console.log(this.template);
     const compiledTemplate = this.template(this.model.toJSON());
 
     this.$el.html(compiledTemplate);
 
     return this;
+  },
+  events: {
+    'click button.btn-buy': 'buy',
+    'click button.btn-sell': 'sell',
+  },
+  buy() {
+    this.model.buy();
+  },
+  sell() {
+    this.model.sell();
   },
 });
 
