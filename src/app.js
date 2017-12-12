@@ -32,6 +32,7 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,

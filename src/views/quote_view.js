@@ -1,5 +1,10 @@
+import $ from 'jquery';
+import _ from 'underscore';
+
 import Backbone from 'backbone';
 import Quote from '../models/quote';
+
+const tradeTemplate = _.template($('#trade-template').html());
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
@@ -16,7 +21,12 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote'
   },
   buyQuote: function(e) {
+    const tradeObj = this.model.attributes
+    tradeObj['buy'] = true;
+    console.log(this.model.attributes);
     this.model.buy();
+    const $trades = $('#trades');
+    $('#trades').prepend(tradeTemplate(this.model.attributes));
   },
   sellQuote: function(e) {
     this.model.sell();

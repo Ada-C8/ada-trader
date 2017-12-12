@@ -18,7 +18,7 @@ const QuoteListView = Backbone.View.extend({
         model: quote,
         template: this.template,
         tagName: 'li',
-        className: 'quote',
+        className: 'workspace',
       });
       // Then render the TaskView
       // And append the resulting HTML to the DOM.
