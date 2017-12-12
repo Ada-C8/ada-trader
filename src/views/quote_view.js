@@ -1,8 +1,9 @@
-import Backbone from 'backbone'
+import Backbone from 'backbone';
 
 const QuoteView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
+    this.listenTo(this.model, 'change', this.render);
   },
 
   render(){
@@ -17,11 +18,11 @@ const QuoteView = Backbone.View.extend({
   },
 
   buyQuote: function(event){
-  
+    this.model.buy();
   },
 
   sellQuote: function(event){
-
+    this.model.sell();
   }
 });
 
