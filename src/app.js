@@ -17,7 +17,7 @@ import TradeView from './views/trade_view';
 import TradeListView from './views/trade_list_view';
 
 const quoteList = new QuoteList();
-const trades = new TradeList();
+let TRADESLIST = new TradeList();
 
 const quoteData = [
   {
@@ -52,7 +52,7 @@ $(document).ready(function() {
   quoteListView.render();
 
   const tradeListView = new TradeListView({
-    model: trades,
+    model: TRADESLIST,
     template: _.template($('#trade-template').html()),
     el: 'main'
   });

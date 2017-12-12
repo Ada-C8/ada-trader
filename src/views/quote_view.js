@@ -1,5 +1,8 @@
 import Backbone from 'backbone';
 import Quote from '../models/quote';
+import Trade from '../models/trade';
+import TRADESLIST from '../app';
+
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
@@ -16,9 +19,15 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellStock',
   },
   buyStock: function() {
-    this.model.buy();
-    let trade = new Trade() 
-
+    const stock = this.model;
+    stock.buy();
+    const trade = new Trade({
+      symbol: stock.attributes.symbol,
+      price: stock.attributes.price,
+      buy: 'bought',
+    });
+    TRADESLIST.add(trade);
+    console.log(trade);
   },
   sellStock: function() {
     this.model.sell();
