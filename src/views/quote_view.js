@@ -11,7 +11,20 @@ const QuoteView = Backbone.View.extend({
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;
+  },
+  events: {
+    'click .btn-buy': 'buyShare',
+    'click .btn-sell': 'sellShare'
+  },
+  buyShare: function(event) {
+    event.preventDefault();
+    this.model.buy();
+  },
+  sellShare: function(event) {
+    event.preventDefault();
+    this.model.sell();
   }
+
 })
 
 export default QuoteView;
