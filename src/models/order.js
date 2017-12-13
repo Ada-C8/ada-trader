@@ -11,6 +11,12 @@ const Order = Backbone.Model.extend({
     if (!attributes.symbol) {
       errors['symbol'] = ["Quote symbol is required"];
     }
+    if (typeof(attributes.targetPrice) != 'number') {
+      errors['price'] = ["Price must be a number"];
+    }
+    if (!attributes.targetPrice) {
+      errors['price'] = ["Must have a target price"];
+    }
     if (attributes.buy) {
       if (attributes.targetPrice >= wantQuote[0].attributes.price) {
         errors['targetPrice'] = ["Target price is higher than current market cost."];
