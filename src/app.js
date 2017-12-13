@@ -56,4 +56,9 @@ $(document).ready(function() {
   });
 
   quoteListView.render();
+
+  const tradesView = new TradesView ({
+    el: $('#trades-container'),
+    template: tradeTemplate
+  })
 });

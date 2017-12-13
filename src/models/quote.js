@@ -7,15 +7,31 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    // Implement this function to increase the price by $1.00
-    this.set('price', (this.get('price')) + 1 );
-    console.log('Buy - increased the prive by a dollar');
+    // Get price at time of purchase
+    const buyPrice = this.get('price')
+    console.log(`Bought ${this.get('symbol')} at $${buyPrice}`);
+
+    // increase the price by a dollar
+    const newPrice = (buyPrice + 1);
+    this.set('price', newPrice);
+    console.log(`Buy - increased the price by a dollar, new price $${newPrice}`);
+
+    // return the price so we can use it for the tradesView
+    return buyPrice
   },
 
   sell() {
-    // Implement this function to decrease the price by $1.00
-    this.set('price', (this.get('price')) - 1 );
-    console.log('Sell - decreased the price by a dollar');
+    // Get price at time of sell
+    const sellPrice = this.get('price')
+    console.log(`Sold ${this.get('symbol')} at $${sellPrice}`);
+
+    // decrease the price by a dollar
+    const newPrice = (sellPrice - 1);
+    this.set('price', newPrice);
+    console.log(`Sell - decreased the price by a dollar, new price $${newPrice}`);
+
+    // return the price so we can use it for the tradesView
+    return sellPrice
   },
 });
 

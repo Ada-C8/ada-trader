@@ -12,8 +12,8 @@ const QuoteView = Backbone.View.extend({
 
   // Events Ojects
   events: {
-    'click button.btn-buy' : 'buyPriceUpdate',
-    'click button.btn-sell' : 'sellPriceUpdate',
+    'click button.btn-buy' : 'buyStock',
+    'click button.btn-sell' : 'sellStock',
   },
 
   render() {
@@ -22,11 +22,11 @@ const QuoteView = Backbone.View.extend({
     return this;
   },
 
-  buyPriceUpdate() {
+  buyStock() {
     this.model.buy();
   },
 
-  sellPriceUpdate() {
+  sellStock() {
     this.model.sell();
   },
 });
