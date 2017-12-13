@@ -9,6 +9,8 @@ const Quote = Backbone.Model.extend({
   buy() {
     console.log(`${this.get('symbol')} has been bought for ${this.get('price')}`)
     this.set('price', this.get('price') + 1)
+    const trade = new Trade()
+
   },
 
   sell() {

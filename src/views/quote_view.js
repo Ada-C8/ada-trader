@@ -7,10 +7,13 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render);
     ("I am initializing a view")
   },
+
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
-    console.log("I am rendering a view")
+    console.log("I am rendering a new quoteView");
+    console.log(compiledTemplate);
+    // return compiledTemplate;
     return this;
   },
 
