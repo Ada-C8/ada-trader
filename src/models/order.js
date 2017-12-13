@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 const Order = Backbone.Model.extend({
   defaults: {
     symbol: '',
-    price: '',
+    targetPrice: '',
     buy: '',
   },
   initialize(attributes) {

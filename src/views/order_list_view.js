@@ -4,6 +4,8 @@ import $ from 'jquery';
 
 import Quote from '../models/quote';
 import Order from '../models/order';
+import OrderView from '../views/order_view';
+
 
 import QuoteList from '../collections/quote_list';
 
@@ -24,7 +26,7 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
       });
       // this.listenTo(taskView, 'editMe', this.editTask)
-      // this.$('#todo-items').append(taskView.render().$el);
+      this.$('#orders').append(orderView.render().$el);
     });
     return this;
   },
@@ -35,17 +37,18 @@ const OrderListView = Backbone.View.extend({
     });
   },
   events: {
-    // 'click #add-new-task': 'addTask'
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder'
+
+    // 'click #order-entry-form': 'addOrder'
   },
-  addOrder: function(event) {
+  buyOrder: function(event) {
     event.preventDefault();
-    const orderData ={};
-    ['symbol', 'price-target'].forEach( (field) => {
-      const val = this.$(`#order-entry-form input[name=${field}]`).val();
-      if (val != '') {
-        taskData[field] = val;
-      }
-    });
+    const orderData = {};
+    orderData['symbol'] = this.$(`[name=symbol]`).val()
+    orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
+    orderData['buy'] = 'true';
+    console.log(orderData);
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
@@ -55,7 +58,18 @@ const OrderListView = Backbone.View.extend({
       // }
     }
   },
-
+  sellOrder: function(event) {
+    event.preventDefault();
+    const orderData = {};
+    orderData['symbol'] = this.$(`[name=symbol]`).val();
+    orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
+    orderData['buy'] = 'false';
+    console.log(orderData);
+    const newOrder = new Order(orderData);
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+    }
+  }
 });
 
 export default OrderListView;
