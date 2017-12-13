@@ -1,10 +1,10 @@
 import Backbone from 'backbone';
 
 const TradeHistoryView = Backbone.View.extend({
-
   initialize(params) {
     this.bus = params.bus;
     this.listenTo(this.bus, 'add_me_to_trade_hist', this.render);
+    this.template = params.template;
   },
 
   render(data) {
@@ -13,11 +13,12 @@ const TradeHistoryView = Backbone.View.extend({
     console.log(data.model.attributes.symbol);
     console.log(data.model.get('price'));
 
-    const symbol = data.model.get('symbol');
-    const price = data.model.get('price');
-    const formattedPrice = price.toFixed(2)
-    const type = data.type;
-    this.$('#trades').prepend(`<li>You ${type} ${symbol} at $${formattedPrice}</li>`)
+    const compiledTemplate =
+      this.template(data);
+
+    console.log(this.template(data));
+    this.$('#trades').prepend(compiledTemplate);
+
     return this;
   }
 

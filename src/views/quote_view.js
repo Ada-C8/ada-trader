@@ -12,25 +12,31 @@ const QuoteView = BackBone.View.extend({
 
   buyQuote(event) {
     console.log('In buyQuote');
-    this.model.buy();
     console.log(event);
-    // console.log(`HTML VALUE: ${event.target.value}`);
-    console.log(event.target.firstChild.data);
+
     const objectForTradeHistory = {
       model: this.model,
-      type: 'bought',
+      buy: true,
+      price: this.model.get('price'),
+      symbol: this.model.get('symbol'),
     };
     this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
+
+    this.model.buy();
   },
 
   sellQuote(event) {
     console.log('In sellQuote');
-    this.model.sell();
+
     const objectForTradeHistory = {
       model: this.model,
-      type: 'sold',
+      buy: false,
+      price: this.model.get('price'),
+      symbol: this.model.get('symbol'),
     };
     this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
+
+    this.model.sell();
   },
 
   events: {

@@ -13,6 +13,7 @@ import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
 
 let quoteTemplate;
+let tradeTemplate;
 
 const quoteData = [
   {
@@ -39,6 +40,8 @@ $(document).ready(function() {
 
   quoteTemplate = _.template($('#quote-template').html());
 
+  tradeTemplate = _.template($('#trade-template').html());
+
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
@@ -55,8 +58,8 @@ $(document).ready(function() {
 
   const tradeHistoryView = new TradeHistoryView({
     el: '#trades-container',
-    // template: quoteTemplate, //makes tradesTemplate?
     bus: bus,
+    template: tradeTemplate,
   })
   // quotes.on('update', renderQuoteList, quotes);
   // renderQuoteList(quotes);
