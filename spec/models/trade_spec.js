@@ -3,29 +3,22 @@ import Trade from 'models/trade';
 describe('Trade spec', () => {
   let trade;
   beforeEach(() => {
-    quote = new Trade({
-      symbol: 'HELLO',
-      price: 100.00,
+    trade = new Trade({
+
     });
   });
 
   describe('defaults', () => {
-    it('increases the price by $1.00', () => {
-      const startPrice = quote.get('price');
-
-      quote.buy();
-
-      expect(quote.get('price')).toEqual(startPrice + 1.00);
+    it('has a default buy', () => {
+      expect(trade.get('buy')).toBeTruthy;
+    });
+    it('has a default price', () => {
+        expect(trade.get('buy')).toBeTruthy;
+    });
+    it('has a default symbol', () => {
+        expect(trade.get('buy')).toBeTruthy;
     });
   });
 
-  describe('Sell function', () => {
-    it('decreases the price by $1.00', () => {
-      const startPrice = quote.get('price');
 
-      trade.sell();
-
-      expect(trade.get('price')).toEqual(startPrice - 1.00);
-    });
-  });
 });
