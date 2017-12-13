@@ -6,6 +6,7 @@ const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
 
+    // listens for change events on models and calls render to redraw the view. Any time the model changes it triggers a change event
     this.listenTo(this.model, 'change', this.render);
   },
 
