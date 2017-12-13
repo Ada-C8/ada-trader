@@ -16,11 +16,19 @@ const QuoteListView = Backbone.View.extend ({
         tagName: 'li',
         className: 'quote',
       });
+      //middle man in passing buy or sell event
+      this.listenTo(quoteView, 'add_trade', this.addTrade);
 
       this.$('#quotes').append(quoteView.render().$el);
-      return this;
     });
+    return this;
   },
+
+  addTrade() {
+    console.log('passing new trade to trades view');
+    this.trigger('add_trade', this.model);
+  }
+
 
 });
 

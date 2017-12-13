@@ -9,6 +9,7 @@ import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
+import TradesView from 'views/trades_view';
 
 const quoteData = [
   {
@@ -31,10 +32,12 @@ const quoteData = [
 
 // define templates
 let quoteTemplate;
+let tradeTemplate;
 
 $(document).ready(function() {
   // templates
   quoteTemplate = _.template($('#quote-template').html());
+  tradeTemplate = _.template($('#trade-template').html());
 
   // create new quote list
   const quotes = new QuoteList(quoteData);
@@ -57,6 +60,15 @@ $(document).ready(function() {
   });
 
   simulator.start();
+
+  //create new trades view
+  const tradesView = new TradesView({
+    el: '#trades-container',
+    template: tradeTemplate,
+    tagName: 'li',
+    className: 'trade',
+    view: quoteListView,
+  });
 
 
 

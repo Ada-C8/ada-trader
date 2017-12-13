@@ -22,7 +22,6 @@ const QuoteView = Backbone.View.extend({
 
   buyQuote(event) {
     console.log('buying quote');
-    // append li to ul with id="trades"
     this.model.buy();
     this.trigger('add_trade', this.model);
   },
@@ -31,44 +30,6 @@ const QuoteView = Backbone.View.extend({
     console.log('selling quote');
     this.model.sell();
   },
-
-  // editTask(event) {
-  //   // console.log('Editing task');
-  //   // console.log(event);
-  //   // console.log(this);
-  //   // we want to use from from TaskListView and we need to make that big view to listen to this 'edit_me' message
-  //   this.trigger('edit_me', this.model);
-  // },
-  // selectTask(event) {
-  //   this.bus.trigger('selected_task', this.model);
-  // },
-
-  // events: {
-  //   // click on the button with a class of delete will execute the function deleteTask
-  //   'click button.delete': 'deleteTask',
-  //   'click button.toggle-complete': 'toggleCompletion',
-  //   'click button.edit': 'editTask',
-  //   'click': 'selectTask',
-  // },
-  // deleteTask(event) {
-  //   // .destroy - destroys the model and all the event listeners
-  //   this.model.destroy();
-  //   this.remove();
-  // },
-  // toggleCompletion(event) {
-  //   // this.$el.toggleClass('is-complete');
-  //   this.model.toggleComplete();
-  // },
-  // editTask(event) {
-  //   // console.log('Editing task');
-  //   // console.log(event);
-  //   // console.log(this);
-  //   // we want to use from from TaskListView and we need to make that big view to listen to this 'edit_me' message
-  //   this.trigger('edit_me', this.model);
-  // },
-  // selectTask(event) {
-  //   this.bus.trigger('selected_task', this.model);
-  // },
 
 });
 
