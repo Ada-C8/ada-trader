@@ -45,7 +45,7 @@ $(document).ready(function() {
     quotes.add(new Quote(quote));
   };
 
-  //create new quote list view
+  // create new quote list view
   const quoteListView = new QuoteListView({
     el: '#quotes-container',
     model: quotes,
@@ -61,7 +61,7 @@ $(document).ready(function() {
 
   simulator.start();
 
-  //create new trades view
+  // create new trades view
   const tradesView = new TradesView({
     el: '#trades-container',
     template: tradeTemplate,
@@ -70,6 +70,12 @@ $(document).ready(function() {
     view: quoteListView,
   });
 
+  // add options to select in order form
+  for (let quote of quoteData) {
+    $('.order-entry-form select[name=symbol]').append(`<option>${quote.symbol}</option>`)
+  };
+
+  
 
 
 });

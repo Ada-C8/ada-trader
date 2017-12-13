@@ -24,20 +24,6 @@ const Order = Backbone.Model.extend({
     return errors;
   },
 
-  // validate(attributes) {
-  //   const errors = {};
-  //
-  //   if (!attributes.task_name) {
-  //     errors['task_name'] = ["Task name is required"];
-  //   }
-  //
-  //   if ( Object.keys(errors).length > 0 ) {
-  //     return errors;
-  //   } else {
-  //     return false;
-  //   }
-  // },
-
   // buy() {
   //   this.set('price', this.get('price') + 1.00);
   // },
