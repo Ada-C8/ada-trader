@@ -48,18 +48,40 @@ const OrderListView = Backbone.View.extend({
 
 
     const formData = this.getFormData();
-    formData['buy'] = event.target.classList.contains('btn-buy') ? true : false;
-    console.log(formData);
+    const quotePrice = this.quotes.where({symbol: formData['symbol']})[0].get('price');
+
+    if (event.target.classList.contains('btn-buy')) {
+      formData['buy'] = true;
+      if (quotePrice <= formData['targetPrice']) {
+        console.log('to set a Buy order, targetPrice must be lower than current price');
+        // this.updateStatusMessageFrom(newOrder.validationError);
+        return
+      }
+    } else {
+      formData['buy'] = false;
+      if (quotePrice >= formData['targetPrice']) {
+        console.log('to set a Sell order, targetPrice must be higher than current price');
+        // this.updateStatusMessageFrom(newOrder.validationError);
+        return
+      }
+    }
+
+
+
+    // if (quote.get('price'))
+
+
     const newOrder = new Order(formData);
 
-    // if (!newTask.isValid()) {
-    //   newTask.destroy();
-    //   this.updateStatusMessageFrom(newTask.validationError);
-    //   return;
-    // }
+    if (!newOrder.isValid()) {
+      newOrder.destroy();
+      // this.updateStatusMessageFrom(newOrder.validationError);
+      console.log(newOrder.validationError);
+      return;
+    }
 
     this.model.add(newOrder);
-    // this.clearFormData();
+    this.clearFormData();
     // this.updateStatusMessage(`${newTask.get('task_name')} Created!`)
   },
 
@@ -69,19 +91,15 @@ const OrderListView = Backbone.View.extend({
     orderData['symbol'] = this.$('#add-order-form select[name="symbol"]').val();
 
     orderData['targetPrice'] = Number(this.$('#add-order-form input[name="price-target"]').val());
-    // if (targetPrice !== '') {
-    //   orderData['targetPrice'] = targetPrice;
-    // } //superfluous? does type='number' return empty string?
 
     return orderData;
   },
-  // clearFormData() {
-  //   ['task_name', 'assignee'].forEach((field) => {
-  //     const val = this.$(`#add-task-form input[name=${field}]`).val('');
-  //   });
-  // },
-  //
-  //
+  clearFormData() {
+    this.$('#add-order-form input[name="price-target"]').val('');
+  },
+
+
+
   // editTask(task) {
   //   // this.model.remove(task);
   //   this.$('#add-task-form input[name=task_name]').val(task.get('task_name'));
