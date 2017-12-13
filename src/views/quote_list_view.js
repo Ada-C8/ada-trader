@@ -32,7 +32,6 @@ const QuoteListView = Backbone.View.extend({
     console.log(quoteView.model.attributes);
     const tradeTemplate = _.template($('#trade-template').html());
     $('#trades').prepend(tradeTemplate(quoteView.model.attributes));
-    // $('#trades').prepend(quoteView.render().$el);
   }
 });
 
