@@ -11,6 +11,8 @@ initialize(params) {
 },
 render(){
   this.$('.quotes').empty();
+  this.$('.trades').empty();
+
   this.model.each((quote) => {
     const quoteView = new QuoteView({
       model: quote,
@@ -19,6 +21,7 @@ render(){
       className: 'quote',
     });
     this.$('.quotes').append(quoteView.render().$el);
+    // this.$('.trades').prepend();
   });
   return this;
 }

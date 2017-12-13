@@ -32,13 +32,12 @@ const quoteData = [
 
 const quoteList = new QuoteList(quoteData);
 let quoteTemplate;
-
+let tradeTemplate;
 
 $(document).ready( () => {
 
   quoteTemplate = _.template($('#quote-template').html());
-
-  // quoteList.add(new Quote({symbol: "testing", price: 10001}));
+  tradeTemplate = _.template($('#trade-template').html());
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -48,7 +47,7 @@ $(document).ready( () => {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: quoteTemplate,
-    el: 'main',
+    el: '#quotes-container',
   });
 
   quoteListView.render();
