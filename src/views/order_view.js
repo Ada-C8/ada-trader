@@ -6,6 +6,9 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
     this.listenTo(this.model, 'destroy', this.stopListeningToModel);
   },
+  events: {
+    'click .btn-cancel': 'cancelOrder',
+  },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
@@ -14,6 +17,9 @@ const OrderView = Backbone.View.extend({
   stopListeningToModel() {
     this.model = null;
     this.stopListening();
+  },
+  cancelOrder() {
+    this.model.destroy();
   }
 });
 

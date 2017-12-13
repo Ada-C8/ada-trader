@@ -46,13 +46,14 @@ const quoteData = [
 const orderData = [
   {
     symbol: 'HUMOR',
-    targetPrice: 80.50,
+    // targetPrice: 80.50,
+    targetPrice: 100.50,
     buy: false,
     bus: eventBus,
   },
   {
     symbol: 'HUMOR',
-    targetPrice: 89.50,
+    targetPrice: 70.50,
     buy: true,
     bus: eventBus,
   },
