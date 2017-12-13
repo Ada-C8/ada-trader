@@ -8,10 +8,16 @@ const Quote = Backbone.Model.extend({
 
   buy() {
     // Implement this function to increase the price by $1.00
+    let current_price = this.get('price');
+    console.log(current_price);
+    this.set('price', current_price += 1);
   },
 
   sell() {
     // Implement this function to decrease the price by $1.00
+    let current_price = this.get('price');
+    console.log(current_price);
+    this.set('price', current_price -= 1);
   },
 });
 
