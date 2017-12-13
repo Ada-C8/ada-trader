@@ -6,21 +6,23 @@ const QuoteListView = Backbone.View.extend ({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
-  }
-});
+  },
 
-render() {
-  this.model.each((task) => {
-    const quoteView = new QuoteView({
-      model: quote,
-      template: this.template,
-      tagName: 'li',
-      className: 'quote',
+  render() {
+    this.model.each((quote) => {
+      const quoteView = new QuoteView({
+        model: quote,
+        template: this.template,
+        tagName: 'li',
+        className: 'quote',
+      });
+
+      this.$('#quotes').append(quoteView.render().$el);
+      return this;
     });
-    
-    this.$('#quotes').append(quoteView.render().$el);
-    return this;
-  }),
+  },
+
+});
     // this.$('#todo-items').empty();
     // const currentTaskView = new CurrentTaskView({
     //   bus: this.bus,
@@ -40,8 +42,7 @@ render() {
     //   // listening to 'edit_me' events from task view
     //   this.listenTo(taskView, 'edit_me', this.editTask);
     // });
-    return this;
-  },
+    // return this;
 
 export default QuoteListView;
 
