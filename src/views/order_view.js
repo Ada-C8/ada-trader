@@ -19,7 +19,6 @@ const OrderView = Backbone.View.extend({
     'click button.btn-cancel': 'cancelOrder',
   },
   cancelOrder(e) {
-    console.log('here i am cancelling inside order view');
     this.trigger('cancelMe', this);
   },
   orderBuy: function() {

@@ -20,7 +20,9 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         className: 'order',
       });
-      this.listenTo(orderView, 'cancelMe', this.cancelOrder)
+      this.listenTo(orderView, 'cancelMe', this.cancelOrder);
+      console.log(this.quoteList);
+      this.listenTo(this.quoteList, 'quoteChanged', this.checkQuote);
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
@@ -28,6 +30,9 @@ const OrderListView = Backbone.View.extend({
   events: {
     'click #order-form .btn-buy': 'orderBuy',
     'click #order-form .btn-sell': 'orderSell',
+  },
+  checkQuote(){
+    console.log('checkin those quotes');
   },
   orderBuy: function(event) {
     event.preventDefault();
