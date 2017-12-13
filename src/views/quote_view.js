@@ -11,8 +11,8 @@ const QuoteView = Backbone.View.extend({
     'click .btn-sell': 'sellQuote',
   },
   buyQuote(){
-    // console.log("inside buy");
     this.model.buy()
+    
   },
   sellQuote(){
     // console.log("inside sell");

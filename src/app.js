@@ -1,6 +1,8 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 import QuoteView from './views/quote_view';
+import TraderListView from './views/trader_list_view';
+import QuoteListView from './views/quote_list_view';
 
 import $ from 'jquery';
 import _ from 'underscore';
@@ -38,17 +40,29 @@ $(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
-quotes.each((quote) => {
-  const quoteView = new QuoteView({
-    model: quote,
-    template: _.template($('#quote-template').html()),
-    tagName: 'li',
-    className: 'quote',
+
+
+
+  quotes.each((quote) => {
+    _.extend(quote, Backbone.events);
+    const quoteView = new QuoteView({
+      model: quote,
+      template: _.template($('#quote-template').html()),
+      tagName: 'li',
+      className: 'quote',
     });
     quoteView.render();
     $('.quotes').append(quoteView.$el);
-    // $('.quotes').append(quoteView.render().$el);
+
   });
+
+  const traderListView = new TraderListView({
+    model: quotes,
+    template: _.template($('#trade-template').html()),
+    el: "#trades-container"
+  });
+
+
 
 
   simulator.start();

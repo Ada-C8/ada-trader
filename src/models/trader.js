@@ -1,10 +1,10 @@
-import Backbone from 'backbone';
-const Trader = Backbone.Model.extend({
+// import Backbone from 'backbone';
+// const Trader = Backbone.Model.extend({
 // initialize(attributes) {
 //   },
-
-})
-
-
-
-export default Trader;
+//
+// })
+//
+//
+//
+// export default Trader;
