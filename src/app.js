@@ -13,6 +13,7 @@ import Quote from './models/quote';
 import QuoteList from './collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradesView from './views/trades_view';
 
 const quoteData = [
   {
@@ -34,10 +35,12 @@ const quoteData = [
 ];
 
 let quoteTemplate;
+let tradeTemplate;
 
 $(document).ready(function() {
-  // quoteTemplate
+  // Templates
   quoteTemplate = _.template($('#quote-template').html());
+  tradeTemplate = _.template($('#trade-template').html());
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
