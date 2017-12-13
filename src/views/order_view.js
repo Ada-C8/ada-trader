@@ -5,6 +5,7 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.bus = params.bus;
     this.template = params.template;
+    this.triggered = false;
 
     const eventName = `${this.model.get('symbol').toLowerCase()}_change`;
     this.listenTo(this.bus, eventName, this.checkPrice, this.model);
@@ -17,25 +18,39 @@ const OrderView = Backbone.View.extend({
     return this;
   },
   events: {
-    'click button.btn-cancel': 'removeOrder',
+    'click button.btn-cancel': 'cancelOrder',
   },
-  removeOrder() {
-    this.model.destroy();
+  cancelOrder(quote) {
+    this.model.destroy(
+      {success: function() {
+        console.log("order has been cancelled");
+      }}
+    );
     this.remove();
+  },
+  executeOrder(quote, buy) {
+    console.log(`${buy ? 'buy!' : 'sell!'}`);
+    this.remove();
+    this.model.destroy({
+      success: function(response) {
+        if (buy) {
+          quote.buy();
+        } else {
+          quote.sell();
+        }
+        console.log("model has been destroyed");
+      },
+    });
   },
   checkPrice(quote) {
     const quotePrice = quote.model.get('price');
     const targetPrice = this.model.get('targetPrice');
     if (this.model.get('buy') && (quotePrice <= targetPrice)) {
-      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. BUYING!`);
-      this.removeOrder();
-      quote.buy();
-      return;
+      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
+      this.executeOrder(quote, true);
     } else if (!this.model.get('buy') && (quotePrice >= targetPrice)) {
-      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. SELLING!`);
-      this.removeOrder();
-      quote.sell();
-      return;
+      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
+      this.executeOrder(quote, false);
     }
   },
 });

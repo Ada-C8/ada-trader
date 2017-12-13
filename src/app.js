@@ -90,7 +90,7 @@ const clearFormErrors = function clearFormErrors() {
 const getOrderFormData = function getFormData() {
   const data = {};
   data['symbol'] = $(`#order-form select[name="symbol"]`).val();
-  data['targetPrice'] = parseInt($(`#order-form input[name="price-target"]`).val());
+  data['targetPrice'] = parseFloat($(`#order-form input[name="price-target"]`).val());
   return data;
 };
 
