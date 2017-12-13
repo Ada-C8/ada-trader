@@ -9,6 +9,12 @@ const OrderView = Backbone.View.extend({
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;
+  },
+  events: {
+    'click button.btn-cancel': 'deleteOrder',
+  },
+  deleteOrder: function() {
+    this.model.destroy();
   }
 })
 
