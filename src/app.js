@@ -49,7 +49,6 @@ $(document).ready(function() {
   });
   //console.log('TEST');
 
-
   quoteListView.render();
   simulator.start();
 });
