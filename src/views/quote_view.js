@@ -10,10 +10,24 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
   },
 
+  // Events Ojects
+  events: {
+    'click button.btn-buy' : 'buyPriceUpdate',
+    'click button.btn-sell' : 'sellPriceUpdate',
+  },
+
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;
+  },
+
+  buyPriceUpdate() {
+    this.model.buy();
+  },
+
+  sellPriceUpdate() {
+    this.model.sell();
   },
 });
 
