@@ -40,8 +40,9 @@ $(document).ready(function() {
   simulator.start();
   const quoteListView = new QuoteListView ({
     model: quotes,
-    template: _.template($('#quote-template').html()),
-    el: 'div.quotes-list-container',
+    quoteTemplate: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
+    el: 'main',
   });
 
   quoteListView.render();
