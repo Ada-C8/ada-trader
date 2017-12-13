@@ -35,7 +35,7 @@ $(document).ready(function() {
     el: 'main',
     model: quoteList,
     template: _.template($('quote-template').html()),
-  })
-
+  });
+  quoteListView.render();
   simulator.start();
 });
