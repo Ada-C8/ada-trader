@@ -10,7 +10,6 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
     this.listenTo(this.model, 'change', this.render);
-
   },
   render() {
     // this.$('#quotes-container').empty();
@@ -20,9 +19,8 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         className: 'order',
       });
-      this.listenTo(orderView, 'cancelMe', this.cancelOrder);
-      console.log(this.quoteList);
-      this.listenTo(this.quoteList, 'quoteChanged', this.checkQuote);
+      // this.listenTo(orderView, 'cancelMe', this.cancelOrder);
+      this.listenTo(this.quoteList, 'quoteChanged', this.aChange);
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
@@ -31,8 +29,22 @@ const OrderListView = Backbone.View.extend({
     'click #order-form .btn-buy': 'orderBuy',
     'click #order-form .btn-sell': 'orderSell',
   },
-  checkQuote(){
-    console.log('checkin those quotes');
+  aChange(){
+    // this.trigger('quoteChanged', this);
+    // console.log('in the order list view change')
+    this.model.models.forEach(function(order){
+      // console.log(order.attributes.symbol);
+      // console.log(order.attributes.targetPrice);
+      let currentPrice = order.attributes.quotes.models.filter(quote => (quote.attributes.symbol === order.attributes.symbol))[0].attributes.price;
+      let target = order.attributes.targetPrice;
+      // console.log(`current: ${currentPrice}, target: ${target}`)
+      // console.log(order.attributes.quotes)
+      if (currentPrice >= target) {
+        // console.log('current is less than target, i should buy');
+        return false
+      }
+    });
+    this.quoteList.quoteView.buyStock();
   },
   orderBuy: function(event) {
     event.preventDefault();
@@ -52,7 +64,8 @@ const OrderListView = Backbone.View.extend({
 
     let newOrder = new Order(buyData);
     newOrder.set('quotes', this.quotes);
-    console.log(newOrder);
+    // newOrder.set('listView', OrderListView);
+
 
     if (newOrder.isValid()) {
       console.log('IS VALID');
@@ -70,7 +83,6 @@ const OrderListView = Backbone.View.extend({
       const val = $(`#${field}`).val();
       console.log(val);
       if (field == 'targetPrice') {
-        console.log('inside the targetPrice field')
         buyData[field] = parseInt(val);
       }
       else {

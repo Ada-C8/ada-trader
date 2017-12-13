@@ -22,6 +22,7 @@ const QuoteListView = Backbone.View.extend({
       });
       // Then render the TaskView
       // And append the resulting HTML to the DOM.
+      this.quoteView = quoteView;
       this.listenTo(quoteView, 'quoteChanged', this.aChange);
 
       this.$('#quotes').append(quoteView.render().$el);
@@ -29,7 +30,6 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
   aChange(e) {
-    console.log('CHANGED IN QUOTE LIST VIEW');
     this.trigger('quoteChanged', this);
   },
   // events: {

@@ -21,7 +21,6 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellStock',
   },
   aChange(e) {
-    // console.log('CHANGED IN QUOTE VIEW');
     this.trigger('quoteChanged', this);
   },
   buyStock: function() {

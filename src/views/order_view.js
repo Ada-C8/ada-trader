@@ -9,15 +9,20 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, "change", this.render);
+    // this.listenTo(this.listView, 'quoteChanged', this.checkQuotes);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
+
     this.$el.html(compiledTemplate);
     return this;
   },
   events: {
     'click button.btn-cancel': 'cancelOrder',
   },
+  // checkQuotes(){
+  //   console.log('checkin quotes in the order view booyah');
+  // },
   cancelOrder(e) {
     this.trigger('cancelMe', this);
   },
