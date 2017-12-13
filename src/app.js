@@ -10,6 +10,8 @@ import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
 import TradeList from 'collections/trade_list';
 import TradeListView from 'views/trade_list_view';
+import OrderList from 'collections/order_list';
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -27,6 +29,29 @@ const quoteData = [
   {
     symbol: 'SUPER',
     price: 83.10,
+  },
+];
+
+const orderData = [
+  {
+    symbol: 'HUMOR',
+    targetPrice: 10.50,
+    buy: true,
+  },
+  {
+    symbol: 'CLOTH',
+    targetPrice: 10.70,
+    buy: true,
+  },
+  {
+    symbol: 'HABIT',
+    targetPrice: 10.00,
+    buy: true,
+  },
+  {
+    symbol: 'SUPER',
+    targetPrice: 10.10,
+    buy: true,
   },
 ];
 
@@ -50,19 +75,26 @@ $(document).ready(function() {
   tradeListView.render();
 
   const quotes = new QuoteList(quoteData);
-  const simulator = new Simulator({
-    quotes: quotes,
-    bus: eventBus,
-  });
-
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
     el: 'main',
     bus: eventBus,
   });
-
   quoteListView.render();
 
+  const orders = new OrderList(orderData);
+  const orderListView = new OrderListView({
+    model: orders,
+    template: _.template($('#order-template').html()),
+    el: 'main',
+    bus: eventBus,
+  });
+  orderListView.render();
+
+  const simulator = new Simulator({
+    quotes: quotes,
+    bus: eventBus,
+  });
   simulator.start();
 });

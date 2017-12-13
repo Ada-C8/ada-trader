@@ -1,10 +1,10 @@
 import Backbone from 'backbone';
 
-const Quote = Backbone.Model.extend({
+const Order = Backbone.Model.extend({
   initialize(params) {
     this.symbol = params.symbol;
     this.buy = params.buy;
-    this.price = params.price;
+    this.targetPrice = params.targetPrice;
     this.bus = params.bus;
     this.listenTo(this.bus, `priceChange${this.symbol}`, this.attemptTrade);
   },
@@ -13,4 +13,4 @@ const Quote = Backbone.Model.extend({
   },
 });
 
-export default Quote;
+export default Order;
