@@ -5,12 +5,8 @@ import _ from 'underscore';
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.bus = params.bus;
     this.quote = this.model.attributes.quote[0];
-    console.log(this.model.attributes.quote[0]);
-    console.log(this.quote);
-    // this.listenTo(this.model, 'change', this.render);
-    // this.quote = params.quote
-
     this.listenTo(this.quote, 'change', this.checkPrice);
   },
   render() {
