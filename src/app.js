@@ -69,7 +69,7 @@ let quoteTemplate;
 //   });
 // }
 
-const renderTradeHistory = function() {
+// const renderTradeHistory = function() {
   // const $quoteList = $('#quotes');
   // $quoteList.empty();
   //
@@ -84,7 +84,7 @@ const renderTradeHistory = function() {
   //   // THESE ARE THE THINGS THAT BACKBONE EXPECTS except for template, which is why we initialized template.
   //
   //   $quoteList.append(quoteView.render().$el);
-};
+// };
 
 $(document).ready(function() {
   let bus = {};

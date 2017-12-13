@@ -21,9 +21,8 @@ const TradeHistoryView = Backbone.View.extend({
       console.log(this.trade);
       const compiledTemplate = this.template(this.trade);
 
-      this.$el.append(compiledTemplate);
-      // this.$el.html(`<h2>${this.model.get('symbol')}</h2>`)
-      // this.$el.append(`<h3>${this.model.get('assignee')}</h3>`)
+      this.$el.prepend(compiledTemplate);
+
       console.log(this);
     // // this.model.each((quote)=> {
     //   const tradeHistoryView = new TradeHistoryView({

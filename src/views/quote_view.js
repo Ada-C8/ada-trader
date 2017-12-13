@@ -23,21 +23,21 @@ const QuoteView = Backbone.View.extend({
   },
   buy(event) {
     console.log(event);
-    this.model.buy();
     this.bus.trigger('trade', {
       buy: true,
       price: this.model.get('price'),
       symbol: this.model.get('symbol'),
-    })
+    });
+    this.model.buy();
   },
   sell(event) {
     console.log(event);
-    this.model.sell();
     this.bus.trigger('trade', {
       buy: false,
       price: this.model.get('price'),
       symbol: this.model.get('symbol'),
-    })
+    });
+    this.model.sell();
   },
 
 
