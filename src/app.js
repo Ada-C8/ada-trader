@@ -10,6 +10,8 @@ import QuoteList from 'collections/quote_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
 import Order from 'models/order';
+import OrderList from 'collections/order_list';
+import OrderListView from 'views/order_list_view';
 import TradeHistoryView from 'views/trade_history_view';
 
 let quoteViewTemplate;
@@ -37,6 +39,9 @@ const quoteData = [
   },
 ];
 
+quotes = new QuoteList(quoteData);
+const orders = new OrderList();
+
 const populateForm = function populateForm () {
   const $form_select = $('#order-form select[name="symbol"]');
   quotes.each((quote) => {
@@ -45,23 +50,22 @@ const populateForm = function populateForm () {
   });
 };
 
-const newBuy = function newBuy() {
+const newBuy = function newBuy(e) {
   newOrder(e, true);
 };
 
-const newSell = function newBuy() {
+const newSell = function newBuy(e) {
   newOrder(e, false);
 };
 
-const newOrder = function newOrder(isBuy) {
+const newOrder = function newOrder(e, isBuy) {
   e.preventDefault();
   const formData = getOrderFormData();
   formData['buy'] = isBuy;
   const order = new Order(formData);
-  console.log(order);
   if (order.isValid()){
     $('#order-form')[0].reset();
-
+    orders.add(order);
   } else {
     // render errors
   }
@@ -70,7 +74,7 @@ const newOrder = function newOrder(isBuy) {
 const getOrderFormData = function getFormData() {
   const data = {};
   data['symbol'] = $(`#order-form select[name="symbol"]`).val();
-  data['price_target'] = $(`#order-form input[name="price-target"]`).val();
+  data['targetPrice'] = parseInt($(`#order-form input[name="price-target"]`).val());
   return data;
 };
 
@@ -81,8 +85,6 @@ $(document).ready(function() {
   quoteViewTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
   orderTemplate = _.template($('#order-template').html());
-  quotes = new QuoteList(quoteData);
-  const orders = new OrderList();
   const simulator = new Simulator({
     bus: bus,
     quotes: quotes,
@@ -98,7 +100,7 @@ $(document).ready(function() {
     el: '#trades-container',
     template: tradeTemplate,
   });
-  const orderListView = new OrderListview({
+  const orderListView = new OrderListView({
     bus: bus,
     el: '#orders-container',
     model: orders,
@@ -107,8 +109,6 @@ $(document).ready(function() {
 
   const orderForm = $('#order-form');
   _.extend(orderForm, Backbone.Events);
-  orderForm.listenTo(quotes, 'add', populateForm);
-  orderForm.listenTo(quotes, 'remove', populateForm);
   populateForm();
 
   $('#order-form').on('click', 'button.btn-buy', newBuy);

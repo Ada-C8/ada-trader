@@ -6,9 +6,10 @@ import QuoteView from './quote_view';
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
-    this.template = params.template;
-    this.listenTo(this.model, 'change', this.render);
     this.bus = params.bus;
+    this.template = params.template;
+
+    this.listenTo(this.model, 'change', this.render);
   },
   render() {
     const $quoteList = this.$('#quotes');
