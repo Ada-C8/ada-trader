@@ -5,6 +5,7 @@ const QuoteListView = Backbone.View.extend({
 
   initialize(params){
     this.template = params.template;
+    this.tradeTemplate = params.tradeTemplate,
     this.listenTo(this.model, 'update', this.render);
   },
 
@@ -18,10 +19,19 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote'
       });
+      this.listenTo(quoteView, 'addTrade', this.addToTradeHistory);
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
+  },
+
+  addToTradeHistory: function(quoteView){
+    console.log('add to trade history');
+    console.log(quoteView);
+    const compiledTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    this.$('#trades').prepend(compiledTemplate);
   }
+
 
 });
 
