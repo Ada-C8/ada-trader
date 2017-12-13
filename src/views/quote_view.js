@@ -5,6 +5,7 @@ const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render);
+    this.bus = params.bus;
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -15,13 +16,18 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-buy': 'buy',
     'click button.btn-sell': 'sell',
   },
-  buy() {
+  buy(event) {
     console.log('buying');
     this.model.buy();
+    // console.log(this.model.price)
+    // let tradeData = {
+    // };
+    this.bus.trigger('selected_trade', this.model);
   },
-  sell() {
+  sell(event) {
     console.log('selling');
     this.model.sell();
+    this.bus.trigger('selected_trade', this.model);
   },
 });
 

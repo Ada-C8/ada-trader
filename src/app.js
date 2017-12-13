@@ -8,9 +8,11 @@ import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradeHistoryView from './views/trade_history_view';
 
 const quoteList = new QuoteList();
 let quoteTemplate;
+let tradeTemplate;
 
 const quoteData = [
   {
@@ -47,6 +49,9 @@ const renderList = function(quoteList) {
 };
 //
 $(document).ready(function() {
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
+  tradeTemplate = _.template($('#trade-template').html());
   quoteTemplate = _.template($('#quote-template').html());
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -54,10 +59,19 @@ $(document).ready(function() {
   });
   simulator.start();
 
+  // $('#selected_trade').empty();
+  const tradeHistoryView = new TradeHistoryView({
+    bus: bus,
+    template: tradeTemplate,
+    el: $('#trades'),
+  });
+
+  tradeHistoryView.render();
   const quoteListView = new QuoteListView({
     model: quotes,
     template: quoteTemplate,
-    el: 'main'
+    el: '#quotes-container',
+    bus: bus,
   });
   quoteListView.render();
 });
