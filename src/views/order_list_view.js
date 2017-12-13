@@ -35,10 +35,8 @@ const OrderListView = Backbone.View.extend ({
     console.log('placing new buy order');
 
     const formData = this.getFormData();
-    // add buy and currentPrice attributes to the oblect
     formData['buy'] = 'true';
-    // find quote model
-    // console.log(this.quotes);
+    
     let currentPrice = this.quotes.findWhere({ symbol: formData['symbol']}).get('price');
     formData['currentPrice'] = currentPrice;
 
