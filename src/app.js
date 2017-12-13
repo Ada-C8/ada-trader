@@ -1,12 +1,20 @@
+// CSS
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+// Modules
 import $ from 'jquery';
 import _ from 'underscore';
 
-import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
-import Trade from 'models/trade';
+// Imports
+import Simulator from './models/simulator';
+import QuoteList from './collections/quote_list';
+// import Trade from './models/trade';
+
+import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view';
+
+// -------------------------------------------------------
 
 const quoteData = [
   {
@@ -27,9 +35,15 @@ const quoteData = [
   },
 ];
 
+// Define some variables
+let quoteTemplate;
+
+// -------------------------------------------------------
+
+// jQuery Ready
 $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
-  tradeTemplate = _.template($('#trade-template').html());
+  // tradeTemplate = _.template($('#trade-template').html());
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -37,4 +51,12 @@ $(document).ready(function() {
   });
 
   simulator.start();
+
+  const quoteListView = new QuoteListView({
+    el: 'main',
+    model: quotes,
+    template: quoteTemplate,
+  });
+
+  quoteListView.render();
 });
