@@ -7,8 +7,10 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
+import OrderListView from 'views/order_list_view';
 import TradesView from 'views/trades_view';
 
 const quoteData = [
@@ -33,11 +35,13 @@ const quoteData = [
 // define templates
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 
 $(document).ready(function() {
   // templates
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
 
   // create new quote list
   const quotes = new QuoteList(quoteData);
@@ -72,10 +76,27 @@ $(document).ready(function() {
 
   // add options to select in order form
   for (let quote of quoteData) {
+    console.log(quote);
     $('.order-entry-form select[name=symbol]').append(`<option>${quote.symbol}</option>`)
   };
 
-  
+  // create new empty order list
+  const orders = new OrderList();
+
+  // create new order list view
+  const orderListView = new OrderListView({
+    el: '#order-workspace',
+    model: orders,
+    template: orderTemplate,
+  });
+
+  orderListView.render();
+
+
+
+
+
+
 
 
 });

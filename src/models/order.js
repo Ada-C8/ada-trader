@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 const Order = Backbone.Model.extend({
   initialize(params) {
     this.currentPrice = params.currentPrice,
-    this.buy = params.buy,
+    this.buy = params.buy
   },
 
   validate(attributes) {
