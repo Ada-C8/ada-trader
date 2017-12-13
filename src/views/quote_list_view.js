@@ -14,13 +14,20 @@ const QuoteListView = Backbone.View.extend({
       const quoteView = new QuoteView ({
         model: quote,
         template: this.template,
+        tradeTemplate: this.tradeTemplate,
         tagName: 'li',
         className: 'quote'
       })
+      this.listenTo(quoteView, 'appendTrade', this.appendTrade)
       this.$('#quotes').append(quoteView.render().$el);
     })
     return this
   },
+
+  appendTrade(quoteView) {
+    const compiledTradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    this.$('#trades').prepend(compiledTradeTemplate);
+  }
 
 
 })

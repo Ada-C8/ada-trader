@@ -38,9 +38,11 @@ $(document).ready(() => {
   });
 
   const quoteTemplate = _.template($('#quote-template').html());
+  const tradeTemplate = _.template($('#trade-template').html());
   const quoteListView = new QuoteListView({
     model: quoteList,
     template: quoteTemplate,
+    tradeTemplate: tradeTemplate,
     el: 'main'
   });
 
