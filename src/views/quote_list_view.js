@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
-
-import QuoteView from './quote_view';
-import Quote from '../models/quote';
+import _ from 'underscore';
+import QuoteView from '../views/quote_view';
+// import Quote from '../models/quote';
 // import CurrentQuoteView from './current_selected_view';
 
 const QuoteListView = Backbone.View.extend({
@@ -20,10 +20,10 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
       });
       this.$('#quotes').append(quoteView.render().$el);
-    })
+    });
     return this;
   }
 
-})
+});
 
 export default QuoteListView;
