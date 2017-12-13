@@ -24,9 +24,9 @@ const QuoteListView = Backbone.View.extend ({
     return this;
   },
 
-  addTrade() {
+  addTrade(quote) {
     console.log('passing new trade to trades view');
-    this.trigger('add_trade', this.model);
+    this.trigger('add_trade', quote);
   }
 
 

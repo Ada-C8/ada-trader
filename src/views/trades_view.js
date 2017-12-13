@@ -8,10 +8,14 @@ const TradesView = Backbone.View.extend ({
     this.listenTo(this.view, 'add_trade', this.addTrade);
   },
 
-  addTrade() {
+  addTrade(quote) {
     console.log('adding new trade');
+    console.log(quote);
     // this.$('#trades').append('<li>something</li>');
-    this.$('#trades').append('<li>something</li>');
+
+    const compiledTemplate = this.template(quote);
+
+    this.$('#trades').append(compiledTemplate);
 
   },
 
