@@ -34,11 +34,23 @@ const OrdersView = Backbone.View.extend({
     this.$('form input').val('');
   },
 
+  updateStatusMessageForForm(messageHash) {
+    console.log('UpdateStatusMessageForForm: messageHash');
+    console.log(messageHash);
+    console.log(messageHash.order);
+
+    const $statusMessages = this.$('.form-errors');
+    $statusMessages.empty();
+
+    for (let key in messageHash) {
+      $statusMessages.append(`<p>${key}: ${messageHash[key]}</p>`);
+    }
+    // $statusMessages.show();
+  },
+
   addBuyOrder(event){
     event.preventDefault();
     console.log('In addBuyOrder');
-    //create new model
-    //puts new model in order view
 
     const formData = this.getFormData();
     const newOrder = new Order(formData);
@@ -47,10 +59,17 @@ const OrdersView = Backbone.View.extend({
       console.log('Model is valid');
       this.model.add(newOrder);
       this.clearFormData();
-      // this.updateStatusMessage(`${newTask.get('task_name')} Created!`)
+
+      const successMessage = {
+        order: `New order for ${newOrder.get('symbol')} created!`
+      };
+      this.updateStatusMessageForForm(successMessage);
     } else {
       console.log('ERROR');
-      // this.updateStatusMessageFrom(newTask.validationError); //.validationError has all errors
+
+      this.updateStatusMessageForForm(newOrder.validationError);
+      // this.updateStatusMessageFrom(newTask.validationError);
+      //.validationError has all errors
       // newTask.destroy();
     }
   },
