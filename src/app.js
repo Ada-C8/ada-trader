@@ -31,6 +31,7 @@ const quoteData = [
   },
 ];
 
+// fake history to test
 const tradeData = [
   {
     symbol: 'ABCD',
