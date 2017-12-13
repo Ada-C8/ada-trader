@@ -4,7 +4,7 @@ import Quote from '../models/quote';
 const QuoteView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
-
+    this.hamRadio = params.hamRadio;
     this.listenTo(this.model, 'change', this.render)
   },
   render(){
@@ -19,10 +19,13 @@ const QuoteView = Backbone.View.extend({
   buyQuote(){
     console.log('banana');
     this.model.buy();
+    this.hamRadio.trigger('sold_quote', this.model);
     return this;
   },
   sellQuote(){
     this.model.sell();
+      this.hamRadio.trigger('bought_quote', this.model);
+      console.log(this.model);
     return this;
   },
 

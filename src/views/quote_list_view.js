@@ -5,10 +5,14 @@ import Quote from '../models/quote';
 const QuoteListView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
+    this.hamRadio = params.hamRadio;
 
     this.listenTo(this.model, 'update', this.render);
   },
   events:{
+
+    // this.listenTo(this.hamRadio, 'bought_quote', this.setModel);
+    // this.listenTo(this.hamRadio, 'sold_quote', this.setModel);
     // 'click #add-new-task': 'addTask',
   },
   updateStatusMessageFrom(messageHash){
@@ -31,13 +35,13 @@ const QuoteListView = Backbone.View.extend({
     const formData = this.getFormData();
     const newQuote = new Quote(formData);
     if(newQuote.isValid()){
-    this.model.add(newQuote);
-    this.clearFormData();
-    this.updateStatusMessage(`${newQuote.get('quote_name')} Created!`);
-  }else{
-    console.log('Something went wrong!');
-    this.updateStatusMessageFrom(newQuote.validationError);
-  }
+      this.model.add(newQuote);
+      this.clearFormData();
+      this.updateStatusMessage(`${newQuote.get('quote_name')} Created!`);
+    }else{
+      console.log('Something went wrong!');
+      this.updateStatusMessageFrom(newQuote.validationError);
+    }
   },
   clearFormData(){
     ['quote_name', 'assignee'].forEach((field) => {
@@ -62,11 +66,12 @@ const QuoteListView = Backbone.View.extend({
         model: quote,
         template: this.template,
         tagName: 'li',
-        className: 'quote'
+        className: 'quote',
+        hamRadio: this.hamRadio,
       });
       this.$('#quotes').append(quoteView.render().$el);
     });
-    
+
     return this;
   },
 });

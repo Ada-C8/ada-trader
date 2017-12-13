@@ -4,9 +4,13 @@ const Trade = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
     price: 0.00,
-    transaction: 'buy',
+    buy: true,
   },
-
+  // newTrade(model){
+  //   console.log(model);
+  //   console.log('that is the model^^');
+  //   return this;
+  // },
 });
 
 export default Trade;
