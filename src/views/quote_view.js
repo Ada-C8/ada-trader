@@ -7,10 +7,21 @@ const QuoteView = Backbone.View.extend({
   },
   render() {
     // why JSON?
-    // const compiledTemplate = this.template(this.model.toJSON());
-    const compiledTemplate = this.template(this.model.attributes);
+    const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;
+  },
+  events: {
+    'click .btn-buy': 'buyQuote',
+    'click .btn-sell': 'sellQuote',
+  },
+  buyQuote() {
+    this.model.buy();
+    console.log('bought!');
+  },
+  sellQuote() {
+    this.model.sell();
+    console.log('sold!');
   },
 });
 
