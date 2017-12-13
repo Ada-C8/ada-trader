@@ -7,7 +7,9 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
+
 import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view';
 
 const quoteData = [
   {
@@ -54,16 +56,28 @@ $(document).ready(function() {
   simulator.start();
 
   quoteTemplate = _.template($('#quote-template').html());
-const $quoteList = $('#quotes');
 
-  const quoteView = new QuoteView({
-    // el: 'ul',
-    model: quotes.at(0),
+  const quoteListView = new QuoteListView ({
+    model: quotes,
     template: quoteTemplate,
-    tagName: 'li',
-    className: 'quote'
+    el: 'main',
   });
-  quoteView.render();
 
-  $quoteList.append(quoteView.render().$el);
+  quoteListView.render();
+
+
+
+// // render one quote
+// const $quoteList = $('#quotes');
+//
+//   const quoteView = new QuoteView({
+//     // el: 'ul',
+//     model: quotes.at(0),
+//     template: quoteTemplate,
+//     tagName: 'li',
+//     className: 'quote'
+//   });
+//   quoteView.render();
+//
+//   $quoteList.append(quoteView.render().$el);
 });
