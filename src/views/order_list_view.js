@@ -1,6 +1,7 @@
 import Backbone from 'backbone';
 
 import Order from '../models/order';
+import OrderView from './order_view';
 
 
 const OrdersView = Backbone.View.extend({
@@ -8,7 +9,7 @@ const OrdersView = Backbone.View.extend({
     this.bus = params.bus;
     this.template = params.template;
     this.allSymbols = params.allSymbols;
-    // this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'update', this.render);
   },
 
   getFormData(){
@@ -57,20 +58,31 @@ const OrdersView = Backbone.View.extend({
 
     if (newOrder.isValid()) {
       console.log('Model is valid');
-      this.model.add(newOrder);
       this.clearFormData();
 
       const successMessage = {
         order: `New order for ${newOrder.get('symbol')} created!`
       };
       this.updateStatusMessageForForm(successMessage);
+
+      //trigger bus for creation of new order
+      const objectForBuyOrder = {
+        model: newOrder,
+        buy: true,
+        symbol: newOrder.get('symbol'),
+        targetPrice: newOrder.get('price'),
+      };
+      console.log('Object for buy order:');
+      console.log(objectForBuyOrder);
+      this.bus.trigger('create_new_order', objectForBuyOrder);
+
+      // this.model.add(newOrder);
+
     } else {
       console.log('ERROR');
 
       this.updateStatusMessageForForm(newOrder.validationError);
-      // this.updateStatusMessageFrom(newTask.validationError);
-      //.validationError has all errors
-      // newTask.destroy();
+      newOrder.destroy();
     }
   },
 
@@ -89,10 +101,23 @@ const OrdersView = Backbone.View.extend({
     console.log('In OrdersView render');
     console.log(this.allSymbols);
 
+    this.$('#orders').empty();
+
     this.allSymbols.forEach((symbol) => {
       this.$('select[name="symbol"]').append(`<option>${symbol}</option>`)
       // this.$('form select').append(`<option>${symbol}</option>`)
+    });
 
+    this.model.each((order) => {
+      const orderView = new OrderView({
+        model: order,
+        template: this.template,
+        tagName: 'li',
+        bus: this.bus,
+      });
+
+      this.$('#orders').append(orderView.render().$el);
+      // this.listenTo(taskView, 'edit_me', this.editTask)
     });
     return this;
   },
