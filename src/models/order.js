@@ -9,7 +9,21 @@ const Order = Backbone.Model.extend({
   initialize(attributes) {
   },
   validate(attributes) {
-  // add validations??
+    const errors = {};
+
+      if (!attributes.targetPrice) {
+        errors['targetPrice'] = ['Price is required'];
+      }
+
+      if (attributes.targetPrice <= 0) {
+        errors['targetPrice'] = ['Price must be greater than 0']
+      }
+
+      if ( Object.keys(errors).length > 0 ) {
+        return errors;
+      } else {
+        return false;
+      }
   },
 
 });

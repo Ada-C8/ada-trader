@@ -12,7 +12,6 @@ const OrderView = Backbone.View.extend({
   render() {
     const compileTemplate = this.template(this.model.toJSON());
     this.$el.html(compileTemplate);
-    // $('#selector').append(`<option>${message}</option>`)
     return this;
   },
   events: {

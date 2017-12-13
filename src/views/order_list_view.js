@@ -52,24 +52,40 @@ const OrderListView = Backbone.View.extend({
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
-      //   this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
-      // } else {
-      //   this.updateStatusMessageFrom(newTask.validationError);
-      // }
+      this.updateStatusMessageWith(`New order placed for ${newOrder.get('symbol')}`);
+    } else {
+      console.log(`IN THE ELSE ${newOrder.validationError}`);
+      this.updateStatusMessageFrom(newOrder.validationError);
     }
-  },
-  sellOrder: function(event) {
-    event.preventDefault();
-    const orderData = {};
-    orderData['symbol'] = this.$(`[name=symbol]`).val();
-    orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
-    orderData['buy'] = 'false';
-    console.log(orderData);
-    const newOrder = new Order(orderData);
-    if (newOrder.isValid()) {
-      this.model.add(newOrder);
-    }
+},
+sellOrder: function(event) {
+  event.preventDefault();
+  const orderData = {};
+  orderData['symbol'] = this.$(`[name=symbol]`).val();
+  orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
+  orderData['buy'] = 'false';
+  console.log(orderData);
+  const newOrder = new Order(orderData);
+  if (newOrder.isValid()) {
+    this.model.add(newOrder);
   }
+},
+updateStatusMessageFrom: function(messageHash) {
+  const statusMessagesEl = this.$('.form-errors');
+  statusMessagesEl.empty();
+  _.each(messageHash, (messageType) => {
+    messageType.forEach((message) => {
+      statusMessagesEl.append(`<h3>${message}</h3>`);
+    })
+  });
+  statusMessagesEl.show();
+},
+updateStatusMessageWith: function(message) {
+  const statusMessagesEl = this.$('.form-errors');
+  statusMessagesEl.empty();
+  statusMessagesEl.append(`<h3>${message}</h3>`);
+  statusMessagesEl.show();
+}
 });
 
 export default OrderListView;
