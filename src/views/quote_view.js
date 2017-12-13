@@ -6,7 +6,7 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
 
-    this.listenTo(this.model, 'change', this.priceChange);
+    this.listenTo(this.model, 'change', this.emitPriceChange);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -21,18 +21,18 @@ const QuoteView = Backbone.View.extend({
   },
   buy() {
     // const event_name = this.model.get('symbol') + '_buy';
+    this.bus.trigger('bought', this.model);
     this.model.buy();
-    this.bus.trigger('bought', this.model)
   },
   sell() {
     // const event_name = this.model.get('symbol') + '_sell';
+    this.bus.trigger('sold', this.model);
     this.model.sell();
-    this.bus.trigger('sold', this.model)
   },
 
-  priceChange() {
-    const event_name = this.model.get('symbol') + '_change';
-    this.bus.trigger(event_name, this.model);
+  emitPriceChange() {
+    const eventName = `${this.model.get('symbol').toLowerCase()}_change`;
+    this.bus.trigger(eventName, this);
   },
 });
 

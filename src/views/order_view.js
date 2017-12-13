@@ -6,7 +6,8 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
     this.template = params.template;
 
-    this.listenTo(this.model, 'change', this.priceChange);
+    const eventName = `${this.model.get('symbol').toLowerCase()}_change`;
+    this.listenTo(this.bus, eventName, this.checkPrice, this.model);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -16,11 +17,26 @@ const OrderView = Backbone.View.extend({
     return this;
   },
   events: {
-    'click button.btn-cancel': 'cancelOrder',
+    'click button.btn-cancel': 'removeOrder',
   },
-  cancelOrder() {
+  removeOrder() {
     this.model.destroy();
     this.remove();
+  },
+  checkPrice(quote) {
+    const quotePrice = quote.model.get('price');
+    const targetPrice = this.model.get('targetPrice');
+    if (this.model.get('buy') && (quotePrice <= targetPrice)) {
+      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. BUYING!`);
+      this.removeOrder();
+      quote.buy();
+      return;
+    } else if (!this.model.get('buy') && (quotePrice >= targetPrice)) {
+      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. SELLING!`);
+      this.removeOrder();
+      quote.sell();
+      return;
+    }
   },
 });
 
