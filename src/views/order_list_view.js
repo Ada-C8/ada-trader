@@ -69,7 +69,6 @@ sellOrder: function(event) {
   if (newOrder.isValid()) {
     this.model.add(newOrder);
   } else {
-    console.log(`IN THE ELSE ${newOrder.validationError}`);
     this.updateStatusMessageFrom(newOrder.validationError);
   }
 },
@@ -83,12 +82,7 @@ updateStatusMessageFrom: function(messageHash) {
   });
   statusMessagesEl.show();
 },
-updateStatusMessageWith: function(message) {
-  const statusMessagesEl = this.$('.form-errors');
-  statusMessagesEl.empty();
-  statusMessagesEl.append(`<h3>${message}</h3>`);
-  statusMessagesEl.show();
-}
+
 });
 
 export default OrderListView;

@@ -24,19 +24,10 @@ const Order = Backbone.Model.extend({
       if (attributes.buy === true && parseFloat(attributes.targetPrice) > parseFloat(attributes.marketPrice)) {
         errors['targetPrice'] = ['Buy order price too high']
       }
-      console.log(errors);
-      console.log(parseFloat(attributes.targetPrice))
-      console.log(parseFloat(attributes.marketPrice))
-      console.log(parseFloat(attributes.targetPrice) > parseFloat(attributes.marketPrice))
 
       if (attributes.buy === false && parseFloat(attributes.targetPrice) < parseFloat(attributes.marketPrice)) {
         errors['targetPrice'] = ['Sell order price too low']
       }
-
-      console.log(errors);
-      console.log(parseFloat(attributes.targetPrice))
-      console.log(parseFloat(attributes.marketPrice))
-      console.log(parseFloat(attributes.targetPrice) < parseFloat(attributes.marketPrice))
 
       if ( Object.keys(errors).length > 0 ) {
         return errors;
