@@ -69,6 +69,17 @@ $(document).ready(function() {
     );
   });
 
+  // TODO: add logic to use form to create an order
+  $('.order-entry-form .btn-buy').on('click', function(event) {
+    event.preventDefault();
+    eventBus.trigger('createOrder', {buy: true});
+  })
+
+  $('.order-entry-form .btn-sell').on('click', function(event) {
+    event.preventDefault();
+    eventBus.trigger('createOrder', {buy: false});
+  })
+
   const tradeList = new TradeList();
   const tradeListView = new TradeListView({
     model: tradeList,

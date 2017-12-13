@@ -8,6 +8,25 @@ const Order = Backbone.Model.extend({
     this.bus = params.bus;
     this.listenTo(this.bus, `priceChange${this.get('symbol')}`, this.attemptTrade);
   },
+  validate(params) {
+    const errors = {};
+
+    if (!params.symbol) {
+      errors['symbol'] = ["Symbol is required"];
+    }
+
+    if (!params.targetPrice) {
+      errors['price'] = ["Price is required"];
+    } else if ( typeof parseFloat(params.price) !== 'number' ) {
+      errors['price'] = ["Price must be a number"];
+    }
+
+    if ( Object.keys(errors).length > 0 ) {
+      return errors;
+    } else {
+      return false;
+    }
+  },
   attemptTrade(price) {
     if (this.get('buy')) {
       if (parseFloat(price) <= this.get('targetPrice')) {
