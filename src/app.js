@@ -6,6 +6,8 @@ import $ from 'jquery';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
+import TradeList from './collections/trade_list';
+import TradeListView from './views/trade_list_view';
 
 const quoteData = [
   {
@@ -27,6 +29,7 @@ const quoteData = [
 ];
 
 const quoteList = new QuoteList(quoteData);
+const tradeList = new TradeList();
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
@@ -39,7 +42,14 @@ $(document).ready(function() {
    template: _.template($('#quote-template').html()),
    el: '.quotes-list-container'
  });
- 
+
+ const tradeListView = new TradeListView({
+  model: tradeList,
+  template: _.template($('#trade-template').html()),
+  el: '.trades-list-container'
+});
+
+  tradeListView.render();
   quoteListView.render();
   simulator.start();
 });
