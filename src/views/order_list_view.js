@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import Order from 'models/order';
 import OrderView from 'views/order_view';
 
 const OrderListView = Backbone.View.extend({
@@ -7,11 +8,13 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.bus, 'create_orders', this.render);
   },
   render(current_quotes) {
+    console.log(current_quotes.length);
     current_quotes.each((quote) => {
       const order = new Order({
-        symbol: quote.symbol,
-        price: quote.price,
+        symbol: quote.get('symbol'),
+        price: quote.get('price'),
       });
+      this.$el.append(`<option value="${order.get('symbol')}">${order.get('symbol')}</option`);
     });
   },
 });

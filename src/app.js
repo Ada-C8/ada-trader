@@ -68,6 +68,8 @@ $(document).ready(function() {
   });
 
   const orderListView = new OrderListView({ /////////////
+    el: 'form select',
+    // template: '<option value=""></option>',
     model: orders,
     bus: bus,
   });
