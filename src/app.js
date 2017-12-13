@@ -40,6 +40,7 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
     el: '#quotes-container',
   });
 
