@@ -77,7 +77,7 @@ $(document).ready(function() {
   // add options to select in order form
   for (let quote of quoteData) {
     console.log(quote);
-    $('.order-entry-form select[name=symbol]').append(`<option>${quote.symbol}</option>`)
+    $('.order-entry-form select[name=symbol]').append(`<option value='${quote.symbol}'>${quote.symbol}</option>`)
   };
 
   // create new empty order list
@@ -88,6 +88,7 @@ $(document).ready(function() {
     el: '#order-workspace',
     model: orders,
     template: orderTemplate,
+    quotes: quotes,
   });
 
   orderListView.render();

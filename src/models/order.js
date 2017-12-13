@@ -3,7 +3,8 @@ import Backbone from 'backbone';
 const Order = Backbone.Model.extend({
   initialize(params) {
     this.currentPrice = params.currentPrice,
-    this.buy = params.buy
+    this.buy = params.buy,
+    this.targetPrice = params.targetPrice
   },
 
   validate(attributes) {
@@ -11,10 +12,10 @@ const Order = Backbone.Model.extend({
     if (!attributes.targetPrice) {
       errors.targetPrice = ['can\'t be blank'];
     }
-    else if (buy && targetPrice >= this.currentPrice) {
+    else if (this.buy && this.targetPrice >= this.currentPrice) {
       errors.targetPrice = ['can\'t be grater than or equal to the current market price'];
     }
-    else if (!buy && targetPrice <= this.currentPrice) {
+    else if (!this.buy && this.targetPrice <= this.currentPrice) {
       errors.targetPrice = ['can\'t be less than or equal to the current market price'];
     }
 
