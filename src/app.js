@@ -60,15 +60,32 @@ const newSell = function newBuy(e) {
 
 const newOrder = function newOrder(e, isBuy) {
   e.preventDefault();
+  clearFormErrors();
   const formData = getOrderFormData();
   formData['buy'] = isBuy;
+  formData['stockPrice'] = quotes.findWhere({'symbol': formData['symbol']}).get('price');
   const order = new Order(formData);
   if (order.isValid()){
     $('#order-form')[0].reset();
     orders.add(order);
   } else {
-    // render errors
+    console.log("it was bad");
+    displayOrderFormErrors(order.validationError);
   }
+};
+
+const displayOrderFormErrors = function displayOrderFormErrors(errors) {
+  const el = $('#form-errors');
+  for(let field in errors) {
+    for (let error of errors[field]) {
+      el.append(`<p class="error">${field} ${error}</p>`)
+    }
+  }
+};
+
+const clearFormErrors = function clearFormErrors() {
+  const el = $('#form-errors');
+  el.html('');
 };
 
 const getOrderFormData = function getFormData() {
