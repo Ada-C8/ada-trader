@@ -15,6 +15,9 @@ const OrderView = Backbone.View.extend({
   },
   deleteOrder: function() {
     this.model.destroy();
+  },
+  executeOrder: function(changeInfo) {
+    if(this.model.get('symbol') === changeInfo[symbol] && )
   }
 })
 

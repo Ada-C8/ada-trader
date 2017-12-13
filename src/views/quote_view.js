@@ -9,6 +9,7 @@ const QuoteView = Backbone.View.extend({
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
+    this.trigger('priceChange', {symbol: this.model.get('symbol'), currentPrice: this.model.get('price')});
     return this;
   },
   events: {

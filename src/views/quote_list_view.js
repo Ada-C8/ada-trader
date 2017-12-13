@@ -23,6 +23,8 @@ const QuoteListView = Backbone.View.extend({
 
       this.listenTo(quoteView, 'sell', this.displaySell);
 
+      this.listenTo(quoteView, 'priceChange', this.alertPriceChange);
+
       this.$('#quotes').append(quoteView.render().$el);
 
     });
@@ -34,6 +36,9 @@ const QuoteListView = Backbone.View.extend({
   displaySell(quoteView) {
     this.$('#trades').prepend(this.tradeTemplate({buy: false, symbol: quoteView.model.get('symbol'), price: quoteView.model.get('price')}))
   },
+  alertPriceChange(changeInfo) {
+    this.trigger('priceChange', changeInfo);
+  }
 });
 
 export default QuoteListView;
