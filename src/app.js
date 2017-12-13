@@ -13,6 +13,7 @@ import OrderList from './collections/order_list';
 
 // Views
 import QuoteListView from './views/quote_list_view';
+import OrderListView from './views/order_list_view';
 
 // Data
 const quoteData = [
@@ -53,6 +54,12 @@ $(document).ready(function() {
     tradeTemplate: _.template($('#trade-template').html()),
     el: 'main',
     orderList: orderList
+  });
+
+  const orderListView = new OrderListView({
+    model: orderList,
+    template: _.template($('#order-template').html()),
+    el: 'main'
   });
 
   quoteListView.render();
