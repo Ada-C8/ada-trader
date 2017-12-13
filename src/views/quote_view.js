@@ -1,17 +1,15 @@
 import Backbone from 'backbone';
-import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.listenTo(this.model, "change", this.render);
   },
   render() {
     // why JSON?
     // const compiledTemplate = this.template(this.model.toJSON());
-    // use $el to ensure that we only select items within the view
     const compiledTemplate = this.template(this.model.attributes);
     this.$el.html(compiledTemplate);
-    
     return this;
   },
 });

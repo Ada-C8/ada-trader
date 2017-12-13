@@ -6,7 +6,7 @@ const QuoteListView = Backbone.View.extend({
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
   },
-
+  
   render() {
     const list = this.$('#quotes');
     list.empty();
@@ -15,7 +15,6 @@ const QuoteListView = Backbone.View.extend({
         model: quote,
         template: this.template,
         tagName: 'li',
-        // why was class chosen over id here?
         className: 'quote',
       });
       list.append(quoteView.render().$el);
