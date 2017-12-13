@@ -1,6 +1,6 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
-
+import _ from 'underscore';
 import $ from 'jquery';
 
 // models
@@ -9,6 +9,7 @@ import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 //views
 import QuoteView from './views/quote_view';
+import QuoteListView from 'views/quote_list_view';
 
 const quoteData = [
   {
@@ -35,5 +36,15 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  const quoteListView = new QuoteListView({
+    model: quotes,
+    template: _.template($('#quote-template').html()),
+    el: 'main',
+  });
+
+  quoteListView.render();
+
+
+// SIMULATOR START //
   simulator.start();
 });
