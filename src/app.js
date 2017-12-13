@@ -12,8 +12,6 @@ import QuoteList from './collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 
-const quoteList = new QuoteList();
-
 const quoteData = [
   {
     symbol: 'HUMOR',
