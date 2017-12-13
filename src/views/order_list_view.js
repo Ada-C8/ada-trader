@@ -12,7 +12,7 @@ const OrdersView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
   },
 
-  getFormData(){
+  getFormData(buySell){
     console.log('In getFormData');
     const orderData = {};
 
@@ -24,8 +24,16 @@ const OrdersView = Backbone.View.extend({
 
     //get value for price
     const selectedPrice = this.$('form input').val();
-    orderData.price = selectedPrice;
+    orderData.targetPrice = selectedPrice;
 
+    //get buy/sell
+    const tradeType = buySell;
+    if (tradeType === 'buy') {
+      orderData.buy = true;
+    } else if (tradeType === 'sell') {
+      orderData.buy = false;
+    }
+    console.log('New Order Data:');
     console.log(orderData);
     return orderData;
   },
@@ -52,8 +60,15 @@ const OrdersView = Backbone.View.extend({
   addBuyOrder(event){
     event.preventDefault();
     console.log('In addBuyOrder');
+    console.log('EVENT:');
+    const buy = 'buy';
 
-    const formData = this.getFormData();
+    const formData = this.getFormData(buy);
+    console.log('Back in addBuyOrder:');
+    console.log(formData.symbol);
+    console.log(formData.targetPrice);
+    console.log(formData.buy);
+
     const newOrder = new Order(formData);
 
     if (newOrder.isValid()) {
@@ -64,19 +79,20 @@ const OrdersView = Backbone.View.extend({
         order: `New order for ${newOrder.get('symbol')} created!`
       };
       this.updateStatusMessageForForm(successMessage);
+      console.log('New Order symbol');
+      console.log(newOrder.symbol);
+      this.model.add(newOrder);
 
       //trigger bus for creation of new order
-      const objectForBuyOrder = {
-        model: newOrder,
-        buy: true,
-        symbol: newOrder.get('symbol'),
-        targetPrice: newOrder.get('price'),
-      };
-      console.log('Object for buy order:');
-      console.log(objectForBuyOrder);
-      this.bus.trigger('create_new_order', objectForBuyOrder);
-
-      // this.model.add(newOrder);
+      // const objectForBuyOrder = {
+      //   model: newOrder,
+      //   buy: true,
+      //   symbol: newOrder.get('symbol'),
+      //   targetPrice: newOrder.get('price'),
+      // };
+      // console.log('Object for buy order:');
+      // console.log(objectForBuyOrder);
+      // this.bus.trigger('create_new_order', objectForBuyOrder);
 
     } else {
       console.log('ERROR');

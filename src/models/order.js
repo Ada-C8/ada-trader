@@ -6,6 +6,9 @@ const Order = Backbone.Model.extend({
   //   price: 0.00,
   // },
   initialize(attributes) {
+    this.targetPrice = parseFloat(attributes.targetPrice);
+    this.buy = attributes.buy;
+    this.symbol = attributes.symbol;
   },
 
   validate(attributes) {
@@ -16,9 +19,11 @@ const Order = Backbone.Model.extend({
       errors['symbol'] = ['A symbol is required'];
     }
 
-    if (!attributes.price) {
+    if (!attributes.targetPrice) {
       errors['price'] = ['A price is required']
     }
+
+    //TODO: validate for buy or sell?
 
     if ( Object.keys(errors).length > 0 ) {
       return errors;
