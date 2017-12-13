@@ -18,11 +18,9 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sell',
   },
   buy(event) {
-    console.log(event);
     this.model.buy();
   },
   sell(event) {
-    console.log(event);
     this.model.sell();
   }
 
