@@ -4,7 +4,7 @@ import Trade from '../models/trade';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.trades = params.trades;
+    this.bus = params.bus;
     this.listenTo(this.model, "change", this.render);
   },
   render() {
@@ -22,7 +22,7 @@ const QuoteView = Backbone.View.extend({
       buy: true,
       price: this.model.get('price'),
     });
-    this.trades.add(trade);
+    this.bus.trigger('addTrade', trade);
     this.model.buy();
   },
   sellQuote() {
@@ -31,7 +31,7 @@ const QuoteView = Backbone.View.extend({
       buy: false,
       price: this.model.get('price'),
     });
-    this.trades.add(trade);
+    this.bus.trigger('addTrade', trade);
     this.model.sell();
   },
 });

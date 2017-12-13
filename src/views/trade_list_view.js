@@ -4,7 +4,9 @@ import TradeView from './trade_view';
 const TradeListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.bus, 'addTrade', this.newTrade);
   },
   render() {
     const list = this.$('#trades');
@@ -20,6 +22,9 @@ const TradeListView = Backbone.View.extend({
     });
     return this;
   },
+  newTrade(trade) {
+    this.model.add(trade);
+  }
 });
 
 export default TradeListView;

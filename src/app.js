@@ -1,6 +1,7 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+import Backbone from 'backbone';
 import $ from 'jquery';
 import _ from 'underscore';
 
@@ -30,24 +31,28 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+  let eventBus = {};
+  eventBus = _.extend(eventBus, Backbone.Events);
   const tradeList = new TradeList();
   const tradeListView = new TradeListView({
     model: tradeList,
     template: _.template($('#trade-template').html()),
     el: 'main',
+    bus: eventBus,
   })
   tradeListView.render();
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
+    bus: eventBus,
   });
 
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
     el: 'main',
-    trades: tradeList,
+    bus: eventBus,
   });
 
   quoteListView.render();
