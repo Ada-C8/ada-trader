@@ -1,10 +1,7 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-  // defaults: {
-  //   symbol: 'UNDEF',
-  //   price: 0.00,
-  // },
+
   initialize(attributes) {
     this.targetPrice = parseFloat(attributes.targetPrice);
     this.buy = attributes.buy;

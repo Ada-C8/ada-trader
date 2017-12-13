@@ -19,21 +19,23 @@ const OrderView = Backbone.View.extend({
     console.log(this.model.targetPrice);
     console.log(this.model.attributes);
 
+    //TODO: when I access attributes via this.model.attributes the targetPrice turns into a string? Workaround below
+
     const obj = {
       targetPrice: parseFloat(this.model.targetPrice),
       symbol: this.model.symbol,
       buy: this.model.buy,
     }
 
-
     const compiledTemplate = this.template(obj);
     this.$el.html(compiledTemplate);
-    //
+
     // const compiledTemplate = this.template(this.model.attributes);
     // this.$el.html(compiledTemplate);
 
-    console.log('TEMPLATE please?');
+    console.log('Template please?');
     console.log(compiledTemplate);
+    
     return this;
   },
 

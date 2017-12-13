@@ -105,7 +105,36 @@ const OrdersView = Backbone.View.extend({
   addSellOrder(event){
     event.preventDefault();
     console.log('In addSellOrder');
+    console.log('EVENT:');
 
+    const buy = 'sell';
+
+    const formData = this.getFormData(buy);
+    console.log('Back in addBuyOrder:');
+    console.log(formData.symbol);
+    console.log(formData.targetPrice);
+    console.log(formData.buy);
+
+    const newOrder = new Order(formData);
+
+    if (newOrder.isValid()) {
+      console.log('Model is valid');
+      this.clearFormData();
+
+      const successMessage = {
+        order: `New order for ${newOrder.get('symbol')} created!`
+      };
+      this.updateStatusMessageForForm(successMessage);
+      console.log('New Order symbol');
+      console.log(newOrder.symbol);
+      this.model.add(newOrder);
+
+    } else {
+      console.log('ERROR');
+
+      this.updateStatusMessageForForm(newOrder.validationError);
+      newOrder.destroy();
+    }
   },
 
   events: {
@@ -118,6 +147,7 @@ const OrdersView = Backbone.View.extend({
     console.log(this.allSymbols);
 
     this.$('#orders').empty();
+    this.$('form select').empty();
 
     this.allSymbols.forEach((symbol) => {
       this.$('select[name="symbol"]').append(`<option>${symbol}</option>`)
