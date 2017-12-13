@@ -9,9 +9,12 @@ import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
+import OrderList from './collections/order_list';
+import OrderListView from './views/order_list_view';
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 
 const quoteData = [
   {
@@ -34,6 +37,8 @@ const quoteData = [
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
+  const orders = new OrderList([{symbol: 'HUMOR', buy: true, targetPrice: 100.00}]);
+  console.log(orders);
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -44,10 +49,11 @@ $(document).ready(function() {
 
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
 
 
   const quoteListView = new QuoteListView({
-    el: '.quotes-list-container',
+    el: '#quotes-container',
     model: quotes,
     bus: bus,
     template: quoteTemplate,
@@ -56,9 +62,18 @@ $(document).ready(function() {
   quoteListView.render();
 
   const tradeHistoryView = new TradeHistoryView({
-    el: '.trades-list-container',
+    el: '#trades-container',
     bus: bus,
     template: tradeTemplate,
   });
+
+  const orderListView = new OrderListView({
+    el: '#order-workspace',
+    model: orders,
+    bus: bus,
+    template: orderTemplate,
+  });
+
+  orderListView.render();
 
 });
