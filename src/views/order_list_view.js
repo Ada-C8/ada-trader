@@ -31,25 +31,35 @@ const OrderListView = Backbone.View.extend({
     });
   },
   events: {
-    'click button.btn-buy': 'buyOrder'
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder',
   },
   buyOrder: function(event) {
     event.preventDefault();
-    const orderData = {};
-    ['price-target','name'].forEach((field) => {
-      const val = this.$(`[name=${field}]`).val();
-      console.log(val);
-      if (val != '') {
-        taskData[field] = val;
-      }
-    });
+    const symbol = this.$(`[name=symbol]`).val();
+    const price = parseInt(this.$(`[name=price-target]`).val());
+    const orderData = {buy: true, targetPrice: price, symbol: symbol};
     const newOrder = new Order(orderData);
-    $('#orders').prepend(this.orderTemplate(newOrder));
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+    } else {
+      this.errorMessage(newOrder.errors);
+    }
   },
-  sellOrder(e) {
-    e.preventDefault();
-    const addSell = {};
-    $('#orders').prepend(this.orderTemplate(addSell));
+  sellOrder(event) {
+    event.preventDefault();
+    const symbol = this.$(`[name=symbol]`).val();
+    const price = parseInt(this.$(`[name=price-target]`).val());
+    const orderData = {buy: false, targetPrice: price, symbol: symbol};
+    const newOrder = new Order(orderData);
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+    } else {
+      this.errorMessage(newOrder.errors);
+    }
+  },
+  errorMessage(errors) {
+
   },
 });
 

@@ -13,30 +13,6 @@ const OrderView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
-  // events: {
-  //   'click button.btn-buy': 'buyOrder'
-  //   // 'click button.btn-sell': 'sellOrder',
-  // },
-  // buyOrder: function(event) {
-  //   event.preventDefault();
-  //   console.log('click');
-  //   // event.preventDefault();
-  //   // const orderData = {};
-  //   // ['price-target','name'].forEach((field) => {
-  //   //   const val = this.$(`[name=${field}]`).val();
-  //   //   console.log(val);
-  //   //   if (val != '') {
-  //   //     taskData[field] = val;
-  //   //   }
-  //   // });
-  //   // const newOrder = new Order(orderData);
-  //   // $('#orders').prepend(this.orderTemplate(newOrder));
-  // },
-  // sellOrder(e) {
-  //   e.preventDefault();
-  //   const addSell = {};
-  //   $('#orders').prepend(this.orderTemplate(addSell));
-  // },
 });
 
 export default OrderView;
