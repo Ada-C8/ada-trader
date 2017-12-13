@@ -33,7 +33,7 @@ const Simulator = Backbone.Model.extend({
       // Actually trigger the change
       const oldPrice = quote.get('price');
       quote.set('price', oldPrice + change);
-      this.bus.trigger(`${quote.get('symbol')}priceChange`);
+      this.bus.trigger(`priceChange${quote.get('symbol')}`, quote.get('price').toFixed(2));
     });
   },
 });

@@ -6,10 +6,6 @@ const Order = Backbone.Model.extend({
     this.buy = params.buy;
     this.targetPrice = params.targetPrice;
     this.bus = params.bus;
-    this.listenTo(this.bus, `priceChange${this.symbol}`, this.attemptTrade);
-  },
-  attemptTrade() {
-    console.log('ATTEMPTING TRADE');
   },
 });
 

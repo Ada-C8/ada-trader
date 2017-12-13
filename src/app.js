@@ -1,3 +1,8 @@
+// TODO: trigger event every time price changes that will attempt to complete open orders
+// TODO: create open orders using the form
+// TODO: return form errors when attempting to create an invalid open order
+
+
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
@@ -35,24 +40,29 @@ const quoteData = [
 const orderData = [
   {
     symbol: 'HUMOR',
-    targetPrice: 10.50,
+    targetPrice: 80.50,
     buy: true,
   },
   {
-    symbol: 'CLOTH',
-    targetPrice: 10.70,
-    buy: true,
+    symbol: 'HUMOR',
+    targetPrice: 80.50,
+    buy: false,
   },
-  {
-    symbol: 'HABIT',
-    targetPrice: 10.00,
-    buy: true,
-  },
-  {
-    symbol: 'SUPER',
-    targetPrice: 10.10,
-    buy: true,
-  },
+  // {
+  //   symbol: 'CLOTH',
+  //   targetPrice: 10.70,
+  //   buy: true,
+  // },
+  // {
+  //   symbol: 'HABIT',
+  //   targetPrice: 10.00,
+  //   buy: true,
+  // },
+  // {
+  //   symbol: 'SUPER',
+  //   targetPrice: 10.10,
+  //   buy: true,
+  // },
 ];
 
 $(document).ready(function() {
