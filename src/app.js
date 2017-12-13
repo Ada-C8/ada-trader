@@ -69,7 +69,6 @@ const newOrder = function newOrder(e, isBuy) {
     $('#order-form')[0].reset();
     orders.add(order);
   } else {
-    console.log("it was bad");
     displayOrderFormErrors(order.validationError);
   }
 };
