@@ -6,9 +6,12 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
   },
   render() {
-    const compiledTemplate = this.template(this.model.toJSON());
+    // why JSON?
+    // const compiledTemplate = this.template(this.model.toJSON());
     // use $el to ensure that we only select items within the view
+    const compiledTemplate = this.template(this.model.attributes);
     this.$el.html(compiledTemplate);
+    
     return this;
   },
 });
