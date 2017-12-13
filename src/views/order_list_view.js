@@ -9,17 +9,21 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model.models, 'update', this.render);
+
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this, 'change', this.render);
+
   },
   render() {
-    // this.$('#quotes-container').empty();
+    this.$('#orders').empty();
     this.model.each((order) => {
       const orderView = new OrderView({
         model: order,
         template: this.template,
         className: 'order',
       });
-      // this.listenTo(orderView, 'cancelMe', this.cancelOrder);
+      this.listenTo(orderView, 'cancelMe', this.cancelOrder);
       this.listenTo(this.quoteList, 'quoteChanged', this.aChange);
       this.$('#orders').append(orderView.render().$el);
     });
@@ -32,19 +36,36 @@ const OrderListView = Backbone.View.extend({
   aChange(){
     // this.trigger('quoteChanged', this);
     // console.log('in the order list view change')
+    let orderListView = this;
     this.model.models.forEach(function(order){
       // console.log(order.attributes.symbol);
       // console.log(order.attributes.targetPrice);
+
       let currentPrice = order.attributes.quotes.models.filter(quote => (quote.attributes.symbol === order.attributes.symbol))[0].attributes.price;
+
       let target = order.attributes.targetPrice;
       // console.log(`current: ${currentPrice}, target: ${target}`)
-      // console.log(order.attributes.quotes)
-      if (currentPrice >= target) {
+      // console.log(order);
+      // console.log(order.attributes.symbol);
+      if (currentPrice <= target) {
         // console.log('current is less than target, i should buy');
-        return false
+        // return false
+        // console.log(orderListView.quoteList);
+        // orderListView.quoteList.quoteView.buyStock();
+        orderListView.quoteList.quoteView.forEach(function(quoteView){
+          if (quoteView.model.attributes.symbol === order.attributes.symbol) {
+            quoteView.buyStock();
+            // console.log(order);
+            order.destroy();
+
+            // let toBeDestroyed = orderListView.quoteView
+            // orderListView.cancelOrder(order);
+          }
+        });
+
       }
+
     });
-    this.quoteList.quoteView.buyStock();
   },
   orderBuy: function(event) {
     event.preventDefault();
@@ -105,9 +126,10 @@ const OrderListView = Backbone.View.extend({
       this.updateStatusMessageFrom(newOrder.validationError);
     }
   },
-  cancelOrder(order) {
-    order.remove();
-    order.model.destroy();
+  cancelOrder(orderView) {
+    console.log('inside the cancel');
+    orderView.remove();
+    orderView.model.destroy();
   },
   updateStatusMessageFrom: function(messageHash) {
     const statusMessagesEl = this.$('.form-errors');

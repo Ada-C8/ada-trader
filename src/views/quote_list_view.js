@@ -4,9 +4,11 @@ import QuoteView from '../views/quote_view';
 import Quote from '../models/quote'
 
 const QuoteListView = Backbone.View.extend({
+
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
+    this.quoteView = [];
   },
   render() {
     // Clear the unordered list
@@ -22,7 +24,7 @@ const QuoteListView = Backbone.View.extend({
       });
       // Then render the TaskView
       // And append the resulting HTML to the DOM.
-      this.quoteView = quoteView;
+      this.quoteView.push(quoteView);
       this.listenTo(quoteView, 'quoteChanged', this.aChange);
 
       this.$('#quotes').append(quoteView.render().$el);
