@@ -60,6 +60,8 @@ const orderData = [
 ];
 
 $(document).ready(function() {
+  // <option disabled selected value> -- select an option -- </option>
+  $("select[name='symbol']").append($('<option disabled selected value>'));
   quoteData.map( quote => quote.symbol ).forEach((symbol) => {
     $("select[name='symbol']").append($('<option>', {
       value: symbol,
