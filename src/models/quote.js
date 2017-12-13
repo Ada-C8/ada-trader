@@ -7,7 +7,6 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    console.log("CLICK BUY")
     this.set('price', this.get('price') + 1.00)
     // Implement this function to increase the price by $1.00
   },

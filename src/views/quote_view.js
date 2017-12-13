@@ -21,10 +21,17 @@ const QuoteView = Backbone.View.extend({
 
   buyShare(e) {
     this.model.buy();
+    // console.log("Hello!:")
+    const symbol = this.model.attributes.symbol
+    const price = this.model.attributes.price
+    this.$()
   },
 
   sellShare(e){
     this.model.sell();
+    const symbol = this.model.attributes.symbol
+    const price = this.model.attributes.price
+
   }
 
 });
