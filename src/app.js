@@ -9,6 +9,7 @@ import _ from 'underscore';
 // Models
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
+import OrderList from './collections/order_list';
 
 // Views
 import QuoteListView from './views/quote_list_view';
@@ -38,6 +39,8 @@ $(document).ready(function() {
 
   const quoteList = new QuoteList(quoteData);
 
+  const orderList = new OrderList;
+
   const simulator = new Simulator({
     quotes: quoteList,
   });
@@ -48,7 +51,8 @@ $(document).ready(function() {
     model: quoteList,
     template: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
-    el: 'main'
+    el: 'main',
+    orderList: orderList
   });
 
   quoteListView.render();

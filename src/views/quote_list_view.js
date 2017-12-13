@@ -6,6 +6,7 @@ const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.tradeTemplate = params.tradeTemplate;
+    this.orderList = params.orderList;
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
@@ -32,6 +33,23 @@ const QuoteListView = Backbone.View.extend({
   },
   displaySell(quoteView) {
     this.$('#trades').prepend(this.tradeTemplate({buy: false, symbol: quoteView.model.get('symbol'), price: quoteView.model.get('price')}))
+  },
+  events: {
+    'click .btn-buy': 'makeBuyOrder',
+    'click .btn-sell': 'makeSellOrder'
+  },
+  makeBuyOrder: function(event) {
+    event.preventDefault();
+    // validate? when you create a new order?
+    const orderData = { buy: true };
+    orderData['symbol'] = this.$('select :selected').text();
+    orderData['targetPrice'] = this.$(`input[name=price-target]`).val();
+    //const newOrder = new Order(orderData);
+    this.orderList.add(orderData);
+    console.log(this.orderList);
+  },
+  makeSellOrder() {
+    // validate? when you create a new order?
   }
 });
 
