@@ -45,12 +45,20 @@ const OrderView = Backbone.View.extend({
   checkPrice(quote) {
     const quotePrice = quote.model.get('price');
     const targetPrice = this.model.get('targetPrice');
-    if (this.model.get('buy') && (quotePrice <= targetPrice)) {
-      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
-      this.executeOrder(quote, true);
+    if (this.model.get('buy') && (quotePrice <= targetPrice) && !this.model.get('triggered')) {
+      // ⬇ what is a better way of stopping it from re-triggering itself before it completes??
+      if (!this.model.get('triggered')) {
+        this.model.set('triggered', true);
+        // console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
+        this.executeOrder(quote, true);
+      }
     } else if (!this.model.get('buy') && (quotePrice >= targetPrice)) {
-      console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
-      this.executeOrder(quote, false);
+      console.log(this.model.get('triggered'));
+      if (!this.model.get('triggered')) {
+        this.model.set('triggered', true);
+        // console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
+        this.executeOrder(quote, false);
+      }
     }
   },
 });
