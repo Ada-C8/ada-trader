@@ -16,12 +16,23 @@ const QuoteView = Backbone.View.extend({
   },
 
   events: {
-    // 'click button.btn-buy': 'buyQuote',
-    // 'click button.btn-sell': 'sellQuote',
+    'click button.btn-buy': 'buyQuote',
+    'click button.btn-sell': 'sellQuote',
     // 'click button.delete': 'deleteTask',
     // 'click button.toggle-complete': 'toggleComplete',
     // 'click button.edit': 'editTask',
     // 'click h3': 'selectTask',
+  },
+
+  buyQuote(event) {
+    let buyPrice = this.model.buy();
+    // console.log(this.model.get('symbol'));
+    // console.log(buyPrice);
+  },
+
+  sellQuote(event) {
+    let sellPrice = this.model.sell();
+
   },
   // selectTask() {
   //   this.bus.trigger('selected_task', this.model)
