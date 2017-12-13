@@ -17,7 +17,10 @@ const OrderView = Backbone.View.extend({
     this.model.destroy();
   },
   executeOrder: function(changeInfo) {
-    // if(this.model.get('symbol') === changeInfo[symbol] && )
+    if (this.model.get('symbol') === changeInfo.symbol && this.model.get('buy') === true && changeInfo.currentPrice <= this.model.get('targetPrice')) {
+      console.log('I should buy');
+    }
+
 
   }
 })
