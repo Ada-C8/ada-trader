@@ -37,3 +37,13 @@ export default TradeHistoryView;
 //
 //   this.render();
 // },
+
+//
+// const symbol = data.model.get('symbol');
+// const price = data.model.get('price');
+// const formattedPrice = price.toFixed(2)
+// const type = data.type;
+//
+//
+//
+// this.$('#trades').prepend(`<li>You ${type} ${symbol} at $${formattedPrice}</li>`)

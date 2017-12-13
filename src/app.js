@@ -11,9 +11,11 @@ import QuoteList from 'collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
+import OrdersView from './views/orders_view';
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 
 const quoteData = [
   {
@@ -39,8 +41,8 @@ $(document).ready(function() {
   bus = _.extend(bus, Backbone.Events);
 
   quoteTemplate = _.template($('#quote-template').html());
-
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -54,13 +56,24 @@ $(document).ready(function() {
     bus: bus,
   });
 
-  quoteListView.render();
-
   const tradeHistoryView = new TradeHistoryView({
     el: '#trades-container',
     bus: bus,
     template: tradeTemplate,
   })
+
+  console.log('about to see all quotes?');
+  const allSymbolsArray = quotes.allSymbols();
+
+  const ordersView = new OrdersView({
+    el: '#order-workspace',
+    bus: bus,
+    template: orderTemplate,
+    allSymbols: allSymbolsArray,
+  })
+
+  ordersView.render();
+  quoteListView.render();
   // quotes.on('update', renderQuoteList, quotes);
   // renderQuoteList(quotes);
   simulator.start();

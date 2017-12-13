@@ -7,6 +7,7 @@ const Order = Backbone.Model.extend({
   // },
   initialize(attributes) {
   },
+  
   validate(attributes) {
     const errors = {};
 
@@ -20,20 +21,6 @@ const Order = Backbone.Model.extend({
       return false;
     }
   },
-  toString() {
-    return `task_name: ${this.get('task_name')}, assignee: ${this.get('assignee')}`;
-  },
-
-  //add toggleComplete method to flip it
-  toggleComplete() {
-    this.set('is_complete', !this.get('is_complete'));
-
-    // if (this.is_complete) {
-    //   this.is_complete = false;
-    // } else {
-    //   this.is_complete = true;
-    // }
-  }
 });
 
 export default Order;
