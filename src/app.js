@@ -9,9 +9,13 @@ import Quote from 'models/quote';
 import OpenOrder from 'models/order'
 
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
+
+import OrderView from 'views/order_view';
+import OrderListView from 'views/order_list_view';
 
 import TradeView from 'views/trade_view';
 
@@ -45,6 +49,7 @@ $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
   const quotes = new QuoteList(quoteData);
+  const orders = new OrderList(quoteData); ///////////////////
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -62,7 +67,8 @@ $(document).ready(function() {
     bus: bus,
   });
 
-  const orderListView = new OrderListView({
+  const orderListView = new OrderListView({ /////////////
+    model: orders,
     bus: bus,
   });
 
