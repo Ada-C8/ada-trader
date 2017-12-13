@@ -12,8 +12,11 @@ const QuoteView = Backbone.View.extend({
 
     return this;
   },
-  
-})
+
+});
+
+
+export default QuoteView;
 
 // import Backbone from 'backbone';
 // import Task from '../models/task';

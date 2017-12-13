@@ -5,6 +5,8 @@ import $ from 'jquery';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import QuoteView from 'vies/quote_view';
+
 
 const quoteData = [
   {
@@ -26,6 +28,9 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+  // my templates
+  quoteTemplate = _.template($('#quote-template').html());
+
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
