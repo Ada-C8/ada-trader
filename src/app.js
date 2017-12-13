@@ -41,28 +41,13 @@ const orderData = [
   {
     symbol: 'HUMOR',
     targetPrice: 80.50,
-    buy: true,
+    buy: false,
   },
   {
     symbol: 'HUMOR',
-    targetPrice: 80.50,
-    buy: false,
+    targetPrice: 89.50,
+    buy: true,
   },
-  // {
-  //   symbol: 'CLOTH',
-  //   targetPrice: 10.70,
-  //   buy: true,
-  // },
-  // {
-  //   symbol: 'HABIT',
-  //   targetPrice: 10.00,
-  //   buy: true,
-  // },
-  // {
-  //   symbol: 'SUPER',
-  //   targetPrice: 10.10,
-  //   buy: true,
-  // },
 ];
 
 $(document).ready(function() {
@@ -93,7 +78,23 @@ $(document).ready(function() {
   });
   quoteListView.render();
 
+  const orderData = [
+    {
+      symbol: 'HUMOR',
+      targetPrice: 80.50,
+      buy: false,
+      bus: eventBus,
+    },
+    {
+      symbol: 'HUMOR',
+      targetPrice: 89.50,
+      buy: true,
+      bus: eventBus,
+    },
+  ];
+
   const orders = new OrderList(orderData);
+  orders.bus = eventBus;
   const orderListView = new OrderListView({
     model: orders,
     template: _.template($('#order-template').html()),

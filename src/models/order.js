@@ -6,7 +6,29 @@ const Order = Backbone.Model.extend({
     this.buy = params.buy;
     this.targetPrice = params.targetPrice;
     this.bus = params.bus;
+    this.listenTo(this.bus, `priceChange${this.get('symbol')}`, this.attemptTrade);
   },
+  attemptTrade(price) {
+    if (this.get('buy')) {
+      if (parseFloat(price) <= this.get('targetPrice')) {
+        this.completeTrade(price);
+      }
+    } else {
+      if (this.get('targetPrice') <= parseFloat(price)) {
+        this.completeTrade(price);
+      }
+    }
+  },
+  completeTrade(price) {
+    this.stopListening();
+    const trade = {
+      symbol: this.get('symbol'),
+      buy: this.get('buy'),
+      price: parseFloat(price),
+    };
+    this.destroy();
+    this.bus.trigger('addTrade', trade);
+  }
 });
 
 export default Order;
