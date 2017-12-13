@@ -10,6 +10,7 @@ import _ from 'underscore';
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
 import OrderList from './collections/order_list';
+import Bus from './models/event_bus';
 
 // Views
 import QuoteListView from './views/quote_list_view';
@@ -46,6 +47,8 @@ $(document).ready(function() {
     quotes: quoteList,
   });
 
+  const bus = new Bus;
+
   simulator.start();
 
   const quoteListView = new QuoteListView({
@@ -53,14 +56,15 @@ $(document).ready(function() {
     template: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
     el: 'main',
-    orderList: orderList
+    orderList: orderList,
+    bus: bus
   });
 
   const orderListView = new OrderListView({
     model: orderList,
     template: _.template($('#order-template').html()),
     el: 'main',
-    quoteListView: quoteListView
+    bus: bus
   });
 
   quoteListView.render();

@@ -7,6 +7,7 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
     this.quoteListView = params.quoteListView;
+    this.bus = params.bus;
   },
   render() {
     this.$('#orders').empty();
@@ -18,7 +19,7 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
       });
       this.$('#orders').append(orderView.render().$el);
-      orderView.listenTo(this.quoteListView, 'priceChange', orderView.executeOrder);
+      orderView.listenTo(this.bus, 'priceChange', orderView.executeOrder);
     });
     return this;
   },
