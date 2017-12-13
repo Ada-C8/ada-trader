@@ -31,5 +31,11 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  const quoteListView = new QuoteListView({
+    el: 'main',
+    model: quoteList,
+    template: _.template($('quote-template').html()),
+  })
+
   simulator.start();
 });
