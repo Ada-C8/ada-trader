@@ -10,8 +10,13 @@ const OrderView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render); //listen for destory
   },
 
-  events: {
+  destroyOrder(event) {
+    console.log('In destroyOrder');
+    this.model.destroy();
+  },
 
+  events: {
+    'click button.btn-cancel': 'destroyOrder',
   },
 
   render(){
@@ -35,7 +40,7 @@ const OrderView = Backbone.View.extend({
 
     console.log('Template please?');
     console.log(compiledTemplate);
-    
+
     return this;
   },
 
