@@ -34,20 +34,6 @@ const QuoteListView = Backbone.View.extend({
   displaySell(quoteView) {
     this.$('#trades').prepend(this.tradeTemplate({buy: false, symbol: quoteView.model.get('symbol'), price: quoteView.model.get('price')}))
   },
-  events: {
-    'click .btn-buy': 'addOrder',
-    'click .btn-sell': 'addOrder'
-  },
-  addOrder: function(event) {
-    event.preventDefault();
-    // validate? when you create a new order?
-    const orderData = this.$(event.target).attr('class').includes('btn-buy') ? { buy: true } : {buy: false}
-    orderData['symbol'] = this.$('select :selected').text();
-    const stringTargetPrice = this.$(`input[name=price-target]`).val();
-    orderData['targetPrice'] = parseFloat(stringTargetPrice);
-    this.orderList.add(orderData);
-    this.$('.order-entry-form [name=price-target]').val("");
-  },
 });
 
 export default QuoteListView;
