@@ -39,15 +39,17 @@ const OrderListView = Backbone.View.extend({
   },
 
   events: {
-    'click button.btn-buy': 'addOrder',
+    'click button.btn-buy, button.btn-sell': 'addOrder',
   },
 
   addOrder(event) {
-    console.log('in addOrder');
     event.preventDefault();
 
+
+
     const formData = this.getFormData();
-    formData['buy'] = true;
+    formData['buy'] = event.target.classList.contains('btn-buy') ? true : false;
+    console.log(formData);
     const newOrder = new Order(formData);
 
     // if (!newTask.isValid()) {
