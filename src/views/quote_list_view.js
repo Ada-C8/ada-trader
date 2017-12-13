@@ -1,8 +1,8 @@
 import Backbone from 'backbone';
 
 import QuoteView from './quote_view';
-import Quote from '../models/task';
-import CurrentQuoteView from './current_selected_view';
+import Quote from '../models/quote';
+// import CurrentQuoteView from './current_selected_view';
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
@@ -12,8 +12,18 @@ const QuoteListView = Backbone.View.extend({
   },
   render() {
     this.$('#quotes').empty();
+    this.model.each((quote) => {
+      const quoteView = new QuoteView({
+        model: quote,
+        template: this.template,
+        tagName: 'li',
+        className: 'quote',
+      });
+      this.$('#quotes').append(quoteView.render().$el);
+    })
+    return this;
   }
-  events: {
-    'click #add-'
-  }
+
 })
+
+export default QuoteListView;
