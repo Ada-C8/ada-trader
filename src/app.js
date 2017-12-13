@@ -31,6 +31,13 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+  quoteData.map( quote => quote.symbol ).forEach((symbol) => {
+    $("select[name='symbol']").append($('<option>', {
+      value: symbol,
+      text: symbol})
+    );
+  });
+
   let eventBus = {};
   eventBus = _.extend(eventBus, Backbone.Events);
   const tradeList = new TradeList();
