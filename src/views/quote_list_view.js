@@ -6,7 +6,6 @@ const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.tradeTemplate = params.tradeTemplate;
-    this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
@@ -15,7 +14,6 @@ const QuoteListView = Backbone.View.extend({
       const quoteView = new QuoteView({
         model: quote,
         template: this.template,
-        orderTemplate: this.orderTemplate,
         tagName: 'li',
         className: 'task',
       })
