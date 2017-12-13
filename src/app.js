@@ -3,6 +3,7 @@ import 'css/app.css';
 
 import $ from 'jquery';
 import _ from 'underscore';
+import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
@@ -40,6 +41,9 @@ let quoteTemplate;
 let tradeTemplate;
 
 $(document).ready(function() {
+  let bus = {};
+  // need to import backbone
+  bus = _.extend(bus, Backbone.Events);
   quoteTemplate = _.template($('#quote-template').html());
 
   tradeTemplate = _.template($('#trade-template').html());
@@ -54,12 +58,14 @@ $(document).ready(function() {
     el: 'main',
     model: quotes,
     template: quoteTemplate,
+    bus: bus,
   });
 
   // TradeHistoryView will encompass the main tag
   const tradelistView = new TradeListView({
-    el: 'main',
-    model: quotes,
+    el: '#trades-container',
+    bus: bus,
+    // model: quotes,
     template: tradeTemplate,
   });
 

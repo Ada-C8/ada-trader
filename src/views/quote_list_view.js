@@ -7,6 +7,7 @@ const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
+    this.bus = params.bus;
   },
   render() {
     this.$('#quotes').empty();
@@ -18,6 +19,7 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         // TODO: check for styling
         className: 'quote',
+        bus: this.bus,
       });
       console.log('in quotelistview render');
       this.$('#quotes').append(quoteView.render().$el);

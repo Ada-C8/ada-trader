@@ -15,7 +15,6 @@ const Quote = Backbone.Model.extend({
   },
 
   sell() {
-    // Implement this function to decrease the price by $1.00
     console.log('selling quote');
     console.log(this.get('price'));
     let newPrice = this.get('price') - 1;

@@ -6,6 +6,7 @@ const QuoteView = Backbone.View.extend({
   initialize(params) {
     // use #quote-template
     this.template = params.template;
+    this.bus = params.bus;
     // any time the stock "changes" change event on model
     this.listenTo(this.model, 'change', this.render);
   },
@@ -14,9 +15,24 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote() {
+    // this.bus.trigger('selected_task', this.model);
+
+    let tradeObject = {
+      price: this.model.get('price'),
+      symbol: this.model.get('symbol'),
+      buy: true,
+    }
+
+    this.bus.trigger('add_trade', tradeObject)
     this.model.buy();
   },
   sellQuote() {
+    let tradeObject = {
+      price: this.model.get('price'),
+      symbol: this.model.get('symbol'),
+      buy: false,
+    }
+    this.bus.trigger('add_trade', tradeObject)
     this.model.sell();
   },
   render() {
@@ -24,12 +40,6 @@ const QuoteView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
-
-//   Click the Buy button for a quote:
-// That quote's market price increases by $1.00
-// Click the Sell button for a quote:
-// That quote's market price decreases by $1.00
-
 
 });
 
