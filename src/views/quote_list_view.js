@@ -4,6 +4,7 @@ import QuoteView from 'views/quote_view';
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
   },
 
@@ -15,6 +16,7 @@ const QuoteListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'quote',
+        bus: this.bus,
       });
 
       // quoteView.render() returns back the jquery object from the quoteView
