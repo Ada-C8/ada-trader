@@ -75,6 +75,8 @@ const OrderListView = Backbone.View.extend({
     buyData['buy'] = false;
 
     const newOrder = new Order(buyData);
+    newOrder.set('quotes', this.quotes);
+
     console.log(newOrder);
 
     if (newOrder.isValid()) {
