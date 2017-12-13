@@ -16,7 +16,7 @@ const Order = Backbone.Model.extend({
       errors['symbol'] = ['A symbol is required'];
     }
 
-    if (!attributes.targetPrice) {
+    if (!attributes.targetPrice || attributes.targetPrice === '0') {
       errors['price'] = ['A price is required']
     }
 

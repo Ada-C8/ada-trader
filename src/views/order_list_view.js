@@ -10,6 +10,37 @@ const OrdersView = Backbone.View.extend({
     this.template = params.template;
     this.allSymbols = params.allSymbols;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.bus, 'price_check_response', this.priceCheckResponse)
+  },
+
+  priceCheckResponse(response) {
+    if (response) {
+      const newOrder = new Order(response);
+
+      if (newOrder.isValid()) {
+        console.log('Model is ALL valid');
+        this.clearFormData();
+
+        const successMessage = {
+          order: `New order for ${newOrder.get('symbol')} created!`
+        };
+        this.updateStatusMessageForForm(successMessage);
+        console.log('New Order symbol');
+        console.log(newOrder.symbol);
+        this.model.add(newOrder);
+
+      } else {
+        console.log('ERROR');
+
+        this.updateStatusMessageForForm(newOrder.validationError);
+        newOrder.destroy();
+      }
+    } else {
+      const errorMessage = {
+        order: `New order not created. Price must be less than the current price!`
+      };
+      this.updateStatusMessageForForm(errorMessage)
+    }
   },
 
   getFormData(buySell){
@@ -54,7 +85,6 @@ const OrdersView = Backbone.View.extend({
     for (let key in messageHash) {
       $statusMessages.append(`<p>${key}: ${messageHash[key]}</p>`);
     }
-    // $statusMessages.show();
   },
 
   addBuyOrder(event){
@@ -69,37 +99,40 @@ const OrdersView = Backbone.View.extend({
     console.log(formData.targetPrice);
     console.log(formData.buy);
 
-    const newOrder = new Order(formData);
-
-    if (newOrder.isValid()) {
-      console.log('Model is valid');
-      this.clearFormData();
-
-      const successMessage = {
-        order: `New order for ${newOrder.get('symbol')} created!`
-      };
-      this.updateStatusMessageForForm(successMessage);
-      console.log('New Order symbol');
-      console.log(newOrder.symbol);
-      this.model.add(newOrder);
-
-      //trigger bus for creation of new order
-      // const objectForBuyOrder = {
-      //   model: newOrder,
-      //   buy: true,
-      //   symbol: newOrder.get('symbol'),
-      //   targetPrice: newOrder.get('price'),
-      // };
-      // console.log('Object for buy order:');
-      // console.log(objectForBuyOrder);
-      // this.bus.trigger('create_new_order', objectForBuyOrder);
-
-    } else {
-      console.log('ERROR');
-
-      this.updateStatusMessageForForm(newOrder.validationError);
-      newOrder.destroy();
-    }
+    this.bus.trigger('add_order_request', formData);
+    //
+    // const newOrder = new Order(formData);
+    // // const currentQuote = new
+    //
+    // if (newOrder.isValid()) {
+    //   console.log('Model is valid');
+    //   this.clearFormData();
+    //
+    //   //trigger event on bus to quotes to check price is below the quote price
+    //
+    //   this.bus.trigger('add_order_request', formData);
+    //
+    //   //TODO: how to just do it selectively by symbol? Below thought seems dangerous
+    //   // if (newOrder.symbol === "HUMOR") {
+    //   //   this.bus.trigger('add_humor_order_request', formData);
+    //   // } else if (newOrder.symbol === "CLOTH") {
+    //   //   this.bus.trigger('add_cloth_order_request', formData);
+    //   // }
+    //
+    //   const successMessage = {
+    //     order: `New order for ${newOrder.get('symbol')} created!`
+    //   };
+    //   this.updateStatusMessageForForm(successMessage);
+    //   console.log('New Order symbol');
+    //   console.log(newOrder.symbol);
+    //   this.model.add(newOrder);
+    //
+    // } else {
+    //   console.log('ERROR');
+    //
+    //   this.updateStatusMessageForForm(newOrder.validationError);
+    //   newOrder.destroy();
+    // }
   },
 
   addSellOrder(event){
@@ -159,6 +192,7 @@ const OrdersView = Backbone.View.extend({
         model: order,
         template: this.template,
         tagName: 'li',
+        className: 'order',
         bus: this.bus,
       });
 

@@ -8,6 +8,34 @@ const QuoteView = BackBone.View.extend({
     this.bus = params.bus;
 
     this.listenTo(this.model, 'change', this.render);
+
+    //TODO: how to make each quote listens selectively to their symbol?
+    // if (this.model.symbol  === 'HUMOR') {
+    //   this.listenTo(this.bus, 'add_order_request', this.checkPriceTarget)
+    // }
+    // this.listenTo(this.bus, 'add_humor_order_request', this.checkPriceTarget)
+
+    this.listenTo(this.bus, 'add_order_request', this.checkPriceTarget)
+  },
+
+  checkPriceTarget(orderData) {
+    console.log('In checkPriceTarget');
+    console.log(orderData);
+    console.log(orderData.symbol);
+    console.log(this.model.get('symbol'));
+    console.log(this.model.get('price'));
+
+    if (this.model.get('symbol') === orderData.symbol) {
+      if (this.model.get('price') <= orderData.targetPrice) {
+        console.log('targetPrice is too high');
+        this.bus.trigger('price_check_response', false)
+        return false;
+      } else {
+        console.log('targetPrice is good');
+        this.bus.trigger('price_check_response', orderData)
+        return true;
+      }
+    }
   },
 
   buyQuote(event) {
