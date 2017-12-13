@@ -2,9 +2,14 @@ import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
 import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import Quote from 'models/quote';
+import QuoteListView from 'views/quote_list_view';
+import QuoteView from 'views/quote_view';
 
 const quoteData = [
   {
