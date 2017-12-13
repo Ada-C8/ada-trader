@@ -7,13 +7,16 @@ import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OpenOrderList from 'collections/open_order_list';
 
 import Quote from './models/quote';
-// import TaskList from './collections/task_list';
 import QuoteView from './views/quote_view';
-// import TaskListView from './views/task_list_view';
 import QuoteListView from './views/quote_list_view';
 import TradeListView from './views/trade_list_view';
+import OpenOrder from './models/open_order';
+import OpenOrderView from './views/open_order_view';
+import OpenOrderListView from './views/open_order_list_view';
+
 
 
 
@@ -61,7 +64,7 @@ $(document).ready(function() {
     bus: bus,
   });
 
-  // TradeHistoryView will encompass the main tag
+  // TradelistView will encompass the main tag
   const tradelistView = new TradeListView({
     el: '#trades-container',
     bus: bus,
