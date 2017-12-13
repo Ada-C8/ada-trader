@@ -19,6 +19,11 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote'
       });
+
+      // Add options for Order Entry Form
+      const symbol = quote.get('symbol');
+      this.$('select[name=symbol]').append(`<option value="${symbol}">${symbol}</option>`);
+
       this.listenTo(quoteView, 'addTrade', this.addToTradeHistory);
       this.$('#quotes').append(quoteView.render().$el);
     });
