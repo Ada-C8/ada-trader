@@ -16,12 +16,12 @@ const OrderView = Backbone.View.extend({
   },
   checkPrice() {
     if (this.model.attributes.buy) {
-      if (this.model.attributes.targetPrice <= this.quote.attributes.price) {
-        this.trigger('buyOrder', this);
+      if (this.model.attributes.targetPrice >= this.quote.attributes.price) {
+        this.bus.trigger('buyOrder', this);
       }
     } else {
-      if (this.model.attributes.targetPrice >= this.quote.attributes.price) {
-        this.trigger('buyOrder', this);
+      if (this.model.attributes.targetPrice <= this.quote.attributes.price) {
+        this.bus.trigger('sellOrder', this);
       }
     }
   }
