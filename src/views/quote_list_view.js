@@ -5,7 +5,7 @@ import Quote from '../models/quote';
 const TaskListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    // this.bus = params.bus;
+    this.bus = params.bus;
 
     this.listenTo(this.model, 'update', this.render);
   },
@@ -16,7 +16,7 @@ const TaskListView = Backbone.View.extend({
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
-        // bus: this.bus,
+        bus: this.bus,
         template: this.template,
         tagName: 'li', // creates an element to put the template in
         className: 'quote', //adds a class to the element

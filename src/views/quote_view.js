@@ -4,7 +4,7 @@ import Quote from '../models/quote';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    // this.bus = params.bus;
+    this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
   },
   render() {
@@ -26,13 +26,22 @@ const QuoteView = Backbone.View.extend({
 
   buyQuote(event) {
     let buyPrice = this.model.buy();
-    // console.log(this.model.get('symbol'));
-    // console.log(buyPrice);
+    const attributes = {
+      buy: true,
+      symbol: this.model.get('symbol'),
+      price: buyPrice
+    }
+    this.bus.trigger('buy_sell_quote', attributes)
   },
 
   sellQuote(event) {
     let sellPrice = this.model.sell();
-
+    const attributes = {
+      buy: false,
+      symbol: this.model.get('symbol'),
+      price: sellPrice
+    }
+    this.bus.trigger('buy_sell_quote', attributes)
   },
   // selectTask() {
   //   this.bus.trigger('selected_task', this.model)

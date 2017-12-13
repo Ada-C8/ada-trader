@@ -7,17 +7,17 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    const newPrice = (this.get('price') + 1)
+    const tradePrice = (this.get('price'))
+    const newPrice = tradePrice + 1
     this.set('price', newPrice)
-    return newPrice
+    return tradePrice
   },
 
   sell() {
-    const newPrice = (this.get('price') - 1)
+    const tradePrice = (this.get('price'))
+    const newPrice = tradePrice - 1
     this.set('price', newPrice)
-    return newPrice
-
-    // Implement this function to decrease the price by $1.00
+    return tradePrice
   },
 });
 
