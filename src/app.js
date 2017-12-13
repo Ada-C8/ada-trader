@@ -9,10 +9,15 @@ import QuoteList from 'collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
+import OrderView from './views/order_view';
+import OrderListView from './views/order_list_view';
+import OrderList from 'collections/order_list';
 
 const quoteList = new QuoteList();
+const orderList = new OrderList();
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 
 const quoteData = [
   {
@@ -32,7 +37,6 @@ const quoteData = [
     price: 83.10,
   },
 ];
-// should be able to delete this
 const renderList = function(quoteList) {
   const $quoteList = $('#quotes');
   $quoteList.empty();
@@ -47,26 +51,42 @@ const renderList = function(quoteList) {
     $quoteList.append(quoteView.render().$el);
   });
 };
+const renderOrderList = function(orderList) {
+  const $orderList = $('#orders');
+  $orderList.empty();
+
+  orderList.forEach((order) => {
+    const orderView = new OrderView({
+      model: order,
+      template: _.template($('#order-template').html()),
+      tageName: 'li',
+      className: 'order',
+    });
+    $orderList.append(orderView.render().$el);
+  });
+};
 //
 $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
   tradeTemplate = _.template($('#trade-template').html());
   quoteTemplate = _.template($('#quote-template').html());
+  orderTemplate = _.template($('#order-template').html());
   const quotes = new QuoteList(quoteData);
+
+  const orders = new OrderList(quoteData); // not sure if this is right...
   const simulator = new Simulator({
     quotes: quotes,
   });
   simulator.start();
 
-  // $('#selected_trade').empty();
   const tradeHistoryView = new TradeHistoryView({
     bus: bus,
     template: tradeTemplate,
     el: $('#trades'),
   });
-
   tradeHistoryView.render();
+
   const quoteListView = new QuoteListView({
     model: quotes,
     template: quoteTemplate,
@@ -74,4 +94,12 @@ $(document).ready(function() {
     bus: bus,
   });
   quoteListView.render();
+
+  const orderListView = new OrderListView({
+    model: orders,
+    template: orderTemplate,
+    el: '#orders',
+    bus: bus,
+  });
+  orderListView.render();
 });
