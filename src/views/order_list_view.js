@@ -46,8 +46,10 @@ const OrderListView = Backbone.View.extend({
     orderData['symbol'] = this.$(`[name=symbol]`).val()
     orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
     orderData['buy'] = true;
-    const searchElem = this.quoteList.findWhere({symbol: 'HUMOR'})
-    orderData['marketPrice'] = searchElem.get('price')
+    // const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
+    // orderData['marketPrice'] = searchElem.get('price')
+    const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
+    orderData['activeQuote'] = searchElem
     const newOrder = new Order(orderData);
     console.log(newOrder);
     if (newOrder.isValid()) {
@@ -63,8 +65,10 @@ sellOrder: function(event) {
   orderData['symbol'] = this.$(`[name=symbol]`).val();
   orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
   orderData['buy'] = false;
-  const searchElem = this.quoteList.findWhere({symbol: 'HUMOR'})
-  orderData['marketPrice'] = searchElem.get('price')
+  // const searchElem = this.quoteList.findWhere({symbol: 'HUMOR'})
+  // orderData['marketPrice'] = searchElem.get('price')
+  const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
+  orderData['activeQuote'] = searchElem
   const newOrder = new Order(orderData);
   if (newOrder.isValid()) {
     this.model.add(newOrder);
