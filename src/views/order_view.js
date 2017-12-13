@@ -1,12 +1,8 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
-import $ from 'jquery';
-// import Order from 'models/order'
 
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.orderTemplate = _.template($('#order-template').html());
     this.listenTo(this.model, 'orderMe', this.deleteOrder);
   },
   render() {

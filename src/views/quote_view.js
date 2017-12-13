@@ -8,6 +8,8 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
 
     this.tradeTemplate = _.template($('#trade-template').html());
+
+    this.listenTo(this.model, 'printMe', this.addTemplate);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -23,6 +25,10 @@ const QuoteView = Backbone.View.extend({
   },
   sellQuote: function() {
     this.model.sell();
+  },
+  addTemplate() {
+    const tradeTemplate = _.template($('#trade-template').html());
+    $('#trades').prepend(tradeTemplate(this.model.toJSON()));
   },
 });
 

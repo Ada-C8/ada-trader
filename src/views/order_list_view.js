@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import _ from 'underscore';
 import Backbone from 'backbone';
 import Order from 'models/order';
 import OrderView from './order_view';
