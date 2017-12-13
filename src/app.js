@@ -38,27 +38,35 @@ let quoteTemplate;
 let tradeTemplate;
 
 $(document).ready(function() {
-  // Templates
+  // set up bus so that is can listen and respond to events
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
+
+  // Underscore templates
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
 
+  // new quoteList instance
   const quotes = new QuoteList(quoteData);
+
+  // new simulator, will start it updating the quotes at second intervals
   const simulator = new Simulator({
     quotes: quotes,
   });
-
   simulator.start();
 
+  // makes a quote list view, render it
   const quoteListView = new QuoteListView ({
     el: '#quotes-container',
     model: quotes,
     template: quoteTemplate,
   });
-
   quoteListView.render();
 
+  // Creates an instance of TradesView that it will show all of the trade histories
+  // include the bus so it can listen and emit messages with the other views in the app
   const tradesView = new TradesView ({
-    el: $('#trades-container'),
-    template: tradeTemplate
+    el: '#trades-container',
+    template: tradeTemplate,
   })
 });

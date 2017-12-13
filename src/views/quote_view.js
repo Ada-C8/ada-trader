@@ -28,7 +28,13 @@ const QuoteView = Backbone.View.extend({
 
   sellStock() {
     this.model.sell();
+    this.testMethod();
   },
+
+  testMethod() {
+    console.log('I can chain a method!');
+  }
+
 });
 
 export default QuoteView;
