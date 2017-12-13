@@ -7,6 +7,7 @@ const QuoteView = Backbone.View.extend({
     this.trades = params.trades;
     this.listenTo(this.model, "change", this.render);
   },
+
   render() {
     // why JSON?
     const compiledTemplate = this.template(this.model.toJSON());
@@ -17,6 +18,7 @@ const QuoteView = Backbone.View.extend({
     'click .btn-buy': 'buyQuote',
     'click .btn-sell': 'sellQuote',
   },
+
   buyQuote() {
     this.model.buy();
     console.log('bought!');
@@ -27,6 +29,7 @@ const QuoteView = Backbone.View.extend({
     });
     this.trades.add(trade);
   },
+
   sellQuote() {
     this.model.sell();
     console.log('sold!');

@@ -33,9 +33,12 @@ const quoteData = [
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
+  
   const simulator = new Simulator({
     quotes: quotes,
   });
+
+  const tradeList = new TradeList();
 
   const quoteListView = new QuoteListView({
     model: quotes,
@@ -45,12 +48,11 @@ $(document).ready(function() {
   });
   quoteListView.render();
 
-  const tradeList = new TradeList();
   const tradeListView = new TradeListView({
     model: tradeList,
     template: _.template($('#trade-template').html()),
     el: 'main',
-  });
+  })
   tradeListView.render();
 
   simulator.start();
