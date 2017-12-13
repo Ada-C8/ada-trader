@@ -31,20 +31,6 @@ const quoteData = [
   },
 ];
 
-// fake history to test
-const tradeData = [
-  {
-    symbol: 'ABCD',
-    buy: true,
-    price: 10.02,
-  },
-  {
-    symbol: 'XYZ',
-    buy: false,
-    price: 15.02,
-  },
-]
-
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -55,10 +41,11 @@ $(document).ready(function() {
     model: quotes,
     template: _.template($('#quote-template').html()),
     el: 'main',
+    trades: tradeList,
   });
   quoteListView.render();
 
-  const tradeList = new TradeList(tradeData);
+  const tradeList = new TradeList();
   const tradeListView = new TradeListView({
     model: tradeList,
     template: _.template($('#trade-template').html()),
