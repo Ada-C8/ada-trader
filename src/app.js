@@ -30,20 +30,20 @@ const quoteData = [
   },
 ];
 
-const renderList = (quoteList) => {
-  const $quoteList = $();
-  $quoteList.empty();
-
-  quoteList.forEach((quote) => {
-    const quoteView = new QuoteView({
-      model: quote,
-      template: _.template($('#quote-template').html()),
-      tagName: 'li',
-      className: 'quote',
-    });
-    $quoteList.append(quoteView.render().$el);
-  });
-};
+// const renderList = (quoteList) => {
+//   const $quoteList = $();
+//   $quoteList.empty();
+//
+//   quoteList.forEach((quote) => {
+//     const quoteView = new QuoteView({
+//       model: quote,
+//       template: _.template($('#quote-template').html()),
+//       tagName: 'li',
+//       className: 'quote',
+//     });
+//     $quoteList.append(quoteView.render().$el);
+//   });
+// };
 
 let quoteTemplate;
 
