@@ -21,6 +21,9 @@ import TradeView from 'views/trade_view';
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
+
+const orders = new OrderList(); /////////////////// TODO: Check to see if I even need to pass in the data if quotes already exists
 
 const quoteData = [
   {
@@ -42,14 +45,16 @@ const quoteData = [
 ];
 
 
+
 $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
 
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
+
   const quotes = new QuoteList(quoteData);
-  const orders = new OrderList(quoteData); ///////////////////
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -69,8 +74,8 @@ $(document).ready(function() {
 
   const orderListView = new OrderListView({ /////////////
     el: 'form select',
-    // template: '<option value=""></option>',
-    model: orders,
+    template: orderTemplate, // This is the form for each order view
+    model: orders, // TODO: Check this
     bus: bus,
   });
 
