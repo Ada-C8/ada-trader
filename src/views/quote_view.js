@@ -24,6 +24,22 @@ render() {
 
 }, //render
 
+events: {
+  'click button.btn-buy': 'buy',
+  'click button.btn-sell': 'sell',
+},
+buy(event) {
+  // this.$el.toggleClass('is-complete');
+  console.log("You clicked buy");
+  console.log(event);
+  this.model.buy();
+},
+sell(event) {
+  // this.$el.toggleClass('is-complete');
+  console.log("You clicked Sell");
+  console.log(event);
+  this.model.sell();
+},
 
 
 }); //end of Quote View
