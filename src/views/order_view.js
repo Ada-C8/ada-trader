@@ -7,6 +7,7 @@ const OrderView = Backbone.View.extend({
     this.template = params.template;
     this.quote = this.model.attributes.quote[0];
     console.log(this.model.attributes.quote[0]);
+    console.log(this.quote);
     // this.listenTo(this.model, 'change', this.render);
     // this.quote = params.quote
 
@@ -18,7 +19,15 @@ const OrderView = Backbone.View.extend({
     return this;
   },
   checkPrice() {
-    console.log('entering');
+    if (this.model.attributes.buy) {
+      if (this.model.attributes.targetPrice <= this.quote.attributes.price) {
+        this.trigger('buyOrder', this);
+      }
+    } else {
+      if (this.model.attributes.targetPrice >= this.quote.attributes.price) {
+        this.trigger('buyOrder', this);
+      }
+    }
   }
 })
 
