@@ -10,13 +10,10 @@ const TradesView = Backbone.View.extend ({
 
   addTrade(quote) {
     console.log('adding new trade');
-    console.log(quote);
-    // this.$('#trades').append('<li>something</li>');
 
     const compiledTemplate = this.template(quote);
 
-    this.$('#trades').append(compiledTemplate);
-
+    this.$('#trades').prepend(compiledTemplate);
   },
 
 
