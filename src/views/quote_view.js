@@ -19,7 +19,6 @@ const QuoteView = Backbone.View.extend({
   },
   buyQuote: function(e) {
     console.log('clicked the buy button');
-    console.log(this.model);
     this.model.buy();
   },
   sellQuote: function(e) {
