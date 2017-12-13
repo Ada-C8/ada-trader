@@ -14,10 +14,14 @@ const QuoteView = Backbone.View.extend({
   }, //end of render
   events: {
     'click button.alert': 'buyStock',
+    'click button.success': 'sellStock',
   },
   buyStock: function(e) {
-    console.log("button is clicked");
     this.model.buy();
+  },
+  sellStock: function(e) {
+    console.log("button is clicked");
+    this.model.sell();
   }
 }); // end of QuoteView
 
