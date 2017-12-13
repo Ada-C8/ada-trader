@@ -7,12 +7,17 @@ const Order = Backbone.Model.extend({
   // },
   initialize(attributes) {
   },
-  
+
   validate(attributes) {
     const errors = {};
 
-    if (!attributes.task_name) { //all tasks require a task name
-      errors['task_name'] = ["Task name is required"];
+    //TODO: validate for specific symbols?
+    if (!attributes.symbol) { //all orders require a symbol
+      errors['symbol'] = ['A symbol is required'];
+    }
+
+    if (!attributes.price) {
+      errors['price'] = ['A price is required']
     }
 
     if ( Object.keys(errors).length > 0 ) {

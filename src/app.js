@@ -8,14 +8,19 @@ import Backbone from 'backbone';
 import Quote from './models/quote';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import Order from './models/order';
+import OrderList from './collections/order_list';
+
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
-import OrdersView from './views/orders_view';
+import OrdersView from './views/order_list_view';
 
 let quoteTemplate;
 let tradeTemplate;
 let orderTemplate;
+
+const orderList = new OrderList();
 
 const quoteData = [
   {
@@ -45,6 +50,7 @@ $(document).ready(function() {
   orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
+
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -62,11 +68,12 @@ $(document).ready(function() {
     template: tradeTemplate,
   })
 
-  console.log('about to see all quotes?');
+  //get all symbols from quotes
   const allSymbolsArray = quotes.allSymbols();
 
   const ordersView = new OrdersView({
     el: '#order-workspace',
+    model: orderList,
     bus: bus,
     template: orderTemplate,
     allSymbols: allSymbolsArray,
@@ -74,32 +81,6 @@ $(document).ready(function() {
 
   ordersView.render();
   quoteListView.render();
-  // quotes.on('update', renderQuoteList, quotes);
-  // renderQuoteList(quotes);
+
   simulator.start();
-
 });
-
-
-
-
-
-// const renderQuoteList = function renderQuoteList(quotes) {
-//   const $quotes = $('#quotes');
-//   $quotes.empty();
-//
-//   quotes.forEach((quote) =>{
-//     console.log('In renderQuoteList');
-//
-//     //make new QuoteView
-//     const quoteView = new QuoteView({
-//       model: quote,
-//       template: _.template($('#quote-template').html()),
-//       tagName: 'li',
-//       className: 'quote',
-//     });
-//
-//     $quotes.append(quoteView.render().$el);
-//     console.log('In renderQuoteList after');
-//   });
-// };
