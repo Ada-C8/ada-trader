@@ -41,6 +41,7 @@ $(document).ready(function() {
     // setting model to quotes, not new QuoteListView- might run into problems later??
     model: quotes,
     template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
     el: '#quotes-container',
   });
 
