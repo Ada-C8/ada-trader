@@ -4,19 +4,13 @@ import 'css/app.css';
 import $ from 'jquery';
 import _ from 'underscore';
 
-
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import OrderList from 'collections/order_list';
 
-
-import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 
-import OrderView from './views/order_view';
 import OrderListView from './views/order_list_view';
-
-const quoteList = new QuoteList();
 
 const quoteData = [
   {
@@ -45,9 +39,6 @@ $(document).ready(function() {
 
   const orders = new OrderList();
 
-
-
-
   quotes.each(function (quote) {
     $('#order-form-symbols').append(`<option id=symbol value=${quote.attributes.symbol}>${quote.attributes.symbol}</option>`);
   });
@@ -66,7 +57,6 @@ $(document).ready(function() {
   });
   orderListView.quotes = quotes;
   orderListView.quoteList = quoteListView;
-
   orderListView.render();
 
   simulator.start();

@@ -9,11 +9,8 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
-    this.listenTo(this.model.models, 'update', this.render);
-
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this, 'change', this.render);
-
   },
   render() {
     this.$('#orders').empty();
@@ -37,8 +34,8 @@ const OrderListView = Backbone.View.extend({
     let orderListView = this;
     this.model.models.forEach(function(order){
       let currentPrice = order.attributes.quotes.models.filter(quote => (quote.attributes.symbol === order.attributes.symbol))[0].attributes.price;
-
       let target = order.attributes.targetPrice;
+
       if (order.attributes.buy && currentPrice <= target) {
         orderListView.quoteList.quoteView.forEach(function(quoteView){
           if (quoteView.model.attributes.symbol === order.attributes.symbol) {
@@ -47,7 +44,6 @@ const OrderListView = Backbone.View.extend({
           }
         });
       }
-
       if (!order.attributes.buy && currentPrice >= target) {
         orderListView.quoteList.quoteView.forEach(function(quoteView){
           if (quoteView.model.attributes.symbol === order.attributes.symbol) {
@@ -63,9 +59,7 @@ const OrderListView = Backbone.View.extend({
     const buyData = {};
     ['symbol', 'targetPrice'].forEach( (field) => {
       const val = $(`#${field}`).val();
-      console.log(val);
       if (field == 'targetPrice') {
-        console.log('inside the targetPrice field')
         buyData[field] = parseInt(val);
       }
       else {
@@ -73,52 +67,41 @@ const OrderListView = Backbone.View.extend({
       }
     });
     buyData['buy'] = true;
-
     let newOrder = new Order(buyData);
     newOrder.set('quotes', this.quotes);
-    // newOrder.set('listView', OrderListView);
-
-
     if (newOrder.isValid()) {
-      console.log('IS VALID');
       this.model.add(newOrder);
-      // this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
+      this.updateStatusMessageWith(`New order added for ${newOrder.get('symbol')}`);
+      $('#order-form').reset();
     } else {
-      console.log('FAIL');
-      // this.updateStatusMessageFrom(newTask.validationError);
+      this.updateStatusMessageFrom(newOrder.validationError);
     }
   },
   orderSell: function(event) {
     event.preventDefault();
     const buyData = {};
     ['symbol', 'targetPrice'].forEach( (field) => {
-      const val = $(`#${field}`).val();
-      console.log(val);
       if (field == 'targetPrice') {
+        let val = $(`#${field}`).val();
         buyData[field] = parseInt(val);
       }
       else {
+        let val = $(`#${field}`).val();
         buyData[field] = val;
       }
     });
     buyData['buy'] = false;
-
     const newOrder = new Order(buyData);
     newOrder.set('quotes', this.quotes);
-
-    console.log(newOrder);
-
     if (newOrder.isValid()) {
-      console.log('IS VALID');
       this.model.add(newOrder);
       this.updateStatusMessageWith(`New order added for ${newOrder.get('symbol')}`);
+      $('#order-form').render();
     } else {
-      console.log('FAIL');
       this.updateStatusMessageFrom(newOrder.validationError);
     }
   },
   cancelOrder(orderView) {
-    console.log('inside the cancel');
     orderView.remove();
     orderView.model.destroy();
   },
