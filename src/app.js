@@ -1,10 +1,13 @@
+import $ from 'jquery';
+import _ from 'underscore';
+
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
-import $ from 'jquery';
-
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+
+import QuoteListView from 'views/quote_list_view';
 
 const quoteData = [
   {
@@ -30,6 +33,13 @@ $(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
+  const quoteListView = new QuoteListView({
+    model: quotes,
+    quoteTemplate: _.template($('#quote-template').html()),
+    el: 'main'
+  })
+
+  quoteListView.render();
 
   simulator.start();
 });
