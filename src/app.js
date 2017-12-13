@@ -37,13 +37,6 @@ const quoteData = [
   },
 ];
 
-// const order = new Order();
-// const orderView = new OrderView({
-//   model: order,
-//   template: _.template($('#task-template').html()),
-//   el: 'main',
-// });
-
 $(document).ready(function() {
 
   const quotes = new QuoteList(quoteData);
@@ -53,6 +46,7 @@ $(document).ready(function() {
 
   simulator.start();
 
+  const order = new Order(quotes);
   const quoteListView = new QuoteListView({
   model: quotes,
   template: _.template($('#quote-template').html()),

@@ -26,25 +26,6 @@ const QuoteListView = Backbone.View.extend({
     });
     return this;
   },
-  // events: {
-  //   'click #add-new-task': 'addTask'
-  // },
-  // addTask: function(event) {
-  //   event.preventDefault();
-  //   const taskData ={};
-  //   ['task_name', 'assignee'].forEach( (field) => {
-  //     const val = this.$(`#add-task-form input[name=${field}]`).val();
-  //     if (val != '') {
-  //       taskData[field] = val;
-  //     }
-  //   });
-  //   const newTask = new Task(taskData);
-  //   if (newTask.isValid()) {
-  //     this.model.add(newTask);
-  //     this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
-  //   } else {
-  //     this.updateStatusMessageFrom(newTask.validationError);
-  //   }
 });
 
 

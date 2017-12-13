@@ -5,15 +5,16 @@ import $ from 'jquery';
 import Quote from '../models/quote';
 import Order from '../models/order';
 import OrderView from '../views/order_view';
-
-
 import QuoteList from '../collections/quote_list';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.quoteList = params.symbols
+    console.log(this.quoteList)
     this.listenTo(this.model, 'update', this.render);
     this.orderForm(params.symbols.models);
+
   },
 
   render() {
@@ -32,27 +33,25 @@ const OrderListView = Backbone.View.extend({
   },
   orderForm(symbol_names) {
     symbol_names.forEach( (symbol_name) => {
-      console.log(symbol_name.get('symbol'));
       $('select').append(`<option>${symbol_name.get('symbol')}</option>`)
     });
   },
   events: {
     'click button.btn-buy': 'buyOrder',
     'click button.btn-sell': 'sellOrder'
-
-    // 'click #order-entry-form': 'addOrder'
   },
   buyOrder: function(event) {
     event.preventDefault();
     const orderData = {};
     orderData['symbol'] = this.$(`[name=symbol]`).val()
     orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
-    orderData['buy'] = 'true';
-    console.log(orderData);
+    orderData['buy'] = true;
+    const searchElem = this.quoteList.findWhere({symbol: 'HUMOR'})
+    orderData['marketPrice'] = searchElem.get('price')
     const newOrder = new Order(orderData);
+    console.log(newOrder);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
-      this.updateStatusMessageWith(`New order placed for ${newOrder.get('symbol')}`);
     } else {
       console.log(`IN THE ELSE ${newOrder.validationError}`);
       this.updateStatusMessageFrom(newOrder.validationError);
@@ -63,11 +62,15 @@ sellOrder: function(event) {
   const orderData = {};
   orderData['symbol'] = this.$(`[name=symbol]`).val();
   orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
-  orderData['buy'] = 'false';
-  console.log(orderData);
+  orderData['buy'] = false;
+  const searchElem = this.quoteList.findWhere({symbol: 'HUMOR'})
+  orderData['marketPrice'] = searchElem.get('price')
   const newOrder = new Order(orderData);
   if (newOrder.isValid()) {
     this.model.add(newOrder);
+  } else {
+    console.log(`IN THE ELSE ${newOrder.validationError}`);
+    this.updateStatusMessageFrom(newOrder.validationError);
   }
 },
 updateStatusMessageFrom: function(messageHash) {
