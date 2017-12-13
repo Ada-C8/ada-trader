@@ -18,8 +18,16 @@ const QuoteView = Backbone.View.extend({
     return this;
   },
   buyQuote: function(e) {
-    // console.log('clicked Buy button');
+    console.log('clicked Buy button');
     this.model.set('price', this.model.buy());
+    //Shauna triggers an event that the quotelistview is listening for
+    // console.log(this.$el);
+    // console.log(this.model.get('symbol'));
+    // const quoteStored = new Quote({symbol: this.model.get('symbol'), price: this.model.get('price')})
+    // console.log(quoteStored);
+    this.model.set('buy', true);
+    // this.trigger('addMe', quoteStored);
+    this.trigger('addBuy', this);
   },
   sellQuote: function(e) {
     this.model.set('price', this.model.sell());

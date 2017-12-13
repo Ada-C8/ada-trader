@@ -6,7 +6,9 @@ import 'css/app.css';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import Quote from 'models/quote';
 
+import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
 
 const quoteData = [
@@ -37,7 +39,7 @@ $(document).ready(function() {
     model: quotes,
     quoteTemplate: _.template($('#quote-template').html()),
     el: 'main'
-  })
+  });
 
   quoteListView.render();
 

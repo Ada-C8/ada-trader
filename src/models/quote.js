@@ -7,15 +7,16 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    const newBuyPrice = this.get('price') + 1
-    return newBuyPrice;
-    ;
+    return this.get('price') + 1;
   },
 
   sell() {
-    const newBuyPrice = this.get('price') - 1
-    return newBuyPrice;
+    return this.get('price') - 1;
   },
+
+  // postBuy() {
+  //
+  // }
 });
 
 export default Quote;
