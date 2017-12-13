@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import OrderView from './order_view';
+import Order from '../models/order';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
@@ -30,8 +31,19 @@ const OrderListView = Backbone.View.extend({
     orderData['symbol'] = this.$('select :selected').text();
     const stringTargetPrice = this.$(`input[name=price-target]`).val();
     orderData['targetPrice'] = parseFloat(stringTargetPrice);
-    this.model.add(orderData);
-    this.$('.order-entry-form [name=price-target]').val("");
+    const newOrder = new Order(orderData);
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+      this.$('.order-entry-form [name=price-target]').val("");
+      this.$('.form-errors').empty();
+    } else {
+      this.$('.form-errors').empty();
+      for(let key in newOrder.validationError) {
+        newOrder.validationError[key].forEach((error) => {
+          this.$('.form-errors').append(`<p>${key}: ${error}</p>`);
+        })
+      }
+    }
   },
 })
 
