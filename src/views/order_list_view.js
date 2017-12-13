@@ -24,7 +24,7 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
       });
       this.listenTo(orderView, 'cancelMe', this.cancelOrder);
-      this.listenTo(this.quoteList, 'quoteChanged', this.aChange);
+      this.listenTo(this.quoteList, 'quoteChanged', this.quoteCheck);
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
@@ -33,38 +33,29 @@ const OrderListView = Backbone.View.extend({
     'click #order-form .btn-buy': 'orderBuy',
     'click #order-form .btn-sell': 'orderSell',
   },
-  aChange(){
-    // this.trigger('quoteChanged', this);
-    // console.log('in the order list view change')
+  quoteCheck(){
     let orderListView = this;
     this.model.models.forEach(function(order){
-      // console.log(order.attributes.symbol);
-      // console.log(order.attributes.targetPrice);
-
       let currentPrice = order.attributes.quotes.models.filter(quote => (quote.attributes.symbol === order.attributes.symbol))[0].attributes.price;
 
       let target = order.attributes.targetPrice;
-      // console.log(`current: ${currentPrice}, target: ${target}`)
-      // console.log(order);
-      // console.log(order.attributes.symbol);
-      if (currentPrice <= target) {
-        // console.log('current is less than target, i should buy');
-        // return false
-        // console.log(orderListView.quoteList);
-        // orderListView.quoteList.quoteView.buyStock();
+      if (order.attributes.buy && currentPrice <= target) {
         orderListView.quoteList.quoteView.forEach(function(quoteView){
           if (quoteView.model.attributes.symbol === order.attributes.symbol) {
             quoteView.buyStock();
-            // console.log(order);
             order.destroy();
-
-            // let toBeDestroyed = orderListView.quoteView
-            // orderListView.cancelOrder(order);
           }
         });
-
       }
 
+      if (!order.attributes.buy && currentPrice >= target) {
+        orderListView.quoteList.quoteView.forEach(function(quoteView){
+          if (quoteView.model.attributes.symbol === order.attributes.symbol) {
+            quoteView.sellStock();
+            order.destroy();
+          }
+        });
+      }
     });
   },
   orderBuy: function(event) {
