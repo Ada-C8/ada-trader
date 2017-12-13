@@ -10,6 +10,7 @@ import QuoteList from 'collections/quote_list';
 import Quote from 'models/quote';
 import QuoteListView from 'views/quote_list_view';
 import QuoteView from 'views/quote_view';
+import TradeHistoryView from 'views/history_view';
 
 const quoteData = [
   {
@@ -45,4 +46,14 @@ $(document).ready(function() {
       template: quoteTemplate,
     });
       quoteListView.render();
+
+      let tradeHistoryTemplate = _.template($('#trade-template').html());
+
+      const tradeHistoryView = new TradeHistoryView({
+        el: 'main',
+        model: quotes,
+        template: tradeHistoryTemplate
+      });
+
+      tradeHistoryView.bind();
 });
