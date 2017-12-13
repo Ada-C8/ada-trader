@@ -78,7 +78,7 @@ const displayOrderFormErrors = function displayOrderFormErrors(errors) {
   const el = $('#form-errors');
   for(let field in errors) {
     for (let error of errors[field]) {
-      el.append(`<p class="error">${field} ${error}</p>`)
+      el.append(`<p class="error">${error}</p>`)
     }
   }
 };

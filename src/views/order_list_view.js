@@ -23,7 +23,7 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         bus: this.bus,
       });
-      $orderList.prepend(orderView.render().$el);
+      $orderList.append(orderView.render().$el);
     });
 
     return this;

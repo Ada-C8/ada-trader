@@ -10,7 +10,7 @@ const Order = Backbone.Model.extend({
     let error_message = '';
 
     if (!params.targetPrice) {
-      error_message = 'must enter a price';
+      error_message = 'Must enter a price';
       if (errors['targetPrice']) {
         errors['targetPrice'].push(error_message);
       } else {
@@ -20,7 +20,7 @@ const Order = Backbone.Model.extend({
 
     if (params.buy) { // if it is a buy order
       if (params.targetPrice >= params.stockPrice) {
-        error_message = 'must be lower than current price';
+        error_message = 'Buy price must be lower than current stock price';
         if (errors['targetPrice']) {
           errors['targetPrice'].push(error_message);
         } else {
@@ -29,7 +29,7 @@ const Order = Backbone.Model.extend({
       }
     } else { // if it is a sell order
       if (params.targetPrice <= params.stockPrice) {
-        error_message = 'must be higher than current price';
+        error_message = 'Sell price must be higher than current stock price';
         if (errors['targetPrice']) {
           errors['targetPrice'].push(error_message);
         } else {

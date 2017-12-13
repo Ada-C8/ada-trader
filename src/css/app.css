@@ -118,6 +118,10 @@ header, footer {
   font-size: 1em;
 }
 
+.error {
+  color: tomato;
+}
+
 /*
 Foundation Overrides
 */
