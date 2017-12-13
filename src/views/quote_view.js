@@ -1,4 +1,4 @@
-import Task from "../models/quote";
+import Quote from "../models/quote";
 import Backbone from 'backbone';
 
 const QuoteView = Backbone.View.extend({

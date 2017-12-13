@@ -19,8 +19,8 @@ const QuoteListView = Backbone.View.extend({
         bus: this.bus,
       });
       this.$('#quotes').append(quoteView.render().$el)
-      console.log('rendering quotes about to trigger');
-      this.bus.trigger('quotes', this.model)
+
+      this.bus.trigger('quotes', this.model);
     })
   },
     // events: {

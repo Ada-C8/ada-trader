@@ -44,6 +44,7 @@ const tradeList = new TradeList();
 const openOrderList = new OpenOrderList();
 let quoteTemplate
 let tradeTemplate
+let orderTemplate
 
 quoteData.forEach(function(datum) {
   quoteList.add(new Quote(datum))
@@ -52,6 +53,7 @@ quoteData.forEach(function(datum) {
 $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
 
 
   let bus = {};
@@ -67,7 +69,7 @@ $(document).ready(function() {
     template: quoteTemplate,
     bus: bus,
   });
-  quoteListView.render();
+
   const quotes = new QuoteList(quoteData);
 
   const tradeListView = new TradeListView({
@@ -76,17 +78,19 @@ $(document).ready(function() {
     template: tradeTemplate,
     bus: bus,
   });
-  tradeListView.render();
   const trades = new TradeList();
 
   const openOrderListView = new OpenOrderListView({
     el: 'main',
     model: openOrderList,
+    template: orderTemplate,
     bus: bus,
   });
-  openOrderListView.render();
   const openOrders = new OpenOrderList();
 
+  tradeListView.render();
+  openOrderListView.render();
+  quoteListView.render();
 
 
   simulator.start();
