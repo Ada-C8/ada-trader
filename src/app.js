@@ -38,7 +38,6 @@ const quoteData = [
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const orders = new OrderList([{symbol: 'HUMOR', buy: true, targetPrice: 100.00}]);
-  console.log(orders);
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -70,6 +69,7 @@ $(document).ready(function() {
   const orderListView = new OrderListView({
     el: '#order-workspace',
     model: orders,
+    quotes: quotes,
     bus: bus,
     template: orderTemplate,
   });

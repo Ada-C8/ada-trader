@@ -6,6 +6,7 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
+    this.quotes = params.quotes //this might be a bad idea
 
     this.listenTo(this.model, 'update', this.render);
   },
@@ -25,59 +26,53 @@ const OrderListView = Backbone.View.extend({
       this.$('#orders').append(orderView.render().$el);
     });
 
+    this.newOrderFormRender();
+
     return this;
   },
 
-  // events: {
-  //   'click #add-new-task': 'addTask',
-  // },
-  //
-  // updateStatusMessageFrom(messageHash) {
-  //   const $statusMessages = this.$('#status-messages');
-  //   $statusMessages.empty();
-  //   Object.keys(messageHash).forEach((messageType) => {
-  //     messageHash[messageType].forEach((message) => {
-  //       $statusMessages.append(`<li>${message}</li>`);
-  //     });
-  //   });
-  //   $statusMessages.show();
-  // },
-  //
-  // updateStatusMessage(message) {
-  //   this.updateStatusMessageFrom({
-  //     'task': [message],
-  //   });
-  // },
-  //
-  // addTask(event) {
-  //   event.preventDefault();
-  //
-  //   const formData = this.getFormData();
-  //   const newTask = new Task(formData);
-  //
-  //   if (!newTask.isValid()) {
-  //     newTask.destroy();
-  //     this.updateStatusMessageFrom(newTask.validationError);
-  //     return;
-  //   }
-  //
-  //   this.model.add(newTask);
-  //   this.clearFormData();
-  //   // this.$('#status-messages').hide();
-  //   this.updateStatusMessage(`${newTask.get('task_name')} Created!`)
-  // },
-  //
-  // getFormData() {
-  //   const taskData = {};
-  //   ['task_name', 'assignee'].forEach((field) => {
-  //     const val = this.$(`#add-task-form input[name=${field}]`).val();
-  //     if (val !== '') {
-  //       taskData[field] = val;
-  //     }
-  //   });
-  //
-  //   return taskData;
-  // },
+  newOrderFormRender() {
+    this.quotes.each((quote) => {
+      const symbol = quote.get('symbol');
+      this.$('#add-order-form select').append(`<option value="${symbol}">${symbol}</option>`);
+    });
+  },
+
+  events: {
+    'click button.btn-buy': 'addOrder',
+  },
+
+  addOrder(event) {
+    console.log('in addOrder');
+    event.preventDefault();
+
+    const formData = this.getFormData();
+    formData['buy'] = true;
+    const newOrder = new Order(formData);
+
+    // if (!newTask.isValid()) {
+    //   newTask.destroy();
+    //   this.updateStatusMessageFrom(newTask.validationError);
+    //   return;
+    // }
+
+    this.model.add(newOrder);
+    // this.clearFormData();
+    // this.updateStatusMessage(`${newTask.get('task_name')} Created!`)
+  },
+
+  getFormData() {
+    const orderData = {};
+
+    orderData['symbol'] = this.$('#add-order-form select[name="symbol"]').val();
+
+    orderData['targetPrice'] = Number(this.$('#add-order-form input[name="price-target"]').val());
+    // if (targetPrice !== '') {
+    //   orderData['targetPrice'] = targetPrice;
+    // } //superfluous? does type='number' return empty string?
+
+    return orderData;
+  },
   // clearFormData() {
   //   ['task_name', 'assignee'].forEach((field) => {
   //     const val = this.$(`#add-task-form input[name=${field}]`).val('');
@@ -91,8 +86,25 @@ const OrderListView = Backbone.View.extend({
   //   this.$('#add-task-form input[name=assignee]').val(task.get('assignee'));
   //   task.destroy();
   // },
+  //
+  // updateStatusMessageFrom(messageHash) {
+  //   const $statusMessages = this.$('#status-messages');
+  //   $statusMessages.empty();
+  //   Object.keys(messageHash).forEach((messageType) => {
+  //     messageHash[messageType].forEach((message) => {
+  //       $statusMessages.append(`<li>${message}</li>`);
+  //     });
+  //   });
+  //   $statusMessages.show();
+  // },
+  //
 
-
+  // updateStatusMessage(message) {
+  //   this.updateStatusMessageFrom({
+  //     'task': [message],
+  //   });
+  // },
+  //
 
 });
 
