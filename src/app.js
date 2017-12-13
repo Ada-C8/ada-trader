@@ -60,6 +60,7 @@ $(document).ready(function() {
     el: '#quotes-container',
     model: quotes,
     template: quoteTemplate,
+    bus: bus,
   });
   quoteListView.render();
 
@@ -68,5 +69,6 @@ $(document).ready(function() {
   const tradesView = new TradesView ({
     el: '#trades-container',
     template: tradeTemplate,
-  })
+    bus: bus,
+  });
 });

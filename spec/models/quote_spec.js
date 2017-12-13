@@ -28,4 +28,6 @@ describe('Quote spec', () => {
       expect(quote.get('price')).toEqual(startPrice - 1.00);
     });
   });
+
+  // TODO: write tests for makeTradeData method
 });
