@@ -26,9 +26,6 @@ const Order = Backbone.Model.extend({
     }
   },
   orderMe() {
-    console.log('listen');
-    console.log(this.targetPrice);
-    console.log(this.quote.get('price'));
     if (this.buy && this.targetPrice >= this.quote.get('price')) {
       this.trigger('orderMe');
       this.quote.buy();

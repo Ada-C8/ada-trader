@@ -2,8 +2,6 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import $ from 'jquery';
 
-
-
 const Quote = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
