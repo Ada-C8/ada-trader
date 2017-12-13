@@ -36,11 +36,13 @@ $(document).ready(function() {
   // templates
   quoteTemplate = _.template($('#quote-template').html());
 
+  // create new quote list
   const quotes = new QuoteList(quoteData);
   for (let quote of quoteData) {
     quotes.add(new Quote(quote));
   };
 
+  //create new quote list view
   const quoteListView = new QuoteListView({
     el: '#quotes-container',
     model: quotes,
@@ -49,6 +51,7 @@ $(document).ready(function() {
 
   quoteListView.render();
 
+  // run the simulator
   const simulator = new Simulator({
     quotes: quotes,
   });
