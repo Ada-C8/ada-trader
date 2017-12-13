@@ -18,6 +18,8 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
         bus: this.bus,
       });
+      // console.log('This is the quote_list_view model: this.model' + this.model);
+      // this.bus.trigger('create_order', this.model);
 
       // quoteView.render() returns back the jquery object from the quoteView
       // Selects the el tag of the current quotelistview in this case it is the main?

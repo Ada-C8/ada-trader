@@ -6,7 +6,10 @@ import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
+import OpenOrder from 'models/order'
+
 import QuoteList from 'collections/quote_list';
+
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
 
@@ -58,6 +61,15 @@ $(document).ready(function() {
     template: tradeTemplate,
     bus: bus,
   });
+
+  const orderListView = new OrderListView({
+    bus: bus,
+  });
+
+  // const orderView = new OrderView({
+  //   el: 'form select',
+  //   // model: order,
+  // });
 
   quoteListView.render();
 
