@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 const Simulator = Backbone.Model.extend({
   initialize(params) {
-    this.quotes = params.quotes;
+    this.quotes = params.quotes; // it is assigning and creating quotes with this.quotes 
   },
 
   start() {

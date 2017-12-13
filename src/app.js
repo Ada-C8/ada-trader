@@ -1,10 +1,20 @@
+// css
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+// vendor modules
 import $ from 'jquery';
+import _ from 'underscore';
+import Backbone from 'backbone';
 
+//simulator
 import Simulator from 'models/simulator';
+
+// files
 import QuoteList from 'collections/quote_list';
+import Quote from 'models/quote';
+import QuoteListView from 'views/quote_list_view';
+import QuoteView from 'views/quote_view';
 
 const quoteData = [
   {
@@ -25,11 +35,26 @@ const quoteData = [
   },
 ];
 
+// const quoteList = new QuoteList();
+
+
 $(document).ready(function() {
+
   const quotes = new QuoteList(quoteData);
-  const simulator = new Simulator({
+  const simulator = new Simulator({ // passing in a hash with a key quotes
     quotes: quotes,
   });
 
   simulator.start();
+
+  let quoteTemplate = _.template($('#quote-template').html());
+  
+  const quoteListView = new QuoteListView({
+    el: 'main',
+    model: quotes,
+    template: quoteTemplate,
+  });
+
+  quoteListView.render();
+
 });
