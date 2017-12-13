@@ -1,4 +1,3 @@
-// TODO: trigger event every time price changes that will attempt to complete open orders
 // TODO: create open orders using the form
 // TODO: return form errors when attempting to create an invalid open order
 
@@ -18,22 +17,29 @@ import TradeListView from 'views/trade_list_view';
 import OrderList from 'collections/order_list';
 import OrderListView from 'views/order_list_view';
 
+let eventBus = {};
+eventBus = _.extend(eventBus, Backbone.Events);
+
 const quoteData = [
   {
     symbol: 'HUMOR',
     price: 88.50,
+    bus: eventBus,
   },
   {
     symbol: 'CLOTH',
     price: 81.70,
+    bus: eventBus,
   },
   {
     symbol: 'HABIT',
     price: 98.00,
+    bus: eventBus,
   },
   {
     symbol: 'SUPER',
     price: 83.10,
+    bus: eventBus,
   },
 ];
 
@@ -42,11 +48,13 @@ const orderData = [
     symbol: 'HUMOR',
     targetPrice: 80.50,
     buy: false,
+    bus: eventBus,
   },
   {
     symbol: 'HUMOR',
     targetPrice: 89.50,
     buy: true,
+    bus: eventBus,
   },
 ];
 
@@ -58,8 +66,6 @@ $(document).ready(function() {
     );
   });
 
-  let eventBus = {};
-  eventBus = _.extend(eventBus, Backbone.Events);
   const tradeList = new TradeList();
   const tradeListView = new TradeListView({
     model: tradeList,
@@ -77,21 +83,6 @@ $(document).ready(function() {
     bus: eventBus,
   });
   quoteListView.render();
-
-  const orderData = [
-    {
-      symbol: 'HUMOR',
-      targetPrice: 80.50,
-      buy: false,
-      bus: eventBus,
-    },
-    {
-      symbol: 'HUMOR',
-      targetPrice: 89.50,
-      buy: true,
-      bus: eventBus,
-    },
-  ];
 
   const orders = new OrderList(orderData);
   orders.bus = eventBus;
