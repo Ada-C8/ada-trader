@@ -37,4 +37,12 @@ $(document).ready(function() {
   });
 
   simulator.start();
+  let quoteTemplate = _.template($('#quote-template').html());
+
+  const quoteListView = new QuoteListView({
+      el: 'main',
+      model: quotes,
+      template: quoteTemplate,
+    });
+      quoteListView.render();
 });
