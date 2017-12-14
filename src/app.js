@@ -4,11 +4,14 @@ import 'css/app.css';
 import $ from 'jquery';
 import _ from 'underscore';
 
+import Backbone from 'backbone';
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradeView from './views/trade_view';
+
 
 const quoteData = [
   {
@@ -62,5 +65,13 @@ $(document).ready(function() {
   });
 
   quoteListview.render();
+
+  const tradeView = new TradeView({
+    model: quotes,
+    template: _.template($('#trade-template').html()),
+    el: 'main'
+  });
+
+  tradeView.helper();
 
 });
