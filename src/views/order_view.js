@@ -20,9 +20,6 @@ const OrderView = Backbone.View.extend({
   },
 
   cancelOrder(event) {
-
-    
-
     // TRIGGERS ORDER LIST VIEW TO RE RENDER
     this.model.destroy();
     this.remove();

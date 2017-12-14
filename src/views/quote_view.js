@@ -6,6 +6,7 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'compareToMarketPrice', checkSubmittedOrderPrice);
   },
 
   events: {
@@ -34,7 +35,7 @@ const QuoteView = Backbone.View.extend({
     this.model.sell();
   },
 
-  render() {
+  render(event) {
     // JSON to make the view into the proper object format
     const compiledTemplate = this.template(this.model.toJSON());
 
@@ -45,6 +46,7 @@ const QuoteView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
+
 });
 
 export default QuoteView;

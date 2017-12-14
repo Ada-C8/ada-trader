@@ -6,6 +6,7 @@ const QuoteListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'compareToMarketPrice', checkSubmittedOrderPrice);
   },
 
   render() {
@@ -23,10 +24,16 @@ const QuoteListView = Backbone.View.extend({
       // Selects the el tag of the current quotelistview in this case it is the main?
       this.$('#quotes').append(quoteView.render().$el); // TODO: PLEASE BREAK DOWN WHAT $EL IS. THE JQUERY OBJECT? WHY CAN IT GO AT THE END?
     });
-    
+
     // SEE THE ORDER LIST VIEW FOR THE LISTEN TO RENDER MESSAGE
     this.bus.trigger('append_symbols', this.model);
     return this;
+  },
+  // TODO: I AM HERE!
+  checkSubmittedOrderPrice(order) {
+    if (this.model.get('symbol') === order.get('symbol') {
+
+    });
   },
 });
 

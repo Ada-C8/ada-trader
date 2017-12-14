@@ -49,6 +49,8 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseInt(orderData['targetPrice']),
       buy: true,
     });
+    // SEE QUOTE VIEW LIST FOR THE LISTEN TO
+    this.trigger('compareToMarketPrice', order);
 
     // Check model validations
     this.checkValidations(order);
@@ -70,6 +72,8 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseInt(orderData['targetPrice']),
       buy: false,
     });
+
+    // TODO: How do we check the target price of the current market price? When we submit the order form?
 
     // Check model validations
     this.checkValidations(order); // TODO: Come back to this

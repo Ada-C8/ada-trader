@@ -59,7 +59,7 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
-  const orderListView = new OrderListView({ 
+  const orderListView = new OrderListView({
     el: '#order-workspace',
     template: orderTemplate, // This is the form for each order view
     model: orders, // TODO: Check this
@@ -87,3 +87,8 @@ $(document).ready(function() {
 // Instatiante the view in the document ready and then set the attributes of the current view
 // Compile the template the trade view and then pass it in as
 // this.$el.prepend(compiledTemplate)
+
+// Quote needs a trigger 
+// Pass in open order needs a listener trigger
+// It is listening to quote.price
+//
