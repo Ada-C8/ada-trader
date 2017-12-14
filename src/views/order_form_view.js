@@ -21,10 +21,12 @@ const OrderFormView = Backbone.View.extend({
   createOrder(buyOption) {
     const sym = $('#symbol').val();
     const orderData = {
+      quotes: this.quotes,
+      bus: this.bus,
       symbol: sym,
       targetPrice: Number($('form input[name="price-target"]').val()),
       buy: buyOption.buy,
-      marketPrice: this.getCurrentPrice(this.getQuote(sym))
+      // marketPrice: this.getCurrentPrice(this.getQuote(sym))
     };
 
     return new Order(orderData);

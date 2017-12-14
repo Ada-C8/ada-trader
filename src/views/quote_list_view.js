@@ -24,6 +24,7 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote',
       });
+
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
@@ -31,6 +32,10 @@ const QuoteListView = Backbone.View.extend({
   events: {
   },
   addTrade(quote) {
+    console.log('in quote list');
+    console.log(this);
+    console.log(this.model);
+
     console.log('existing quote');
     console.log(quote);
     const tradeTemplate = this.tradeTemplate(quote.toJSON());

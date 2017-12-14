@@ -10,7 +10,6 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'change', this.checkOrders);
 
-    this.listenTo(this.bus, 'completeOrder', this.completeOrder);
     this.listenTo(this.bus, `buy${this.model.get('symbol')}`, this.buyQuote);
     this.listenTo(this.bus, `sell${this.model.get('symbol')}`, this.sellQuote);
   },
