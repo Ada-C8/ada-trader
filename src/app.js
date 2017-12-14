@@ -53,11 +53,12 @@ $(document).ready(function() {
     });
     quoteView.render();
     $('.quotes').append(quoteView.$el);
+    $('#option').append(`<option value= "${quote.get('symbol')}"> "${quote.get('symbol')}"</option> `);
 
   });
 
   const traderListView = new TraderListView({
-    model: quotes,
+    // model: pensar que pongo aca
     template: _.template($('#trade-template').html()),
     el: "#trades-container"
   });
