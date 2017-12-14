@@ -1,11 +1,16 @@
 import Quote from 'models/quote';
+import _ from 'underscore';
+import Backbone from 'backbone';
 
 describe('Quote spec', () => {
   let quote;
   beforeEach(() => {
+    let eventBus = {};
+    eventBus = _.extend(eventBus, Backbone.Events);
     quote = new Quote({
       symbol: 'HELLO',
       price: 100.00,
+      bus: eventBus,
     });
   });
 

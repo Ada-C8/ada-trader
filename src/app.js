@@ -20,7 +20,7 @@ const addErrors = function addErrors(message) {
   $('.form-errors').append(`<h3>${message}</h3>`);
 }
 
-const getFormData = function getFormData(orderData) {
+const addFormData = function addFormData(orderData) {
   ['symbol', 'targetPrice'].forEach( (field) => {
     let val = $(`.order-entry-form [name=${field}]`).val();
     if (field === 'targetPrice') {
@@ -103,8 +103,7 @@ $(document).ready(function() {
     event.preventDefault();
     clearFormErrors();
     const buying = event.currentTarget.classList.value.includes('btn-buy');
-    let orderData = {buy: buying, bus: eventBus};
-    orderData = getFormData(orderData);
+    const orderData = addFormData({buy: buying, bus: eventBus});
     eventBus.trigger('createOrder', orderData, quotes);
   })
 
