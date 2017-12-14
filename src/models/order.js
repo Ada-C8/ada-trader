@@ -1,0 +1,19 @@
+import Backbone from 'backbone';
+
+const Order = Backbone.Model.extend({
+  defaults:{
+    symbol: 'UNDEF',
+    targetPrice: 0.00
+  },
+
+  buy(){
+    this.set('buy', true);
+  },
+
+  sell(){
+    this.set('buy', false);
+  },
+
+});
+
+export default Order;
