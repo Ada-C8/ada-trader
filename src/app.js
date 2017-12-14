@@ -45,7 +45,6 @@ const quoteData = [
 ];
 
 
-
 $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
@@ -55,6 +54,7 @@ $(document).ready(function() {
   orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
+  
   const simulator = new Simulator({
     quotes: quotes,
   });
