@@ -28,12 +28,8 @@ const quoteData = [
     price: 83.10,
   },
 ];
-// const quoteList = new QuoteList();
-// let quoteTemplate;
 
 $(document).ready(function() {
-  // quoteTemplate = _.template($('#quote-template').html());
-
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
@@ -42,11 +38,10 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
     el: 'main'
   });
-  // console.log(quoteListView);
 
-
-  quoteListView.render();
+  quoteListView.renderQuote();
   simulator.start();
 });

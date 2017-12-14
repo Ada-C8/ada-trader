@@ -7,22 +7,26 @@ import QuoteView from 'views/quote_view';
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.listenTo(this.model, 'update', this.render);
+    this.tradeTemplate = params.tradeTemplate;
+    this.listenTo(this.model, 'update', this.renderQuote);
   },
-  render() {
+  renderQuote() {
     this.$('#quotes').empty();
 
     this.model.each((quote) => {
-      console.log(`rendering ${quote}`);
       const quoteView = new QuoteView({
         model: quote,
         template: this.template,
         className: 'quote',
       });
+      this.listenTo(quoteView, 'tradeUpdate', this.trade);
       this.$('#quotes').append(quoteView.render().$el);
     });
-
     return this;
+  },
+  trade: function(quoteView) {
+    const compiledTradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    this.$('#trades').prepend(compiledTradeTemplate);
   },
 
 });
