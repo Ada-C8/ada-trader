@@ -6,11 +6,15 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.bus, 'order_sale', this.buySellQuote)
   },
   render() {
+    // console.log('in quote render');
     const compiledTemplate = this.template(this.model.toJSON());
 
     this.$el.html(compiledTemplate);
+
+    this.bus.trigger('quote_change_price', this.model)
 
     return this
   },
@@ -25,24 +29,26 @@ const QuoteView = Backbone.View.extend({
   },
 
   buyQuote(event) {
-    let buyPrice = this.model.buy();
-    const attributes = {
-      buy: true,
-      symbol: this.model.get('symbol'),
-      price: buyPrice
-    }
-    this.bus.trigger('buy_sell_quote', attributes)
+    this.buySellQuote({ buy: true, symbol: this.model.get('symbol') });
   },
 
   sellQuote(event) {
-    let sellPrice = this.model.sell();
+    this.buySellQuote({ buy: false, symbol: this.model.get('symbol') });
+  },
+
+  buySellQuote(info) {
+    if (info.symbol !== this.model.get('symbol')) {
+      return
+    }
+    let salePrice = info.buy ? this.model.buy() : this.model.sell();
+
     const attributes = {
-      buy: false,
+      buy: info.buy,
       symbol: this.model.get('symbol'),
-      price: sellPrice
+      price: salePrice
     }
     this.bus.trigger('buy_sell_quote', attributes)
-  },
+  }
   // selectTask() {
   //   this.bus.trigger('selected_task', this.model)
   // },

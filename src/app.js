@@ -37,7 +37,7 @@ const quoteData = [
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
-  const orders = new OrderList([{symbol: 'HUMOR', buy: true, targetPrice: 100.00}]);
+  const orders = new OrderList();
   const simulator = new Simulator({
     quotes: quotes,
   });

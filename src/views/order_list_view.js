@@ -9,6 +9,7 @@ const OrderListView = Backbone.View.extend({
     this.quotes = params.quotes //this might be a bad idea
 
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.bus, 'quote_change_price', this.buySellQuote);
   },
 
   render() {
@@ -45,8 +46,6 @@ const OrderListView = Backbone.View.extend({
   addOrder(event) {
     event.preventDefault();
 
-
-
     const formData = this.getFormData();
     const quotePrice = this.quotes.where({symbol: formData['symbol']})[0].get('price');
 
@@ -54,22 +53,18 @@ const OrderListView = Backbone.View.extend({
       formData['buy'] = true;
       if (quotePrice <= formData['targetPrice']) {
         console.log('to set a Buy order, targetPrice must be lower than current price');
-        // this.updateStatusMessageFrom(newOrder.validationError);
-        return
-      }
-    } else {
-      formData['buy'] = false;
-      if (quotePrice >= formData['targetPrice']) {
-        console.log('to set a Sell order, targetPrice must be higher than current price');
-        // this.updateStatusMessageFrom(newOrder.validationError);
+        // this.updateStatusMessageFrom(invalid targetPrice);
         return
       }
     }
-
-
-
-    // if (quote.get('price'))
-
+    else {
+      formData['buy'] = false;
+      if (quotePrice >= formData['targetPrice']) {
+        console.log('to set a Sell order, targetPrice must be higher than current price');
+        // this.updateStatusMessageFrom(invalid targetPrice);
+        return
+      }
+    }
 
     const newOrder = new Order(formData);
 
@@ -125,6 +120,24 @@ const OrderListView = Backbone.View.extend({
   //   });
   // },
   //
+
+  buySellQuote(quote) {
+    const relevantOrders = this.model.where({symbol: quote.get('symbol')});
+
+    relevantOrders.forEach((order) => {
+      if (order.get('buy')) {
+        if (order.get('targetPrice') >= quote.get('price')) {
+          this.bus.trigger('order_sale', { buy: true, symbol: order.get('symbol') })
+          this.model.remove(order);
+        }
+      } else {
+        if (order.get('targetPrice') <= quote.get('price')) {
+          this.bus.trigger('order_sale', { buy: false, symbol: order.get('symbol') })
+          this.model.remove(order);
+        }
+      }
+    });
+  },
 
 });
 
