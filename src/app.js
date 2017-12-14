@@ -1,3 +1,5 @@
+import Backbone from 'backbone';
+
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
@@ -9,6 +11,7 @@ import Quote from './models/quote';
 import QuoteList from './collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+// import TradeHistoryView from './views/trade_history_view';
 
 const quoteData = [
   {
@@ -36,6 +39,10 @@ let tradeTemplate;
 
 $(document).ready( () => {
 
+  let bus = {}; //can trigger/subscribe to BB events
+  bus = _.extend(bus, Backbone.Events);
+  console.log("bus is " + bus);
+
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
 
@@ -45,10 +52,13 @@ $(document).ready( () => {
   });
 
   const quoteListView = new QuoteListView({
-    model: quotes,
-    template: quoteTemplate,
     el: '#quotes-container',
+    model: quoteList,
+    template: quoteTemplate,
+    bus: bus,
   });
+
+
 
   quoteListView.render();
 
@@ -57,22 +67,11 @@ $(document).ready( () => {
 
 });
 
-// const renderList = (quoteList) => {
-//
-//   const $quoteList = $('#quotes');
-//   $quoteList.empty();
-//
-//   quoteList.forEach((quote) => {
-//
-//     const quoteView = new QuoteView({
-//       model: quote,
-//       template: _.template($('#quote-template').html()),
-//       tagName: 'li',
-//       className: 'quote',
-//
-//     });
-//
-//     $quoteList.append(quoteView.render().$el);
-//   }); // for each
-//
-// }
+
+
+// const tradeHistoryView = new TradeHistoryView({
+//   el: '#trades-container',
+//   model: quoteList,
+//   template: tradeTemplate,
+//   bus: bus,
+// });
