@@ -11,6 +11,7 @@ const OrderListView = Backbone.View.extend ({
   },
 
   render() {
+    this.$('#orders').empty();
     // create new open orders
     this.model.each((order) => {
       const orderView = new OrderView({
@@ -27,34 +28,45 @@ const OrderListView = Backbone.View.extend ({
 
   events: {
     'click button.btn-buy': 'buyOrder',
-    // 'click button.btn-sell': 'sellQuote',
+    'click button.btn-sell': 'sellOrder',
   },
 
   buyOrder(event) {
     event.preventDefault();
     console.log('placing new buy order');
+    this.makeOrder(true);
+  },
 
+  sellOrder(event) {
+    event.preventDefault();
+    console.log('placing new sell order');
+    this.makeOrder(false);
+  },
+
+  makeOrder(option) {
     const formData = this.getFormData();
-    formData['buy'] = 'true';
-    
+    formData['buy'] = option;
+
     let currentPrice = this.quotes.findWhere({ symbol: formData['symbol']}).get('price');
     formData['currentPrice'] = currentPrice;
 
-    const buyOrder = new Order(formData);
-    if (buyOrder.isValid()) {
+    const newOrder = new Order(formData);
+    if (newOrder.isValid()) {
       console.log('validations passed');
-      this.model.add(buyOrder);
+      this.model.add(newOrder);
       this.clearFormData();
     } else {
       console.log('invalid order');
-      buyOrder.destroy();
+      newOrder.destroy();
     }
   },
 
   clearFormData() {
-    ['symbol', 'price-target'].forEach((field) => {
-      this.$(`#order-entry-form input[name=${field}]`).val('');
-    });
+    // ['symbol', 'price-target'].forEach((field) => {
+      // this.$(`#order-entry-form input[name=${field}]`).val('');
+    // });
+    this.$('form input[name=price-target]').val('');
+    this.$('form select[name=symbol]').val('');
   },
 
   getFormData() {
