@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
-import Quote from '../models/quote';
-import _ from 'underscore';
+// import Quote from '../models/quote';
+// import _ from 'underscore';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {

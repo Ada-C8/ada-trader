@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
+// import _ from 'underscore';
 
 import OrderView from '../views/order_view';
 import Order from '../models/order';
@@ -58,6 +58,7 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),
     };
 
+    orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
     const newOrder = new Order(orderData);
 
     if (newOrder.isValid()) {
