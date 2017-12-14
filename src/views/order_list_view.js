@@ -55,18 +55,17 @@ const OrderListView = Backbone.View.extend ({
       console.log('validations passed');
       this.model.add(newOrder);
       this.clearFormData();
+      this.successMessage('New Open Order succesfully created');
     } else {
       console.log('invalid order');
       newOrder.destroy();
+      this.errorsMessage(newOrder.validationError);
     }
   },
 
   clearFormData() {
-    // ['symbol', 'price-target'].forEach((field) => {
-      // this.$(`#order-entry-form input[name=${field}]`).val('');
-    // });
     this.$('form input[name=price-target]').val('');
-    this.$('form select[name=symbol]').val('');
+    this.$('form select[name=symbol]').val('HUMOR');
   },
 
   getFormData() {
@@ -84,6 +83,22 @@ const OrderListView = Backbone.View.extend ({
 
     console.log(orderData);
     return orderData;
+  },
+
+  clearMessage() {
+    this.$('.form-errors').empty();
+  },
+
+  successMessage(message) {
+    this.clearMessage();
+    this.$('.form-errors').append(`<p class="success">${message}</p>`);
+  },
+
+  errorsMessage(errorsHash) {
+    this.clearMessage();
+    for (let attr in errorsHash) {
+      this.$('.form-errors').append(`<p class="error">${errorsHash[attr]}</p>`);
+    }
   },
 
 

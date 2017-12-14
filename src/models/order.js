@@ -10,13 +10,13 @@ const Order = Backbone.Model.extend({
   validate(attributes) {
     const errors = {};
     if (!attributes.targetPrice) {
-      errors.targetPrice = ['can\'t be blank'];
+      errors.targetPrice = ['Target price can\'t be blank'];
     }
     else if (this.buy && this.targetPrice >= this.currentPrice) {
-      errors.targetPrice = ['can\'t be grater than or equal to the current market price'];
+      errors.targetPrice = ['Target price can\'t be grater than or equal to the current market price'];
     }
     else if (!this.buy && this.targetPrice <= this.currentPrice) {
-      errors.targetPrice = ['can\'t be less than or equal to the current market price'];
+      errors.targetPrice = ['Target price can\'t be less than or equal to the current market price'];
     }
 
     if (Object.keys(errors).length < 1) {
