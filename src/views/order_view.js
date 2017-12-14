@@ -1,12 +1,11 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
 import Quote from '../models/order';
-//copied from tradelist
+
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.listenTo(this.model, 'destroy', this.stop);
-    this.bus = params.bus;
+    this.listenTo(this.model, 'change', this.render);
   },
 
   render() {
@@ -19,13 +18,9 @@ const OrderView = Backbone.View.extend({
     'click .btn-cancel': 'cancelOrder',
   },
 
-  stop() {
-     this.model = null;
-     this.stopListening();
-   },
-
   cancelOrder() {
     this.model.destroy();
+    this.remove();
   },
 });
 export default OrderView;

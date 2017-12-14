@@ -5,26 +5,25 @@ import Order from '../models/order';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
-    this.listenTo(this.bus, 'newOrder', this.newOrder)
   },
 
   render() {
-    this.$('#trades').empty();
+    this.$('#orders').empty();
+
     this.model.each((order) => {
       const orderView = new OrderView({
         model: order,
         template: this.template,
         tagName: 'li',
-        className: 'order',
-        bus: this.bus,
+        className: 'order'
       });
+
       this.$('#orders').append(orderView.render().$el);
     });
-  return this;
-},
 
+    return this;
+  }
 });
 
 export default OrderListView;
