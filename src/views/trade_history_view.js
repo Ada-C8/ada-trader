@@ -24,14 +24,16 @@ const TradeHistoryView = Backbone.View.extend({
   el: '.trade',
 
   render() {
-    
-    // this.$el.html(compiledTemplate);
 
+    // this.$el.html(compiledTemplate);
+// this.$('.quotes').append(quoteView.render().$el);
     // this.$('.trades').empty();
     if (this.data) {
       const compiledTemplate =
       this.template(this.data);
-      this.$el.html(compiledTemplate);
+      // this.$el.html(compiledTemplate);
+      this.$el.prepend(compiledTemplate);
+
       //   console.log("rendering");
       console.log(this.data);
 
