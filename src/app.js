@@ -61,7 +61,7 @@ $(document).ready(function() {
 
   quoteListView.render();
 
-/////////trade history /////
+  /////////trade history /////
   let tradeHistoryTemplate = _.template($('#trade-template').html());
 
   const tradeHistoryView = new TradeHistoryView({
@@ -101,6 +101,22 @@ $(document).ready(function() {
     orders.push(order);
     // console.log(orderData);
   });
+
+
+  $('#order-form .btn-sell').on('click', function(event) {
+    event.preventDefault();
+    let orderData = {
+      buy: false
+    };
+
+    orderData['symbol'] = $('#select-symbol').val();
+    orderData['targetPrice'] = parseFloat($('#order-price').val());
+
+    let order = new Order(orderData);
+    orders.push(order);
+    // console.log(orderData);
+  });
+
 
   let orderTemplate = _.template($('#order-template').html());
 

@@ -16,8 +16,10 @@ const OpenOrderView = Backbone.View.extend({
     'click button.btn-cancel': 'cancel',
   },
   cancel(event) {
-    console.log('cancel');
-    // TODO destroy
+    // console.log('cancel');
+    if (confirm("Are you sure?") === true){
+      this.model.destroy();
+    }
   }
 });
 
