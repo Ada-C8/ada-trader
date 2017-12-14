@@ -17,11 +17,11 @@ const OrderListView = Backbone.View.extend({
 
     this.model.each((order) => {
       const orderView = new OrderView({
-        model: order,
-        tagName: 'li',
+            model: order,
+          tagName: 'li',
         className: 'order',
-        template: this.template,
-        bus: this.bus,
+         template: this.template,
+              bus: this.bus,
       });
       $orderList.append(orderView.render().$el);
     });

@@ -45,18 +45,22 @@ const OrderView = Backbone.View.extend({
   checkPrice(quote) {
     const quotePrice = quote.model.get('price');
     const targetPrice = this.model.get('targetPrice');
-    if (this.model.get('buy') && (quotePrice <= targetPrice) && !this.model.get('triggered')) {
-      // ⬇ what is a better way of stopping it from re-triggering itself before it completes??
+    const buy = this.model.get('buy');
+    if (buy && (quotePrice <= targetPrice)) {
+      // the 'triggered' attribute is a weird workaround - it takes
+      // long enough between the event being triggered by the price change
+      // and the model being deleted that, if the price stays within the range,
+      // it can be triggered again by the next price change. As far as I
+      // can tell, by changing the value of 'triggered' within this method,
+      // it reacts quickly enough to prevent that double-fire.
+      // What more elegant solutions could there be?
       if (!this.model.get('triggered')) {
         this.model.set('triggered', true);
-        // console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
         this.executeOrder(quote, true);
       }
-    } else if (!this.model.get('buy') && (quotePrice >= targetPrice)) {
-      console.log(this.model.get('triggered'));
+    } else if (!buy && (quotePrice >= targetPrice)) {
       if (!this.model.get('triggered')) {
         this.model.set('triggered', true);
-        // console.log(`target price is ${targetPrice}, current price is ${quotePrice}. buying`);
         this.executeOrder(quote, false);
       }
     }

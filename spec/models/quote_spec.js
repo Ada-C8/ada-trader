@@ -5,7 +5,7 @@ describe('Quote', () => {
   beforeEach(() => {
     quote = new Quote({
       symbol: 'HELLO',
-      price: 100.00,
+       price: 100.00,
     });
   });
 

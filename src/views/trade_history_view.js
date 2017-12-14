@@ -9,8 +9,8 @@ const TradeHistoryView = Backbone.View.extend({
   },
   newBuy(quote){
     const generatedHTML = this.template({
-      buy: true,
-      price: quote.get('price'),
+         buy: true,
+       price: quote.get('price'),
       symbol: quote.get('symbol'),
     });
 
@@ -18,8 +18,8 @@ const TradeHistoryView = Backbone.View.extend({
   },
   newSell(quote){
     const generatedHTML = this.template({
-      buy: false,
-      price: quote.get('price'),
+         buy: false,
+       price: quote.get('price'),
       symbol: quote.get('symbol'),
     });
 

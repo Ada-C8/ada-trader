@@ -17,11 +17,11 @@ const QuoteListView = Backbone.View.extend({
 
     this.model.each((quote) => {
       const quoteView = new QuoteView({
-        model: quote,
-        tagName: 'li',
+            model: quote,
+          tagName: 'li',
         className: 'quote',
-        template: this.template,
-        bus: this.bus,
+         template: this.template,
+              bus: this.bus,
       });
       $quoteList.append(quoteView.render().$el);
     });

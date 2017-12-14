@@ -14,33 +14,39 @@ import OrderList from 'collections/order_list';
 import OrderListView from 'views/order_list_view';
 import TradeHistoryView from 'views/trade_history_view';
 
+// declaring variables, initializing lists
+
 let quoteViewTemplate;
 let tradeTemplate;
 let orderTemplate;
 let quotes;
-// let quoteViewListTemplate;
+
+let bus = {};
+_.extend(bus, Backbone.Events);
 
 const quoteData = [
   {
     symbol: 'HUMOR',
-    price: 88.50,
+     price: 88.50,
   },
   {
     symbol: 'CLOTH',
-    price: 81.70,
+     price: 81.70,
   },
   {
     symbol: 'HABIT',
-    price: 98.00,
+     price: 98.00,
   },
   {
     symbol: 'SUPER',
-    price: 83.10,
+     price: 83.10,
   },
 ];
 
 quotes = new QuoteList(quoteData);
 const orders = new OrderList();
+
+// order form
 
 const populateForm = function populateForm () {
   const $form_select = $('#order-form select[name="symbol"]');
@@ -95,12 +101,12 @@ const getOrderFormData = function getFormData() {
 };
 
 $(document).ready(function() {
-  let bus = {};
-  _.extend(bus, Backbone.Events);
-
+  // compiling templates
   quoteViewTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
   orderTemplate = _.template($('#order-template').html());
+
+  // initializing views, simulator
   const simulator = new Simulator({
     bus: bus,
     quotes: quotes,
@@ -123,13 +129,13 @@ $(document).ready(function() {
     template: orderTemplate,
   });
 
+  // order form initialization & event listeners
   const orderForm = $('#order-form');
-  _.extend(orderForm, Backbone.Events);
   populateForm();
-
   $('#order-form').on('click', 'button.btn-buy', newBuy);
   $('#order-form').on('click', 'button.btn-sell', newSell);
 
+  // simulator & quote list initialization
   simulator.start();
   quotesView.render();
 });

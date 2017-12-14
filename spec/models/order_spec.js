@@ -4,9 +4,9 @@ describe('Order', () => {
   let order;
   beforeEach(() => {
     order = new Order({
-      symbol: 'HUMOR',
-      buy: true,
-      stockPrice: 50.00,
+           symbol: 'HUMOR',
+              buy: true,
+       stockPrice: 50.00,
       targetPrice: 40.00,
     });
   });
