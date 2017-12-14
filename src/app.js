@@ -8,12 +8,17 @@ import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+// import LimitOrder from 'models/LimitOrder';
 import QuoteListView from './views/quote_list_view';
 import MarketOrder from 'collections/market_order';
 import MarketOrderView from './views/market_order_view';
+import LimitOrderList from './collections/limit_order_list';
+import LimitOrderListView from './views/limit_order_list_view';
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
+let dropdownTemplate;
 
 let hamRadio = {};
 hamRadio = _.extend(hamRadio, Backbone.Events);
@@ -38,10 +43,24 @@ const quoteData = [
   },
 ];
 
+// const renderOrderDropdown =  function renderOrderDropdown(event){
+//   const dropdownElement = $('#dropdown');
+//   console.log('banana');
+//   dropdownElement.html('');
+//   console.log(event);
+//   console.log('this is event');
+//   event.forEach( (symbol) => {
+//     let generatedHTML = dropdownTemplate({symbol: symbol});
+//     dropdownElement.append(generatedHTML);
+//   });
+// };
 
 $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
+  dropdownTemplate = _.template($('#dropdown-symbol').html());
+  // hamRadio.listenTo(hamRadio, 'render_order_dropdown', renderOrderDropdown);
 
   const quotes = new QuoteList(quoteData);
   console.log(quotes);
@@ -60,12 +79,24 @@ $(document).ready(function() {
   console.log(marketOrder);
   console.log('that is the market order^^^^');
   const marketOrderView = new MarketOrderView({
-  el:'main',
-  model: marketOrder,
-  template: tradeTemplate,
-  hamRadio: hamRadio,
+    el:'main',
+    model: marketOrder,
+    template: tradeTemplate,
+    hamRadio: hamRadio,
   });
-  quoteListView.render();
 
+  // const limitOrder = new LimitOrder();
+  const limitOrderList = new LimitOrderList();
+  console.log(limitOrderList);
+  console.log('limit order list up there^^^');
+  const limitOrderListView = new LimitOrderListView({
+    el:'#order-workspace',
+    model: limitOrderList,
+    template: orderTemplate,
+    // dropdownTemplate: dropdownTemplate,
+    hamRadio: hamRadio,
+  });
+
+  quoteListView.render();
   simulator.start();
 });

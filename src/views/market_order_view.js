@@ -59,7 +59,7 @@ const MarketOrderView = Backbone.View.extend({
         tagName: 'li',
         className: 'trade'
       });
-      this.$('#trades').append(tradeView.render().$el);
+      this.$('#trades').prepend(tradeView.render().$el);
     });
 
     return this;

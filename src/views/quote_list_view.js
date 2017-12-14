@@ -6,8 +6,11 @@ const QuoteListView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.hamRadio = params.hamRadio;
-
+    // this.uniqueQuoteSymbols();
+    // this.listenTo(this.model, 'change', this.uniqueQuoteSymbols);
     this.listenTo(this.model, 'update', this.render);
+    // this.listenTo(this.model, 'update', this.uniqueQuoteSymbols);
+
   },
   events:{
 
@@ -61,6 +64,7 @@ const QuoteListView = Backbone.View.extend({
   render(){
     // backbone has it worked out that when using jquery only searches within this specific view
     this.$('#quotes').empty();
+
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
@@ -70,10 +74,27 @@ const QuoteListView = Backbone.View.extend({
         hamRadio: this.hamRadio,
       });
       this.$('#quotes').append(quoteView.render().$el);
-    });
 
+    });
+    this.uniqueQuoteSymbols();
     return this;
   },
+  uniqueQuoteSymbols(){
+    // this.$('#quotes').empty();
+    let quoteSymbols = [];
+    this.model.each((quote) => {
+      let symbol = quote.get('symbol');
+      if( !quoteSymbols.includes(symbol)){
+        quoteSymbols.push(symbol);
+      };
+    });
+    console.log('apples');
+    // debugger;
+    this.hamRadio.trigger('render_order_dropdown', quoteSymbols);
+    console.log('jelly');
+    return quoteSymbols;
+  },
+
 });
 
 export default QuoteListView;

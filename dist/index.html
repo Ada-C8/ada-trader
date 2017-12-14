@@ -59,7 +59,7 @@
            <h3>Order Entry Form</h3>
            <form>
              <label for="symbol">Symbol</label>
-             <select name="symbol">
+             <select id= 'dropdown' name="symbol">
                <!-- Option entries should be added here using JavaScript -->
              </select>
              <label for="price-target">Price</label>
@@ -113,6 +113,10 @@
         <span class="price">$<%- targetPrice.toFixed(2) %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
+    </script>
+
+    <script type="text/template" id="dropdown-symbol">
+      <option class="options" > <%- symbol %></option>
     </script>
 
     <script src="/app.bundle.js" charset="utf-8"></script>

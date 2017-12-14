@@ -5,7 +5,7 @@ const QuoteView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.hamRadio = params.hamRadio;
-    this.listenTo(this.model, 'change', this.render)
+    this.listenTo(this.model, 'change', this.render);
   },
   render(){
     const compiledTemplate =  this.template(this.model.toJSON());
