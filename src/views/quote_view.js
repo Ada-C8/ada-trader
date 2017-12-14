@@ -4,7 +4,7 @@ import Quote from '../models/quote';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-
+    this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
   },
   render() {
@@ -19,18 +19,27 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote(event) {
-    console.log('clicked into buyQuote');
-    console.log('this = ');
-    console.log(this);
-    console.log('this.model = ');
-    console.log(this.model);
-
+    console.log('clicked into buyQuote')
+    // this.trigger('makeTrade', makeTradeObject);
+    this.makeTradeObject(true),
     this.model.buy()
   },
   sellQuote(event) {
     console.log('clicked into sellQuote');
+    this.makeTradeObject(false),
     this.model.sell()
-  }
+  },
+  makeTradeObject(buy) {
+    console.log('buy stuff');
+    const trade = {
+      symbol: this.model.get('symbol'),
+      price: this.model.get('price'),
+      buy: buy,
+    };
+    console.log('trade object');
+    console.log(trade);
+    this.bus.trigger('makeTrade', trade);
+  },
 });
 
 export default QuoteView;
