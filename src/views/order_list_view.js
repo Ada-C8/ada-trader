@@ -10,8 +10,8 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
     this.quotes = params.quotes;
     this.bus = params.bus;
-    this.listenTo(this.bus, 'removeBuyOrder', this.cancelOrder);
-    this.listenTo(this.bus, 'removeSellOrder', this.cancelOrder);
+    this.listenTo(this.bus, 'removeOrder', this.removeOrder);
+    this.listenTo(this.bus, 'removeOrder', this.removeOrder);
   },
   render() {
     this.$('#orders').empty();
@@ -67,13 +67,9 @@ const OrderListView = Backbone.View.extend({
       console.log( 'order is not valid' );
     }
   },
-  cancelOrder(orderView) {
-    console.log('entering remove buy order');
-    console.log(orderView.model);
-    // this.model.remove(orderView.model);
+  removeOrder(orderView) {
     orderView.remove();
     orderView.model.destroy();
-    console.log(orderView.model);
   },
 })
 

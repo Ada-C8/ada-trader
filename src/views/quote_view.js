@@ -32,13 +32,13 @@ const QuoteView = Backbone.View.extend({
   buyOrder: function(orderView) {
     if (orderView.quote == this.model) {
       this.buyShare();
-      this.bus.trigger('removeBuyOrder', orderView);
+      this.bus.trigger('removeOrder', orderView);
     }
   },
   sellOrder: function(orderView) {
     if (orderView.quote == this.model) {
       this.sellShare();
-      this.bus.trigger('removeBuyOrder', orderView);
+      this.bus.trigger('removeOrder', orderView);
     }
   },
 })

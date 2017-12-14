@@ -14,7 +14,11 @@ const OrderView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
+  events: {
+    'click .btn-cancel': 'cancelOrder',
+  },
   checkPrice() {
+    // Better to trigger a cancelOrder from here or from the quoteview??
     if (this.model.attributes.buy) {
       if (this.model.attributes.targetPrice >= this.quote.attributes.price) {
         this.bus.trigger('buyOrder', this);
@@ -24,6 +28,9 @@ const OrderView = Backbone.View.extend({
         this.bus.trigger('sellOrder', this);
       }
     }
+  },
+  cancelOrder() {
+    this.bus.trigger('removeOrder', this);
   }
 })
 
