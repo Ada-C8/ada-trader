@@ -39,6 +39,30 @@ const OrderListView = Backbone.View.extend({
       symbol: selected_symbol,
       targetPrice: selected_price,
     });
+
+    // Run Validations
+    if (order.isValid()) {
+      this.model.add(order);
+      this.clearFormData();
+    } else {
+      this.displayOrderErrors(order.validationError);
+    }
+  },
+
+  displayOrderErrors(errors) {
+    const $errorDisplay = this.$('.form-errors');
+    $errorDisplay.append(`<p>${errors}</p>`);
+    // TODO: THIS IS WHERE I AM!!!
+//     const $statusMessages = this.$('#status-messages');
+// $statusMessages.empty();
+// // messageHash are the keys in a messageHash
+// Object.keys(messageHash).forEach((messageType) => {
+//   // Loop through the values of each key and then place them in the DOM #status-messages
+//   messageHash[messageType].forEach((message) => {
+//     $statusMessages.append(`<li>${message}</li>`);
+//   });
+// });
+// $statusMessages.show();
   },
 });
 
