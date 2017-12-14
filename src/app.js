@@ -39,15 +39,20 @@ const quoteData = [
   },
 ];
 
-const quoteList = new QuoteList();
+// const quoteList = new QuoteList();
+const openOrderList = new OpenOrderList();
+
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 
 $(document).ready(function() {
   let bus = {};
   // need to import backbone
   bus = _.extend(bus, Backbone.Events);
   quoteTemplate = _.template($('#quote-template').html());
+  orderTemplate = _.template($('#order-template').html());
+
 
   tradeTemplate = _.template($('#trade-template').html());
 
@@ -70,6 +75,14 @@ $(document).ready(function() {
     bus: bus,
     // model: quotes,
     template: tradeTemplate,
+  });
+
+  // OpenOrderListview will encompass the orderWorkspace div
+  const openOrderListView = new OpenOrderListView({
+    el: '#order-workspace',
+    model: openOrderList,
+    template: orderTemplate,
+    bus: bus,
   });
 
   quoteListView.render();
