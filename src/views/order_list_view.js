@@ -12,6 +12,8 @@ const OrderListView = Backbone.View.extend({
 
     // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
     this.listenTo(this.bus, 'append_symbols', this.renderDropDown);
+
+    // this.listenTo(this.b)
   },
 
   events: {

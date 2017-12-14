@@ -7,12 +7,25 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
   },
 
+  events: {
+    'click button.btn-cancel': 'cancelOrder',
+  },
+
   render() {
     // console.log('This is my render function in order view')
     const compiledTemplate = this.template(this.model.toJSON());
     // console.log(compiledTemplate);
     this.$el.html(compiledTemplate);
     return this;
+  },
+
+  cancelOrder(event) {
+
+    
+
+    // TRIGGERS ORDER LIST VIEW TO RE RENDER
+    this.model.destroy();
+    this.remove();
   },
 });
 
