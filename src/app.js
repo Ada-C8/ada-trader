@@ -8,9 +8,15 @@ import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
+import OpenOrder from 'models/open_order';
+
 import QuoteList from 'collections/quote_list';
+import OpenOrderList from 'collections/open_order_list';
+
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradeListView from './views/trade_list_view';
+import OpenOrderListView from './views/open_order_list_view';
 
 // let quoteTemplate;
 const quoteList = new QuoteList();
@@ -33,59 +39,58 @@ const quoteData = [
   },
 ];
 
-// const renderList = (quoteList) => {
-// Clear the unordered list
-// const $quoteList = $('#quotes');
-// $quoteList.empty();
-// quoteList.forEach((quote) => {
-//   const quoteView = new QuoteView({
-//     model: quote,
-//     template: _.template($('#quote-template').html()),
-//     tagName: 'li',
-//     className: 'quote',
-//   });
-//   $quoteList.append(quoteView.render().$el);
-// });
 
-// const $tradeList = $('#trade');
-// $tradeList.empty();
-//
-// tradeList.forEach((trade) => {
-//   const tradeView = new TradeView({
-//     model: quote,
-//     template: _.template($('#trade-template').html()),
-//     tagName: 'li',
-//     className: 'trade',
-//   });
-//   $tradeList.prepend(tradeView.render().$el);
-// });
-// }
+// openOrder
 
 
 $(document).ready(function() {
-  let tradeTemplate = _.template($('#trade-template').html());
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
 
+  let tradeTemplate = _.template($('#trade-template').html());
   let quoteTemplate = _.template($('#quote-template').html());
-  // console.log(_.template($('#quote-template').html()));
+  let orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
+  const openOrderList = new OpenOrderList()
+  const openOrder = new OpenOrder()
   const simulator = new Simulator({
     quotes: quotes,
   });
-  quoteList.add(quotes);
-  //
-  quoteList.add(new Quote({symbol: "wtf", price: 100}));
-  // console.log(quoteList)
+
+  // openOrderList.add(new OpenOrder({symbol: "WTF", price: "100"}));
+  // console.log('what is my openOrderList')
+  // console.log(openOrderList)
 
   const quoteListView = new QuoteListView({
     el: '#quotes-container',
-    model: quoteList,
+    model: quotes,
     template: quoteTemplate,
-    // bus: bus,
+    bus: bus,
   });
+
+  const tradeListView = new TradeListView({
+    el: '#trades-container',
+    template: tradeTemplate,
+    bus: bus,
+  });
+
+  // const openOrderView = new OpenOrderView({
+  //   el: '#order-workspace',
+  //   model: openOrderList,
+  //   template: orderTemplate,
+  //   bus: bus,
+  // });
+
+  const openOrderListView = new OpenOrderListView({
+    el: '#order-workspace',
+    model: openOrderList,
+    template: orderTemplate,
+    bus: bus,
+  });
+
+
   quoteListView.render();
-
-
-  // quoteList.on('update', renderList, quoteList);
+  openOrderListView.render();
   simulator.start();
 });

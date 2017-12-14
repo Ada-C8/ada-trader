@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 
+
 const Quote = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
@@ -7,17 +8,13 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    console.log(`${this.get('symbol')} has been bought for ${this.get('price')}`)
-    this.set('price', this.get('price') + 1)
-    const trade = new Trade()
-
+    console.log(`${this.get('symbol')} has been bought for ${this.get('price')}`);
+    this.set('price', this.get('price') + 1);
   },
 
   sell() {
     console.log(`${this.get('symbol')} has been sold for ${this.get('price')}`)
     this.set('price', this.get('price') - 1)
-
-
   },
 });
 
