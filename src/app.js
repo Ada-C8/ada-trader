@@ -1,7 +1,3 @@
-// TODO: create open orders using the form
-// TODO: return form errors when attempting to create an invalid open order
-
-
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
