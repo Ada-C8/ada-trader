@@ -60,5 +60,13 @@ $(document).ready(function() {
   })
   tradeListView.render();
 
+  quoteData.map(quote => quote.symbol).forEach((symbol) => {
+    $("select[name='symbol']").append($('<option>',
+    {
+      value: symbol,
+      text: symbol,
+    }));
+  });
+
   simulator.start();
 });
