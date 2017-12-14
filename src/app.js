@@ -20,6 +20,23 @@ import OrderListView from 'views/order_list_view';
 let eventBus = {};
 eventBus = _.extend(eventBus, Backbone.Events);
 
+const addErrors = function addErrors(message) {
+  $('.form-errors').append(`<h3>${message}</h3>`);
+}
+
+const getFormData = function getFormData(orderData) {
+  ['symbol', 'targetPrice'].forEach( (field) => {
+    let val = $(`.order-entry-form [name=${field}]`).val();
+    if (field === 'targetPrice') {
+      val = parseFloat(val);
+    }
+    if (val != '' && val != undefined) {
+      orderData[field] = val;
+    }
+  });
+  return orderData;
+};
+
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -60,7 +77,12 @@ const orderData = [
 ];
 
 $(document).ready(function() {
-  // <option disabled selected value> -- select an option -- </option>
+  eventBus.listenTo(eventBus, 'formErrors', addErrors);
+
+  const clearFormErrors = function clearFormErrors() {
+    $('.form-errors').empty();
+  };
+
   $("select[name='symbol']").append($('<option disabled selected value>'));
   quoteData.map( quote => quote.symbol ).forEach((symbol) => {
     $("select[name='symbol']").append($('<option>', {
@@ -68,17 +90,6 @@ $(document).ready(function() {
       text: symbol})
     );
   });
-
-  // TODO: add logic to use form to create an order
-  $('.order-entry-form .btn-buy').on('click', function(event) {
-    event.preventDefault();
-    eventBus.trigger('createOrder', {buy: true});
-  })
-
-  $('.order-entry-form .btn-sell').on('click', function(event) {
-    event.preventDefault();
-    eventBus.trigger('createOrder', {buy: false});
-  })
 
   const tradeList = new TradeList();
   const tradeListView = new TradeListView({
@@ -107,6 +118,15 @@ $(document).ready(function() {
     bus: eventBus,
   });
   orderListView.render();
+
+  $('.order-entry-form .btn-buy, .order-entry-form .btn-sell').on('click', function(event) {
+    event.preventDefault();
+    clearFormErrors();
+    const buying = event.currentTarget.classList.value.includes('btn-buy') ? true : false;
+    let orderData = {buy: buying, bus: eventBus};
+    orderData = getFormData(orderData);
+    eventBus.trigger('createOrder', orderData, quotes);
+  })
 
   const simulator = new Simulator({
     quotes: quotes,

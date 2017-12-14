@@ -16,9 +16,7 @@ const Order = Backbone.Model.extend({
     }
 
     if (!params.targetPrice) {
-      errors['price'] = ["Price is required"];
-    } else if ( typeof parseFloat(params.price) !== 'number' ) {
-      errors['price'] = ["Price must be a number"];
+      errors['price'] = ["Invalid target price"];
     }
 
     if ( Object.keys(errors).length > 0 ) {

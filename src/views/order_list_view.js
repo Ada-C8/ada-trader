@@ -24,25 +24,33 @@ const OrderListView = Backbone.View.extend({
     });
     return this;
   },
-  addOrder(params) {
-    const orderData = params;
-    ['symbol', 'targetPrice'].forEach( (field) => {
-      const val = this.$(`.order-entry-form [name=${field}]`).val();
-      if (val != '' && val != undefined) {
-        orderData[field] = val;
-      }
-    });
-    console.log(orderData);
+  addOrder(orderData, quotes) {
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
-      console.log('VALID');
-    //   this.model.add(newTask);
-    //   this.$('#add-task-form')[0].reset();
-    // this.updateStatusMessages(`New task added: ${newTask.get('task_name')}`);
+      if (orderData.buy) {
+        if (orderData.targetPrice < quotes.findWhere({symbol: orderData.symbol}).get('price')) {
+          this.model.add(newOrder);
+          this.$('.order-entry-form form')[0].reset();
+        } else {
+          newOrder.destroy();
+          this.bus.trigger('formErrors', '<h3>Price higher than market price!</h3>');
+        }
+      } else {
+        if (orderData.targetPrice > quotes.findWhere({symbol: orderData.symbol}).get('price')) {
+          this.model.add(newOrder);
+          this.$('.order-entry-form form')[0].reset();
+        } else {
+          newOrder.destroy();
+          this.bus.trigger('formErrors', 'Price lower than market price!');
+        }
+      }
     } else {
-      console.log('NOT VALID');
-      console.log(newOrder);
-    //   this.updateStatusMessages(newTask.validationError);
+      Object.keys(newOrder.validationError).forEach((key) => {
+        newOrder.validationError[key].forEach((error) => {
+          this.bus.trigger('formErrors', error);
+        })
+      })
+      newOrder.destroy();
     }
   }
 });
