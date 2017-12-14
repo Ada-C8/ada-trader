@@ -20,19 +20,19 @@ const QuoteListView = Backbone.View.extend({
       //Shaunna has a listener in here that appends the template (in a separate method)
       //editMe becomes the name of the custom method we are triggering from the quoteview
       //third parameter- is what is it going to do when it hears it
-      this.listenTo(quoteView, 'addBuy', this.prependQuote);
+      this.listenTo(quoteView, 'addTrade', this.prependTrades);
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
   },
   //we will append lines of HTML- not an object- from the template
-  prependQuote: function(quoteView){
-    console.log('we are in the prependQuote method in teh QuoteListView');
+  prependTrades: function(quoteView){
+    console.log('we are in the prependTrades method in teh QuoteListView');
     // console.log(this);
     console.log(quoteView.model.attributes);
     const tradeTemplate = _.template($('#trade-template').html());
     $('#trades').prepend(tradeTemplate(quoteView.model.attributes));
-  }
+  },
 });
 
 export default QuoteListView;

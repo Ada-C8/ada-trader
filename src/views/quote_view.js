@@ -1,4 +1,6 @@
 import Backbone from 'backbone';
+import $ from 'jquery';
+import _ from 'underscore';
 import Quote from '../models/quote';
 import Simulator from '../models/simulator';
 
@@ -20,17 +22,18 @@ const QuoteView = Backbone.View.extend({
   buyQuote: function(e) {
     console.log('clicked Buy button');
     this.model.set('price', this.model.buy());
-    //Shauna triggers an event that the quotelistview is listening for
-    // console.log(this.$el);
-    // console.log(this.model.get('symbol'));
-    // const quoteStored = new Quote({symbol: this.model.get('symbol'), price: this.model.get('price')})
-    // console.log(quoteStored);
+    console.log('made it pasdt the buy method');
     this.model.set('buy', true);
-    // this.trigger('addMe', quoteStored);
-    this.trigger('addBuy', this);
+    console.log(this.model);
+    //triggers an event that the quotelistview is listening for:
+    this.trigger('addTrade', this);
   },
   sellQuote: function(e) {
+    console.log('clicked Sell button');
     this.model.set('price', this.model.sell());
+    console.log('made it pasdt the sell method');
+    this.model.set('buy', false);
+    this.trigger('addTrade', this);
   }
 });
 
