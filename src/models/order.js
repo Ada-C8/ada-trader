@@ -34,7 +34,12 @@ const Order = Backbone.Model.extend({
   validate(attributes) {
     const errors = {};
     const marketPrice = this.getCurrentPrice();
+    const symbols = this.quotes.map(quote => quote.get('symbol'));
 
+    if (!symbols.includes(attributes.symbol)) {
+      errors['symbol'] = ['Is not in the list'];
+    }
+    
     if (!attributes.targetPrice) {
       errors['targetPrice'] = ['Cannot be blank'];
     }

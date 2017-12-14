@@ -12,12 +12,12 @@ const OrderFormView = Backbone.View.extend({
     'click .btn-buy': 'buyOrder',
     'click .btn-sell': 'sellOrder',
   },
-  getQuote(symbol) {
-    return this.quotes.findWhere({symbol: symbol});
-  },
-  getCurrentPrice(quote) {
-    return quote.get('price');
-  },
+  // getQuote(symbol) {
+  //   return this.quotes.findWhere({symbol: symbol});
+  // },
+  // getCurrentPrice(quote) {
+  //   return quote.get('price');
+  // },
   createOrder(buyOption) {
     const sym = $('#symbol').val();
     const orderData = {
@@ -31,6 +31,7 @@ const OrderFormView = Backbone.View.extend({
 
     return new Order(orderData);
   },
+  
   buyOrder: function(event) {
     event.preventDefault();
     this.clearErrors();
@@ -40,6 +41,7 @@ const OrderFormView = Backbone.View.extend({
     this.validate(order);
     this.$el.find('form').trigger('reset');
   },
+
   sellOrder: function(event) {
     event.preventDefault();
     this.clearErrors();
@@ -49,6 +51,7 @@ const OrderFormView = Backbone.View.extend({
     this.validate(order);
     this.$el.find('form').trigger('reset');
   },
+
   validate(order) {
     if (order.isValid()) {
       this.bus.trigger('addOrder', order);
@@ -56,9 +59,11 @@ const OrderFormView = Backbone.View.extend({
       this.renderError(order.validationError);
     }
   },
+
   clearErrors() {
     this.$('.form-errors').empty();
   },
+
   renderError(errors) {
     const errorSection = this.$('.form-errors');
     Object.keys(errors).forEach((field) => {
