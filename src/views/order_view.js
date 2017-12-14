@@ -29,7 +29,7 @@ const OrderView = Backbone.View.extend({
         if (this.model.get('targetPrice') < model.get('price').toFixed(2)) {
           console.log('BUY');
           console.log(parseFloat(this.model.get('targetPrice')));
-          
+
           const objectForTradeHistory = {
             model: model,
             buy: true,
@@ -38,11 +38,11 @@ const OrderView = Backbone.View.extend({
           };
 
           this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
+          this.stopListening(); ///destroy alone doesn't stop the listener
+          this.model.destroy();
         }
       }
     }
-
-
   },
 
   destroyOrder(event) {
