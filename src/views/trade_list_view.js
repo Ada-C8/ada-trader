@@ -9,8 +9,12 @@ const TradeListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render)
     this.listenTo(this.bus, 'bought_quote', this.buyTrade)
     this.listenTo(this.bus, 'sold_quote', this.sellTrade)
+    this.listenTo(this.bus, 'automatic_buy', this.buyTrade)
+    this.listenTo(this.bus, 'automatic_sell', this.sellTrade)
+
   },
   render(model) {
+    this.$('#trades').empty()
     this.model.each((trade) => {
       const tradeView = new TradeView({
         model: trade,
@@ -23,6 +27,8 @@ const TradeListView = Backbone.View.extend({
     })
     return this
   },
+
+  //combine into addTrade
   buyTrade(model) {
     const newTrade = new Trade({symbol: model.attributes.symbol, price: model.attributes.price})
     if(newTrade.isValid()) {
@@ -33,6 +39,7 @@ const TradeListView = Backbone.View.extend({
     // this.render();
   },
   sellTrade(model) {
+    console.log('getting into sell trade!');
     const newTrade = new Trade({symbol: model.attributes.symbol, price: model.attributes.price, buy: false})
     if(newTrade.isValid()) {
       this.model.add(newTrade);
@@ -40,9 +47,6 @@ const TradeListView = Backbone.View.extend({
       newTrade.destroy();
     }
   }
-    // events: {
-    //
-    // },
   })
 
   export default TradeListView

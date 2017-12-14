@@ -1,6 +1,7 @@
 import Backbone from 'backbone';
 
 const Quote = Backbone.Model.extend({
+
   defaults: {
     symbol: 'UNDEF',
     price: 0.00,

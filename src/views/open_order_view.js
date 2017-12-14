@@ -9,6 +9,7 @@ const OpenOrderView = Backbone.View.extend({
   },
 
   render() {
+    this.$el.empty();
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;

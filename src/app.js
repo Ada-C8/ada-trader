@@ -59,9 +59,7 @@ $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events)
 
-  const simulator = new Simulator({
-    quotes: quotes,
-  });
+
 
   const quoteListView = new QuoteListView({
     el: 'main',
@@ -89,9 +87,12 @@ $(document).ready(function() {
   const openOrders = new OpenOrderList();
 
   tradeListView.render();
-  openOrderListView.render();
   quoteListView.render();
+  openOrderListView.render();
 
+  const simulator = new Simulator({
+    quotes: quotes,
+  });
 
   simulator.start();
 });

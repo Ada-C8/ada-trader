@@ -7,9 +7,10 @@ const QuoteListView = Backbone.View.extend({
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render)
     this.bus = params.bus;
-    // listenTo event
   },
+
   render() {
+    this.$('#quotes').empty()
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
@@ -18,10 +19,10 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
         bus: this.bus,
       });
+      // this.bus.trigger('automatic_trade', this.model)
       this.$('#quotes').append(quoteView.render().$el)
-
-      this.bus.trigger('quotes', this.model);
     })
+    this.bus.trigger('quotes', this.model);
   },
     // events: {
     //
