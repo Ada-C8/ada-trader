@@ -6,14 +6,14 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
     this.tradeTemplate = params.tradeTemplate;
     this.bus = params.bus,
-    console.log('init');
-    console.log(params);
-    console.log(this.template);
-    console.log(this.tradeTemplate);
 
     // listen to changes in model and render
     this.listenTo(this.model, 'change', this.render);
-    // this.listenTo(this.bus, 'addTrade', )
+    this.listenTo(this.model, 'change', this.checkOrders);
+
+    this.listenTo(this.bus, 'completeOrder', this.completeOrder);
+    this.listenTo(this.bus, `buy${this.model.get('symbol')}`, this.buyQuote);
+    this.listenTo(this.bus, `sell${this.model.get('symbol')}`, this.sellQuote);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -26,14 +26,22 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote() {
+    console.log('buy triggered');
+    console.log(this);
+
     this.model.buy();
-    // this.trigger('addTrade', this);
     this.bus.trigger('addTrade', this.model);
   },
   sellQuote() {
+    console.log('sell triggered');
+    console.log(this);
+
     this.model.sell();
-    // this.trigger('addTrade', this);
     this.bus.trigger('addTrade', this.model);
+  },
+  checkOrders() {
+    const sym = this.model.get('symbol');
+    this.bus.trigger(`check${sym}`, this.model);
   },
 });
 

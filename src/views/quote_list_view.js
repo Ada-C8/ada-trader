@@ -3,6 +3,7 @@ import _ from 'underscore';
 import $ from 'jquery';
 
 import Quote from '../models/quote';
+import Order from '../models/order';
 import QuoteView from '../views/quote_view';
 
 const QuoteListView = Backbone.View.extend({
@@ -10,6 +11,7 @@ const QuoteListView = Backbone.View.extend({
     this.template = params.template;
     this.tradeTemplate = params.tradeTemplate;
     this.bus = params.bus,
+
     this.listenTo(this.model, 'update', this.render);
     this.listenTo(this.bus, 'addTrade', this.addTrade);
   },
@@ -34,6 +36,8 @@ const QuoteListView = Backbone.View.extend({
   },
   addTrade(quote) {
     // const tradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    console.log('existing quote');
+    console.log(quote);
     const tradeTemplate = this.tradeTemplate(quote.toJSON());
     $('#trades').prepend(tradeTemplate);
   },

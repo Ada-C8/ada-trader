@@ -7,8 +7,11 @@ import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 
 import QuoteListView from './views/quote_list_view';
+import OrderFormView from './views/order_form_view';
+import OrderListView from './views/order_list_view';
 
 const quoteData = [
   {
@@ -30,8 +33,21 @@ const quoteData = [
 ];
 
 const quotes = new QuoteList(quoteData);
+const orders = new OrderList();
+
+// add options to select tag for dropdown in order form
+const addOptions = function addOptions() {
+  const select = $('select[name="symbol"]');
+  const optArray = $('#quotes').find('h3.symbol');
+
+  for (let i = 0; i < optArray.length; i += 1) {
+    const opt = new Option(optArray[i].innerHTML, optArray[i].innerHTML);
+    select.append(opt);
+  }
+};
 
 $(document).ready(function() {
+
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -50,4 +66,21 @@ $(document).ready(function() {
   });
 
   quoteListView.render();
+  addOptions();
+
+
+  const orderFormView = new OrderFormView({
+    quotes: quotes,
+    bus: bus,
+    el: '.order-entry-form',
+  });
+
+  const orderListView = new OrderListView({
+    model: orders,
+    bus: bus,
+    template: _.template($('#order-template').html()),
+    el: '.orders-container',
+  });
+  orderListView.render();
+
 });
