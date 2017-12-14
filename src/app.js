@@ -29,21 +29,34 @@ const quoteData = [
   },
 ];
 
-$(document).ready(() => {
-  // quoteTemplate = _.template($('#quote-template').html());
 
-    const quotes = new QuoteList(quoteData);
-    const simulator = new Simulator({
-      quotes: quotes,
+
+$(document).ready(() => {
+  const quotes = new QuoteList(quoteData);
+  // quoteTemplate = _.template($('#quote-template').html());
+  // append to symbol label
+  function dropdown(){
+    const $label = $(`select[name=symbol]`);
+    quotes.forEach(function(quote) {
+      let dropdownItem = `<option value= ${quote.get('symbol')}> ${quote.get('symbol')}</option>`;
+      $label.append(dropdownItem);
     });
+  }
+  dropdown();
+
+
+  const simulator = new Simulator({
+    quotes: quotes,
+  });
 
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
     el: 'main',
   });
 
   quoteListView.render();
-  
+
   simulator.start();
 });
