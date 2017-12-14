@@ -12,9 +12,8 @@ const Quote = Backbone.Model.extend({
       symbol: this.get('symbol'),
       price: this.get('price'),
     };
-    this.set('price', (this.get('price') + 1.00));
     this.trigger('clickedBuyOrSellQuote', tradeData);
-
+    this.set('price', (this.get('price') + 1.00));
   },
   sell() {
     // Implement this function to decrease the price by $1.00
@@ -23,8 +22,9 @@ const Quote = Backbone.Model.extend({
       symbol: this.get('symbol'),
       price: this.get('price'),
     };
-    this.set('price', (this.get('price') - 1.00));
+
     this.trigger('clickedBuyOrSellQuote', tradeData);
+    this.set('price', (this.get('price') - 1.00));
 
   },
 });
