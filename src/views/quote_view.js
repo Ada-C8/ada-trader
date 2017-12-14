@@ -14,7 +14,7 @@ const QuoteView = Backbone.View.extend({
     return this;
   }, //render
   events: {
-    'click button.btn-buy': 'buy',
+    'click button.btn-buy': 'buy', //why lowercase?
     'click button.btn-sell': 'sell'
   },
 

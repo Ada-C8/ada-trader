@@ -10,6 +10,7 @@ import QuoteList from 'collections/quote_list';
 
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradeListView from './views/trade_list_view';
 
 const quoteData = [
   {
@@ -46,8 +47,10 @@ const quoteData = [
 // };
 
 let quoteTemplate;
+let tradeTemplate;
 
 $(document).ready(function() {
+  // Quotes
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
@@ -65,7 +68,17 @@ $(document).ready(function() {
 
   quoteListView.render();
 
+// Trade History
+tradeTemplate = _.template($('#trade-template').html());
 
+  const tradeListView = new TradeListView({
+    model: quotes,
+    template: tradeTemplate,
+    el: 'main',
+
+  });
+
+  tradeListView.bind();
 
 // // render one quote
 // const $quoteList = $('#quotes');
@@ -77,7 +90,8 @@ $(document).ready(function() {
 //     tagName: 'li',
 //     className: 'quote'
 //   });
-//   quoteView.render();
+//   $('#quotes-list')quoteView.render();
 //
-//   $quoteList.append(quoteView.render().$el);
+        //   $quoteList.append(quoteView.render().$el);
+
 });
