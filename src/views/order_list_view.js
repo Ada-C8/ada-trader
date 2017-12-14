@@ -48,16 +48,6 @@ const OrderListView = Backbone.View.extend({
 
     const formData = this.getFormData();
     formData['buy'] = event.target.classList.contains('btn-buy') ? true : false;
-
-    const quotePrice = this.quotes.where({symbol: formData['symbol']})[0].get('price');
-    const invalidBuy = formData['buy'] && (quotePrice <= formData['targetPrice'])
-    const invalidSell = !formData['buy'] && (quotePrice >= formData['targetPrice'])
-
-    if (invalidBuy || invalidSell) {
-      this.updateStatusMessage(`to set a ${invalidBuy ? 'buy' : 'sell'} order, targetPrice must be ${invalidBuy ? 'lower' : 'higher'} than current price`); //is this the right place to be doing this validation?
-      return
-    }
-
     const newOrder = new Order(formData);
 
     if (!newOrder.isValid()) {
@@ -75,11 +65,12 @@ const OrderListView = Backbone.View.extend({
     const orderData = {};
 
     orderData['symbol'] = this.$('#add-order-form select[name="symbol"]').val();
-
+    orderData['quote'] = this.quotes.where({symbol: orderData['symbol']})[0];
     orderData['targetPrice'] = Number(this.$('#add-order-form input[name="price-target"]').val());
 
     return orderData;
   },
+
   clearFormData() {
     this.$('#add-order-form input[name="price-target"]').val('');
   },
