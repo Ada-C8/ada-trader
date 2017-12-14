@@ -9,14 +9,10 @@ const TradeHistoryView = Backbone.View.extend({
 
   render(data) {
     console.log('In TradeHistoryView render');
-    console.log(data);
-    console.log(data.model.attributes.symbol);
-    console.log(data.model.get('price'));
 
     const compiledTemplate =
       this.template(data);
 
-    console.log(this.template(data));
     this.$('#trades').prepend(compiledTemplate);
 
     return this;
@@ -25,25 +21,3 @@ const TradeHistoryView = Backbone.View.extend({
 });
 
 export default TradeHistoryView;
-//
-// createTradeHistory(model){
-//   console.log('In createTradeHistory');
-//   console.log(model);
-//   console.log(model.attributes.symbol);
-//   console.log(model.get('price'));
-//
-//   const symbol = model.get('symbol');
-//   const price = model.get('price');
-//
-//   this.render();
-// },
-
-//
-// const symbol = data.model.get('symbol');
-// const price = data.model.get('price');
-// const formattedPrice = price.toFixed(2)
-// const type = data.type;
-//
-//
-//
-// this.$('#trades').prepend(`<li>You ${type} ${symbol} at $${formattedPrice}</li>`)

@@ -4,31 +4,24 @@ import Order from '../models/order';
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.bus = params.bus; //listening for prices in quote model
+    this.bus = params.bus;
 
-    // this.listenTo(this.bus, 'create_new_order', this.render);
-    this.listenTo(this.model, 'change', this.render); //listen for destory
+    this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.bus, 'price_change', this.checkForPriceMatch);
   },
 
   checkForPriceMatch(model) {
     console.log('In checkForPriceMatch');
     console.log(model);
-    console.log(this.model.get('symbol'));
-    console.log(model.get('price').toFixed(2));
-    console.log('TARGETPRICE!!!');
-    console.log(this.model.get('targetPrice'));
 
     if (model.get('symbol') === this.model.get('symbol')) {
-      console.log('HUMOR MATCH');
-      console.log(this.model.get('buy'));
+      console.log('Symbol Match');
 
       if (this.model.get('buy')) {
-        console.log('BUY IS TRUE');
+        console.log('Buy attribute is true');
 
-        if (this.model.get('targetPrice') < model.get('price').toFixed(2)) {
-          console.log('BUY');
-          console.log(parseFloat(this.model.get('targetPrice')));
+        if (this.model.get('targetPrice') >= model.get('price').toFixed(2)) {
+          console.log('Executing buy order');
 
           const objectForTradeHistory = {
             model: model,
@@ -42,11 +35,10 @@ const OrderView = Backbone.View.extend({
           this.model.destroy();
         }
       } else {
-        console.log('BUY IS FALSE, SO SELL');
+        console.log('Buy attribute is false');
 
-        if (this.model.get('targetPrice') > model.get('price').toFixed(2)) {
-          console.log('SELL');
-          console.log(parseFloat(this.model.get('targetPrice')));
+        if (this.model.get('targetPrice') <= model.get('price').toFixed(2)) {
+          console.log('Executing sell order');
 
           const objectForTradeHistory = {
             model: model,
@@ -74,8 +66,6 @@ const OrderView = Backbone.View.extend({
 
   render(){
     console.log('In order view render:');
-    console.log(this.model.targetPrice);
-    console.log(this.model.attributes);
 
     //TODO: when I access attributes via this.model.attributes the targetPrice turns into a string? Workaround below
 
@@ -87,12 +77,6 @@ const OrderView = Backbone.View.extend({
 
     const compiledTemplate = this.template(obj);
     this.$el.html(compiledTemplate);
-
-    // const compiledTemplate = this.template(this.model.attributes);
-    // this.$el.html(compiledTemplate);
-
-    console.log('Template please?');
-    console.log(compiledTemplate);
 
     return this;
   },

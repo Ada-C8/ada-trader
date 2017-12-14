@@ -17,7 +17,6 @@ const QuoteListView = Backbone.View.extend({
   },
 
   render() {
-    // const $quotes = this.$('#quotes').empty();
     this.$('#quotes').empty();
 
     this.model.each((quote) => {
