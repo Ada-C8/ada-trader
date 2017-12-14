@@ -102,7 +102,7 @@ $(document).ready(function() {
   $('.order-entry-form .btn-buy, .order-entry-form .btn-sell').on('click', function(event) {
     event.preventDefault();
     clearFormErrors();
-    const buying = event.currentTarget.classList.value.includes('btn-buy') ? true : false;
+    const buying = event.currentTarget.classList.value.includes('btn-buy');
     let orderData = {buy: buying, bus: eventBus};
     orderData = getFormData(orderData);
     eventBus.trigger('createOrder', orderData, quotes);
