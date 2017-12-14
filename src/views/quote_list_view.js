@@ -6,7 +6,7 @@ const QuoteListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
-    this.listenTo(this.model, 'compareToMarketPrice', checkSubmittedOrderPrice);
+    this.listenTo(this.bus, 'compareToMarketPrice', this.checkSubmittedOrderPrice);
   },
 
   render() {
@@ -29,12 +29,19 @@ const QuoteListView = Backbone.View.extend({
     this.bus.trigger('append_symbols', this.model);
     return this;
   },
-  // TODO: I AM HERE!
-  checkSubmittedOrderPrice(order) {
-    if (this.model.get('symbol') === order.get('symbol') {
 
+  checkSubmittedOrderPrice(submittedOrder) {
+    this.model.forEach((quote) => {
+
+      // TODO:
+      if (quote.get('symbol') === submittedOrder.get('symbol') && submittedOrder.get('targetPrice') >= quote.get('price')) {
+        return false;
+      } else {
+        return true;
+      }
     });
   },
+
 });
 
 export default QuoteListView;

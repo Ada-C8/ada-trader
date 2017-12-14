@@ -6,7 +6,6 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'compareToMarketPrice', checkSubmittedOrderPrice);
   },
 
   events: {

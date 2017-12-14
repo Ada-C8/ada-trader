@@ -12,8 +12,6 @@ const OrderListView = Backbone.View.extend({
 
     // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
     this.listenTo(this.bus, 'append_symbols', this.renderDropDown);
-
-    // this.listenTo(this.b)
   },
 
   events: {
@@ -37,9 +35,8 @@ const OrderListView = Backbone.View.extend({
 
   createBuyOrder(event) {
     event.preventDefault();
-    this.$('.form-errors').empty();
+    this.$('.form-errors').empty(); // TODO: Do I need this?
 
-    // TODO: Make this into a separate function - get form data
     const orderData = this.getFormData();
 
     // TODO: Make this into a separate function create order based on click selection
@@ -49,11 +46,20 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseInt(orderData['targetPrice']),
       buy: true,
     });
-    // SEE QUOTE VIEW LIST FOR THE LISTEN TO
-    this.trigger('compareToMarketPrice', order);
 
-    // Check model validations
-    this.checkValidations(order);
+    // SEE QUOTE VIEW LIST FOR THE LISTEN TO
+    // Explicit check of boolean
+    if (this.bus.trigger('compareToMarketPrice', order) === true) {
+      // console.log("My order returns true?")
+      // Check model validations
+      this.checkValidations(order);
+    } else {
+      // console.log("Returns false errors should be displayed???")
+      
+      // TODO: Does this need to be a custom error when the model is saved?
+      const $errorDisplay = this.$('.form-errors');
+      $errorDisplay.append(`<p>Your must be less than the current market price and greater than 0!</p>`);
+    }
   },
 
   ////////////////////////// DISPLAY SELL ORDER ////////////////////////
@@ -135,7 +141,6 @@ const OrderListView = Backbone.View.extend({
     this.$('form input[name=price-target]').val('');
     this.$('form-errors').empty();
   },
-
 });
 
 export default OrderListView;
