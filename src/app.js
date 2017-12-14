@@ -43,6 +43,10 @@ $(document).ready(function() {
     el: 'main'
   });
 
+  const orderListView = new OrderListView({
+    el: '#order-workspace'
+  })
+
   quoteListView.render();
   simulator.start();
 });
