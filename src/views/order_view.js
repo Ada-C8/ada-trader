@@ -15,6 +15,15 @@ const OrderView = Backbone.View.extend({
     return this
   },
 
+  events: {
+    'click button.btn-cancel': 'destroyOrder',
+  },
+
+  destroyOrder() {
+    this.model.destroy();
+    this.remove();
+  },
+
 });
 
 
