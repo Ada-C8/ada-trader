@@ -7,6 +7,7 @@ const OrderListView = Backbone.View.extend({
     this.bus = params.bus;
     this.template = params.template;
 
+    // SEE CHECKVALIDATION METHOD FOR THE .ADD TO THE COLLECTION FOR TRIGGERED EVENT
     this.listenTo(this.model, 'update', this.renderOpenOrders);
 
     // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
@@ -14,6 +15,7 @@ const OrderListView = Backbone.View.extend({
   },
 
   events: {
+    // TODO: PUT THESE IN THEIR OWN FUNCTIONS
     'click form button.btn-buy': 'displayBuyOrder',
     'click form button.btn-sell': 'displaySellOrder',
   },
@@ -35,16 +37,17 @@ const OrderListView = Backbone.View.extend({
     event.preventDefault();
     this.$('.form-errors').empty();
 
-    // TODO: Make this into a separate function
-    let selectedSymbol = this.$('form select[name=symbol]').val();
-    let selectedPrice = this.$('form input[name=price-target]').val();
+    // // TODO: Make this into a separate function - get form data
+    // let selectedSymbol = this.$('form select[name=symbol]').val();
+    // let selectedPrice = this.$('form input[name=price-target]').val();
+    const orderData = this.getFormData();
 
-    // TODO: Make this into a separate function
+    // TODO: Make this into a separate function create order based on click selection
     // A new order is created for each submission
     const order = new Order({
-      symbol: selectedSymbol,
+      symbol: orderData['symbol'],
       // console.log(`selectedPrice === String`);
-      targetPrice: parseInt(selectedPrice),
+      targetPrice: parseInt(orderData['targetPrice']),
       buy: true,
     });
 
@@ -59,18 +62,29 @@ const OrderListView = Backbone.View.extend({
     this.$('.form-errors').empty();
 
     // TODO: Make this into a separate function
-    let selectedSymbol = this.$('form select[name=symbol]').val();
-    let selectedPrice = this.$('form input[name=price-target]').val();
+    // let selectedSymbol = this.$('form select[name=symbol]').val();
+    // let selectedPrice = this.$('form input[name=price-target]').val();
+    const orderData = this.getFormData();
 
+    // TODO: Make this into a separate function create order based on click selection
     // A new order is created for each submission
     const order = new Order({
-      symbol: selectedSymbol,
-      targetPrice: parseInt(selectedPrice),
+      symbol: orderData['symbol'],
+      // console.log(`selectedPrice === String`);
+      targetPrice: parseInt(orderData['targetPrice']),
       buy: false,
     });
 
     // Check model validations
     this.checkValidations(order); // TODO: Come back to this
+  },
+
+  ////////////////////////// GET FORM DATA ////////////////////////
+  getFormData() {
+    const data = {};
+    data['symbol'] = this.$('form select[name=symbol]').val();
+    data['targetPrice'] = this.$('form input[name=price-target]').val();
+    return data;
   },
 
   //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
