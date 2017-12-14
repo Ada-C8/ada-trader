@@ -6,9 +6,12 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
 
     this.listenTo(this.model, 'change', this.render);
+    // add event listener for 'action' from Order View
+    // this.listenTo(this.view, 'action', this.addTrade);
   },
 
   render() {
+    // console.log('rerendering the quotes');
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
 

@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
   initialize(params) {
+    this.currentQuote = params.currentQuote,
     this.currentPrice = params.currentPrice,
     this.buy = params.buy,
     this.targetPrice = params.targetPrice
@@ -24,10 +25,6 @@ const Order = Backbone.Model.extend({
     }
     return errors;
   },
-
-  // buy() {
-  //   this.set('price', this.get('price') + 1.00);
-  // },
 
 });
 

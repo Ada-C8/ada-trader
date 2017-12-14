@@ -19,6 +19,8 @@ const OrderListView = Backbone.View.extend ({
         template: this.template,
         tagName: 'li',
         className: 'orders',
+        currentQuote: order.currentQuote,
+        buy: order.buy
       });
 
       this.$('#orders').append(orderView.render().$el);
@@ -47,7 +49,10 @@ const OrderListView = Backbone.View.extend ({
     const formData = this.getFormData();
     formData['buy'] = option;
 
-    let currentPrice = this.quotes.findWhere({ symbol: formData['symbol']}).get('price');
+    // find corresponding quote model
+    let currentQuote = this.quotes.findWhere({ symbol: formData['symbol']});
+    formData['currentQuote'] = currentQuote;
+    let currentPrice = currentQuote.get('price');
     formData['currentPrice'] = currentPrice;
 
     const newOrder = new Order(formData);
@@ -100,28 +105,6 @@ const OrderListView = Backbone.View.extend ({
       this.$('.form-errors').append(`<p class="error">${errorsHash[attr]}</p>`);
     }
   },
-
-
-
-  // buyQuote(event) {
-  //   console.log('buying quote');
-  //   this.model.buy();
-  //   const quote = {
-  //     price: this.model.get('price'),
-  //     symbol: this.model.get('symbol'),
-  //     buy: true,
-  //   }
-  //   this.trigger('add_trade', quote);
-  // },
-  //
-  // addTrade(quote) {
-  //   console.log('passing new trade to trades view');
-  //   this.trigger('add_trade', quote);
-  // }
-
-
-  // buy action
-
 
 });
 
