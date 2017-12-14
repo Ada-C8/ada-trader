@@ -29,7 +29,7 @@ const OrderListView = Backbone.View.extend({
         className: 'order', // orders?
         bus: this.bus,
       });
-      this.$('#orders').append(orderView.render().$el);
+      this.$('#orders').prepend(orderView.render().$el);
     });
     this.newOrderFormRender();
     return this;
@@ -52,27 +52,30 @@ const OrderListView = Backbone.View.extend({
     if (event.target.classList.contains('btn-buy')) {
       formData['buy'] = true;
       if (quotePrice <= formData['targetPrice']) {
-        console.log('targetPrice must be lower than current price');
+        // console.log('targetPrice must be lower than current price');
+        this.updateUser('Sorry! You must enter a number that is lower than the current price ');
         return
       }
     }
     else {
       formData['buy'] = false;
       if (quotePrice >= formData['targetPrice']) {
-        console.log('targetPrice must be higher than current price ');
+        // console.log('targetPrice must be higher than current price ');
+        this.updateUser('Sorry! You must enter a number that is  higher than the current price ');
         return;
       }
     }
     const newOrder = new Order(formData);
     console.log(formData);
-    // if (!newOrder.isValid()) {
-    //   newOrder.destroy();
-    //   console.log(newOrder.validationError);
     // seriously need to do some status messaging...
-    //   return;
-    // }
+    if (!newOrder.isValid()) {
+      newOrder.destroy();
+      this.updateUser(newOrder.validationError);
+      return;
+    }
     this.model.add(newOrder);
     this.clearFormData();
+    this.updateUser(`Created new order for:  ${newOrder.get('symbol')} `)
   },
   getFormData() {
     const orderData = {};
@@ -101,7 +104,11 @@ const OrderListView = Backbone.View.extend({
       }
     });
   },
-
+  updateUser(message) {
+    const $messages = this.$('.form-errors');
+    $messages.empty();
+    $messages.append(`<p>${message}</p>`);
+  },
   // sell(event) {
   //   console.log('selling');
   //   this.model.sell();
