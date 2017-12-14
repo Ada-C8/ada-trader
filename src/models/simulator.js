@@ -7,7 +7,7 @@ const Simulator = Backbone.Model.extend({
   },
 
   start() {
-    setInterval(() => this._tick(), 1000);
+    // setInterval(() => this._tick(), 1000);
   },
 
   // PRIVATE FUNCTIONS \\
