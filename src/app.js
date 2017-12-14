@@ -56,6 +56,5 @@ $(document).ready(function() {
 
   tradeListView.render();
   quoteListView.render();
-  
   simulator.start();
 });
