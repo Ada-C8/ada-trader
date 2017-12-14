@@ -6,22 +6,12 @@ import TradeView from '../views/trade_view';
 const TradeListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.listenTo(this.model, 'update', this.render);
+    this.bus = params.bus;
+    this.listenTo(this.bus, 'trade', this.onTrade);
   },
-  render() {
-    // this.$('#trades').empty();
-
-    this.model.each((trade) => {
-      const tradeView = new TradeView({
-        model: trade,
-        template: this.template,
-        tagName: 'li',
-        className: 'trade',
-      });
-      this.$('#trades').prepend(tradeView.render().$el);
-    });
-    return this;
-  },
+  onTrade(params) {
+    this.$('#trades').prepend(this.template(params));
+  }
 });
 
 export default TradeListView;

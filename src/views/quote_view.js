@@ -5,8 +5,7 @@ import _ from 'underscore';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.tradeTemplate = _.template($('#trade-template').html());
-
+    // this.orderListOptionTemplate = _.template($('#order-list-option-template').html());
     this.listenTo(this.model, 'change', this.render);
   },
   render() {
@@ -17,11 +16,9 @@ const QuoteView = Backbone.View.extend({
   events: {
     'click button.btn-buy': function() {
       let trade = this.model.buy();
-      $('#trades').prepend(this.tradeTemplate(trade));
     },
     'click .btn-sell': function() {
       let trade = this.model.sell();
-      $('#trades').prepend(this.tradeTemplate(trade));
     },
   },
 });
