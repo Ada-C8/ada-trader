@@ -6,6 +6,7 @@ const TradeView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render);
+    this.bus = params.bus;
   },
 
   render() {
