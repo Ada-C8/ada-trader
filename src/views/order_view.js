@@ -6,6 +6,16 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model.get('quote'), 'change', this.autoOrder);
+  },
+
+  autoOrder() {
+    let autoOrdered = (this.model.get('buy')) ? this.model.autoBuy() : this.model.autoSell();
+
+    if (autoOrdered) {
+      this.model.destroy();
+      this.remove();
+    }
   },
 
   render() {
