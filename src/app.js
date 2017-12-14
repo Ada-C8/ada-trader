@@ -7,6 +7,10 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import Quote from 'models/quote'
 import QuoteView from 'views/quote_view'
+import OpenOrder from 'models/open_order'
+import OpenOrderView from 'views/open_order_view'
+import OpenOrderList from 'collections/open_order_list'
+import OpenOrderListView from 'views/open_order_list_view'
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view'
 
@@ -48,4 +52,16 @@ $(document).ready(() => {
 
   quoteListView.render()
   simulator.start();
+
+  $('.order-entry-form').submit(function(){
+    console.log('CLICK!')
+    const openOrder = new OpenOrder({
+      model: this.model,
+      symbol: this.model.attributes.symbol,
+      price: this.model.attributes.price
+    })
+
+    const openOrderView = new OpenOrderView(openOrder)
+
+  })
 });
