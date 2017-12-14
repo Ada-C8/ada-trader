@@ -15,14 +15,6 @@ initialize(params) {
 render(){
   this.$('.quotes').empty();
 
-  // const tradeHistoryView = new TradeHistoryView({
-  //   bus: this.bus,
-  //   template: tradeTemplate,
-  //   el: '.trades'
-  // });
-  //
-  // tradeHistoryView.render();
-
   this.model.each((quote) => {
     const quoteView = new QuoteView({
       model: quote,
@@ -41,7 +33,16 @@ render(){
 
 
 
-
-
-
 export default QuoteListView;
+
+
+
+
+
+// const tradeHistoryView = new TradeHistoryView({
+//   bus: this.bus,
+//   template: tradeTemplate,
+//   el: '.trades'
+// });
+//
+// tradeHistoryView.render();
