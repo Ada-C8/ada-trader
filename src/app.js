@@ -9,6 +9,13 @@ import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
+import Order from 'models/order'
+import OrderList from 'collections/order_list'
+import OrderListView from 'views/order_list_view';
+
+
+
+
 
 const quoteData = [
   {
@@ -33,6 +40,7 @@ const quoteData = [
 
 $(document).ready(() => {
   const quotes = new QuoteList(quoteData);
+  const orders = new OrderList();
   // quoteTemplate = _.template($('#quote-template').html());
   // append to symbol label
   function dropdown(){
@@ -53,10 +61,17 @@ $(document).ready(() => {
     model: quotes,
     template: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
+    // orderTemplate: _.template($('#order-template').html()),
     el: 'main',
   });
-
   quoteListView.render();
+
+  const orderListView = new OrderListView({
+    model: orders,
+    orderTemplate: _.template($('#order-template').html()),
+    el: 'main',
+  });
+  orderListView.render();
 
   simulator.start();
 });
