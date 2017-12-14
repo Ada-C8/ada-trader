@@ -41,13 +41,6 @@ const TradeHistoryView = Backbone.View.extend({
     return this;
   }
 
-  // const compiledTemplate =
-  // this.template(this.model.toJSON());
-  // this.$el.html(compiledTemplate);
-
-
-
-
 
 }) //end
 
