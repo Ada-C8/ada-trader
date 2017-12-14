@@ -91,7 +91,8 @@ $(document).ready(function() {
 
     orderData['symbol'] = $('#orderForm select').val();
     orderData['targetPrice'] = parseFloat($('#orderForm .price-target').val());
-
+    orderData['quote'] = quoteList.findWhere({symbol: orderData['symbol']});
+    
     $('#orderForm select').val($('#orderForm select option:first').val());
     $('#orderForm .price-target').val('');
 
