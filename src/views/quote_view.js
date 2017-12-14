@@ -8,27 +8,33 @@ const QuoteView = BackBone.View.extend({
     this.bus = params.bus;
 
     this.listenTo(this.model, 'change', this.render);
-
-    //TODO: how to make each quote listens selectively to their symbol?
-    // if (this.model.symbol  === 'HUMOR') {
-    //   this.listenTo(this.bus, 'add_order_request', this.checkPriceTarget)
-    // }
-    // this.listenTo(this.bus, 'add_humor_order_request', this.checkPriceTarget)
-
     this.listenTo(this.bus, 'add_order_request', this.checkPriceTarget)
+    // this.listenTo(this.model, 'change:price', this.priceChange(this.model.get('symbol')));
+    this.listenTo(this.model, 'change:price', this.priceChange);
+  },
+
+  priceChange(){
+    console.log('priceChange!');
+    console.log();
+    
+    const symbol = this.model.get('symbol');
+    console.log(this.model.get('symbol'));
+
+    this.bus.trigger('price_change', symbol);
   },
 
   checkPriceTarget(orderData) {
     console.log('In checkPriceTarget');
     console.log(orderData);
-    console.log(this.model.get('symbol'));
-    console.log(this.model.get('price'));
 
     if (this.model.get('symbol') === orderData.symbol) {
       if (orderData.buy) {
         if (this.model.get('price') <= orderData.targetPrice) {
           console.log('targetPrice is too high');
-          this.bus.trigger('price_check_response', false)
+          const errorMessage = {
+            order: 'New order not created. You must plan to buy at a price that is less than the current price!',
+          };
+          this.bus.trigger('price_check_response', errorMessage)
           return false;
         } else {
           console.log('targetPrice is good');
@@ -37,7 +43,10 @@ const QuoteView = BackBone.View.extend({
         }
       } else {
         if (this.model.get('price') >= orderData.targetPrice) {
-          this.bus.trigger('price_check_response', false)
+          const errorMessage = {
+            order: `New order not created. You must plan to sell at a price that is greater than the current price!`
+          };
+          this.bus.trigger('price_check_response', errorMessage)
           return false;
         } else {
           console.log('targetPrice is good');

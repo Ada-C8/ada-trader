@@ -8,6 +8,7 @@ const OrderView = Backbone.View.extend({
 
     // this.listenTo(this.bus, 'create_new_order', this.render);
     this.listenTo(this.model, 'change', this.render); //listen for destory
+    this.listenTo(this.bus, 'price_change', )
   },
 
   destroyOrder(event) {
