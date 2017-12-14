@@ -96,10 +96,12 @@ $(document).ready(function() {
   quoteListView.render();
 
   const orderListView = new OrderListView({
+
     model: orders,
     template: orderTemplate,
-    el: '#orders',
+    el: '#order-workspace', // or orders?
     bus: bus,
   });
+
   orderListView.render();
 });

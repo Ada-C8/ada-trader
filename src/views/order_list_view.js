@@ -13,21 +13,37 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.bus, 'quote_price_change', this.buySellQuote);
   },
   render() {
-      this.$('#quotes').empty();
+      this.$('#orders').empty();
 
-      this.model.each((quote) => {
-        const quoteView = new QuoteView({
-          model: quote,
+      this.model.each((order) => {
+        const orderView = new OrderView({
+          model: order,
           template: this.template,
           tagName: 'li',
-          className: 'quote',
+          className: 'order', // orders?
           bus: this.bus,
         });
-        this.$('#quotes').append(quoteView.render().$el);
+        this.$('#orders').append(orderView.render().$el);
       });
+      this.newOrderFormRender();
       return this;
+    },
+    events: {
+      'click button.buy': 'buy',
+      'click button.sell': 'sell',
+    },
+    buy(event) {
+      console.log('buying');
+      this.model.buy();
+      this.bus.trigger('update', this.model);
+    },
+    sell(event) {
+      console.log('selling');
+      this.model.sell();
+      this.bus.trigger('update', this.model);
     },
 });
 

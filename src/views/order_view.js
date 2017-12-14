@@ -12,7 +12,7 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
   },
   render() {
-    const compiledTemplate = this.template(this.model.toJSON());
+    const compiledTemplate = this.template(this.model.toJSON()); //
     this.$el.html(compiledTemplate);
     return this;
   },
