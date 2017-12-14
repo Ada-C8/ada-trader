@@ -6,10 +6,10 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from 'models/simulator';
-// import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
 import TradeListView from 'views/trade_list_view';
+import OrderEntryView from 'views/order_entry_view';
 
 const eventBus = _.extend({}, Backbone.Events);
 
@@ -38,26 +38,26 @@ const quoteData = [
 
 
 const quotes = new QuoteList(quoteData);
-
-let quoteTemplate;
-let tradeTemplate;
+const orders = new OrdersList();
 
 $(document).ready(function() {
-  quoteTemplate = _.template($('#quote-template').html());
-
   const quoteListView = new QuoteListView({
     model: quotes,
-    template: quoteTemplate,
+    template: _.template($('#quote-template').html()),
     el: '#quotes-container',
   });
 
-  tradeTemplate = _.template($('#trade-template').html());
-
   const tradeListView = new TradeListView({
     model: quotes,
-    template: tradeTemplate,
+    template: _.template($('#trade-template').html()),
     bus: eventBus,
     el: '#trades-container',
+  });
+
+  const orderEntryView = new OrderEntryView({
+    model: {quotes, orders}, // shorthand notation
+    template: _.template($('#order-list-option-template').html()),
+    el: '.order-entry-form'
   });
 
   const simulator = new Simulator({
@@ -67,5 +67,5 @@ $(document).ready(function() {
   simulator.start();
 
   quoteListView.render();
-
+  orderEntryView.render();
 });

@@ -1,7 +1,6 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
 import Quote from '../models/quote';
-import TradeView from '../views/trade_view';
 
 const TradeListView = Backbone.View.extend({
   initialize(params) {
