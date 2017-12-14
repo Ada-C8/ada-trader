@@ -13,6 +13,7 @@ import OrderList from './collections/order_list';
 //views
 import QuoteListView from 'views/quote_list_view';
 import TradeListView from 'views/trade_list_view';
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -32,6 +33,27 @@ const quoteData = [
     price: 83.10,
   },
 ];
+
+////////////// TEMPORARY
+const fakeOrderData = [
+  {
+    symbol: 'HUMOR',
+    price: 108.50,
+  },
+  {
+    symbol: 'CLOTH',
+    price: 61.70,
+  },
+  {
+    symbol: 'HABIT',
+    price: 78.00,
+  },
+  {
+    symbol: 'SUPER',
+    price: 103.10,
+  },
+];
+///////////////////////
 
 $(document).ready(function() {
   const bus = _.extend({}, Backbone.Events);
