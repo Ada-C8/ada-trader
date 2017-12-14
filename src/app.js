@@ -59,6 +59,13 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  const orderListView = new OrderListView({ /////////////
+    el: '#order-workspace',
+    template: orderTemplate, // This is the form for each order view
+    model: orders, // TODO: Check this
+    bus: bus,
+  });
+
   const quoteListView = new QuoteListView({
     el: 'main', // TODO: Can this be anything else but main? Why does this even need to be set? I do not see main attached to the DOM
     model: quotes,
@@ -71,18 +78,6 @@ $(document).ready(function() {
     template: tradeTemplate,
     bus: bus,
   });
-
-  const orderListView = new OrderListView({ /////////////
-    el: 'form select',
-    template: orderTemplate, // This is the form for each order view
-    model: orders, // TODO: Check this
-    bus: bus,
-  });
-
-  // const orderView = new OrderView({
-  //   el: 'form select',
-  //   // model: order,
-  // });
 
   quoteListView.render();
 

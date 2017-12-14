@@ -9,6 +9,7 @@ const QuoteListView = Backbone.View.extend({
   },
 
   render() {
+    let symbols = [];
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
@@ -17,6 +18,7 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
         bus: this.bus,
       });
+      // symbols.push(quote.get('symbol'));
       // quoteView.render() returns back the jquery object from the quoteView
       // Selects the el tag of the current quotelistview in this case it is the main?
       this.$('#quotes').append(quoteView.render().$el); // TODO: PLEASE BREAK DOWN WHAT $EL IS. THE JQUERY OBJECT? WHY CAN IT GO AT THE END?
