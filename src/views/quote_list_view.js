@@ -10,6 +10,7 @@ const QuoteListView = Backbone.View.extend({
   },
   render() {
     this.$('#quotes').empty();
+    this.$('form select').empty();
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
@@ -19,6 +20,7 @@ const QuoteListView = Backbone.View.extend({
       });
       this.listenTo(quoteView, 'tradeMe', this.addTrade);
       this.$('#quotes').append(quoteView.render().$el);
+      this.$('form select').append(`<option value="${ quoteView.model.get('symbol') }">${ quoteView.model.get('symbol') }</option>`);
     });
     return this;
   },
