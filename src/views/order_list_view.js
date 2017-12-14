@@ -11,7 +11,8 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.quoteList = params.symbols
-    console.log(this.quoteList)
+    this.bus = params.bus;
+    console.log(this.bus);
     this.listenTo(this.model, 'update', this.render);
     this.orderForm(params.symbols.models);
 
@@ -19,12 +20,14 @@ const OrderListView = Backbone.View.extend({
 
   render() {
     this.$('#orders').empty();
+    console.log(this.model);
     this.model.each((order) => {
       const orderView = new OrderView({
         model: order,
         template: this.template,
         tagName: 'li',
         className: 'order',
+        bus: this.bus,
       });
       // this.listenTo(taskView, 'editMe', this.editTask)
       this.$('#orders').append(orderView.render().$el);
@@ -43,18 +46,21 @@ const OrderListView = Backbone.View.extend({
   buyOrder: function(event) {
     event.preventDefault();
     const orderData = {};
-    orderData['symbol'] = this.$(`[name=symbol]`).val()
-    orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
+    orderData['symbol'] = this.$(`[name=symbol]`).val();
+    orderData['targetPrice'] = parseFloat(this.$(`[name=price-target]`).val());
     orderData['buy'] = true;
-    // const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
-    // orderData['marketPrice'] = searchElem.get('price')
-    const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
-    orderData['activeQuote'] = searchElem
+    const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']});
+    console.log(searchElem);
+    orderData['activeQuote'] = searchElem;
+    console.log(this.bus);
+    orderData['bus'] = this.bus;
     const newOrder = new Order(orderData);
     console.log(newOrder);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      console.log(this.model);
     } else {
+      newOrder.destroy();
       console.log(`IN THE ELSE ${newOrder.validationError}`);
       this.updateStatusMessageFrom(newOrder.validationError);
     }
@@ -65,8 +71,7 @@ sellOrder: function(event) {
   orderData['symbol'] = this.$(`[name=symbol]`).val();
   orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
   orderData['buy'] = false;
-  // const searchElem = this.quoteList.findWhere({symbol: 'HUMOR'})
-  // orderData['marketPrice'] = searchElem.get('price')
+  orderData['bus'] = this.bus;
   const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
   orderData['activeQuote'] = searchElem
   const newOrder = new Order(orderData);

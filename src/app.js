@@ -14,8 +14,9 @@ import OrderList from 'collections/order_list';
 import OrderView from 'views/order_view';
 import OrderListView from 'views/order_list_view';
 
-
-
+let bus = {};
+bus = _.extend(bus, Backbone.Events);
+console.log(bus);
 const quoteList = new QuoteList();
 
 const quoteData = [
@@ -46,11 +47,12 @@ $(document).ready(function() {
 
   simulator.start();
 
-  const order = new Order(quotes);
+  // const order = new Order(quotes);
   const quoteListView = new QuoteListView({
   model: quotes,
   template: _.template($('#quote-template').html()),
   el: '#quotes-container',
+  bus: bus
 });
   quoteListView.render();
 
@@ -60,6 +62,7 @@ $(document).ready(function() {
     symbols: quotes,
     template: _.template($('#order-template').html()),
     el: '#order-workspace',
+    bus: bus
   })
 
   // OrderListView.render();
