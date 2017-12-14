@@ -148,26 +148,28 @@ const OrdersView = Backbone.View.extend({
     console.log(formData.targetPrice);
     console.log(formData.buy);
 
-    const newOrder = new Order(formData);
-
-    if (newOrder.isValid()) {
-      console.log('Model is valid');
-      this.clearFormData();
-
-      const successMessage = {
-        order: `New order for ${newOrder.get('symbol')} created!`
-      };
-      this.updateStatusMessageForForm(successMessage);
-      console.log('New Order symbol');
-      console.log(newOrder.symbol);
-      this.model.add(newOrder);
-
-    } else {
-      console.log('ERROR');
-
-      this.updateStatusMessageForForm(newOrder.validationError);
-      newOrder.destroy();
-    }
+    this.bus.trigger('add_order_request', formData);
+    //
+    // const newOrder = new Order(formData);
+    //
+    // if (newOrder.isValid()) {
+    //   console.log('Model is valid');
+    //   this.clearFormData();
+    //
+    //   const successMessage = {
+    //     order: `New order for ${newOrder.get('symbol')} created!`
+    //   };
+    //   this.updateStatusMessageForForm(successMessage);
+    //   console.log('New Order symbol');
+    //   console.log(newOrder.symbol);
+    //   this.model.add(newOrder);
+    //
+    // } else {
+    //   console.log('ERROR');
+    //
+    //   this.updateStatusMessageForForm(newOrder.validationError);
+    //   newOrder.destroy();
+    // }
   },
 
   events: {
