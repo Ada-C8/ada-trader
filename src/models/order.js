@@ -10,6 +10,15 @@ const Order = Backbone.Model.extend({
     const errors = {};
     let error_message = '';
 
+    if (!params.stockPrice) {
+      error_message = 'Must enter a stock price';
+      if (errors['stockPrice']) {
+        errors['stockPrice'].push(error_message);
+      } else {
+        errors['stockPrice'] = [error_message];
+      }
+    }
+
     if (!params.targetPrice) {
       error_message = 'Must enter a price';
       if (errors['targetPrice']) {
