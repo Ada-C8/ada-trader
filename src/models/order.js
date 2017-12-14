@@ -2,12 +2,12 @@ import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
   validate(attributes) {
-    const errors = {};
+    let errors;
     if (!attributes.targetPrice) {
-      errors['targetPrice'] = ['A target price is required.'];
+      errors = 'A target price is required.';
     }
 
-    if ( Object.keys(errors).length > 0 ) {
+    if ( errors ) {
       return errors;
     } else {
       return false;

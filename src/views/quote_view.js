@@ -9,7 +9,6 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.bus, 'order_sale', this.buySellQuote)
   },
   render() {
-    // console.log('in quote render');
     const compiledTemplate = this.template(this.model.toJSON());
 
     this.$el.html(compiledTemplate);
@@ -22,10 +21,6 @@ const QuoteView = Backbone.View.extend({
   events: {
     'click button.btn-buy': 'buyQuote',
     'click button.btn-sell': 'sellQuote',
-    // 'click button.delete': 'deleteTask',
-    // 'click button.toggle-complete': 'toggleComplete',
-    // 'click button.edit': 'editTask',
-    // 'click h3': 'selectTask',
   },
 
   buyQuote(event) {
@@ -48,22 +43,7 @@ const QuoteView = Backbone.View.extend({
       price: salePrice
     }
     this.bus.trigger('buy_sell_quote', attributes)
-  }
-  // selectTask() {
-  //   this.bus.trigger('selected_task', this.model)
-  // },
-  // editTask(event) {
-  //   console.log('clicked Edit');
-  //   this.trigger('edit_event', this.model)
-  // },
-  // deleteTask(event) {
-  //   this.model.destroy();
-  //   this.remove();
-  // },
-  // toggleComplete(event) {
-  //   this.model.set('is_complete', !this.model.get('is_complete'));
-  //   // this.$el.closest('.task').toggleClass('is-complete');
-  // },
+  },
 
 });
 
