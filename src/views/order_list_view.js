@@ -40,42 +40,19 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),
     };
 
-
     orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
 
-    console.log(orderData['buy']);
-    console.log( !orderData.buy );
-    console.log(orderData.targetPrice);
-    console.log( (orderData['targetPrice'] < orderData['quote'][0]['attributes']['price']) );
-    console.log( !orderData['buy'] && (orderData['targetPrice'] < orderData['quote'][0]['attributes']['price']) )
+    const newOrder = new Order(orderData);
+    console.log ('attempting to create a new order!')
 
-
-    if ( orderData['buy'] && (orderData['targetPrice'] < orderData['quote'][0]['attributes']['price']) ) {
-      console.log('entering!!!')
-      this.$('.form-errors').html(`<h3>Price lower than market price!</h3>`)
-    } else if ( !orderData['buy'] && (orderData['targetPrice'] > orderData['quote'][0]['attributes']['price']) ) {
-      this.$('.form-errors').html(`<h3>Price higher than market price!</h3>`)
-    } else if (isNaN(orderData['targetPrice'])) {
-      this.$('.form-errors').html(`<h3>Invalid Target Price</h3>`)
+    if (newOrder.isValid()) {
+      console.log('successs!')
+      this.model.add(newOrder);
+      this.$('.form-errors').empty();
     } else {
-      const newOrder = new Order(orderData);
-
-      if (newOrder.isValid()) {
-        this.model.add(newOrder);
-      } else {
-        console.log( 'order is not valid' );
-      }
+      console.log(newOrder.validationError);
+      this.$('.form-errors').html(`<h3>${newOrder.validationError}</h3>`)
     }
-
-
-    // orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
-    // const newOrder = new Order(orderData);
-    //
-    // if (newOrder.isValid()) {
-    //   this.model.add(newOrder);
-    // } else {
-    //   console.log( 'order is not valid' );
-    // }
   },
   addSellOrder: function(event) {
     event.preventDefault();
@@ -88,31 +65,15 @@ const OrderListView = Backbone.View.extend({
 
     orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
 
-    console.log(orderData['buy']);
-    console.log( !orderData.buy );
-    console.log(orderData.targetPrice);
-    console.log( (orderData['targetPrice'] < orderData['quote'][0]['attributes']['price']) );
-    console.log( !orderData['buy'] && (orderData['targetPrice'] < orderData['quote'][0]['attributes']['price']) )
-
-
-    if ( orderData['buy'] && (orderData['targetPrice'] < orderData['quote'][0]['attributes']['price']) ) {
-      console.log('entering!!!')
-      this.$('.form-errors').html(`<h3>Price lower than market price!</h3>`)
-    } else if ( !orderData['buy'] && (orderData['targetPrice'] > orderData['quote'][0]['attributes']['price']) ) {
-      this.$('.form-errors').html(`<h3>Price higher than market price!</h3>`)
-    } else if (isNaN(orderData['targetPrice'])) {
-      this.$('.form-errors').html(`<h3>Invalid Target Price</h3>`)
+    const newOrder = new Order(orderData);
+    if (newOrder.isValid()) {
+      console.log('successs!')
+      this.model.add(newOrder);
+      this.$('.form-errors').empty();
     } else {
-      const newOrder = new Order(orderData);
-
-      if (newOrder.isValid()) {
-        this.model.add(newOrder);
-      } else {
-        console.log( 'order is not valid' );
-      }
+      console.log(newOrder.validationError);
+      this.$('.form-errors').html(`<h3>${newOrder.validationError}</h3>`)
     }
-
-
   },
   removeOrder(orderView) {
     orderView.remove();
