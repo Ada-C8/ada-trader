@@ -25,6 +25,24 @@ const OrderListView = Backbone.View.extend({
     });
     return this;
   },
+  addOrder: function(event) {
+    event.preventDefault();
+
+    const orderData ={};
+    ['symbol', 'price-target'].forEach( (field) => {
+      const val = this.$(`input[name=${field}]`).val();
+      if (val != '') {
+        orderData[field] = val;
+      }
+    });
+    const newOrder= new Order(orderData);
+
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+      // this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
+    } else {
+    }
+  },
 });
 
 export default OrderListView;

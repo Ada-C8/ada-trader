@@ -23,14 +23,14 @@ const QuoteListView = Backbone.View.extend({
       });
       // Then render the QuoteView
       // And append the resulting HTML to the DOM.
-      this.listenTo(quoteView, 'clickedBuyOrSellQuote', this.showTrade);
+      this.listenTo(quote, 'clickedBuyOrSellQuote', this.showTrade);
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
   },
-  showTrade: function(quoteView) {
+  showTrade: function(tradeData) {
     console.log('SHOW QUOTE BOUGHT');
-    const compiledTradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    const compiledTradeTemplate = this.tradeTemplate(tradeData);
     this.$('#trades').prepend(compiledTradeTemplate);
   },
 });
