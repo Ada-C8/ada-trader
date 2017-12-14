@@ -5,7 +5,12 @@ const OrderListView = Backbone.View.extend({
 
   initialize(params){
     this.template = params.template;
-    this.listenTo(this.model, 'update', this.render);
+    // this.listenTo(this.model, 'update', this.render);
+  },
+
+  events: {
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder',
   },
 
   render(){
@@ -19,14 +24,24 @@ const OrderListView = Backbone.View.extend({
           className: 'order'
         });
 
-        // add listener for orderform
         this.$('#orders').append(orderView.render().$el);
     });
     return this;
   },
 
-  addToOrders: function(orderView){
+  buyOrder: function(event){
+    this.addToOrders(event);
+  },
+
+  sellOrder: function(event){
+    this.addToOrders(event);
+  },
+
+  addToOrders: function(event){
+    event.preventDefault();
     console.log('in addToOrders function at OrderListView');
   }
 
 });
+
+export default OrderListView;
