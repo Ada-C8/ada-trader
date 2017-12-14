@@ -8,7 +8,41 @@ const OrderView = Backbone.View.extend({
 
     // this.listenTo(this.bus, 'create_new_order', this.render);
     this.listenTo(this.model, 'change', this.render); //listen for destory
-    this.listenTo(this.bus, 'price_change', )
+    this.listenTo(this.bus, 'price_change', this.checkForPriceMatch);
+  },
+
+  checkForPriceMatch(model) {
+    console.log('In checkForPriceMatch');
+    console.log(model);
+    console.log(this.model.get('symbol'));
+    console.log(model.get('price').toFixed(2));
+    console.log('TARGETPRICE!!!');
+    console.log(this.model.get('targetPrice'));
+
+    if (model.get('symbol') === this.model.get('symbol')) {
+      console.log('HUMOR MATCH');
+      console.log(this.model.get('buy'));
+
+      if (this.model.get('buy')) {
+        console.log('BUY IS TRUE');
+
+        if (this.model.get('targetPrice') < model.get('price').toFixed(2)) {
+          console.log('BUY');
+          console.log(parseFloat(this.model.get('targetPrice')));
+          
+          const objectForTradeHistory = {
+            model: model,
+            buy: true,
+            price: parseFloat(this.model.get('targetPrice')),
+            symbol: this.model.get('symbol'),
+          };
+
+          this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
+        }
+      }
+    }
+
+
   },
 
   destroyOrder(event) {

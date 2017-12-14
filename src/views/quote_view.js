@@ -14,13 +14,13 @@ const QuoteView = BackBone.View.extend({
   },
 
   priceChange(){
-    console.log('priceChange!');
+    console.log('In priceChange!');
     console.log();
-    
+
     const symbol = this.model.get('symbol');
     console.log(this.model.get('symbol'));
 
-    this.bus.trigger('price_change', symbol);
+    this.bus.trigger('price_change', this.model);
   },
 
   checkPriceTarget(orderData) {
