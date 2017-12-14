@@ -5,6 +5,10 @@ const Order = Backbone.Model.extend({
     symbol: 'UNDEF',
     targetPrice: 0.00,
   },
+
+  initialize(attributes) {
+  },
+
   validate(attributes) {
     const errors = {}
 
@@ -13,16 +17,21 @@ const Order = Backbone.Model.extend({
       errors['symbol'] = ["You must select a symbol!"];
     }
 
-    if (!attributes.price) {
+    if (!attributes.targetPrice) {
+      // console.log('This is my price in validations: ' + attributes.price);
       errors['targetPrice'] = ["Your target price cannot be blank!"];
     }
+    //
+    // if (attributes.price === String) {
+    //   errors['targetPrice'] = ["Your target must be an integer"];
+    // }
 
     if ( Object.keys(errors).length > 0 ) {
       return errors;
     } else {
       return false;
     }
-  }
+  },
 
 });
 

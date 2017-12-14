@@ -23,8 +23,6 @@ let quoteTemplate;
 let tradeTemplate;
 let orderTemplate;
 
-const orders = new OrderList(); /////////////////// TODO: Check to see if I even need to pass in the data if quotes already exists
-
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -54,12 +52,14 @@ $(document).ready(function() {
   orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
-  
+
+  const orders = new OrderList(); /////////////////// TODO: Check to see if I even need to pass in the data if quotes already exists
+
   const simulator = new Simulator({
     quotes: quotes,
   });
 
-  const orderListView = new OrderListView({ /////////////
+  const orderListView = new OrderListView({ 
     el: '#order-workspace',
     template: orderTemplate, // This is the form for each order view
     model: orders, // TODO: Check this

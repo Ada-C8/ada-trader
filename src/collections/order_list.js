@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import Order from 'models/order';
 
-const OrderList = Backbone.Model.extend({
+const OrderList = Backbone.Collection.extend({
   model: Order,
 });
 

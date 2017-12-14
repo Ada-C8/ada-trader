@@ -12,36 +12,43 @@ const OrderListView = Backbone.View.extend({
   },
 
   events: {
-    'submit #new-open-order': 'displayOpenOrder',
+    'submit form': 'displayBoughtOrder',
   },
 
   render(quotes) {
     let $selectOptions = this.$('select[name=symbol]');
     quotes.forEach((quote) => {
+
       // Append the current symbol and then append the price
       $selectOptions.append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
-      // // Create a new order and then add it to the model
-      // const order = new Order({
-      //   symbol: quote.get('symbol'),
-      //   price: quote.get('price'),
-      // });
+
       // this.model.add(order); // TODO: COME BACK TO THIS!
     });
   },
 
-  displayOpenOrder(event) {
+    ////////////////////////// ERROR HANDLING ////////////////////////
+  displayBoughtOrder(event) {
     event.preventDefault();
-    let selected_symbol = this.$('form select[name=symbol]').val();
-    let selected_price = this.$('form input[name=price-target]').val();
+    this.$('.form-errors').empty();
+
+    let selectedSymbol = this.$('form select[name=symbol]').val();
+    let selectedPrice = this.$('form input[name=price-target]').val();
+    console.log('This is my selected Price: ' + selectedPrice);
+    console.log('This is my selected Symbol' + selectedSymbol);
 
     // A new order is created for each submission
     const order = new Order({
-      symbol: selected_symbol,
-      targetPrice: selected_price,
+      symbol: selectedSymbol,
+      targetPrice: selectedPrice,
     });
 
-    // Run Validations
+    console.log('Order symbol: ' + order.get('symbol'));
+    console.log('Order targetPrice: ' + order.get('targetPrice'));
+
+    ////////////////////////// CHECK VALIDATIONS ////////////////////////
     if (order.isValid()) {
+      // console.log('This is the model:' + this.model);
+      console.log('this is this: ' + this);
       this.model.add(order);
       this.clearFormData();
     } else {
@@ -50,15 +57,24 @@ const OrderListView = Backbone.View.extend({
     }
   },
 
+  ////////////////////////// ERROR DISPLAY ////////////////////////
   displayOrderErrors(errors) {
     const $errorDisplay = this.$('.form-errors');
     $errorDisplay.empty();
-    
+
     // Iterate over errors hash and display
     Object.keys(errors).forEach((key) => {
       $errorDisplay.append(`<p>${errors[key]}</p>`);
     });
   },
+
+  ////////////////////////// CLEAR FORM //////////////////////////
+  clearFormData() {
+    this.$('form input[name=price-target]').val('');
+    this.$('form select[name=symbol]').val('');
+    this.$('form-errors').empty(); // TODO: Do I need this?
+  },
 });
+
 
 export default OrderListView;
