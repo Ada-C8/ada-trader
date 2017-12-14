@@ -7,15 +7,15 @@ const Order = Backbone.Model.extend({
     targetPrice: 0.00,
   },
 
-  // quotes is a quoteList
-  findQuote(quotes) {
-    return quotes.findWhere({symbol: this.quoteSymbol});
-  },
-
-  getMarketPrice(quotes) {
-    const quote = this.findQuote(quotes);
-    return quote.get('price');
-  },
+  // // quotes is a quoteList
+  // findQuote(quotes) {
+  //   return quotes.findWhere({symbol: this.quoteSymbol});
+  // },
+  //
+  // getMarketPrice(quotes) {
+  //   const quote = this.findQuote(quotes);
+  //   return quote.get('price');
+  // },
 
   validate(attributes) {
     const errors = {};

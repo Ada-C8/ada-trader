@@ -23,14 +23,7 @@ const OrderView = Backbone.View.extend({
     const targetPrice = this.model.get('targetPrice');
 
     if (buy && targetPrice >= quote.get('price')) {
-      console.log(quote.get('price'));
       console.log('buy');
-      console.log(quote.attributes);
-
-      const trade = new Quote(quote.attributes);
-      console.log('testing new trade');
-      console.log(trade);
-
       this.bus.trigger(`buy${quote.get('symbol')}`);
 
       this.removeOrder();
