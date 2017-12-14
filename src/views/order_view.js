@@ -17,6 +17,7 @@ const OrderView = Backbone.View.extend({
 
   cancelOrder: function(event){
     console.log('deleted an order');
+    this.model.destroy();
   },
 });
 
