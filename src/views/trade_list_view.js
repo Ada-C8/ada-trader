@@ -5,7 +5,6 @@ import QuoteView from '../views/quote_view';
 const TradeListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.hello = params.hello;
     this.bus = params.bus;
     this.listenTo(this.bus, 'boughtQuote', this.addQuote);
     this.listenTo(this.bus, 'soldQuote', this.soldQuote);
