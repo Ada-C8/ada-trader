@@ -15,7 +15,13 @@ import QuoteList from 'collections/quote_list';
 import Quote from 'models/quote';
 import QuoteListView from 'views/quote_list_view';
 import QuoteView from 'views/quote_view';
+
 import TradeHistoryView from 'views/trade_history_view';
+
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
+import OpenOrderView from 'views/open_order_view';
+import OpenOrderListView from 'views/open_order_list_view';
 
 const quoteData = [
   {
@@ -55,7 +61,7 @@ $(document).ready(function() {
 
   quoteListView.render();
 
-
+/////////trade history /////
   let tradeHistoryTemplate = _.template($('#trade-template').html());
 
   const tradeHistoryView = new TradeHistoryView({
@@ -65,5 +71,45 @@ $(document).ready(function() {
   });
 
   tradeHistoryView.bind();
+
+  /////// order entry form //////
+
+  const orders = new OrderList();
+
+  quotes.forEach(function(quote) {
+    // console.log(quote);
+    $('#select-symbol').append($('<option>', {
+      value: quote.get('symbol'),
+      text: quote.get('symbol')
+    }));
+  });
+
+  $('#order-form').on('submit', function(event) {
+    event.preventDefault();
+  });
+
+  $('#order-form .btn-buy').on('click', function(event) {
+    event.preventDefault();
+    let orderData = {
+      buy: true
+    };
+
+    orderData['symbol'] = $('#select-symbol').val();
+    orderData['targetPrice'] = parseFloat($('#order-price').val());
+
+    let order = new Order(orderData);
+    orders.push(order);
+    // console.log(orderData);
+  });
+
+  let orderTemplate = _.template($('#order-template').html());
+
+  const openOrderListView = new OpenOrderListView({
+    el: 'main',
+    model: orders,
+    template: orderTemplate,
+  });
+
+  openOrderListView.render();
 
 });
