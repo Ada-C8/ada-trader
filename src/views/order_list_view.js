@@ -7,7 +7,7 @@ const OrderListView = Backbone.View.extend({
     this.bus = params.bus;
     this.template = params.template;
 
-    // SEE CHECKVALIDATION METHOD FOR THE .ADD TO THE COLLECTION FOR TRIGGERED EVENT
+    // SEE CHECK VALIDATION METHOD FOR THE .ADD TO THE COLLECTION FOR TRIGGERED EVENT
     this.listenTo(this.model, 'update', this.renderOpenOrders);
 
     // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
@@ -16,8 +16,8 @@ const OrderListView = Backbone.View.extend({
 
   events: {
     // TODO: PUT THESE IN THEIR OWN FUNCTIONS
-    'click form button.btn-buy': 'displayBuyOrder',
-    'click form button.btn-sell': 'displaySellOrder',
+    'click form button.btn-buy': 'createBuyOrder',
+    'click form button.btn-sell': 'createSellOrder',
   },
 
   renderDropDown(quotes) {
@@ -33,20 +33,17 @@ const OrderListView = Backbone.View.extend({
 
   ////////////////////////// DISPLAY BUY ORDER ////////////////////////
 
-  displayBuyOrder(event) {
+  createBuyOrder(event) {
     event.preventDefault();
     this.$('.form-errors').empty();
 
-    // // TODO: Make this into a separate function - get form data
-    // let selectedSymbol = this.$('form select[name=symbol]').val();
-    // let selectedPrice = this.$('form input[name=price-target]').val();
+    // TODO: Make this into a separate function - get form data
     const orderData = this.getFormData();
 
     // TODO: Make this into a separate function create order based on click selection
     // A new order is created for each submission
     const order = new Order({
       symbol: orderData['symbol'],
-      // console.log(`selectedPrice === String`);
       targetPrice: parseInt(orderData['targetPrice']),
       buy: true,
     });
@@ -57,17 +54,14 @@ const OrderListView = Backbone.View.extend({
 
   ////////////////////////// DISPLAY SELL ORDER ////////////////////////
 
-  displaySellOrder(event) {
+  createSellOrder(event) {
     event.preventDefault();
     this.$('.form-errors').empty();
 
-    // TODO: Make this into a separate function
-    // let selectedSymbol = this.$('form select[name=symbol]').val();
-    // let selectedPrice = this.$('form input[name=price-target]').val();
     const orderData = this.getFormData();
 
     // TODO: Make this into a separate function create order based on click selection
-    // A new order is created for each submission
+
     const order = new Order({
       symbol: orderData['symbol'],
       // console.log(`selectedPrice === String`);
@@ -80,6 +74,7 @@ const OrderListView = Backbone.View.extend({
   },
 
   ////////////////////////// GET FORM DATA ////////////////////////
+
   getFormData() {
     const data = {};
     data['symbol'] = this.$('form select[name=symbol]').val();
@@ -98,9 +93,7 @@ const OrderListView = Backbone.View.extend({
         bus: this.bus,
         className: 'order',
       });
-      // console.log(this.template);
 
-      // console.log(orderView.render());
       this.$('#orders').append(orderView.render().$el);
     });
   },
@@ -117,13 +110,6 @@ const OrderListView = Backbone.View.extend({
     });
   },
 
-  ////////////////////////// CLEAR FORM //////////////////////////
-
-  clearFormData() {
-    this.$('form input[name=price-target]').val('');
-    this.$('form-errors').empty();
-  },
-
   ////////////// CHECK VALIDATIONS AND TRIGGER UPDATE ///////////////
 
   checkValidations(order) {
@@ -136,6 +122,14 @@ const OrderListView = Backbone.View.extend({
       order.destroy();
     }
   },
+
+  ////////////////////////// CLEAR FORM //////////////////////////
+
+  clearFormData() {
+    this.$('form input[name=price-target]').val('');
+    this.$('form-errors').empty();
+  },
+
 });
 
 export default OrderListView;
