@@ -13,8 +13,8 @@ import OrderView from './views/order_view';
 import OrderListView from './views/order_list_view';
 import OrderList from 'collections/order_list';
 
-const quoteList = new QuoteList();
-const orderList = new OrderList();
+// const quoteList = new QuoteList();
+// const orderList = new OrderList();
 let quoteTemplate;
 let tradeTemplate;
 let orderTemplate;
@@ -37,34 +37,34 @@ const quoteData = [
     price: 83.10,
   },
 ];
-const renderList = function(quoteList) {
-  const $quoteList = $('#quotes');
-  $quoteList.empty();
-
-  quoteList.forEach((quote) =>{
-    const quoteView = new TaskView({
-      model: quote,
-      template: _.template($('#quote-template').html()),
-      tagName: 'li',
-      className: 'quote',
-    });
-    $quoteList.append(quoteView.render().$el);
-  });
-};
-const renderOrderList = function(orderList) {
-  const $orderList = $('#orders');
-  $orderList.empty();
-
-  orderList.forEach((order) => {
-    const orderView = new OrderView({
-      model: order,
-      template: _.template($('#order-template').html()),
-      tageName: 'li',
-      className: 'order',
-    });
-    $orderList.append(orderView.render().$el);
-  });
-};
+// const renderList = function(quoteList) {
+//   const $quoteList = $('#quotes');
+//   $quoteList.empty();
+//
+//   quoteList.forEach((quote) =>{
+//     const quoteView = new TaskView({
+//       model: quote,
+//       template: _.template($('#quote-template').html()),
+//       tagName: 'li',
+//       className: 'quote',
+//     });
+//     $quoteList.append(quoteView.render().$el);
+//   });
+// };
+// const renderOrderList = function(orderList) {
+//   const $orderList = $('#orders');
+//   $orderList.empty();
+//
+//   orderList.forEach((order) => {
+//     const orderView = new OrderView({
+//       model: order,
+//       template: _.template($('#order-template').html()),
+//       tageName: 'li',
+//       className: 'order',
+//     });
+//     $orderList.append(orderView.render().$el);
+//   });
+// };
 //
 $(document).ready(function() {
   let bus = {};
@@ -74,7 +74,7 @@ $(document).ready(function() {
   orderTemplate = _.template($('#order-template').html());
   const quotes = new QuoteList(quoteData);
 
-  const orders = new OrderList(quoteData); // not sure if this is right...
+  const orders = new OrderList(); // not sure if this is right...
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -85,7 +85,7 @@ $(document).ready(function() {
     template: tradeTemplate,
     el: $('#trades'),
   });
-  tradeHistoryView.render();
+  // tradeHistoryView.render();
 
   const quoteListView = new QuoteListView({
     model: quotes,

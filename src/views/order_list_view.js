@@ -16,35 +16,90 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.bus, 'quote_price_change', this.buySellQuote);
   },
   render() {
-      this.$('#orders').empty();
+    this.$('#orders').empty();
 
-      this.model.each((order) => {
-        const orderView = new OrderView({
-          model: order,
-          template: this.template,
-          tagName: 'li',
-          className: 'order', // orders?
-          bus: this.bus,
-        });
-        this.$('#orders').append(orderView.render().$el);
+    this.model.each((order) => {
+      const orderView = new OrderView({
+        model: order,
+        template: this.template,
+        tagName: 'li',
+        className: 'order', // orders?
+        bus: this.bus,
       });
-      this.newOrderFormRender();
-      return this;
-    },
-    events: {
-      'click button.buy': 'buy',
-      'click button.sell': 'sell',
-    },
-    buy(event) {
-      console.log('buying');
-      this.model.buy();
-      this.bus.trigger('update', this.model);
-    },
-    sell(event) {
-      console.log('selling');
-      this.model.sell();
-      this.bus.trigger('update', this.model);
-    },
+      this.$('#orders').append(orderView.render().$el);
+    });
+    this.newOrderFormRender();
+    return this;
+  },
+  newOrderFormRender() {
+    this.quotes.each((quote) =>{
+      const symbol = quote.get('symbol');
+      this.$('#add-order form select').append(`<option value="${symbol}">${symbol}</option>`);
+    })
+  },
+  events: {
+    'click button.btn-buy, button.btn-sell': 'addOrder',
+  },
+  addOrder(event) {
+    event.preventDefault();
+    const formData = this.getFormData();
+    const quotePrice = this.quotes.where({symbol: formData['symbol']})[0].get('price');
+
+    if (event.target.classList.contains('btn-buy')) {
+      formData['buy'] = true;
+      if (quotePrice <= formData['targetPrice']) {
+        console.log('targetPrice must be lower than current price');
+        return
+      }
+    }
+    else {
+      formData['buy'] = false;
+      if (quotePrice >= formData['targetPrice']) {
+        console.log('targetPrice must be higher than current price ');
+        return;
+      }
+    }
+    const newOrder = new Order(formData);
+    if (!newOrder.isValid()) {
+      newOrder.destroy();
+      console.log(newOrder.validationError);
+      return;
+    }
+    this.model.add(newOrder);
+    this.clearFormData;
+  },
+  getFormData() {
+    const orderData = {};
+    orderData['symbol'] = this.$('#add-order-form select[name="symbol"]').val();
+    orderData['targetPrice'] = Number(this.$('#add-order-form input[name="price-target"]').val());
+    return orderData;
+  },
+  clearFormData() {
+    this.$('#add-order-form input[name="price-target"]').val('');
+  },
+  buySellQuote(quote) {
+    const selectedOrder = this.model.where({symbol: quote.get('symbol')});
+
+    selectedOrder.forEach((order) => {
+      if (order.get('buy')) {
+        if (order.get('targetPrice') >= quote.get('price')) {
+          this.bus.trigger('order_sale', { buy: true, symbol: order.get('symbol') })
+          this.model.remove(order);
+        }
+      } else {
+        if (order.get('targetPrice') <= quote.get('price')) {
+          this.bus.trigger('order_sale', { buy: false, symbol: order.get('symbol') })
+          this.model.remove(order);
+        }
+      }
+    });
+  },
+
+  // sell(event) {
+  //   console.log('selling');
+  //   this.model.sell();
+  //   this.bus.trigger('update', this.model);
+  // },
 });
 
 export default OrderListView;
