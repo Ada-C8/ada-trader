@@ -46,7 +46,10 @@ const OrderListView = Backbone.View.extend({
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      console.log(newOrder);
     } else {
+      console.log('delete');
+      newOrder.destroy();
       this.errorMessage(newOrder.validationError);
     }
   },
