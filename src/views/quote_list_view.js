@@ -27,9 +27,9 @@ const QuoteListView = Backbone.View.extend({
   },
   //we will append lines of HTML- not an object- from the template
   prependTrades: function(quoteView){
-    console.log('we are in the prependTrades method in teh QuoteListView');
+    // console.log('we are in the prependTrades method in teh QuoteListView');
     // console.log(this);
-    console.log(quoteView.model.attributes);
+    // console.log(quoteView.model.attributes);
     const tradeTemplate = _.template($('#trade-template').html());
     $('#trades').prepend(tradeTemplate(quoteView.model.attributes));
   },
