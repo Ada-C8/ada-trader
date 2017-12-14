@@ -10,30 +10,41 @@ const TradeHistoryView = Backbone.View.extend({
     this.template = params.template;
     console.log("Im in the trade_history_view");
     this.listenTo(this.bus, 'record_trade', this.setModel);
-    // this.listenTo(this.bus, 'record_trade', this.render());
+    // this.listenTo(this.bus, 'record_trade', this.render);
   },
 
-  setModel(model) {
+  setModel(trade_data) {
+    console.log("In set model function");
     console.log('setModel');
-    console.log(model);
-    this.model = model;
+    console.log(trade_data);
+    this.data = trade_data;
     this.render();
   },
 
   el: '.trade',
 
   render() {
+    
+    // this.$el.html(compiledTemplate);
 
     // this.$('.trades').empty();
-    if (this.model) {
-    console.log("rendering");
-    console.log( this.model.get('symbol') );
-    console.log( this.model.get('price') );
-    console.log('Doing something i hope!!!');
-    // console.log(this.model.get('symbol'));
-  };
+    if (this.data) {
+      const compiledTemplate =
+      this.template(this.data);
+      this.$el.html(compiledTemplate);
+      //   console.log("rendering");
+      console.log(this.data);
+
+    };
     return this;
   }
+
+  // const compiledTemplate =
+  // this.template(this.model.toJSON());
+  // this.$el.html(compiledTemplate);
+
+
+
 
 
 }) //end

@@ -11,7 +11,7 @@ import Quote from './models/quote';
 import QuoteList from './collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
-// import TradeHistoryView from './views/trade_history_view';
+import TradeHistoryView from './views/trade_history_view';
 
 const quoteData = [
   {
@@ -57,6 +57,14 @@ $(document).ready( () => {
     template: quoteTemplate,
     bus: bus,
   });
+
+  const tradeHistoryView = new TradeHistoryView({
+    bus: bus,
+    template: tradeTemplate,
+    el: '.trades'
+  });
+
+  tradeHistoryView.render();
 
 
 
