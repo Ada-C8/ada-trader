@@ -19,6 +19,11 @@ const OrderView = Backbone.View.extend({
     console.log('deleted an order');
     this.model.destroy();
   },
+
+  fulfillOrder: function(quote){
+    console.log('inside fulfillOrder in OrderView');
+    console.log(quote);
+  }
 });
 
 export default OrderView;
