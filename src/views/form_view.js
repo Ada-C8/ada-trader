@@ -21,6 +21,14 @@ const FormView = Backbone.View.extend({
     'click button.btn-sell' : 'createSellOrder'
   },
   createBuyOrder: function(e) {
+    this.createOrder(e, true);
+  },
+
+  createSellOrder: function(e) {
+    this.createOrder(e, false);
+  },
+
+  createOrder: function(e, type) {
     e.preventDefault();
     const formQuote = this.$('select option:selected').text();
     const formPrice = this.$('input').val();
@@ -29,7 +37,7 @@ const FormView = Backbone.View.extend({
       });
     const order = new Order({
       quote: quote,
-      buy: true,
+      buy: type,
       price: parseFloat(formPrice),
       symbol: quote.get('symbol'),
       targetPrice: parseFloat(formPrice),
@@ -38,7 +46,6 @@ const FormView = Backbone.View.extend({
       this.bus.trigger('newOrder', order);
     }
   }
-
 });
 
 export default FormView;

@@ -14,8 +14,6 @@ const TradeListView = Backbone.View.extend({
         this.render(model);
       }
     });
-    // this.listenTo('tradeMe', this.render);
-    // this.listenTo(this.model, 'sell', this.render);
   },
   render(params) {
     console.log('in trade list render');

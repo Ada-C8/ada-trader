@@ -22,13 +22,21 @@ const OrderView = Backbone.View.extend({
   },
   tradeQuote: function(e) {
     console.log(this.model.get('quote').get('price'));
-    if (this.model.get('quote').get('price') <= this.model.get('targetPrice')) {
-      console.log('hey u can buy now');
-      this.model.get('quote').set('buy', true);
-      this.bus.trigger('tradeMe', this.model.get('quote'));
-      this.cancelOrder();
+    if (this.model.get('buy')) {
+      if (this.model.get('quote').get('price') <= this.model.get('targetPrice')) {
+        this.model.get('quote').set('buy', true);
+        this.bus.trigger('tradeMe', this.model.get('quote'));
+        this.model.get('quote').buy()
+        this.cancelOrder();
+      }
+    } else {
+      if (this.model.get('quote').get('price') >= this.model.get('targetPrice')) {
+        this.model.get('quote').set('buy', false);
+        this.bus.trigger('tradeMe', this.model.get('quote'));
+        this.model.get('quote').sell()
+        this.cancelOrder();
+      }
     }
-
   }
 });
 

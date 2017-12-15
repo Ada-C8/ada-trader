@@ -15,7 +15,6 @@ const OrderListView = Backbone.View.extend({
   },
   render() {
     this.$('#orders').empty();
-    // const trueTemplate = this.template;
     this.model.each((order) => {
       const orderView = new OrderView({
         model: order,
@@ -28,7 +27,6 @@ const OrderListView = Backbone.View.extend({
     });
   },
   addOrder(order) {
-    console.log(order);
     this.model.add(order)
   },
 });
