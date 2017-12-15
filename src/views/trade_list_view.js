@@ -11,8 +11,8 @@ const TradeListView = Backbone.View.extend({
   },
   render() {
     // renders the entire collection after each update, so must clear the existing list. otherwise, can use addNewTrade to prepend one instance of TradeView, but then code is repetitive
-    const currentTradeListView = this.$('#trades');
-    currentTradeListView.empty();
+    const currentTradeHistory = this.$('#trades');
+    currentTradeHistory.empty();
     this.model.each((trade) => {
       const tradeView = new TradeView({
         model: trade,
@@ -20,6 +20,7 @@ const TradeListView = Backbone.View.extend({
         bus: this.bus,
         tagName: 'li',
         className: 'trade',
+        id: trade.get('id'),
       });
       this.$('#trades').prepend(tradeView.render().$el);
     });

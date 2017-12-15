@@ -26,6 +26,7 @@ const QuoteView = Backbone.View.extend({
       price: this.model.get('price'),
       buy: true,
       bus: this.bus,
+      id: 'bought',
     });
     this.bus.trigger('newTrade', newBoughtTrade);
     this.model.buy();
@@ -37,6 +38,7 @@ const QuoteView = Backbone.View.extend({
       price: this.model.get('price'),
       buy: false,
       bus: this.bus,
+      id: 'sold',
     });
     this.bus.trigger('newTrade', newSoldTrade);
     this.model.sell();
