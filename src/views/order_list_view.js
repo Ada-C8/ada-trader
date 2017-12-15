@@ -16,7 +16,7 @@ const OrderListView = Backbone.View.extend({
     // SEE QUOTE_LIST_VIEW submittedOrderPRICE FOR TRIGGER
     this.listenTo(this.bus, 'checkValidations', this.checkValidations);
 
-    // SEE QUOTE VIEW LIST VIEW
+    // SEE QUOTE VIEW LIST RENDER()
     this.listenTo(this.bus, 'checkQuotePrice', this.checkQuotePrice);
   },
 
@@ -29,9 +29,10 @@ const OrderListView = Backbone.View.extend({
   //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
 
   render() {
-    if (this.model.length > 0) {
+    this.$('#orders').empty();
       // Append the last order only
-      const lastOrder = this.model.at(this.model.length - 1);
+
+    this.model.each((lastOrder) => {
       const orderView = new OrderView({
         model: lastOrder,
         template: this.template,
@@ -39,9 +40,8 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
         bus: this.bus,
       });
-
       this.$('#orders').append(orderView.render().$el);
-    }
+    });
     return this;
   },
 
@@ -68,7 +68,7 @@ const OrderListView = Backbone.View.extend({
       buy: true,
     });
 
-    // SEE CHECKSUBMITTED ORDER PRICE in QUOTE LIST VIEW
+    // SEE CHECK SUBMITTED ORDER PRICE in QUOTE LIST VIEW
     this.bus.trigger('compareToMarketPrice', order);
   },
 
@@ -115,6 +115,7 @@ const OrderListView = Backbone.View.extend({
   checkValidations(order) {
     if (order.isValid()) {
       // Triggers update on a collection
+      console.log('1. this it he add function');
       this.model.add(order);
       this.clearFormData();
     } else {
@@ -135,19 +136,14 @@ const OrderListView = Backbone.View.extend({
   checkQuotePrice(quote) {
     const orders = this.model.where({symbol: quote.get('symbol')});
 
-    // console.log(orders.length);
-    // console.log(orders);
     if (orders.length > 0) {
       orders.forEach((order) => {
-        // if (quote.get('price') < order.get('targetPrice')) {
-          // How do we access the view of a model that already exists?
-          order.destroy();
+        if (quote.get('price') < order.get('targetPrice')) {
           this.model.remove(order);
-
-          // This is supposed to fire an event to re-render
+          order.destroy(); // run render on the collection
+        }
       });
-      console.log(this.model.length);
-    }
+    } // TODO: DISPLAY TO THE USER THAT THERE ARE NO AVAILABLE QUOTES
   },
 });
 
