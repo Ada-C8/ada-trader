@@ -37,15 +37,21 @@ const Order = Backbone.Model.extend({
   },
   priceCheck() {
     //BUY: if order's target price is equal to or below quote's price
-    if (this.attributes.buy && (this.attributes.targetPrice <= this.attributes.matchedQuote.get('price')) ) {
-      //alert('hey BUY');
-      // this.matchedQuote.buy();
+    if (this.attributes.buy && (this.attributes.targetPrice >= this.attributes.matchedQuote.get('price')) ) {
+      // alert('hey buy!');
+      const matchedQuoteCopy = this.attributes.matchedQuote;
+      // debugger;
+      this.destroy();
+      matchedQuoteCopy.buy();
     }
 
     //SELL: if order's target price is equal to or above quote's price
-    if (!this.attributes.buy && (this.attributes.targetPrice >= this.attributes.matchedQuote.get('price')) ) {
-      // this.matchedQuote.sell();
+    if (!this.attributes.buy && (this.attributes.targetPrice <= this.attributes.matchedQuote.get('price')) ) {
       // alert('hey sell!');
+      const matchedQuoteCopy = this.attributes.matchedQuote;
+      // debugger;
+      this.destroy();
+      matchedQuoteCopy.sell();
     }
   },
 
