@@ -10,7 +10,6 @@ const OrderListView = Backbone.View.extend({
     this.quotes = params.quotes;
 
     this.listenTo(this.model, 'update', this.render);
-    // this.listenTo(this.bus, 'addOrder', this.addOrder);
   },
   render() {
     this.$('#orders').empty();
@@ -34,16 +33,12 @@ const OrderListView = Backbone.View.extend({
   },
 
   createOrder(buyOption) {
-    // const sym = this.$('#symbol').val();
-    // console.log(`sym is ${sym}`);
     const orderData = {
       quotes: this.quotes,
       bus: this.bus,
       symbol: this.$('#symbol').val(),
       targetPrice: parseFloat(this.$('#target-price').val()),
-      // targetPrice: parseFloat(this.$('form input[name="price-target"]').val()),
       buy: buyOption.buy,
-      // marketPrice: this.getCurrentPrice(this.getQuote(sym))
     };
 
     return new Order(orderData);
@@ -72,7 +67,6 @@ const OrderListView = Backbone.View.extend({
     if (order.isValid()) {
       this.model.add(order);
       this.$el.find('form').trigger('reset');
-      // this.bus.trigger('addOrder', order);
     } else {
       this.renderError(order.validationError);
     }

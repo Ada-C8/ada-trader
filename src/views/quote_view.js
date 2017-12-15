@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import $ from 'jquery';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
@@ -19,27 +20,35 @@ const QuoteView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
+
   events: {
     'click button.btn-buy': 'buyQuote',
     'click button.btn-sell': 'sellQuote',
   },
+
   buyQuote() {
     console.log('buy triggered');
-    console.log(this);
 
     this.model.buy();
-    this.bus.trigger('addTrade', this.model);
+    this.addTrade();
   },
+
   sellQuote() {
     console.log('sell triggered');
-    console.log(this);
 
     this.model.sell();
-    this.bus.trigger('addTrade', this.model);
+    this.addTrade();
   },
+
   checkOrders() {
     const sym = this.model.get('symbol');
     this.bus.trigger(`check${sym}`, this.model);
+  },
+
+  addTrade() {
+    console.log('adding trade to template');
+    const tradeTemplate = this.tradeTemplate(this.model.toJSON());
+    $('#trades').prepend(tradeTemplate);
   },
 });
 

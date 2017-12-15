@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-import $ from 'jquery';
 
 import QuoteView from '../views/quote_view';
 
@@ -10,7 +9,7 @@ const QuoteListView = Backbone.View.extend({
     this.bus = params.bus,
 
     this.listenTo(this.model, 'update', this.render);
-    this.listenTo(this.bus, 'addTrade', this.addTrade);
+    // this.listenTo(this.bus, 'addTrade', this.addTrade);
   },
   render() {
     // clear unordered list
@@ -21,6 +20,7 @@ const QuoteListView = Backbone.View.extend({
         model: quote,
         bus: this.bus,
         template: this.template,
+        tradeTemplate: this.tradeTemplate,
         tagName: 'li',
         className: 'quote',
       });
@@ -28,18 +28,6 @@ const QuoteListView = Backbone.View.extend({
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
-  },
-  events: {
-  },
-  addTrade(quote) {
-    console.log('in quote list');
-    console.log(this);
-    console.log(this.model);
-
-    console.log('existing quote');
-    console.log(quote);
-    const tradeTemplate = this.tradeTemplate(quote.toJSON());
-    $('#trades').prepend(tradeTemplate);
   },
 });
 

@@ -6,8 +6,6 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
 
     this.listenTo(this.model, 'change', this.render);
-
-    // this.listenTo(this.bus, `check${this.model.get('symbol')}`, this.checkPrice);
   },
 
   render() {
