@@ -67,7 +67,7 @@ $(document).ready(function() {
   });
 
   const quoteListView = new QuoteListView({
-    el: 'main', // TODO: Can this be anything else but main? Why does this even need to be set? I do not see main attached to the DOM
+    el: 'main',
     model: quotes,
     template: quoteTemplate,
     bus: bus,
@@ -88,7 +88,7 @@ $(document).ready(function() {
 // Compile the template the trade view and then pass it in as
 // this.$el.prepend(compiledTemplate)
 
-// Quote needs a trigger 
+// Quote needs a trigger
 // Pass in open order needs a listener trigger
 // It is listening to quote.price
 //

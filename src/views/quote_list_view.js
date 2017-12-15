@@ -9,7 +9,7 @@ const QuoteListView = Backbone.View.extend({
     this.listenTo(this.bus, 'compareToMarketPrice', this.checkSubmittedOrderPrice);
   },
 
-  render() {
+  render(event) {
     let symbols = [];
     this.model.each((quote) => {
       const quoteView = new QuoteView({
@@ -30,18 +30,32 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
 
-  checkSubmittedOrderPrice(submittedOrder) {
+  checkSubmittedOrderPrice(formData) {
     this.model.forEach((quote) => {
-
-      // TODO:
-      if (quote.get('symbol') === submittedOrder.get('symbol') && submittedOrder.get('targetPrice') >= quote.get('price')) {
-        return false;
-      } else {
-        return true;
-      }
+      if (quote.get('symbol') === formData['symbol']) {
+        if ((parseInt(formData['targetPrice']) >= parseInt(quote.get('price'))) || ((parseInt(formData['targetPrice'])) < 0)) {
+          const $errorDisplay = this.$('.form-errors');
+          $errorDisplay.append(`<p>Your must be less than the current market price and greater than 0!</p>`);
+        } else {
+          this.bus.trigger('createBuyOrder', formData);
+        }
+      } // TODO: Write else statement or error if no symbols match
     });
   },
 
+
+
+    // this.model.forEach((quote) => {
+    //   // TODO: Add conditional if the price is less than 0
+    //   if (quote.get('symbol') === submittedOrder.get('symbol')) {
+    //     if ((parseInt(submittedOrder.get('targetPrice')) >= parseInt(quote.get('price'))) || (parseInt(submittedOrder.get('price')) < 0)) {
+    //       const $errorDisplay = this.$('.form-errors');
+    //       $errorDisplay.append(`<p>Your must be less than the current market price and greater than 0!</p>`);
+    //     } else {
+    //       this.bus.trigger('')
+    //     }
+    //   }
+    // });
 });
 
 export default QuoteListView;

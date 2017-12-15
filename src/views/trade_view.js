@@ -18,6 +18,4 @@ const TradeView = Backbone.View.extend({
   },
 });
 
-// TODO: Where do the new instances of the TradeView get instantiated?
-// TODO: They need to instantiated in the render of the
 export default TradeView;

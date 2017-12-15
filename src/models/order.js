@@ -27,8 +27,6 @@ const Order = Backbone.Model.extend({
       errors['targetPrice'] = ["Please enter an integer"];
     }
 
-    
-
     if ( Object.keys(errors).length > 0 ) {
       return errors;
     } else {

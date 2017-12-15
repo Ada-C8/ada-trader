@@ -12,77 +12,74 @@ const OrderListView = Backbone.View.extend({
 
     // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
     this.listenTo(this.bus, 'append_symbols', this.renderDropDown);
+
+    // SEE QUOTE_LIST_VIEW submittedOrderPRICE FOR TRIGGER
+    this.listenTo(this.bus, 'createBuyOrder', this.createBuyOrder);
   },
 
   events: {
-    // TODO: PUT THESE IN THEIR OWN FUNCTIONS
-    'click form button.btn-buy': 'createBuyOrder',
-    'click form button.btn-sell': 'createSellOrder',
+    // TODO: PUT THESE IN THEIR OWN FUNCTIONS???
+    'click form button.btn-buy': 'compareMarketPriceBuy',
+    'click form button.btn-sell': 'compareMarketPriceSell',
   },
 
   renderDropDown(quotes) {
     let $selectOptions = this.$('select[name=symbol]');
-    quotes.forEach((quote) => {
 
+    quotes.forEach((quote) => {
       // Append the current symbol and then append the price
       $selectOptions.append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
-
-      // this.model.add(order); // TODO: COME BACK TO THIS!
     });
   },
 
-  ////////////////////////// DISPLAY BUY ORDER ////////////////////////
+  ////////////////////////// COMPARE MARKET PRICE ////////////////////////
 
-  createBuyOrder(event) {
+  compareMarketPriceBuy(event) {
     event.preventDefault();
     this.$('.form-errors').empty(); // TODO: Do I need this?
 
     const orderData = this.getFormData();
 
-    // TODO: Make this into a separate function create order based on click selection
-    // A new order is created for each submission
-    const order = new Order({
-      symbol: orderData['symbol'],
-      targetPrice: parseInt(orderData['targetPrice']),
-      buy: true,
-    });
-
     // SEE QUOTE VIEW LIST FOR THE LISTEN TO
-    // Explicit check of boolean
-    if (this.bus.trigger('compareToMarketPrice', order) === true) {
-      // console.log("My order returns true?")
-      // Check model validations
-      this.checkValidations(order);
-    } else {
-      // console.log("Returns false errors should be displayed???")
-      
-      // TODO: Does this need to be a custom error when the model is saved?
-      const $errorDisplay = this.$('.form-errors');
-      $errorDisplay.append(`<p>Your must be less than the current market price and greater than 0!</p>`);
-    }
+    this.bus.trigger('compareToMarketPrice', orderData);
   },
 
-  ////////////////////////// DISPLAY SELL ORDER ////////////////////////
-
-  createSellOrder(event) {
+  compareMarketPriceSell(event) {
     event.preventDefault();
-    this.$('.form-errors').empty();
+    this.$('.form-errors').empty(); // TODO: Do I need this?
 
     const orderData = this.getFormData();
 
-    // TODO: Make this into a separate function create order based on click selection
+    // SEE QUOTE VIEW LIST FOR THE LISTEN TO
+    this.bus.trigger('compareToMarketPrice', orderData);
+  },
 
+  ////////////////////////// CREATE BUY ORDER ////////////////////////
+
+  createBuyOrder(formData) {
     const order = new Order({
-      symbol: orderData['symbol'],
-      // console.log(`selectedPrice === String`);
-      targetPrice: parseInt(orderData['targetPrice']),
-      buy: false,
+      symbol: formData['symbol'],
+      targetPrice: parseInt(formData['targetPrice']),
+      buy: true,
     });
 
-    // TODO: How do we check the target price of the current market price? When we submit the order form?
+    // Check if the order is valid
+    this.checkValidations(order);
+    // TODO: Does this need to be a custom error when the model is saved?
+  },
 
-    // Check model validations
-    this.checkValidations(order); // TODO: Come back to this
+  ////////////////////////// CREATE SELL ORDER ////////////////////////
+
+  createSellOrder(formData) {
+    const order = new Order({
+      symbol: formData['symbol'],
+      targetPrice: parseInt(formData['targetPrice']),
+      buy: true,
+    });
+
+    // Check if the order is valid
+    this.checkValidations(order);
+    // TODO: Does this need to be a custom error when the model is saved?
   },
 
   ////////////////////////// GET FORM DATA ////////////////////////
@@ -144,3 +141,5 @@ const OrderListView = Backbone.View.extend({
 });
 
 export default OrderListView;
+
+// TODO: When saving my order, does the checking of the price to the current quote price need to be when the model is saved? Or can it be a custom error?
