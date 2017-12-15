@@ -9,6 +9,7 @@ import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
 import OrderList from 'collections/order_list';
+import OrderListView from 'views/order_list_view';
 import TradeListView from 'views/trade_list_view';
 import OrderEntryView from 'views/order_entry_view';
 
@@ -53,6 +54,12 @@ $(document).ready(function() {
     template: _.template($('#trade-template').html()),
     bus: eventBus,
     el: '#trades-container',
+  });
+
+  const orderListView = new OrderListView({
+    model: orders,
+    template: _.template($('#order-template').html()),
+    el: '.orders-list-container'
   });
 
   const orderEntryView = new OrderEntryView({

@@ -5,7 +5,6 @@ import _ from 'underscore';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    // this.orderListOptionTemplate = _.template($('#order-list-option-template').html());
     this.listenTo(this.model, 'change', this.render);
   },
   render() {

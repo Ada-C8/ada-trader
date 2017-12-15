@@ -3,8 +3,9 @@ import Backbone from 'backbone';
 const Order = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
-    priceTarget: 0.00, // camelCase from form kebab-case
-    isBuy: null,
+    priceTarget: 0.00, // TODO: camelCase from form kebab-case, but template uses targetPrice and this is working. WHY?!
+    buy: null,
+    quote: null,
   },
   // initialize() {
   //   this.bus = this.get('bus'); // NOTE: Because bus doesn't change

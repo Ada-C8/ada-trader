@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
 import $ from 'jquery';
 import Order from '../models/order';
 
@@ -21,6 +20,7 @@ const OrderEntryView = Backbone.View.extend({
     event.preventDefault();
 
     const orderData = {};
+    orderData.buy = event.target.className.includes('btn-buy') ? true : false;
     const fields = {select: 'symbol', input: 'price-target'};
 
     for (const field in fields) {
@@ -31,7 +31,8 @@ const OrderEntryView = Backbone.View.extend({
       }
     }
 
-    orderData.isBuy = event.target.className.includes('btn-buy') ? true : false;
+    orderData.priceTarget = Number(orderData.priceTarget)
+    orderData.quote = this.model.quotes.where({symbol: orderData.symbol});
 
     const newOrder = new Order(orderData);
     this.model.orders.add(newOrder);
