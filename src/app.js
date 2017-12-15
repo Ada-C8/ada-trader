@@ -14,6 +14,8 @@ import TradeView from './views/trade_view';
 import OrderList from 'collections/order_list';
 import Order from 'models/order';
 import OrderListView from './views/order_list_view';
+import OrderFormView from './views/order_form_view';
+
 
 
 const quoteData = [
@@ -34,6 +36,8 @@ const quoteData = [
     price: 83.10,
   },
 ];
+
+const bus = _.extend({}, Backbone.Events);
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
@@ -59,7 +63,9 @@ $(document).ready(function() {
   });
   tradeView.helper();
 
-  $('#orderForm').on('submit', (event) => {
+  const orders = new OrderList();
+
+  $('#orderForm').on('submit', function(event) {
     event.preventDefault();
   });
 
@@ -70,35 +76,15 @@ $(document).ready(function() {
     }));
   });
 
-  $('#orderForm .btn-buy').on('click', (event) => {
-    event.preventDefault();
-    let orderData = {
-      buy: true
-    };
-
-    orderData.symbol = $('#orderForm select').val();
-    orderData.targetPrice = parseFloat($('#target-price').val());
-
-    let order = new Order(orderData);
-    orders.append(order);
-  });
-
-  $('#orderForm .btn-sell').on('click', (event) => {
-    event.preventDefault();
-    let orderData = {
-      buy: false
-    };
-
-    orderData.symbol = $('#orderForm select').val();
-    orderData.targetPrice = parseFloat($('#target-price').val());
-
-    let order = new Order(orderData);
-    orders.append(order);
+  const orderFormView = new OrderFormView({
+    el: '.order-entry-form',
+    bus: bus,
   });
 
   const orderListView = new OrderListView({
     model: orders,
     template: _.template($('#order-template').html()),
-    el: '.orders-list-container'
+    el: '.orders-list-container',
+    bus: bus,
   });
 });
