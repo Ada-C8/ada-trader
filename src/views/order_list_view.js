@@ -2,7 +2,6 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import Order from '../models/order';
 import OrderView from '../views/order_view';
-import QuoteList from 'collections/quote_list';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
