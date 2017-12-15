@@ -21,8 +21,8 @@ const OrderListView = Backbone.View.extend({
   },
 
   events: {
-    'click form button.btn-buy': 'createOrder',
-    'click form button.btn-sell': 'createOrder',
+    'click form button.btn-buy': 'sellOrBuy',
+    'click form button.btn-sell': 'sellOrBuy',
   },
 
   //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
@@ -57,29 +57,35 @@ const OrderListView = Backbone.View.extend({
   ////////////////////////// CREATE BUY ORDER ////////////////////////
 
   // TODO: MAKE THIS INTO ONE FUNCTION
-  createOrder(event) {
+  sellOrBuy(event) {
     event.preventDefault();
     this.$('.form-errors').empty(); // TODO: Do I need this?
 
     const orderData = this.getFormData();
-    let order;
-
-    if (event.target.classList.value === 'btn-sell alert button') {
-      order = new Order({
-        symbol: orderData['symbol'],
-        price: parseFloat(orderData['price']),
-        buy: false,
-      });
+    const sellOrBuy = event.target.classList.value;
+    
+    let trueOrFalse;
+    if (sellOrBuy === 'btn-sell alert button') {
+      trueOrFalse = false;
     } else {
-      order = new Order({
-        symbol: orderData['symbol'],
-        price: parseFloat(orderData['price']),
-        buy: true,
-      });
+      trueOrFalse = true;
     }
+
+    const order = this.createOrder(trueOrFalse, orderData);
 
     // SEE CHECK SUBMITTED ORDER PRICE in QUOTE LIST VIEW
     this.bus.trigger('compareToMarketPrice', order);
+  },
+
+  ////////////////////////// CREATE ORDER ////////////////////////
+
+  createOrder(trueOrFalse, orderData) {
+    const order = new Order({
+      symbol: orderData['symbol'],
+      price: parseFloat(orderData['price']),
+      buy: trueOrFalse,
+    });
+    return order;
   },
 
   ////////////////////////// FORM DATA ////////////////////////

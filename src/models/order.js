@@ -1,13 +1,10 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-  defaults: {
+  defaults: { // TODO: What is the difference between the defaults
     symbol: 'UNDEF',
     price: 0.00,
-    // buy: false,
-  },
-
-  initialize(attributes) {
+    buy: false,
   },
 
   validate(attributes) {
