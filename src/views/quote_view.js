@@ -21,25 +21,25 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote: function(e) {
-    const newTrade = new Trade({
+    const newBoughtTrade = new Trade({
       symbol: this.model.get('symbol'),
       price: this.model.get('price'),
       buy: true,
       bus: this.bus,
     });
+    this.bus.trigger('newTrade', newBoughtTrade);
     this.model.buy();
-    this.bus.trigger('newTrade', newTrade);
 
   },
   sellQuote: function(e) {
-    const newTrade = new Trade({
+    const newSoldTrade = new Trade({
       symbol: this.model.get('symbol'),
       price: this.model.get('price'),
       buy: false,
       bus: this.bus,
     });
+    this.bus.trigger('newTrade', newSoldTrade);
     this.model.sell();
-    this.bus.trigger('newTrade', newTrade);
   }
 
 });
