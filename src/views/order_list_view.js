@@ -6,6 +6,7 @@ import OrderView from '../views/order_view';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.quoteList = params.quoteList;
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
@@ -18,30 +19,63 @@ const OrderListView = Backbone.View.extend({
         model: order,
         template: this.template,
         tagName: 'li',
-        className: 'orders',
+        className: 'order',
       });
       // Then render the OrderView and append the resulting HTML to the DOM.
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
   },
-  addOrder: function(event) {
+  events: {
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder',
+  },
+  buyOrder: function(event) {
+    console.log('AddOrder Button Clicked');
     event.preventDefault();
 
-    const orderData ={};
-    ['symbol', 'price-target'].forEach( (field) => {
-      const val = this.$(`input[name=${field}]`).val();
-      if (val != '') {
-        orderData[field] = val;
-      }
-    });
-    const newOrder= new Order(orderData);
+    const orderData = {
+      buy: true,
+      symbol: this.$('select[name=symbol]').val(),
+      targetPrice: parseFloat(this.$('input[name=price-target]').val()),
+      matchedQuote: this.quoteList.findWhere({ symbol: this.$('select[name=symbol]').val() }),
+    };
 
+    const newOrder= new Order(orderData);
+    // console.log(newOrder);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
-      // this.updateStatusMessageWith(`New task added: ${newTask.get('task_name')}`);
     } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
     }
+  },
+  sellOrder: function(event) {
+    console.log('AddOrder Button Clicked');
+    event.preventDefault();
+
+    const orderData = {
+      buy: false,
+      symbol: this.$('select[name=symbol]').val(),
+      targetPrice: parseFloat(this.$('input[name=price-target]').val()),
+      matchedQuote: this.quoteList.findWhere({ symbol: this.$('select[name=symbol]').val() }),
+    };
+
+    const newOrder= new Order(orderData);
+    console.log(newOrder);
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+    } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
+    }
+  },
+  updateStatusMessageFrom: function(messageHash) {
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    _.each(messageHash, (messageType) => {
+      messageType.forEach((message) => {
+        statusMessagesEl.append(`<h3>${message}</h3>`);
+      })
+    });
   },
 });
 

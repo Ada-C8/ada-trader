@@ -9,7 +9,6 @@ const OrderView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render);
   },
   render() {
-    console.log(this.attributes)
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;

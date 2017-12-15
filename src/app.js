@@ -64,11 +64,12 @@ $(document).ready(function() {
 
   const orders = new OrderList();
 
-  console.log(orders);
-  const orderListView = new QuoteListView({
+  //console.log(orders);
+  const orderListView = new OrderListView({
     model: orders,
     template: _.template($('#order-template').html()),
-    el: 'orders-list-container',
+    quoteList: quotes,
+    el: '#order-workspace',
   });
 
   //console.log('TEST');
