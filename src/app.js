@@ -7,11 +7,18 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from 'models/simulator';
+
 import Quote from './models/quote';
 import QuoteList from './collections/quote_list';
+
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+
 import TradeHistoryView from './views/trade_history_view';
+
+import Order from './models/order';
+import OrderList from './collections/order_list';
+
 import OrderView from './views/order_view';
 import OrderListView from './views/order_list_view';
 
@@ -34,8 +41,24 @@ const quoteData = [
   },
 ];
 
+// const orderData = [
+//   {
+//     symbol: 'HUMOR',
+//     targetPrice: 88.50,
+//     buy: buy,
+//   },
+//   {
+//     symbol: 'CLOTH',
+//     targetPrice: 81.70,
+//     buy: buy,
+//   },
+//
+// ];
+
 
 const quoteList = new QuoteList(quoteData);
+const orderList = new OrderList();
+
 let quoteTemplate;
 let tradeTemplate;
 let orderTemplate;
@@ -51,6 +74,7 @@ $(document).ready( () => {
   orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
+
   const simulator = new Simulator({
     quotes: quotes,
   });

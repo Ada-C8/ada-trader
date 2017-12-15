@@ -1,11 +1,11 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-  defaults: {
-    symbol: 'UNDEF',
-    target_price: 0.00,
-    order_type: 'medium'
-  },
+  // defaults: {
+  //   symbol: 'UNDEF',
+  //   targetPrice: 0.00,
+  //   buy: buy,
+  // },
   initialize(attributes) {
   //   this.template = params.template;
   //   this.bus = params.bus;
