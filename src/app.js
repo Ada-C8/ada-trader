@@ -61,7 +61,6 @@ $(document).ready(function() {
   })
 
   orderListView.render();
-
   quoteListView.render();
 
   simulator.start();

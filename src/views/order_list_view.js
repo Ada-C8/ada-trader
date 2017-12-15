@@ -43,14 +43,11 @@ const OrderListView = Backbone.View.extend({
     orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
 
     const newOrder = new Order(orderData);
-    console.log ('attempting to create a new order!')
 
     if (newOrder.isValid()) {
-      console.log('successs!')
       this.model.add(newOrder);
       this.$('.form-errors').empty();
     } else {
-      console.log(newOrder.validationError);
       this.$('.form-errors').html(`<h3>${newOrder.validationError}</h3>`)
     }
   },
@@ -67,11 +64,9 @@ const OrderListView = Backbone.View.extend({
 
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
-      console.log('successs!')
       this.model.add(newOrder);
       this.$('.form-errors').empty();
     } else {
-      console.log(newOrder.validationError);
       this.$('.form-errors').html(`<h3>${newOrder.validationError}</h3>`)
     }
   },

@@ -25,7 +25,6 @@ const QuoteListView = Backbone.View.extend({
       this.listenTo(quoteView, 'showTrade', this.showTrade)
       this.$('#quotes').append(quoteView.render().$el);
     });
-
     return this;
   },
   showTrade: function(quoteView) {
