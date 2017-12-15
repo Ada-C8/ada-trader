@@ -19,7 +19,7 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
       });
       // this.listenTo(quoteView, 'buyUpdate', this.buy);
-    this.listenTo(quoteView, 'addTrade', this.events.showTrade);
+    this.listenTo(quote, 'addTrade', this.events.showTrade);
 
     this.$('#quotes').append(quoteView.render().$el);
   });
@@ -27,8 +27,8 @@ const QuoteListView = Backbone.View.extend({
   return this;
 },
   events: {
-    showTrade: function(e) {
-      const showTradeTemplate = this.tradeTemplate(e.model.toJSON());
+    showTrade: function(data) {
+      const showTradeTemplate = this.tradeTemplate(data);
       this.$('#trades').prepend(showTradeTemplate);
     }
   }

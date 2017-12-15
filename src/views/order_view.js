@@ -16,3 +16,5 @@ const OrderView = Backbone.View.extend({
     // 'click button.btn-buy':
   },
 });
+
+export default OrderView;

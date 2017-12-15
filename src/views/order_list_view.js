@@ -24,19 +24,33 @@ const OrderListView = Backbone.View.extend({
   },
   events: {
     'click button.btn-buy': 'openBuyOrder',
+    'click button.btn-sell': 'openSellOrder',
   },
-  openBuyOrder(event) {
-  event.preventDefault();
-  const orderData = {};
-  ['symbol', 'price'].forEach((field) => {
-    const val = this.$(`select[name=${field}]`).val();
-      orderData[field] = val;
-  });
-  const newOrder = new Order(orderData);
-  if (newOrder.isValid()) {
-    this.model.add(newOrder);
-    }
-  }
+  openBuyOrder: function(event) {
+    event.preventDefault();
+    const orderData = {
+      symbol: this.$(`select[name=symbol]`).val(),
+      targetPrice: parseFloat(this.$('input[name=price-target]').val()),
+      buy: true,
+    };
+    const newOrder = new Order(orderData);
+      if (newOrder.isValid()) {
+        this.model.add(newOrder);
+      }
+  },
+  openSellOrder: function(event) {
+    event.preventDefault();
+    const orderData = {
+      symbol: this.$(`select[name=symbol]`).val(),
+      targetPrice: parseFloat(this.$('input[name=price-target]').val()),
+      buy: false,
+    };
+
+    const newOrder = new Order(orderData);
+      if (newOrder.isValid()) {
+        this.model.add(newOrder);
+      }
+  },
 });
 
 export default OrderListView;

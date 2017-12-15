@@ -13,10 +13,6 @@ import Order from 'models/order'
 import OrderList from 'collections/order_list'
 import OrderListView from 'views/order_list_view';
 
-
-
-
-
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -68,8 +64,8 @@ $(document).ready(() => {
 
   const orderListView = new OrderListView({
     model: orders,
-    orderTemplate: _.template($('#order-template').html()),
-    el: 'main',
+    template: _.template($('#order-template').html()),
+    el: '#order-workspace',
   });
   orderListView.render();
 
