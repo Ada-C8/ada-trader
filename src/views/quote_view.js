@@ -31,15 +31,17 @@ const QuoteView = Backbone.View.extend({
     this.model.sell();
   },
   buyOrder: function(changeInfo) {
-    if (this.model.get(`symbol`) === changeInfo.symbol) {
+    if (this.model.get(`symbol`) === changeInfo.quote.symbol && this.model.get('price') <= changeInfo.quote.currentPrice) {
       this.trigger('buy', this);
       this.model.buy();
+      changeInfo.model.destroy();
     }
   },
   sellOrder: function(changeInfo) {
-    if (this.model.get(`symbol`) === changeInfo.symbol) {
+    if (this.model.get(`symbol`) === changeInfo.quote.symbol && this.model.get('price') >= changeInfo.quote.currentPrice) {
       this.trigger('sell', this);
       this.model.sell();
+      changeInfo.model.destroy();
     }
   }
 })

@@ -17,11 +17,9 @@ const Order = Backbone.Model.extend({
   executeOrder: function(changeInfo) {
     if (this.get('symbol') === changeInfo.symbol && this.get('buy') === true && changeInfo.currentPrice <= this.get('targetPrice')) {
       this.trigger('buy', changeInfo);
-      this.destroy();
     }
     if (this.get('symbol') === changeInfo.symbol && this.get('buy') === false && changeInfo.currentPrice >= this.get('targetPrice')) {
       this.trigger('sell', changeInfo);
-      this.destroy();
     }
   }
 });

@@ -20,10 +20,10 @@ const OrderView = Backbone.View.extend({
     this.model.destroy();
   },
   triggerBuy: function(changeInfo) {
-    this.bus.trigger('buyOrder', changeInfo)
+    this.bus.trigger('buyOrder', {quote: changeInfo, model: this.model});
   },
   triggerSell: function(changeInfo) {
-    this.bus.trigger('sellOrder', changeInfo)
+    this.bus.trigger('sellOrder', {quote: changeInfo, model: this.model});
   }
 })
 
