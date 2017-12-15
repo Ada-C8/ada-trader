@@ -59,9 +59,11 @@ $(document).ready(function() {
   const orderListView = new OrderListView({
     model: orders,
     ordersTemplate: _.template($('#order-template').html()),
-    el: '#order-workspace'
+    el: '#order-workspace',
+    quotes: quotes
   });
-  // orderListView.render();
+  // orderListView.quotes = quotes;
+  orderListView.render();
 
   simulator.start();
 

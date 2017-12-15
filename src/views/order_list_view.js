@@ -5,13 +5,16 @@ import _ from 'underscore';
 // import Quote from '../models/quote';
 import OrderView from '../views/order_view';
 import Order from '../models/order';
+import Quote from '../models/quote';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.ordersTemplate;
     this.listenTo(this.model, 'update', this.render);
+    this.quotes = params.quotes
   },
   render() {
+    this.$('#orders').empty();
     this.model.forEach((order) => {
       const orderView = new OrderView({
         model: order,
@@ -27,14 +30,13 @@ const OrderListView = Backbone.View.extend({
     'click .btn-buy': 'buyOrder',
   },
   buyOrder: function(event) {
-
     console.log('You pressed the Buy Order button.');
     event.preventDefault();
+
     this.addToOrders(event, true);
   },
   addToOrders: function(event, buyIsTrue) {
     const orderData ={};
-
     const symbol = this.$(`select[name=symbol] option:selected`).val();
     orderData['symbol'] = symbol;
     console.log(symbol);
@@ -45,14 +47,21 @@ const OrderListView = Backbone.View.extend({
 
     orderData['buy'] = buyIsTrue;
 
-    console.log(orderData)
+    //finds the current market price and adds it to the orderData hash, to be validated in the model.
+    const currentQuoteModel = this.quotes.find({symbol: symbol});
+    console.log(currentQuoteModel);
+    const currentMarketPrice = currentQuoteModel.get('price');
+    console.log(currentMarketPrice);
+    orderData['marketPrice'] = currentMarketPrice;
+
+    console.log(orderData);
 
     //TODO - need to add a validation
     const newOrder = new Order(orderData)
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       console.log('order is valid');
-      console.log(newOrder);
+      // console.log(newOrder);
       this.updateStatusMessageWith(`New order added: ${newOrder.get('symbol')} for ${newOrder.get('targetPrice')}`);
     } else {
       newOrder.destroy();
@@ -78,6 +87,3 @@ updateStatusMessageWith: function(message) {
 });
 
 export default OrderListView;
-
-//select the current element from the dropdown:
-//this.$('select[name=symbol] option:selected')

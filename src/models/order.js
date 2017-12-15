@@ -15,6 +15,13 @@ const Order = Backbone.Model.extend({
     if (attributes.targetPrice === 0) {
       errors.targetPrice = ["A valid price is required"];
     }
+
+
+    if (attributes.buy &&  attributes.targetPrice >= attributes.marketPrice ) {
+      console.log('Price is higher than or equal to market value');
+      errors.targetPrice = ["Price is great than or equal to market price"];
+    }
+
     //TODO ADD more validations to make sure a symbol is present and only valid numbers are entered (not zero, not a string)
 
     if ( Object.keys(errors).length > 0 ) {
