@@ -13,7 +13,7 @@ const Order = Backbone.Model.extend({
     const errors = {};
 
     if (attributes.targetPrice <= 0.00) {
-      errors['targetPrice'] = ['Target price must be a valid decimal above 0.'];
+      errors['targetPrice'] = ['Invalid target price.'];
     }
 
     if (attributes.symbol === 'UNDEF' || attributes.symbol === undefined){
