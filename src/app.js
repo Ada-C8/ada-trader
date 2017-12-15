@@ -47,18 +47,25 @@ $(document).ready(() => {
 
   const quoteTemplate = _.template($('#quote-template').html());
   const tradeTemplate = _.template($('#trade-template').html());
-  const orderTemplate = _.template($('#trade-template').html());
+  const orderTemplate = _.template($('#order-template').html());
 
   const quoteListView = new QuoteListView({
     model: quoteList,
     quoteTemplate: quoteTemplate,
     tradeTemplate: tradeTemplate,
-    orderTemplate: orderTemplate,
+    // orderTemplate: orderTemplate,
     el: 'main',
     bus: bus
   });
 
+  const orderListView = new OrderListView({
+    model: orderList,
+    el: 'main',
+    template: orderTemplate,
 
+  });
+
+  orderListView.render()
   quoteListView.render()
   simulator.start();
 });

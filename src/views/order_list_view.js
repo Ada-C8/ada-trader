@@ -9,11 +9,11 @@ const OrderListView = Backbone.View.extend({
   },
 
   render() {
-    this.$('orders').empty();
+    // this.$('orders').empty();
     this.model.each((order) => {
       const orderView = new OrderView({
         bus: this.bus,
-        model: quote,
+        model: order,
         template: this.template,
         tagName: 'li',
         className: 'order'
@@ -22,6 +22,27 @@ const OrderListView = Backbone.View.extend({
       this.$('#orders').append(orderView.render().$el);
     })
     return this
+  },
+
+  events: {
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder'
+  },
+
+  buyOrder(e){
+    e.preventDefault();
+    console.log("Trying to buy!")
+    console.log(this.$el)
+
+  },
+
+  sellOrder(e) {
+    e.preventDefault();
+    console.log("Trying to sell!")
+  },
+
+  appendOrder() {
+    let symbol = this.symbol
   }
 
 })

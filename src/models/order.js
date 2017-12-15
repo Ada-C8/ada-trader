@@ -8,7 +8,7 @@ const Order = Backbone.Model.extend({
   },
 
   initalize(params) {
-
+    console.log("You placed an order!")
   },
 
   validate() {
