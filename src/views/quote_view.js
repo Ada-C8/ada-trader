@@ -7,6 +7,8 @@ const QuoteView = Backbone.View.extend({
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'change', this.alertPriceChange);
+    this.listenTo(this.bus, 'buyOrder', this.buyOrder);
+    this.listenTo(this.bus, 'sell', this.sellQuote);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -28,6 +30,12 @@ const QuoteView = Backbone.View.extend({
     this.trigger('sell', this);
     this.model.sell();
   },
+  buyOrder: function(changeInfo) {
+    if (this.model.get(`symbol`) === changeInfo.symbol) {
+      this.trigger('buy', this);
+      this.model.buy();
+    }
+  }
 })
 
 export default QuoteView;

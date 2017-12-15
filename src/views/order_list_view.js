@@ -17,9 +17,10 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'order',
+        bus: this.bus
       });
       this.$('#orders').append(orderView.render().$el);
-      orderView.listenTo(this.bus, 'priceChange', orderView.executeOrder);
+      // orderView.listenTo(this.bus, 'priceChange', orderView.executeOrder);
     });
     return this;
   },
@@ -37,6 +38,7 @@ const OrderListView = Backbone.View.extend({
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      newOrder.listenTo(this.bus, 'priceChange', newOrder.executeOrder);
       this.$('.order-entry-form [name=price-target]').val("");
       this.$('.form-errors').empty();
     } else {

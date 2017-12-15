@@ -3,7 +3,9 @@ import Backbone from 'backbone';
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'buy', this.triggerBuy);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -16,12 +18,8 @@ const OrderView = Backbone.View.extend({
   deleteOrder: function() {
     this.model.destroy();
   },
-  executeOrder: function(changeInfo) {
-    if (this.model.get('symbol') === changeInfo.symbol && this.model.get('buy') === true && changeInfo.currentPrice <= this.model.get('targetPrice')) {
-      console.log('I should buy');
-    }
-
-
+  triggerBuy: function(changeInfo) {
+    this.bus.trigger('buyOrder', changeInfo)
   }
 })
 
