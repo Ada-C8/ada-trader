@@ -22,10 +22,20 @@ render(){
       tagName: 'li',
       className: 'quote',
       bus: this.bus,
-    });
+    }); // end quoteView const
     this.$('.quotes').append(quoteView.render().$el);
-    // this.$('.trades').prepend();
-  });
+
+    this.$('select').append('<option>' + quote.get('symbol') + '</option>');
+
+
+      let x = document.getElementById("symbol");
+      let option = document.createElement("option");
+      option.text = "kiwi";
+      x.add(option, x[0]);
+
+
+
+  }); // end each
   return this;
 },
 

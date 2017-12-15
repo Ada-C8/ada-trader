@@ -62,7 +62,7 @@
            <h3>Order Entry Form</h3>
            <form>
              <label for="symbol">Symbol</label>
-             <select name="symbol">
+             <select id="symbol" name="symbol">
                <!-- Option entries should be added here using JavaScript -->
              </select>
              <label for="price-target">Price</label>
@@ -90,7 +90,6 @@
       within an element with the class "quote" applied -->
       <li class="quote">
       <div class="row small-12 columns">
-        <h1>This is the quote template</h1>
         <h3 class="symbol"><%- symbol %></h3>
         <h3 class="price">$<%- price.toFixed(2) %></h3>
         <div class="quote-actions">
@@ -110,6 +109,7 @@
     </script>
 
     <script type="text/template" id="order-template">
+      <h3>This is the open orders template</h3>
       <h3 class="symbol"><%- symbol %></h3>
       <div class="detail">
         <span class="action"><%- buy ? 'buy' : 'sell' %></span>
