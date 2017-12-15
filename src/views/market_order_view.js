@@ -7,8 +7,8 @@ const MarketOrderView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.hamRadio = params.hamRadio;
-    this.listenTo(this.hamRadio, 'bought_quote', this.buyTrade);
-    this.listenTo(this.hamRadio, 'sold_quote', (this.sellTrade));
+    this.listenTo(this.hamRadio, 'bought_quote', this.addTrade);
+    this.listenTo(this.hamRadio, 'sold_quote', (this.addTrade));
     this.listenTo(this.model, 'update', this.render);
   },
   events:{
@@ -20,25 +20,15 @@ const MarketOrderView = Backbone.View.extend({
   updateStatusMessage(message){
 
   },
-  buyTrade(model){
-    console.log(model);
-    console.log('this is the model');
-    const newTrade = new Trade({symbol: model.attributes.symbol, price: model.attributes.price, buy: false});
-
-    if(newTrade.isValid()){
-      this.model.add(newTrade);
-      this.updateStatusMessage(`${newTrade.get('symbol')} Created!`);
-    }else{
-      console.log('Something went wrong!');
-      this.updateStatusMessageFrom(newTrade.validationError);
+  addTrade(model){
+    console.log(event);
+    console.log('thats the event');
+    let tradeData = {symbol: model.attributes.symbol, price: model.attributes.price}
+    let btnSell = event['target'].classList.contains('btn-sell')
+    if( btnSell){
+      tradeData['buy'] = false;
     }
-    return newTrade;
-  },
-  sellTrade(model){
-    console.log(model);
-    console.log('this is the model');
-    const newTrade = new Trade({symbol: model.attributes.symbol, price: model.attributes.price});
-    console.log(newTrade);
+    const newTrade = new Trade(tradeData);
 
     if(newTrade.isValid()){
       this.model.add(newTrade);

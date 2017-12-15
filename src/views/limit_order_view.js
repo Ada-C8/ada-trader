@@ -12,14 +12,16 @@ const LimitOrderView = Backbone.View.extend({
   },
 
   render(){
+
     const compiledTemplate =  this.template(this.model.toJSON());
+
     this.$el.html(compiledTemplate);
     return this;
   },
-  // events:{
-  //   'click button.btn-buy': 'buyQuote',
-  //   'click button.btn-sell': 'sellQuote',
-  // },
+  events:{
+    // 'click form button.btn-buy': 'order_purchase',
+    // 'click form button.btn-sell': 'order_sell',
+  },
   // buyQuote(){
   //   console.log('banana');
   //   this.model.buy();

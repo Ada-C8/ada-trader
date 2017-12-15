@@ -16,7 +16,6 @@ const TradeView = Backbone.View.extend({
     return this;
   },
   addTrade(event){
-    console.log('peanut butter');
     this.model.newTrade(event);
     return this;
   },
