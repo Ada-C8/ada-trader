@@ -46,11 +46,8 @@ const OrderListView = Backbone.View.extend({
       buy: true,
     });
 
+    // SEE CHECKSUBMITTED ORDER PRICE in QUOTE LIST VIEW
     this.bus.trigger('compareToMarketPrice', order);
-
-    // Check if the order is valid
-    // this.checkValidations(order);
-    // TODO: Does this need to be a custom error when the model is saved?
   },
 
   ////////////////////////// CREATE SELL ORDER ////////////////////////
@@ -82,17 +79,17 @@ const OrderListView = Backbone.View.extend({
   //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
 
   renderOpenOrders(event) {
-    this.model.each((order) => {
-      const orderView = new OrderView({
-        model: order,
-        template: this.template,
-        tagName: 'li',
-        bus: this.bus,
-        className: 'order',
-      });
-
-      this.$('#orders').append(orderView.render().$el);
+    // Append the last order only
+    const lastOrder = this.model.at(this.model.length - 1);
+    const orderView = new OrderView({
+      model: lastOrder,
+      template: this.template,
+      tagName: 'li',
+      className: 'order',
+      bus: this.bus,
     });
+
+    this.$('#orders').append(orderView.render().$el);
   },
 
   ////////////////////////// ERROR DISPLAY ////////////////////////
