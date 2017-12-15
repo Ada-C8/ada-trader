@@ -15,14 +15,19 @@ describe('QuoteList spec', () => {
         },
       ]);
     });
-    console.log('$$$$$$$$');
-    console.log(quoteList);
 
   describe('QuoteList', () => {
     it('should be a list of Quote models', () => {
       console.log('************');
-      console.log(quoteList);
-      expect(quoteList.get('symbol')).toEqual('ANDERS');
+
+      let quoteList2 = new QuoteList();
+      let quote = new Quote ({
+        symbol: 'ANDERS',
+        price: 90.01,
+      });
+
+      quoteList2.add(quote);
+      expect(quoteList2.at(0).get('symbol')).toEqual('ANDERS');
     });
   });
 

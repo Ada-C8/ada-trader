@@ -21,18 +21,30 @@ describe('Order spec', () => {
   });
 
   describe('Validate function', () => {
-    it('returns an object with correct message if missing targetPrice', () => {
+    it('should set isValid() to false and return an object with correct message if missing targetPrice', () => {
       const order = new Order({
-          targetPrice: 88.60,
+          // targetPrice: 88.60,
           buy: true,
           symbol: 'HUMOR',
         });
 
-      // expect(order).toThrow(new Error('model is required'));
+      // order.set({"targetPrice": '0'});
+      expect(order.isValid()).toBeFalsy();
+      expect(order.validationError).toEqual({'price': ['A price is required']})
+    });
 
-      order.set({"targetPrice": '0'});
+    it('should set isValid() to false and return an object with correct message if missing symbol', () => {
+      const order = new Order({
+          targetPrice: 88.60,
+          buy: true,
+          // symbol: 'HUMOR',
+        });
 
       expect(order.isValid()).toBeFalsy();
+      expect(order.validationError).toEqual({'symbol': ['A symbol is required']})
     });
+
   });
 });
+
+// Write a test which verifies that limit orders are executed and destroyed when the relevant stock reaches the order's target price.

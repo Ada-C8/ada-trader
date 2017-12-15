@@ -10,7 +10,6 @@ const Order = Backbone.Model.extend({
 
   validate(attributes) {
     const errors = {};
-    console.log('in validate');
 
     //TODO: validate for specific symbols?
     if (!attributes.symbol) { //all orders require a symbol
@@ -21,7 +20,10 @@ const Order = Backbone.Model.extend({
       errors['price'] = ['A price is required']
     }
 
-    //TODO: validate for buy or sell?
+    if (attributes.buy !== true && attributes.buy !== false) {
+      errors['order type'] = ['You must indicate either buy or sell']
+    }
+
     if ( Object.keys(errors).length > 0 ) {
       return errors;
     } else {
