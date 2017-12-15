@@ -11,6 +11,7 @@ import QuoteList from 'collections/quote_list';
 
 import QuoteListView from 'views/quote_list_view';
 import TradeListView from 'views/trade_list_view';
+import FormView from 'views/form_view';
 
 const quoteData = [
   {
@@ -42,11 +43,17 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
-    el: 'main',
+    el: '#quotes-container',
     bus: bus,
   });
-  quotes.each((quote) => {
-    $('select').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
+  // quotes.each((quote) => {
+  //   $('select').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
+  // });
+  const formView = new FormView({
+    model: quotes,
+    template: _.template($('#form-template').html()),
+    el: '.order-entry-form',
+    bus: bus,
   });
 
   const tradeListView = new TradeListView({
@@ -56,6 +63,7 @@ $(document).ready(function() {
   });
 
   quoteListView.render();
+  formView.render();
   // tradeListView.render();
 
   simulator.start();
