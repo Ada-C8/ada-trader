@@ -24,16 +24,12 @@ const Order = Backbone.Model.extend({
     }
   },
   orderMe() {
-    console.log('start')
     if (this.buy && this.targetPrice >= this.quote.get('price')) {
       this.trigger('orderMe');
       this.quote.buy();
     } else if (!this.buy && this.targetPrice <= this.quote.get('price')) {
       this.trigger('orderMe');
       this.quote.sell();
-
-      // console.log(this)
-      console.log('sell');
     }
   },
 });

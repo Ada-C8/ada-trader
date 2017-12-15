@@ -66,15 +66,14 @@ describe('Order spec', () => {
   describe('orderMe function', () => {
 
     it('buys if market price is below target price', () => {
-      const startPrice = 90;
+      const startPrice = 95;
       const quote = new Quote({price: startPrice});
       const order = new Order({
         targetPrice: 95,
         buy: true,
         quote: quote,
       });
-      console.log('call');
-      order.orderMe();
+      quote.sell();
 
       expect(quote.get('price')).toEqual(startPrice + 1.00);
     });
@@ -88,24 +87,24 @@ describe('Order spec', () => {
         quote: quote,
       });
 
-      order.orderMe();
+      quote.sell();
 
-      expect(quote.get('price')).toEqual(startPrice);
+      expect(quote.get('price')).toEqual(startPrice-1);
     });
 
     it('sells if market price is above target', () => {
-      const startPrice = 90;
+      const startPrice = 84;
       const quote2 = new Quote({price: startPrice, symbol: 'hi'});
       const order = new Order({
         targetPrice: 85,
         buy: false,
         quote: quote2,
       });
-      console.log('call');
-      order.orderMe();
-      console.log('call');
-      // console.log(quote2)
-      expect(quote2.get('price')).toEqual(startPrice - 1.00);
+
+      quote2.buy();
+      quote2.buy();
+
+      expect(quote2.get('price')).toEqual(startPrice);
     });
 
     it('doesnt sell if market is below target',() => {
@@ -117,9 +116,9 @@ describe('Order spec', () => {
         quote: quote,
       });
 
-      order.orderMe();
-
-      expect(quote.get('price')).toEqual(startPrice);
+      // order.orderMe();
+      quote.buy();
+      expect(quote.get('price')).toEqual(startPrice+1);
     });
   });
 });
