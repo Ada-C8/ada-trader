@@ -2,6 +2,7 @@ import Quote from 'models/quote';
 
 describe('Quote spec', () => {
   let quote;
+  
   beforeEach(() => {
     quote = new Quote({
       symbol: 'HELLO',
