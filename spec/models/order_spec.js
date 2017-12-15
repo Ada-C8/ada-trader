@@ -11,6 +11,17 @@ describe('Order spec', () => {
   });
 
   describe('Order Validations', () => {
+    it('returns no errors valid order parameters', () => {
+      const order = new Order({
+        symbol: 'UNDEF',
+        targetPrice: 15.00,
+        buy: true,
+      });
+
+      expect(order.isValid()).toBeTruthy();
+      expect(order.validationError).toBeNull();
+    });
+
     it('returns an error if a symbol is blank', () => {
       const order = new Order({
         symbol: '',
@@ -43,16 +54,5 @@ describe('Order spec', () => {
       expect(order.isValid()).toBeFalsy();
       expect(order.validationError).toEqual({targetPrice: ["Please enter a number higher than 0!"]});
     });
-
-    // it('returns an error if a targetPrice is a string', () => {
-    //   const order = new Order({
-    //     symbol: 'HUMOR',
-    //     targetPrice: 'This is not a price!',
-    //     buy: true,
-    //   });
-    //
-    //   expect(order.isValid()).toBeFalsy();
-    //   expect(order.validationError).toEqual({noString: ["Please enter an integer"]});
-    // });
   }); // INNER DESCRIBE BLOCK
 }); // OUTER DESCRIBE BLOCK

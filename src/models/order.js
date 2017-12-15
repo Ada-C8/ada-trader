@@ -15,11 +15,6 @@ const Order = Backbone.Model.extend({
     if (!attributes.symbol) {
       errors['symbol'] = ["You must select a symbol!"];
     }
-
-    // if (attributes.targetPrice === String) {
-    //   errors['noString'] = ["Please enter an integer"];
-    // }
-
     if (!attributes.targetPrice) {
       errors['targetPrice'] = ["Your target price cannot be blank!"];
     }
