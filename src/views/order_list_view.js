@@ -16,12 +16,11 @@ const OrderListView = Backbone.View.extend({
     // SEE QUOTE_LIST_VIEW submittedOrderPRICE FOR TRIGGER
     this.listenTo(this.bus, 'checkValidations', this.checkValidations);
 
-    // SEE QUOTE VIEW LIST RENDER()
+    // SEE QUOTE VIEW RENDER()
     this.listenTo(this.bus, 'checkQuotePrice', this.checkQuotePrice);
   },
 
   events: {
-    // TODO: PUT THESE IN THEIR OWN FUNCTIONS???
     'click form button.btn-buy': 'createOrder',
     'click form button.btn-sell': 'createOrder',
   },
@@ -78,11 +77,12 @@ const OrderListView = Backbone.View.extend({
         buy: true,
       });
     }
+
     // SEE CHECK SUBMITTED ORDER PRICE in QUOTE LIST VIEW
     this.bus.trigger('compareToMarketPrice', order);
   },
 
-  ////////////////////////// GET FORM DATA ////////////////////////
+  ////////////////////////// FORM DATA ////////////////////////
 
   getFormData() {
     const data = {};
@@ -90,8 +90,6 @@ const OrderListView = Backbone.View.extend({
     data['price'] = this.$('form input[name=price-target]').val();
     return data;
   },
-
-  ////////////////////////// CLEAR FORM //////////////////////////
 
   clearFormData() {
     this.$('form input[name=price-target]').val('');
@@ -132,15 +130,9 @@ const OrderListView = Backbone.View.extend({
     if (orders.length > 0) {
       orders.forEach((order) => {
         if (quote.get('price') < order.get('price')) {
-          let trade = {
-            // TODO: make order price the same name as quote attributes
-            symbol: order.get('symbol'),
-            price: order.get('price'),
-            buy: order.get('buy'),
-          };
 
           // SEE TRADE VIEW FUNCTION
-          this.bus.trigger('add_quote', trade);
+          this.bus.trigger('add_quote', order.attributes);
           this.model.remove(order);
           order.destroy(); // Trggers a render() in this collection
         }

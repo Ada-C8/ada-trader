@@ -32,6 +32,7 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
 
+  // TODO: move this into validations???
   checkSubmittedOrderPrice(order) {
     const quote = this.model.findWhere({symbol: order.get('symbol')});
     const $errorDisplay = this.$('.form-errors');
