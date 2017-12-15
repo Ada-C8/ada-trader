@@ -4,9 +4,10 @@ import 'css/app.css';
 import $ from 'jquery';
 import _ from 'underscore';
 
+import Backbone from 'backbone';
 import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
 
+import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
 
 const quoteData = [
@@ -37,7 +38,7 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
-    el: 'main'
+    el: '#quotes-container'
 
   });
 

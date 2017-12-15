@@ -1,4 +1,3 @@
-// /src/views/task_list_view.js
 import Backbone from 'backbone';
 import _ from 'underscore';
 import QuoteView from '../views/quote_view';
@@ -11,20 +10,14 @@ const QuoteListView = Backbone.View.extend({
   },
 
   render() {
-    // Clear the unordered list
-    //this.$ -> allows to look up jquery things within this view
     this.$('#quotes').empty();
-    // Iterate through the list rendering each Task
     this.model.each((quote) => {
-      // Create a new TaskView with the model & template
       const quoteView = new QuoteView({
         model: quote,
         template: this.template,
         tagName: 'li',
         className: 'quote',
       });
-      // Then render the TaskView
-      // And append the resulting HTML to the DOM.
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
