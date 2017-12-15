@@ -34,15 +34,29 @@ const OrderListView = Backbone.View.extend({
   },
   addToOrders: function(event, buyIsTrue) {
     const orderData ={};
-    orderData['symbol'] = this.$(`input[name=symbol]`);
-    orderData['targetPrice']= this.$('input[name=price-target]');
+
+    const symbol = this.$(`select[name=symbol] option:selected`).val();
+    orderData['symbol'] = symbol;
+    console.log(symbol);
+
+    const price = parseFloat(this.$('input[name=price-target]').val());
+    orderData['targetPrice'] = price;
+    console.log(price);
+
     orderData['buy'] = buyIsTrue;
+
+    console.log(orderData)
+
     //TODO - need to add a validation
     const newOrder = new Order(orderData)
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      console.log('order is valid');
+      console.log(newOrder);
+      this.updateStatusMessageWith(`New order added: ${newOrder.get('symbol')} for ${newOrder.get('targetPrice')}`);
     } else {
       newOrder.destroy();
+      this.updateStatusMessageFrom(newOrder.validationError);
     };
   },
   updateStatusMessageFrom: function(messageHash) {

@@ -65,5 +65,5 @@ $(document).ready(function() {
 
   simulator.start();
 
-  orders.add(new Order({buy: true, price: 49.00, symbol: "JULIA"}));
+  // orders.add(new Order({buy: true, price: 49.00, symbol: "JULIA"}));
 });
