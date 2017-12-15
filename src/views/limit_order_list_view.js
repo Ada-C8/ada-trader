@@ -108,6 +108,10 @@ const LimitOrderListView = Backbone.View.extend({
     if (targetPrice !== '') {
       orderData['symbol'] = targetSymbol;
     };
+    let btnSell = event['target'].classList.contains('btn-sell')
+    if( btnSell){
+      orderData['buy'] = false;
+    }
     return orderData;
 
   },
