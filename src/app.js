@@ -42,6 +42,7 @@ const quoteData = [
 const quoteList = new QuoteList();
 const tradeList = new TradeList();
 const openOrderList = new OpenOrderList();
+
 let quoteTemplate
 let tradeTemplate
 let orderTemplate

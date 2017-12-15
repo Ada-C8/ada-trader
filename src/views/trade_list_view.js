@@ -39,7 +39,6 @@ const TradeListView = Backbone.View.extend({
     // this.render();
   },
   sellTrade(model) {
-    console.log('getting into sell trade!');
     const newTrade = new Trade({symbol: model.attributes.symbol, price: model.attributes.price, buy: false})
     if(newTrade.isValid()) {
       this.model.add(newTrade);

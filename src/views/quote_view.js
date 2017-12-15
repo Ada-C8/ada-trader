@@ -16,8 +16,9 @@ const QuoteView = Backbone.View.extend({
 
   events: {
     'click button.btn-buy': 'buyQuote',
-    'click button.btn-sell': 'sellQuote',
   },
+
+
   buyQuote(event) {
     this.model.buy();
     this.bus.trigger('bought_quote', this.model);

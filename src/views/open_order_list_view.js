@@ -9,12 +9,9 @@ const OpenOrderListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
     this.listenTo(this.bus, 'quotes', this.updateOptions);
     this.listenTo(this.bus, 'quotes', this.storeQuotes);
-
-
   },
   events: {
     'click button.btn-buy, button.btn-sell': 'addOpenOrder',
-    //click buy or sell on form add OpenOrder
   },
   render() {
     this.$('#orders').empty();
@@ -24,7 +21,6 @@ const OpenOrderListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'openOrder',
-        // quote: '',
         bus: this.bus,
       });
       this.$('#orders').append(openOrderView.render().$el)
@@ -32,11 +28,7 @@ const OpenOrderListView = Backbone.View.extend({
     return this;
   },
 
-  compare(model) {
-    console.log('comparing');
-  },
 
-  //add validations based on
   addOpenOrder(event) {
     event.preventDefault();
     const formData = this.getFormData();
@@ -47,7 +39,6 @@ const OpenOrderListView = Backbone.View.extend({
 
     const newOpenOrder = new OpenOrder(formData);
     if (newOpenOrder.isValid()) {
-      //if it is within the right parameters
       this.model.add(newOpenOrder);
       this.clearFormData();
       this.updateStatusMessage('order placed!')
@@ -57,13 +48,13 @@ const OpenOrderListView = Backbone.View.extend({
     }
   },
 
-
+//change to store quotes on model?
   storeQuotes(model) {
     console.log('in store quotes');
     this.quotes = model
   },
 
-//change this so it just passes an array of the symbols
+//change this so it just passes an array of the symbols?
   updateOptions(model) {
     console.log('getting in update options');
     this.$('form>select').html('')
