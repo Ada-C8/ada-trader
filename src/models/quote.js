@@ -5,12 +5,10 @@ const Quote = Backbone.Model.extend({
     symbol: 'UNDEF',
     price: 0.00
   },
-
   buy() {
     this.set('price', this.get('price') + 1);
     this.set('buy', true);
   },
-
   sell() {
     this.set('price', this.get('price') - 1);
     this.set('buy', false);

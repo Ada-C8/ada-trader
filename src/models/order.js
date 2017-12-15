@@ -23,6 +23,9 @@ const Order = Backbone.Model.extend({
       errors['price_target'] = ["Sell order target price cannot be less than the current market price."]
     }
   },
+  /*buy() {
+    this.set('currentPrice', )
+  }, */
 });
 
 export default Order;
