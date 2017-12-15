@@ -18,8 +18,6 @@ import QuoteListView from 'views/quote_list_view';
 import OrderView from 'views/order_view';
 import OrderListView from 'views/order_list_view';
 
-// let quotes;
-
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -39,18 +37,9 @@ const quoteData = [
   },
 ];
 
-// quotes = new QuoteList(quoteData);
-//
-// const formSelect = function formSelect () {
-//   const $form_select = $('#order-form select[name="symbol"]');
-//   quotes.each((quote) => {
-//     const symbol = quote.get('symbol');
-//     $form_select.append(`<option value="${symbol}">${symbol}</option>`);
-//   });
-// };
-
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
+
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -62,7 +51,14 @@ $(document).ready(function() {
     el: 'main',
   });
 
-  // formSelect();
+  const formSelect = function formSelect () {
+    quotes.each((quote) => {
+      const symbol = quote.get('symbol');
+      $('select[name="symbol"]').append(`<option value="${symbol}">${symbol}</option>`);
+    });
+  };
+
+  formSelect();
   quoteListView.render();
   simulator.start();
 });
