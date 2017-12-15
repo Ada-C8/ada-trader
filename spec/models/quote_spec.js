@@ -4,8 +4,9 @@ import Backbone from 'backbone';
 
 describe('Quote spec', () => {
   let quote;
+  let eventBus;
   beforeEach(() => {
-    let eventBus = {};
+    eventBus = {};
     eventBus = _.extend(eventBus, Backbone.Events);
     quote = new Quote({
       symbol: 'HELLO',
@@ -33,4 +34,13 @@ describe('Quote spec', () => {
       expect(quote.get('price')).toEqual(startPrice - 1.00);
     });
   });
+
+  describe('responds to quote model change', () => {
+    it('triggers a priceChange event on the bus in response to a quote model change', () => {
+      const spy = spyOn(eventBus, 'trigger');
+      quote.trigger('change');
+
+      expect(spy).toHaveBeenCalledWith(`priceChange${quote.get('symbol')}`, quote.get('price').toFixed(2));
+    });
+  })
 });
