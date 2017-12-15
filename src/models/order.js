@@ -9,10 +9,10 @@ const Order = Backbone.Model.extend({
 
   initalize(params) {
 
-  }
+  },
 
   validate() {
-    
+
   }
 
 });

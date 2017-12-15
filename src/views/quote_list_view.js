@@ -5,7 +5,7 @@ import Quote from '../models/quote'
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
-    this.template = params.template,
+    this.quoteTemplate = params.quoteTemplate,
     this.tradeTemplate = params.tradeTemplate,
     this.listenTo(this.model, "change", this.render)
   },
@@ -15,11 +15,11 @@ const QuoteListView = Backbone.View.extend({
       const quoteView = new QuoteView ({
         bus: this.bus,
         model: quote,
-        template: this.template,
+        template: this.quoteTemplate,
         tagName: 'li',
         className: 'quote'
       })
-      this.bus.listenTo(quoteView, 'appendTrade', this.appendTrade)
+      this.listenTo(quoteView, 'appendTrade', this.appendTrade)
       this.$('#quotes').append(quoteView.render().$el);
     })
     return this
@@ -28,8 +28,13 @@ const QuoteListView = Backbone.View.extend({
   appendTrade(quoteView) {
     const compiledTradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
     this.$('#trades').prepend(compiledTradeTemplate);
-  }
+  },
 
+  appendOrder(notSureYet) {
+    const compiledOrderTemplate =
+    this.orderTemplate(notSureYet.model.toJSON());
+    this.$('#orders').append(compiledOrderTemplate);
+  },
 
 })
 
