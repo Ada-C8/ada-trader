@@ -9,7 +9,7 @@ const QuoteListView = Backbone.View.extend({
     // add bus
     this.bus = params.bus;
 
-    // listens for changes in out template
+    // listens for changes in our template
     this.listenTo(this.model, 'update', this.render);
   },
 

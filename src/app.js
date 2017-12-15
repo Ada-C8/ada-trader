@@ -7,7 +7,6 @@ import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 
-
 import Simulator from './models/simulator';
 import Quote from './models/quote';
 import QuoteList from './collections/quote_list';
@@ -16,7 +15,8 @@ import QuoteListView from './views/quote_list_view';
 import TradesView from './views/trades_view';
 import Order from './models/order';
 import OrderList from './collections/order_list';
-
+import OrderView  from './views/order_view';
+import OrderListView  from './views/order_list_view';
 
 const quoteData = [
   {
@@ -39,6 +39,7 @@ const quoteData = [
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate
 
 $(document).ready(function() {
   // set up bus so that is can listen and respond to events
