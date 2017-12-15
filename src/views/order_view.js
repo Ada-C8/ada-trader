@@ -5,6 +5,7 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
+    // this.listenTo(this.model, 'change', this.render);
   },
 
   events: {
@@ -12,6 +13,7 @@ const OrderView = Backbone.View.extend({
   },
 
   render() {
+    // console.log('hits the render function');
     // console.log('This is my render function in order view')
     const compiledTemplate = this.template(this.model.toJSON());
     // console.log(compiledTemplate);
@@ -21,8 +23,10 @@ const OrderView = Backbone.View.extend({
 
   cancelOrder(event) {
     // TRIGGERS ORDER LIST VIEW TO RE RENDER
-    this.model.destroy();
-    this.remove();
+    // console.log('why does this button not work')
+    this.remove({silent: true});
+    this.model.destroy({silent: true});
+    // console.log('Model is destroyed');
   },
 });
 
