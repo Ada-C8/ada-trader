@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import QuoteListView from 'views/quote_list_view';
 
 const quoteData = [
   {
@@ -26,9 +27,18 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
+  });
+
+  //create new quote view obj
+  const quoteListView = new QuoteListView({
+    model: quotes
+    template: quoteTemp,
+    tagName: 'li',
+    className: 'quote',
   });
 
   simulator.start();
