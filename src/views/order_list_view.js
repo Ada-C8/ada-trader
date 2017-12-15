@@ -56,6 +56,7 @@ const OrderListView = Backbone.View.extend({
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      newOrder.listenTo(newOrder.get('quote'), 'change', newOrder.quotePriceCheck);
     }
   },
 
