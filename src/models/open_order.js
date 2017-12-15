@@ -10,6 +10,9 @@ const OpenOrder = Backbone.Model.extend({
       errors['target_price'] = ["Price cannot be blank."];
       console.log('error')
     }
+    // TODO: get CurrentMarketPrice from quote
+//     If the target price is blank OR is greater than or equal to the current market price:
+// That order is not created and an appropriate error message is displayed beneath the form
     // if buy is true
     // if (attributes.buy && attributes.targetPrice >= CurrentMarketPrice) {
     //   errors['target_price'] = ["Price cannot be blank."];

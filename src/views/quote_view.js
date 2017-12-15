@@ -36,8 +36,10 @@ const QuoteView = Backbone.View.extend({
     this.model.sell();
   },
   render() {
+    let quote = this.model;
+    this.bus.trigger('quote_change', quote);
     // trigger quote_change event which quotelist view will listen for
-    this.bus.trigger('quote_change');
+    // this.bus.trigger('quote_change');
     console.log(this.model);
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
