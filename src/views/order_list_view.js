@@ -15,12 +15,10 @@ const OrderListView = Backbone.View.extend({
     console.log(this.bus);
     this.listenTo(this.model, 'update', this.render);
     this.orderForm(params.symbols.models);
-
   },
 
   render() {
     this.$('#orders').empty();
-    console.log(this.model);
     this.model.each((order) => {
       const orderView = new OrderView({
         model: order,
@@ -51,6 +49,9 @@ const OrderListView = Backbone.View.extend({
     const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']});
     orderData['activeQuote'] = searchElem;
     orderData['bus'] = this.bus;
+    // THIS COULD BE THE PROBLEM BELOW
+    orderData['symbolList'] = this.quoteList.map(quote => quote.get('symbol'));
+    console.log(orderData['symbolList']);
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);

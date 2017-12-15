@@ -25,7 +25,6 @@ const QuoteView = Backbone.View.extend({
   },
   buyQuote: function() {
     const tradeObj = this.model.attributes;
-    console.log(tradeObj);
     tradeObj['buy'] = true;
     this.model.buy();
     const $trades = $('#trades');
@@ -34,12 +33,11 @@ const QuoteView = Backbone.View.extend({
   },
   sellQuote: function(e) {
     const tradeObj = this.model.attributes;
-    console.log(tradeObj);
     tradeObj['buy'] = false;
     this.model.sell();
     const $trades = $('#trades');
     $('#trades').prepend(tradeTemplate(tradeObj));
-    this.bus.trigger('cancelOrder');
+    this.bus.trigger('orderFinished');
   },
 
 });

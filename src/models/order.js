@@ -11,6 +11,7 @@ const Order = Backbone.Model.extend({
     this.buy = attributes.buy;
     this.targetPrice = attributes.targetPrice
     this.quote = attributes.activeQuote;
+    this.symbolList = attributes.symbolList;
     this.listenTo(this.quote, 'change', this.quoteCheck);
     this.bus = attributes.bus;
   },
@@ -27,6 +28,10 @@ const Order = Backbone.Model.extend({
 
     if (!attributes.symbol) {
       errors['symbol'] = ['Symbol is required'];
+    }
+
+    if (!attributes.symbolList.includes(attributes.symbol)) {
+      errors['symbol'] = ['Invalid symbol'];
     }
 
     if (!attributes.symbol) {
