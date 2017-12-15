@@ -12,7 +12,6 @@ const Order = Backbone.Model.extend({
 
   validate(attributes) {
     const errors = {}
-
     // If the target price is blank OR is greater than or equal to the current market price:
     if (!attributes.symbol) {
       errors['symbol'] = ["You must select a symbol!"];
@@ -23,8 +22,12 @@ const Order = Backbone.Model.extend({
       errors['targetPrice'] = ["Your target price cannot be blank!"];
     }
 
+    if ((attributes.targetPrice) === 0) {
+      errors['targetPrice'] = ["Please enter a number higher than 0!"];
+    }
+
     if (attributes.targetPrice === String) {
-      errors['targetPrice'] = ["Please enter an integer"];
+      errors['noString'] = ["Please enter an integer"];
     }
 
     if ( Object.keys(errors).length > 0 ) {

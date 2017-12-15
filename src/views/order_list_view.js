@@ -14,13 +14,13 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.bus, 'append_symbols', this.renderDropDown);
 
     // SEE QUOTE_LIST_VIEW submittedOrderPRICE FOR TRIGGER
-    this.listenTo(this.bus, 'createBuyOrder', this.createBuyOrder);
+    this.listenTo(this.bus, 'checkValidations', this.checkValidations);
   },
 
   events: {
     // TODO: PUT THESE IN THEIR OWN FUNCTIONS???
-    'click form button.btn-buy': 'compareMarketPriceBuy',
-    'click form button.btn-sell': 'compareMarketPriceSell',
+    'click form button.btn-buy': 'createBuyOrder',
+    'click form button.btn-sell': 'createSellOrder',
   },
 
   renderDropDown(quotes) {
@@ -32,54 +32,42 @@ const OrderListView = Backbone.View.extend({
     });
   },
 
-  ////////////////////////// COMPARE MARKET PRICE ////////////////////////
-
-  compareMarketPriceBuy(event) {
-    event.preventDefault();
-    this.$('.form-errors').empty(); // TODO: Do I need this?
-
-    const orderData = this.getFormData();
-
-    // SEE QUOTE VIEW LIST FOR THE LISTEN TO
-    this.bus.trigger('compareToMarketPrice', orderData);
-  },
-
-  compareMarketPriceSell(event) {
-    event.preventDefault();
-    this.$('.form-errors').empty(); // TODO: Do I need this?
-
-    const orderData = this.getFormData();
-
-    // SEE QUOTE VIEW LIST FOR THE LISTEN TO
-    this.bus.trigger('compareToMarketPrice', orderData);
-  },
-
   ////////////////////////// CREATE BUY ORDER ////////////////////////
 
-  createBuyOrder(formData) {
+  createBuyOrder(event) {
+    event.preventDefault();
+    this.$('.form-errors').empty(); // TODO: Do I need this?
+
+    const orderData = this.getFormData();
+
     const order = new Order({
-      symbol: formData['symbol'],
-      targetPrice: parseInt(formData['targetPrice']),
+      symbol: orderData['symbol'],
+      targetPrice: parseInt(orderData['targetPrice']),
       buy: true,
     });
 
+    this.bus.trigger('compareToMarketPrice', order);
+
     // Check if the order is valid
-    this.checkValidations(order);
+    // this.checkValidations(order);
     // TODO: Does this need to be a custom error when the model is saved?
   },
 
   ////////////////////////// CREATE SELL ORDER ////////////////////////
 
-  createSellOrder(formData) {
+  createSellOrder(event) {
+    event.preventDefault();
+    this.$('.form-errors').empty(); // TODO: Do I need this?
+
+    const orderData = this.getFormData();
+
     const order = new Order({
-      symbol: formData['symbol'],
-      targetPrice: parseInt(formData['targetPrice']),
-      buy: true,
+      symbol: orderData['symbol'],
+      targetPrice: parseInt(orderData['targetPrice']),
+      buy: false,
     });
 
-    // Check if the order is valid
-    this.checkValidations(order);
-    // TODO: Does this need to be a custom error when the model is saved?
+    this.bus.trigger('compareToMarketPrice', order);
   },
 
   ////////////////////////// GET FORM DATA ////////////////////////
