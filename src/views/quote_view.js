@@ -14,30 +14,35 @@ const QuoteView = Backbone.View.extend({
   },
 
   buyQuote(event) {
-    // Call the quote model method
-    let currentTrade = {
-      buy: true,
+    const currentTrade = {
       symbol: this.model.get('symbol'),
       price: this.model.get('price'),
+      buy: true,
     };
+
+    // SEE TRADE VIEW FOR THE LISTENER
     this.bus.trigger('add_quote', currentTrade);
+
+    // Increases stock price by one
     this.model.buy();
   },
 
   sellQuote(event) {
-    let currentTrade = {
+    const currentTrade = {
       symbol: this.model.get('symbol'),
       price: this.model.get('price'),
       buy: false,
     };
+
+    // SEE TRADE VIEW FOR LISTENER
     this.bus.trigger('add_quote', currentTrade);
     this.model.sell();
   },
 
   render() {
-    // TRIGGER WHEN THE PRICE OF THE QUOTE CHANGES
+    // FIRE EACH TIME THE PRICE CHANGES
     this.bus.trigger('checkQuotePrice', this.model);
-    // console.log('How many times does this view render');
+
     // JSON to make the view into the proper object format
     const compiledTemplate = this.template(this.model.toJSON());
 
@@ -48,7 +53,6 @@ const QuoteView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
-
 });
 
 export default QuoteView;
