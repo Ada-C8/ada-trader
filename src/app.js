@@ -9,10 +9,11 @@ import _ from 'underscore';
 // Imports
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
-// import Trade from './models/trade';
+import Trade from './models/trade';
 
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
+import TradeView from './views/trade_view';
 
 // -------------------------------------------------------
 
@@ -47,6 +48,14 @@ let quoteTemplate;
 
 // jQuery Ready
 $(document).ready(function() {
+
+  // EVENT BUS
+  // listen to buy and sell events in quote.js
+  // append #trade-templates for each; parse datas
+  // let bus = {};
+  // bus = _.extend(bus, Backbone.Events);
+  // const tradeView = new TradeView({bus: bus});
+
   quoteTemplate = _.template($('#quote-template').html());
   // tradeTemplate = _.template($('#trade-template').html());
 

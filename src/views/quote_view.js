@@ -20,13 +20,14 @@ const QuoteView = Backbone.View.extend({
   },
 
   buy(event) {
-    this.model.buy();
+    let tradeData = this.model.buy();
+    console.log(tradeData);
   },
 
   sell(event) {
-    this.model.sell();
+    let tradeData = this.model.sell();
+    console.log(tradeData);
   }
-
 });
 
 export default QuoteView;

@@ -11,6 +11,8 @@ const Quote = Backbone.Model.extend({
     let current_price = this.get('price');
     console.log(current_price);
     this.set('price', current_price += 1);
+    let current_symbol = this.get('symbol');
+    return { symbol: current_symbol, price: current_price, buy: 'bought'};
   },
 
   sell() {
@@ -18,6 +20,8 @@ const Quote = Backbone.Model.extend({
     let current_price = this.get('price');
     console.log(current_price);
     this.set('price', current_price -= 1);
+    let current_symbol = this.get('symbol');
+    return { symbol: current_symbol, price: current_price, buy: 'sold'};
   },
 });
 
