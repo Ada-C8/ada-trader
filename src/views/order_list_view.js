@@ -49,7 +49,6 @@ const OrderListView = Backbone.View.extend({
     const order = this.createOrder({buy: true});
 
     this.validate(order);
-    // this.$el.find('form').trigger('reset');
   },
 
   sellOrder: function(event) {
@@ -59,7 +58,6 @@ const OrderListView = Backbone.View.extend({
     const order = this.createOrder({buy: false});
 
     this.validate(order);
-    // this.$el.find('form').trigger('reset');
   },
 
   validate(order) {

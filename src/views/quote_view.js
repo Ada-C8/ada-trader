@@ -27,15 +27,11 @@ const QuoteView = Backbone.View.extend({
   },
 
   buyQuote() {
-    console.log('buy triggered');
-
     this.model.buy();
     this.addTrade();
   },
 
   sellQuote() {
-    console.log('sell triggered');
-
     this.model.sell();
     this.addTrade();
   },
@@ -46,7 +42,6 @@ const QuoteView = Backbone.View.extend({
   },
 
   addTrade() {
-    console.log('adding trade to template');
     const tradeTemplate = this.tradeTemplate(this.model.toJSON());
     $('#trades').prepend(tradeTemplate);
   },
