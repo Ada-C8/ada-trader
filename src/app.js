@@ -8,6 +8,7 @@ import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 
 import QuoteListView from 'views/quote_list_view';
 import TradeListView from 'views/trade_list_view';
@@ -40,6 +41,7 @@ $(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
+  const orders = new OrderList;
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
