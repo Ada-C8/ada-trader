@@ -32,4 +32,6 @@ $(document).ready(function() {
   });
 
   simulator.start();
+
+  const quoteTemp = _.template($('#quote-template').html());
 });
