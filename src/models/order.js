@@ -21,7 +21,6 @@ const Order = Backbone.Model.extend({
     }
 
     //TODO: validate for buy or sell?
-
     if ( Object.keys(errors).length > 0 ) {
       return errors;
     } else {
