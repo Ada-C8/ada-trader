@@ -18,7 +18,6 @@ const TradesView = Backbone.View.extend ({
     this.$('#trades').prepend(compiledTemplate);
   },
 
-
 });
 
 export default TradesView;

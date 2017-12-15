@@ -14,7 +14,7 @@ const Order = Backbone.Model.extend({
       errors.targetPrice = ['Target price can\'t be blank'];
     }
     else if (this.buy && this.targetPrice >= this.currentPrice) {
-      errors.targetPrice = ['Target price can\'t be grater than or equal to the current market price'];
+      errors.targetPrice = ['Target price can\'t be greater than or equal to the current market price'];
     }
     else if (!this.buy && this.targetPrice <= this.currentPrice) {
       errors.targetPrice = ['Target price can\'t be less than or equal to the current market price'];
