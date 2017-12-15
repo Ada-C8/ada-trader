@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import $ from 'jquery';
+import QuoteList from 'collections/quote_list';
 
 const Order = Backbone.Model.extend({
   defaults: {
@@ -16,24 +16,28 @@ const Order = Backbone.Model.extend({
   },
   validate(attributes) {
     const errors = {};
-
+    // const quoteList = Quotelist
     if (!attributes.targetPrice) {
       errors['targetPrice'] = ['Price is required'];
-    }
-
-    if (!attributes.symbol) {
-      errors['symbol'] = ['Symbol is required'];
     }
 
     if (attributes.targetPrice <= 0) {
       errors['targetPrice'] = ['Price must be greater than 0']
     }
 
-    if (attributes.buy && parseFloat(attributes.targetPrice) > parseFloat(attributes.activeQuote.get('price'))) {
+    if (!attributes.symbol) {
+      errors['symbol'] = ['Symbol is required'];
+    }
+
+    if (!attributes.symbol) {
+      errors['symbol'] = ['Symbol is required'];
+    }
+
+    if (attributes.buy && parseFloat(attributes.targetPrice) >= parseFloat(attributes.activeQuote.get('price'))) {
       errors['targetPrice'] = ['Buy order price too high']
     }
 
-    if (!attributes.buy && parseFloat(attributes.targetPrice) < parseFloat(attributes.activeQuote.get('price'))) {
+    if (!attributes.buy && parseFloat(attributes.targetPrice) <= parseFloat(attributes.activeQuote.get('price'))) {
       errors['targetPrice'] = ['Sell order price too low']
     }
     if ( Object.keys(errors).length > 0 ) {
