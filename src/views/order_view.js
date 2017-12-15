@@ -18,11 +18,11 @@ const OrderView = Backbone.View.extend({
   },
   events: {
     'click button.btn-cancel': 'cancelOrder'
-    },
-    cancelOrder: function(e) {
-      this.model.destroy();
-      this.remove();
-    }
-  });
+  },
+  cancelOrder: function(e) {
+    this.model.destroy();
+    this.remove();
+  }
+});
 
-  export default OrderView;
+export default OrderView;

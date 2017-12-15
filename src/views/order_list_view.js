@@ -29,7 +29,6 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
         bus: this.bus,
       });
-      // this.listenTo(taskView, 'editMe', this.editTask)
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
@@ -50,47 +49,42 @@ const OrderListView = Backbone.View.extend({
     orderData['targetPrice'] = parseFloat(this.$(`[name=price-target]`).val());
     orderData['buy'] = true;
     const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']});
-    console.log(searchElem);
     orderData['activeQuote'] = searchElem;
-    console.log(this.bus);
     orderData['bus'] = this.bus;
     const newOrder = new Order(orderData);
-    console.log(newOrder);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
-      console.log(this.model);
     } else {
       newOrder.destroy();
-      console.log(`IN THE ELSE ${newOrder.validationError}`);
       this.updateStatusMessageFrom(newOrder.validationError);
     }
-},
-sellOrder: function(event) {
-  event.preventDefault();
-  const orderData = {};
-  orderData['symbol'] = this.$(`[name=symbol]`).val();
-  orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
-  orderData['buy'] = false;
-  orderData['bus'] = this.bus;
-  const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
-  orderData['activeQuote'] = searchElem
-  const newOrder = new Order(orderData);
-  if (newOrder.isValid()) {
-    this.model.add(newOrder);
-  } else {
-    this.updateStatusMessageFrom(newOrder.validationError);
-  }
-},
-updateStatusMessageFrom: function(messageHash) {
-  const statusMessagesEl = this.$('.form-errors');
-  statusMessagesEl.empty();
-  _.each(messageHash, (messageType) => {
-    messageType.forEach((message) => {
-      statusMessagesEl.append(`<h3>${message}</h3>`);
-    })
-  });
-  statusMessagesEl.show();
-},
+  },
+  sellOrder: function(event) {
+    event.preventDefault();
+    const orderData = {};
+    orderData['symbol'] = this.$(`[name=symbol]`).val();
+    orderData['targetPrice'] = parseInt(this.$(`[name=price-target]`).val());
+    orderData['buy'] = false;
+    orderData['bus'] = this.bus;
+    const searchElem = this.quoteList.findWhere({symbol: orderData['symbol']})
+    orderData['activeQuote'] = searchElem
+    const newOrder = new Order(orderData);
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+    } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
+    }
+  },
+  updateStatusMessageFrom: function(messageHash) {
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    _.each(messageHash, (messageType) => {
+      messageType.forEach((message) => {
+        statusMessagesEl.append(`<h3>${message}</h3>`);
+      })
+    });
+    statusMessagesEl.show();
+  },
 
 });
 

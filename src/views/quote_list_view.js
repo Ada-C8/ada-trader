@@ -10,11 +10,7 @@ const QuoteListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
-    // Clear the unordered list
-    // this.$('#quotes').empty();
-    // Iterate through the list rendering each Quote
     this.model.each((quote) => {
-      // Create a new QuoteView with the model & template
       const quoteView = new QuoteView({
         model: quote,
         template: this.template,
@@ -22,13 +18,10 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
         bus: this.bus
       });
-      // Then render the TaskView
-      // And append the resulting HTML to the DOM.
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
   },
 });
-
 
 export default QuoteListView;
