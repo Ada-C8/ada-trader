@@ -13,13 +13,13 @@ const QuoteListView = Backbone.View.extend({
     this.$('#quotes').empty();
     this.model.each((quote) => {
       const quoteView = new QuoteView ({
-        bus: this.bus, 
+        bus: this.bus,
         model: quote,
         template: this.template,
         tagName: 'li',
         className: 'quote'
       })
-      this.listenTo(quoteView, 'appendTrade', this.appendTrade)
+      this.bus.listenTo(quoteView, 'appendTrade', this.appendTrade)
       this.$('#quotes').append(quoteView.render().$el);
     })
     return this
