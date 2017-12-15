@@ -58,12 +58,13 @@ const fakeOrderData = [
 $(document).ready(function() {
   const bus = _.extend({}, Backbone.Events);
   const quotes = new QuoteList(quoteData);
-  const orderList = new OrderList;
+  const tradeList = new TradeList();
+  const orderList = new OrderList();
   const simulator = new Simulator({
     quotes: quotes,
   });
-  const tradeList = new TradeList();
 
+///// quote list view /////
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
@@ -74,10 +75,11 @@ $(document).ready(function() {
   });
   quoteListView.render();
 
+///// trade list view /////
   const tradeListView = new TradeListView({
     model: tradeList,
     template: _.template($('#trade-template').html()),
-    el: 'main',
+    el: '#workspace',
     bus: bus,
   })
   tradeListView.render();
@@ -90,5 +92,14 @@ $(document).ready(function() {
     }));
   });
 
+///// order list view /////
+  const orderListView = new OrderListView({
+    model: orderList,
+    template: _.template($('#order-template').html()),
+    el: '#order-workspace'
+  });
+  orderListView.render();
+
+///// simulator /////
   simulator.start();
 });
