@@ -36,7 +36,19 @@ const OrderListView = Backbone.View.extend({
   buyOrder(event) {
     event.preventDefault();
     console.log('it clicked!');
-    const orderData = {};
+    const orderData = {buy: true};
+    ['symbol', 'price-target'].forEach( (field) => {
+      const val = this.$(`#order-entry-form  [name=${field}]`).val();
+      console.log(val);
+      orderData[field] = val;
+    });
+    const newOrder = new Order(orderData);
+    console.log(orderData);
+  },
+  sellOrder(event) {
+    event.preventDefault();
+    console.log('it clicked!');
+    const orderData = {buy: false};
     ['symbol', 'price-target'].forEach( (field) => {
       const val = this.$(`#order-entry-form  [name=${field}]`).val();
       console.log(val);
