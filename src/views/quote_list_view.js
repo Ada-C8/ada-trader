@@ -21,7 +21,7 @@ const QuoteListView = Backbone.View.extend({
         className: 'quote',
         bus: this.bus,
       });
-      
+
       // quoteView.render() returns back the jquery object from the quoteView
       // Selects the el tag of the current quotelistview in this case it is the main?
       this.$('#quotes').append(quoteView.render().$el); // TODO: PLEASE BREAK DOWN WHAT $EL IS. THE JQUERY OBJECT? WHY CAN IT GO AT THE END?
@@ -41,7 +41,7 @@ const QuoteListView = Backbone.View.extend({
       return;
     }
 
-    if (order.get('targetPrice') >= parseFloat(quote.get('price')) || (order.get('targetPrice') < 0)) {
+    if (order.get('price') >= parseFloat(quote.get('price')) || (order.get('price') < 0)) {
       $errorDisplay.append(`<p>Your must be less than the current market price and greater than 0!</p>`);
     } else {
       this.bus.trigger('checkValidations', order);

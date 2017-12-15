@@ -22,8 +22,8 @@ const OrderListView = Backbone.View.extend({
 
   events: {
     // TODO: PUT THESE IN THEIR OWN FUNCTIONS???
-    'click form button.btn-buy': 'createBuyOrder',
-    'click form button.btn-sell': 'createSellOrder',
+    'click form button.btn-buy': 'createOrder',
+    'click form button.btn-sell': 'createOrder',
   },
 
   //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
@@ -57,36 +57,28 @@ const OrderListView = Backbone.View.extend({
 
   ////////////////////////// CREATE BUY ORDER ////////////////////////
 
-  createBuyOrder(event) {
+  // TODO: MAKE THIS INTO ONE FUNCTION
+  createOrder(event) {
     event.preventDefault();
     this.$('.form-errors').empty(); // TODO: Do I need this?
 
     const orderData = this.getFormData();
+    let order;
 
-    const order = new Order({
-      symbol: orderData['symbol'],
-      targetPrice: parseFloat(orderData['targetPrice']),
-      buy: true,
-    });
-
+    if (event.target.classList.value === 'btn-sell alert button') {
+      order = new Order({
+        symbol: orderData['symbol'],
+        price: parseFloat(orderData['price']),
+        buy: false,
+      });
+    } else {
+      order = new Order({
+        symbol: orderData['symbol'],
+        price: parseFloat(orderData['price']),
+        buy: true,
+      });
+    }
     // SEE CHECK SUBMITTED ORDER PRICE in QUOTE LIST VIEW
-    this.bus.trigger('compareToMarketPrice', order);
-  },
-
-  ////////////////////////// CREATE SELL ORDER ////////////////////////
-
-  createSellOrder(event) {
-    event.preventDefault();
-    this.$('.form-errors').empty();
-
-    const orderData = this.getFormData();
-
-    const order = new Order({
-      symbol: orderData['symbol'],
-      targetPrice: parseFloat(orderData['targetPrice']),
-      buy: false,
-    });
-
     this.bus.trigger('compareToMarketPrice', order);
   },
 
@@ -95,7 +87,7 @@ const OrderListView = Backbone.View.extend({
   getFormData() {
     const data = {};
     data['symbol'] = this.$('form select[name=symbol]').val();
-    data['targetPrice'] = this.$('form input[name=price-target]').val();
+    data['price'] = this.$('form input[name=price-target]').val();
     return data;
   },
 
@@ -139,11 +131,11 @@ const OrderListView = Backbone.View.extend({
 
     if (orders.length > 0) {
       orders.forEach((order) => {
-        if (quote.get('price') < order.get('targetPrice')) {
+        if (quote.get('price') < order.get('price')) {
           let trade = {
             // TODO: make order price the same name as quote attributes
             symbol: order.get('symbol'),
-            price: order.get('targetPrice'),
+            price: order.get('price'),
             buy: order.get('buy'),
           };
 
