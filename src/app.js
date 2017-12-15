@@ -45,6 +45,9 @@ $(document).ready(function() {
     el: 'main',
     bus: bus,
   });
+  quotes.each((quote) => {
+    $('select').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
+  });
 
   const tradeListView = new TradeListView({
     template: _.template($('#trade-template').html()),
