@@ -26,7 +26,7 @@ describe('Quote spec', () => {
         quote: quote,
       });
 
-      expect(order.isValid()).toEqual(true);
+      expect(order.isValid()).toEqual(false);
     });
   });
 
