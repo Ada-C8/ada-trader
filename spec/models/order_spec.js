@@ -29,7 +29,7 @@ describe('Quote spec', () => {
       expect(order.isValid()).toEqual(false);
     });
 
-    it('will not create valid buy order if price is blank', () => {
+    it('will not create valid buy order if price is blank string', () => {
       const order = new Order({
         quote: quote,
         price: ''
@@ -37,6 +37,25 @@ describe('Quote spec', () => {
 
       expect(order.isValid()).toEqual(false);
     });
+
+    it('will not create valid buy order if price is greater than or equal to quote', () => {
+      const equalPriceOrder = new Order({
+        quote: quote,
+        price: 100.00
+      });
+
+      expect(equalPriceOrder.isValid()).toEqual(false);
+
+      const greaterPriceOrder = new Order({
+        quote: quote,
+        price: 101.00
+      });
+
+      expect(greaterPriceOrder.isValid()).toEqual(false);
+
+
+    });
+
   });
 
   // describe('Sell function', () => {
