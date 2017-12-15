@@ -4,7 +4,7 @@ const Order = Backbone.Model.extend({
   defaults: {
 
   },
-  initalize(attributes) {
+  initialize(attributes) {
   },
   validate(attributes) {
     const errors = {};

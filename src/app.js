@@ -13,6 +13,7 @@ import OrderList from 'collections/order_list';
 import QuoteListView from 'views/quote_list_view';
 import TradeListView from 'views/trade_list_view';
 import FormView from 'views/form_view';
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -64,8 +65,16 @@ $(document).ready(function() {
     el: 'main'
   });
 
+  const orderListView = new OrderListView({
+    model: orders,
+    template: _.template($('#order-template').html()),
+    bus: bus,
+    el: '#order-workspace',
+  });
+
   quoteListView.render();
   formView.render();
+  orderListView.render();
   // tradeListView.render();
 
   simulator.start();
