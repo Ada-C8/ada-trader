@@ -26,7 +26,24 @@ const OrderListView = Backbone.View.extend({
     'click form button.btn-sell': 'createSellOrder',
   },
 
-  // TODO: use the render() method which is it's own method that can be used with this
+  //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
+
+  render() {
+    if (this.model.length > 0) {
+      // Append the last order only
+      const lastOrder = this.model.at(this.model.length - 1);
+      const orderView = new OrderView({
+        model: lastOrder,
+        template: this.template,
+        tagName: 'li',
+        className: 'order',
+        bus: this.bus,
+      });
+
+      this.$('#orders').append(orderView.render().$el);
+    }
+    return this;
+  },
 
   renderDropDown(quotes) {
     let $selectOptions = this.$('select[name=symbol]');
@@ -81,24 +98,6 @@ const OrderListView = Backbone.View.extend({
     return data;
   },
 
-  //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
-
-  render() {
-    // Append the last order only
-    if (this.model.length > 0) {
-      const lastOrder = this.model.at(this.model.length - 1);
-      const orderView = new OrderView({
-        model: lastOrder,
-        template: this.template,
-        tagName: 'li',
-        className: 'order',
-        bus: this.bus,
-      });
-
-      this.$('#orders').append(orderView.render().$el);
-    }
-  },
-
   ////////////////////////// ERROR DISPLAY ////////////////////////
 
   displayOrderErrors(errors) {
@@ -144,12 +143,8 @@ const OrderListView = Backbone.View.extend({
           // How do we access the view of a model that already exists?
           order.destroy();
           this.model.remove(order);
-          // order.destroy();
-          // console.log('This is the model: ' + this.model);
-          // console.log('This is the order: ' + order.get('symbol'));
-          // // order.remove({silent: true});
-          // // order.destroy({silent: true});
-          // console.log("This model does not exist" + order);
+
+          // This is supposed to fire an event to re-render
       });
       console.log(this.model.length);
     }
