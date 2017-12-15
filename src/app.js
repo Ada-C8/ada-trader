@@ -9,7 +9,14 @@ import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
+import TradeList from 'collections/trade_list';
+import TradeView from 'views/trade_view';
+import TradeListView from 'views/trade_list_view';
 
+
+// Create a bus
+let bus = {};
+bus = _.extend(bus, Backbone.Events);
 
 // const quoteList = new QuoteList();
 const quoteData = [
@@ -40,12 +47,23 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     // setting model to quotes, not new QuoteListView- might run into problems later??
     model: quotes,
+    bus: bus,
     template: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
     el: '#quotes-container',
+    tradeEl: '#trades',
   });
 
   quoteListView.render();
+
+  const tradeList = new TradeList();
+  const tradeListView = new TradeListView({
+    model: tradeList,
+    template: _.template($('#trade-template').html()),
+    el: '#trades-container',
+    bus: bus,
+  })
+ tradeListView.render();
 
 
   simulator.start();

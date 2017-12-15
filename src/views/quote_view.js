@@ -2,11 +2,13 @@
 
 import Backbone from 'backbone';
 import Quote from '../models/quote';
+import Trade from '../models/trade';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.tradeTemplate = params.tradeTemplate;
+    this.bus = params.bus
     this.listenTo(this.model, "change", this.render);
   },
   render() {
@@ -19,12 +21,25 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote: function(e) {
-    console.log('clicked the buy button');
+    const newTrade = new Trade({
+      symbol: this.model.get('symbol'),
+      price: this.model.get('price'),
+      buy: true,
+      bus: this.bus,
+    });
     this.model.buy();
+    this.bus.trigger('newTrade', newTrade);
+
   },
   sellQuote: function(e) {
-    console.log('clicked the sell button');
+    const newTrade = new Trade({
+      symbol: this.model.get('symbol'),
+      price: this.model.get('price'),
+      buy: false,
+      bus: this.bus,
+    });
     this.model.sell();
+    this.bus.trigger('newTrade', newTrade);
   }
 
 });
