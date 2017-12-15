@@ -41,6 +41,7 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  const bus = _.extend({}, Backbone.Events);
 
 
   quotes.each((quote) => {
@@ -50,6 +51,7 @@ $(document).ready(function() {
       template: _.template($('#quote-template').html()),
       tagName: 'li',
       className: 'quote',
+      bus: bus,
     });
     quoteView.render();
     $('.quotes').append(quoteView.$el);
@@ -58,9 +60,9 @@ $(document).ready(function() {
   });
 
   const traderListView = new TraderListView({
-    // model: pensar que pongo aca
     template: _.template($('#trade-template').html()),
-    el: "#trades-container"
+    el: "#trades-container",
+    bus: bus
   });
 
 

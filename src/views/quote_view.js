@@ -3,6 +3,7 @@ import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params){
+    this.bus = params.bus;
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render)
   },
@@ -11,8 +12,9 @@ const QuoteView = Backbone.View.extend({
     'click .btn-sell': 'sellQuote',
   },
   buyQuote(){
-    this.model.buy()
-    
+    this.model.buy(),
+    this.bus.trigger('buyQuote', this.model)
+    console.log("inside buyQuote");
   },
   sellQuote(){
     // console.log("inside sell");
