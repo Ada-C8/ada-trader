@@ -24,8 +24,17 @@ const OrderListView = Backbone.View.extend ({
       });
 
       this.$('#orders').append(orderView.render().$el);
+
+      // middle man in passing new trade
+      this.listenTo(orderView, 'add_trade', this.addTrade);
     });
+
     return this;
+  },
+
+  addTrade(quote) {
+    console.log('passing new trade to trades view');
+    this.trigger('add_trade', quote);
   },
 
   events: {

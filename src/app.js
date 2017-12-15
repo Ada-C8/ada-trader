@@ -65,15 +65,6 @@ $(document).ready(function() {
 
   simulator.start();
 
-  // create new trades view
-  const tradesView = new TradesView({
-    el: '#trades-container',
-    template: tradeTemplate,
-    tagName: 'li',
-    className: 'trade',
-    view: quoteListView,
-  });
-
   // add options to select in order form
   for (let quote of quoteData) {
     console.log(quote);
@@ -93,6 +84,15 @@ $(document).ready(function() {
 
   orderListView.render();
 
+  // create new trades view
+  const tradesView = new TradesView({
+    el: '#trades-container',
+    template: tradeTemplate,
+    tagName: 'li',
+    className: 'trade',
+    quotesView: quoteListView,
+    ordersView: orderListView,
+  });
 
 
 

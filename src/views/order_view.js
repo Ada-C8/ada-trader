@@ -37,17 +37,33 @@ const OrderView = Backbone.View.extend({
 
     if (this.buy && parseInt(this.model.targetPrice) >= parseInt(this.currentQuote.get('price'))) {
       console.log('let\'s buy it');
-      // this.trigger('action', this.currentQuote);
+
       this.currentQuote.buy();
       this.removeOrder();
       this.stopListening();
+
+      const quote = {
+        price: this.currentQuote.get('price'),
+        symbol: this.currentQuote.get('symbol'),
+        buy: this.buy,
+      }
+
+      this.trigger('add_trade', quote);
     }
     else if (!this.buy && parseInt(this.model.targetPrice) <= parseInt(this.currentQuote.get('price'))) {
       console.log('let\'s sell it');
-      // this.trigger('action', this.currentQuote);
+      
       this.currentQuote.sell();
       this.removeOrder();
       this.stopListening();
+
+      const quote = {
+        price: this.currentQuote.get('price'),
+        symbol: this.currentQuote.get('symbol'),
+        buy: this.buy,
+      }
+
+      this.trigger('add_trade', quote);
     }
   },
 
