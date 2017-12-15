@@ -9,9 +9,6 @@ const Trade = Backbone.Model.extend({
     this.buy = params.buy;
     this.template = params.template;
   },
-  render() {
-    const compiledTemplate = this.template(this.model.attributes);
-  },
 });
 
 

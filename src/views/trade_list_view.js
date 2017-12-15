@@ -19,8 +19,7 @@ const TradeListView = Backbone.View.extend({
         template: this.template,
         bus: this.bus,
         tagName: 'li',
-        className: 'trade',
-        id: trade.get('id'),
+        className: `trade ${trade.get('classStatus')}`,
       });
       this.$('#trades').prepend(tradeView.render().$el);
     });
