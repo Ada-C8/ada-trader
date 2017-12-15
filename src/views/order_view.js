@@ -6,6 +6,7 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'buy', this.triggerBuy);
+    this.listenTo(this.model, 'sell', this.triggerSell);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -20,6 +21,9 @@ const OrderView = Backbone.View.extend({
   },
   triggerBuy: function(changeInfo) {
     this.bus.trigger('buyOrder', changeInfo)
+  },
+  triggerSell: function(changeInfo) {
+    this.bus.trigger('sellOrder', changeInfo)
   }
 })
 
