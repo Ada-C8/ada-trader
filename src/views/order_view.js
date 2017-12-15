@@ -9,7 +9,9 @@ const OrderView = Backbone.View.extend({
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render);
     this.bus = params.bus;
-    this.listenTo(this.bus, 'orderFinished', this.cancelOrder);
+    // console.log(this);
+    console.log(`${this.model.attributes.symbol}${this.model.attributes.buy}orderFinished`);
+    this.listenTo(this.bus, `${this.model.attributes.symbol}${this.model.attributes.buy}orderFinished`, this.cancelOrder);
   },
   render() {
     const compileTemplate = this.template(this.model.toJSON());

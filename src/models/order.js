@@ -54,10 +54,10 @@ const Order = Backbone.Model.extend({
   quoteCheck: function(e) {
     console.log('IN quoteCheck');
     if (this.buy && parseFloat(this.targetPrice) > parseFloat(this.quote.get('price'))) {
-      console.log('IN BUY executeQuote');
+      console.log('IN BUY quoteCheck');
       this.bus.trigger(`buyMe${this.quote.attributes.symbol}`, this.quote.attributes);
     } else if (!this.buy && parseFloat(this.targetPrice) < parseFloat(this.quote.get('price'))) {
-      console.log('IN SELL')
+      console.log('IN SELL quoteCheck')
       this.bus.trigger(`sellMe${this.quote.attributes.symbol}`, this.quote.attributes);
     }
   },

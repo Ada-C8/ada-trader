@@ -46,7 +46,6 @@ $(document).ready(function() {
 
   simulator.start();
 
-  // const order = new Order(quotes);
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
@@ -64,5 +63,4 @@ $(document).ready(function() {
     bus: bus
   })
 
-  // OrderListView.render();
 });

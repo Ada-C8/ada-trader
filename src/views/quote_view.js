@@ -27,17 +27,16 @@ const QuoteView = Backbone.View.extend({
     const tradeObj = this.model.attributes;
     tradeObj['buy'] = true;
     this.model.buy();
-    const $trades = $('#trades');
     $('#trades').prepend(tradeTemplate(tradeObj));
-    this.bus.trigger('orderFinished');
+    console.log(`${this.model.attributes.symbol}${this.model.attributes.buy}orderFinished`);
+    this.bus.trigger(`${this.model.attributes.symbol}${this.model.attributes.buy}orderFinished`, this);
   },
   sellQuote: function(e) {
     const tradeObj = this.model.attributes;
     tradeObj['buy'] = false;
     this.model.sell();
-    const $trades = $('#trades');
     $('#trades').prepend(tradeTemplate(tradeObj));
-    this.bus.trigger('orderFinished');
+    this.bus.trigger(`${this.model.attributes.symbol}${this.model.attributes.buy}orderFinished`, this);
   },
 
 });
