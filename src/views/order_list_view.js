@@ -83,7 +83,7 @@ const OrderListView = Backbone.View.extend({
     const order = new Order({
       symbol: orderData['symbol'],
       targetPrice: parseFloat(orderData['targetPrice']),
-      // buy: false,
+      buy: false,
     });
 
     this.bus.trigger('compareToMarketPrice', order);
@@ -141,7 +141,7 @@ const OrderListView = Backbone.View.extend({
         if (quote.get('price') < order.get('targetPrice')) {
           // SEE TRADE VIEW FUNCTION
           let trade = {
-            // TODO: make order priec the same name as quote attributes
+            // TODO: make order price the same name as quote attributes
             symbol: order.get('symbol'),
             price: order.get('targetPrice'),
             buy: order.get('buy'),
