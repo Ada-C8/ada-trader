@@ -4,7 +4,7 @@ const TradeView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
-    
+
     // SEE QUOTE VIEW FOR TRIGGER
     this.listenTo(this.bus, 'add_quote', this.render);
   },

@@ -98,6 +98,13 @@ const OrderListView = Backbone.View.extend({
     return data;
   },
 
+  ////////////////////////// CLEAR FORM //////////////////////////
+
+  clearFormData() {
+    this.$('form input[name=price-target]').val('');
+    this.$('form-errors').empty();
+  },
+
   ////////////////////////// ERROR DISPLAY ////////////////////////
 
   displayOrderErrors(errors) {
@@ -124,13 +131,6 @@ const OrderListView = Backbone.View.extend({
     }
   },
 
-  ////////////////////////// CLEAR FORM //////////////////////////
-
-  clearFormData() {
-    this.$('form input[name=price-target]').val('');
-    this.$('form-errors').empty();
-  },
-
   /////////////// CHECK PRICE OF ORDERS TO QUOTES ///////////////////
 
   checkQuotePrice(quote) {
@@ -139,6 +139,15 @@ const OrderListView = Backbone.View.extend({
     if (orders.length > 0) {
       orders.forEach((order) => {
         if (quote.get('price') < order.get('targetPrice')) {
+          // SEE TRADE VIEW FUNCTION
+          let trade = {
+            // TODO: make order priec the same name as quote attributes
+            symbol: order.get('symbol'),
+            price: order.get('targetPrice'),
+            buy: order.get('buy'),
+          };
+
+          this.bus.trigger('add_quote', trade);
           this.model.remove(order);
           order.destroy(); // run render on the collection
         }

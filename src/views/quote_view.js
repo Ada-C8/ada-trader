@@ -26,9 +26,9 @@ const QuoteView = Backbone.View.extend({
 
   sellQuote(event) {
     let currentTrade = {
-      buy: false,
       symbol: this.model.get('symbol'),
       price: this.model.get('price'),
+      buy: false,
     };
     this.bus.trigger('add_quote', currentTrade);
     this.model.sell();
