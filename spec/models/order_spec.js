@@ -28,6 +28,15 @@ describe('Quote spec', () => {
 
       expect(order.isValid()).toEqual(false);
     });
+
+    it('will not create valid buy order if price is blank', () => {
+      const order = new Order({
+        quote: quote,
+        price: ''
+      });
+
+      expect(order.isValid()).toEqual(false);
+    });
   });
 
   // describe('Sell function', () => {
