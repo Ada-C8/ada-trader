@@ -7,9 +7,13 @@ import 'css/app.css';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import Quote from 'models/quote';
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
 
 import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
+import OrderView from 'views/order_view';
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -37,11 +41,29 @@ $(document).ready(function() {
   });
   const quoteListView = new QuoteListView({
     model: quotes,
-    quoteTemplate: _.template($('#quote-template').html()),
-    el: 'main'
+    quotesTemplate: _.template($('#quote-template').html()),
+    el: '.workspace'
   });
-
   quoteListView.render();
 
+  function dropdown(){
+    const $label = $(`select[name=symbol]`);
+    quotes.forEach(function(quote) {
+      let dropdownItem = `<option value=${quote.get('symbol')}>${quote.get('symbol')}</option>`;
+      $label.append(dropdownItem);
+    });
+  }
+  dropdown();
+
+  const orders = new OrderList();
+  const orderListView = new OrderListView({
+    model: orders,
+    ordersTemplate: _.template($('#order-template').html()),
+    el: '#order-workspace'
+  });
+  // orderListView.render();
+
   simulator.start();
+
+  orders.add(new Order({buy: true, price: 49.00, symbol: "JULIA"}));
 });

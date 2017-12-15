@@ -20,6 +20,7 @@ const QuoteView = Backbone.View.extend({
     return this;
   },
   buyQuote: function(e) {
+    console.log('You pressed the buy button in the Quote view')
     this.model.set('price', this.model.buy());
     this.model.set('buy', true);
     //triggers an event that the quotelistview is listening for:
