@@ -9,12 +9,15 @@ const OpenOrderListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render)
     this.listenTo(this.bus, 'dropDown', this.makeDropDown);
     this.listenTo(this.bus, 'currentPrice', this.evaluatePrice);
+    this.listenTo(this.bus, 'sendQuoteList', this.setQuoteList)
+    // this.listenTo(this.bus, 'currentPrice', this.getQuote);
   },
 
   render() {
     console.log('I am in OpenOrderListView render');
     this.$('#orders').empty();
     this.model.each((openOrder) => {
+
       const openOrderView = new OpenOrderView({
         model: openOrder,
         template: this.template,
@@ -22,12 +25,27 @@ const OpenOrderListView = Backbone.View.extend({
         className: 'order',
         bus: this.bus
       });
-      console.log("appending a new openOrder");
+      // console.log("appending a new openOrder");
       // console.log(openOrderView)
       this.$('#orders').append(openOrderView.render().$el);
     });
     return this
   },
+
+  getQuote(quote) {
+    return quote
+  },
+  //   // console.log(this.model)
+  //   let quoteSymbol = quote.get('symbol')
+  //   // this.model.each((openOrder) => {
+  //   //   console.log('******')
+  //   //   console.log(openOrder.get('symbol'))
+  //   //   console.log(quoteSymbol)
+  //   //   console.log('******')
+  //   // });
+  //   console.log(quoteSymbol)
+  //   return quoteSymbol
+  // },
 
   events: {
     'click button.btn-buy': 'buyOpenOrder',
@@ -44,30 +62,50 @@ const OpenOrderListView = Backbone.View.extend({
   buyOpenOrder(event){
     event.preventDefault();
     this.addOpenOrder(true);
-    console.log('buy open order has been clicked')
+    // console.log('buy open order has been clicked')
   },
 
   sellOpenOrder(){
     event.preventDefault();
     this.addOpenOrder(false);
-    console.log('sell open order has been clicked')
+    // console.log('sell open order has been clicked')
+  },
+
+  setQuoteList(quotelist){
+    this.quoteList = quotelist
+    console.log(this.quoteList)
   },
 
   addOpenOrder(type) {
-    console.log('I am in addOpenOrder')
     const formData = this.getFormData(type);
+    this.quoteList.each((quote) => {
+      if (formData['symbol'] == quote.get('symbol'))
+      formData['quote'] = quote
+    })
     const newOpenOrder = new OpenOrder(formData);
     if (newOpenOrder.isValid()) {
-
       console.log('I am a valid order')
       this.model.add(newOpenOrder);
       this.clearFormData();
     }
     else {
-      console.log('ERROR');
+      this.updateStatusMessageFrom(newOpenOrder.validationError);
       newOpenOrder.destroy();
     }
   },
+
+  updateStatusMessageFrom(messageHash) {
+    const $formErrors = this.$('.form-errors');
+    $formErrors.empty();
+    Object.keys(messageHash).forEach((messageType) => {
+      messageHash[messageType].forEach((message) => {
+        $formErrors.append(`<li>${message}</li>`);
+      });
+    });
+    $formErrors.show();
+  },
+
+
 
   clearFormData() {
     this.$(`form select[name= 'symbol']`).val('');
@@ -88,10 +126,10 @@ const OpenOrderListView = Backbone.View.extend({
     return orderData;
   },
 
-//Everytime the price of the quotes change, evaluate if any open orders should be bought or sold. To do this:
-//1. Loop through all the orders to match the order and quote symbols
-//2. Use .validTransation(quote) to check if a transaction should occur
-//3.  If a transaction should happen, tell the quoteView to buy this quote and destroy the quote
+  //Everytime the price of the quotes change, evaluate if any open orders should be bought or sold. To do this:
+  //1. Loop through all the orders to match the order and quote symbols
+  //2. Use .validTransation(quote) to check if a transaction should occur
+  //3.  If a transaction should happen, tell the quoteView to buy this quote and destroy the quote
   evaluatePrice(quote) {
     let quoteSymbol = quote.get('symbol')
     this.model.each((openOrder) => {

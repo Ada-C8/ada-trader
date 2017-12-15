@@ -8,7 +8,7 @@ const QuoteListView = Backbone.View.extend({
     this.bus = params.bus;
   },
   render() {
-    console.log('I am in quoteListView render');
+    // console.log('I am in quoteListView render');
     this.$('#quotes').empty();
     let symbol_array = [];
     this.model.each((quote) => {
@@ -24,8 +24,8 @@ const QuoteListView = Backbone.View.extend({
       // console.log(`this is the symbol ${quote.get('symbol')}`)
       this.$('#quotes').append(quoteView.render().$el);
     });
-    console.log(symbol_array)
     this.bus.trigger('dropDown', symbol_array);
+    this.bus.trigger('sendQuoteList', this.model)
     return this
     //this.listenTo(quoteView, 'buy_me', this.buy);
   }
