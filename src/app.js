@@ -67,7 +67,7 @@ $(document).ready(function() {
   // Creates an instance of TradesView that it will show all of the trade histories
   // include the bus so it can listen and emit messages with the other views in the app
   const tradesView = new TradesView ({
-    el: '#trades-container',
+    el: '#trades',
     template: tradeTemplate,
     bus: bus,
   });

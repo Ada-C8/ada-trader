@@ -14,7 +14,7 @@ const TradesView = Backbone.View.extend({
     console.log('tradeData');
     console.log(tradeData);
     const compiledTemplate = this.template(tradeData);
-    this.$el.html(compiledTemplate);
+    this.$el.prepend(compiledTemplate);
     return this;
   },
 });
