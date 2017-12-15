@@ -16,6 +16,7 @@ import QuoteListView from './views/quote_list_view';
 
 // -------------------------------------------------------
 
+// Given quotes
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -35,6 +36,10 @@ const quoteData = [
   },
 ];
 
+// Got quote names & prices into separate arrays
+const names = quoteData.map(info => info.symbol);
+const prices = quoteData.map(info => info.price);
+
 // Define some variables
 let quoteTemplate;
 
@@ -49,6 +54,12 @@ $(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
+
+  // Populate the form with options and prices
+  let selectBox = $('.order-entry-form form select[name="symbol"]');
+  for (name of names) {
+    selectBox.append(`<option value="${name}">${name}</option>`);
+  }
 
   simulator.start();
 
