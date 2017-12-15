@@ -6,6 +6,7 @@ import _ from 'underscore';
 
 // Models and Collections
 import Simulator from 'models/simulator';
+
 import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 

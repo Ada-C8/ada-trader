@@ -13,13 +13,7 @@ const OrderView = Backbone.View.extend({
   },
 
   render() {
-    // fires on the add but not
-    //console.log('3. renders upon initialization')
-
-    // console.log('hits the render function');
-    // console.log('This is my render function in order view')
     const compiledTemplate = this.template(this.model.toJSON());
-    // console.log(compiledTemplate);
     this.$el.html(compiledTemplate);
 
     // SEE QUOTE LIST VIEW FOR LISTEN TO EVENT
@@ -29,7 +23,7 @@ const OrderView = Backbone.View.extend({
   cancelOrder(event) {
     // TRIGGERS ORDER LIST VIEW TO RE RENDER
     this.remove();
-    this.model.destroy(); // This triggers update in the order list view and not this model!
+    this.model.destroy(); // This triggers update in the order list view and not this model bubbles up to the collection
   },
 });
 
