@@ -1,5 +1,5 @@
 import Quote from 'models/quote';
-// NOTE: no validation, only buy and sell methods
+
 describe('Quote spec', () => {
   let quote;
   beforeEach(() => {
