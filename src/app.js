@@ -14,6 +14,9 @@ import QuoteList from './collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradesView from './views/trades_view';
+import Order from './models/order';
+import OrderList from './collections/order_list';
+
 
 const quoteData = [
   {
