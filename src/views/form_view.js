@@ -24,8 +24,6 @@ const FormView = Backbone.View.extend({
     e.preventDefault();
     const formQuote = this.$('select option:selected').text();
     const formPrice = this.$('input').val();
-    console.log(formQuote);
-    console.log(formPrice);
     const quote = this.model.findWhere({
         symbol: formQuote
       });
