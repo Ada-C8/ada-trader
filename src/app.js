@@ -4,15 +4,17 @@ import 'css/app.css';
 import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
-
-
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
+import Order from 'models/order';
+import OpenOrders from 'collections/open_orders';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
 import QuoteView from './views/quote_view';
 import TradeListView from './views/trade_list_view';
 import OrderFormView from './views/order_form_view';
+import OpenOrderView from './views/open_orders_view';
+
 
 const quoteData = [
   {
@@ -33,6 +35,10 @@ const quoteData = [
   },
 ];
 
+const order = Order;
+
+
+
 let bus = {};
 bus = _.extend(bus, Backbone.Events);
 
@@ -50,11 +56,19 @@ $(document).ready(function() {
   quoteListView.render();
 
   const orderFormView = new OrderFormView({
+    model: order,
     bus: bus,
     el: '.order-entry-form',
   })
   // const orderFormView = new OrderFormView();
   orderFormView.render(quotes);
+
+  const openOrderView = new OpenOrderView({
+    template: _.template($('#order-template').html()),
+    el: '.orders-list-container',
+    bus: bus,
+  });
+  openOrderView.render();
 
   const tradeListView = new TradeListView({
     template: _.template($('#trade-template').html()),

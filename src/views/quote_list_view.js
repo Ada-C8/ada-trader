@@ -20,7 +20,7 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote',
       });
-      this.listenTo(quoteView, 'buy', quoteView.model.buy)
+      this.listenTo(quoteView, 'buy', this.model.buy)
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
