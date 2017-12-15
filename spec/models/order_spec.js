@@ -24,8 +24,15 @@ describe('Order spec', () => {
       expect(order.validationError).toEqual({symbol: ['Symbol is required']});
     });
 
-    it('Will not allow a blank or NaN targetPrice', () => {
+    it('Will not allow a blank targetPrice', () => {
       order.set('targetPrice', '');
+
+      expect(order.isValid()).toEqual(false);
+      expect(order.validationError).toEqual({price: ['Invalid target price']});
+    });
+
+    it('Will not allow a NaN targetPrice', () => {
+      order.set('targetPrice', NaN);
 
       expect(order.isValid()).toEqual(false);
       expect(order.validationError).toEqual({price: ['Invalid target price']});
