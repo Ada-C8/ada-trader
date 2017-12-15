@@ -17,7 +17,6 @@ const Quote = Backbone.Model.extend({
   buy() {
     this.changePrice(this.get('price') + 1, true);
   },
-
   sell() {
     this.changePrice(this.get('price') - 1, false);
   },

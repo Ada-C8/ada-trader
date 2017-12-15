@@ -8,6 +8,7 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
+import OrderList from 'collections/order_list';
 import TradeListView from 'views/trade_list_view';
 import OrderEntryView from 'views/order_entry_view';
 
@@ -38,7 +39,7 @@ const quoteData = [
 
 
 const quotes = new QuoteList(quoteData);
-const orders = new OrdersList();
+const orders = new OrderList();
 
 $(document).ready(function() {
   const quoteListView = new QuoteListView({
@@ -67,5 +68,5 @@ $(document).ready(function() {
   simulator.start();
 
   quoteListView.render();
-  orderEntryView.render();
+  orderEntryView.renderForm();
 });
