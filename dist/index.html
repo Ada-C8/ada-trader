@@ -58,7 +58,7 @@
            <h3>Order Entry Form</h3>
            <form>
              <label for="symbol">Symbol</label>
-             <select name="symbol">
+             <select id="dropdown"name="symbol">
                <!-- Option entries should be added here using JavaScript -->
              </select>
              <label for="price-target">Price</label>
@@ -87,7 +87,7 @@
       <li class="quote">
       <div class="row small-12 columns">
         <h3 class="symbol"><%- symbol %></h3>
-        <h3 class="price">$<%- price.toFixed(2) %></h3>
+        <h3 class="price">₩<%- price.toFixed(2) %></h3>
         <div class="quote-actions">
           <button class="btn-buy alert button">Buy</button>
           <button class="btn-sell success button">Sell</button>
@@ -99,7 +99,7 @@
     <script type="text/template" id="trade-template">
       <li class="trade">
         <span>
-          You <%- buy ? 'bought' : 'sold' %> <%- symbol %> at $<%- price.toFixed(2) %>
+          You <%- buy ? 'bought' : 'sold' %> <%- symbol %> at ₩<%- price.toFixed(2) %>
         </span>
       </li>
     </script>
@@ -109,7 +109,7 @@
       <div class="detail">
         <span class="action"><%- buy ? 'buy' : 'sell' %></span>
         at
-        <span class="price">$<%- targetPrice.toFixed(2) %></span>
+        <span class="price">₩<%- targetPrice.toFixed(2) %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
     </script>

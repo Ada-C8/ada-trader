@@ -12,11 +12,11 @@ import TradeListView from './views/trade_list_view';
 
 const quoteData = [
   {
-    symbol: 'HUMOR',
+    symbol: '유머',
     price: 88.50,
   },
   {
-    symbol: 'CLOTH',
+    symbol: '피복',
     price: 81.70,
   },
   {
@@ -29,12 +29,17 @@ const quoteData = [
   },
 ];
 
+quoteData.forEach(function(quote) {
+  $('#dropdown').append(`<option>${quote.symbol}</option>`)
+})
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
 
+  // $('#')
   simulator.start();
 
   let bus = {};
