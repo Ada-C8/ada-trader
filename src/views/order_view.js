@@ -31,7 +31,9 @@ const OrderView = Backbone.View.extend({
     e.preventDefault();
     this.remove()
     this.model.destroy();
-  }
+  },
+
+  
 });
 
 export default OrderView;
