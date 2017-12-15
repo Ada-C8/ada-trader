@@ -9,6 +9,10 @@ import Quote from 'models/quote'
 import QuoteView from 'views/quote_view'
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view'
+import Order from 'models/order'
+import OrderList from 'collections/order_list'
+import OrderView from 'views/order_view'
+import OrderListView from 'views/order_list_view'
 
 
 const quoteData = [
@@ -50,20 +54,7 @@ $(document).ready(() => {
     bus: bus
   });
 
-  const openOrderList = new OpenOrderList({
-    model: this.model,
-    symbol: this.model.attributes.symbol,
-    price: this.model.attributes.price
-  })
 
-
-    const openOrderListView = new OpenOrderListView({
-      model: openOrderList,
-      template: openOrderTemplate,
-
-    })
-
-  })
 
   quoteListView.render()
   simulator.start();
