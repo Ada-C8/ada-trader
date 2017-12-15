@@ -38,18 +38,24 @@ const Order = Backbone.Model.extend({
   comparePrice() {
     // buy open orders at equal or below quote price
     if (this.attributes.buy) {
-      if (this.attributes.targetPrice <= this.attributes.matchedQuote.get('price')) {
-        // alert('open buy order has been met');
-        
+      if (this.attributes.targetPrice >= this.attributes.matchedQuote.get('price')) {
+        const store = this.attributes.matchedQuote;
+        this.destroy();
+        store.buy();
+        alert('open buy order has been removed');
       }
     }
+
     //sell open orders at equal or above quote price
     if (!this.attributes.buy) {
-      if (this.attributes.targetPrice >= this.attributes.matchedQuote.get('price'))
-        // alert('open sell order has been met');
-
+      if (this.attributes.targetPrice <= this.attributes.matchedQuote.get('price')) {
+      const store = this.attributes.matchedQuote;
+      this.destroy();
+      store.sell();
+      alert('open sell order has been removed');
       }
     }
+  },
 });
 
 export default Order;

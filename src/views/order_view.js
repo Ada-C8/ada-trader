@@ -12,8 +12,12 @@ const OrderView = Backbone.View.extend({
     return this;
   },
   events: {
-    // 'click button.btn-sell': 'openOrder',
-    // 'click button.btn-buy':
+    'click button.btn-cancel': 'cancelOrder',
+  },
+  cancelOrder: function(e) {
+    e.preventDefault();
+    this.remove();
+    this.model.destroy();
   },
 });
 

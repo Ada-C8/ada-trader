@@ -24,7 +24,8 @@ const QuoteView = Backbone.View.extend({
     // this.model.set('buy', false);
     // this.trigger('addTrade', this);
     this.model.sell();
-  }
+  },
+
 });
 
 export default QuoteView;
