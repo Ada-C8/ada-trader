@@ -24,19 +24,17 @@ const QuoteListView = Backbone.View.extend({
       const symbol = quote.get('symbol');
       this.$('select[name=symbol]').append(`<option value="${symbol}">${symbol}</option>`);
 
-      this.listenTo(quoteView, 'addTrade', this.addToTradeHistory);
+      this.listenTo(quote, 'addTrade', this.addToTradeHistory);
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
   },
 
-  addToTradeHistory: function(quoteView){
+  addToTradeHistory: function(tradeData){
     console.log('add to trade history');
-    console.log(quoteView);
-    const compiledTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    const compiledTemplate = this.tradeTemplate(tradeData);
     this.$('#trades').prepend(compiledTemplate);
-  }
-
+  },
 
 });
 
