@@ -31,19 +31,32 @@ const Order = Backbone.Model.extend({
     // attribute type validations
 
     if(typeof attributes.targetPrice !== 'number') {
-      errors[''] = ["order's targetPrice is not of type Number"];
+      errors['targetPrice'] = ["order's targetPrice is not of type Number"];
     }
 
     if(typeof attributes.symbol !== 'string') {
-      errors[''] = ["order's symbol is not of type String"];
+      errors['symbol'] = ["order's symbol is not of type String"];
     }
 
     if(typeof attributes.buy !== 'boolean') {
-      errors[''] = ["order's buy is not of type Boolean"];
+      errors['buy'] = ["order's buy is not of type Boolean"];
     }
 
     if(!attributes.quote instanceof Quote) {
-      errors[''] = ["order's quote is not an instance of Quote"];
+      errors['quote'] = ["order's quote is not an instance of Quote"];
+    }
+
+    // "check current price of quote" validations
+    if(attributes.quote !== undefined &&
+       attributes.buy === true &&
+       attributes.targetPrice > attributes.quote.get('price')) {
+      errors['targetPrice'] = ['Price must be lower than market price'];
+    }
+
+    if(attributes.quote !== undefined &&
+       attributes.buy === false &&
+       attributes.targetPrice < attributes.quote.get('price')){
+      errors['targetPrice'] = ['Price must be higher than market price'];
     }
 
     if ( Object.keys(errors).length > 0 ) {
@@ -52,7 +65,6 @@ const Order = Backbone.Model.extend({
       return false;
     }
 
-    // "check current price of quote" validations
   },
 
   buy(){
