@@ -1,5 +1,6 @@
 import Quote from 'models/quote';
 import Order from 'models/order';
+import OrderList from 'models/order';
 
 describe('Order Spec', () => {
   let buyOrder;
@@ -72,5 +73,28 @@ describe('Order Spec', () => {
       sellOrder.set('targetPrice', 1.00);
       expect(sellOrder.isValid()).toBeFalsy();
     });
+  });
+
+  describe('Order.quotePriceCheck()', () => {
+    it("can buy a quote if the quote is below order's targetPrice", () => {
+      buyOrder.get('quote').set('price', 85);
+      buyOrder.quotePriceCheck();
+      expect(buyOrder).not.toBeUndefined();
+    });
+
+    it("can sell a quote if the quote is higher order's targetPrice", () => {
+      sellOrder.get('quote').set('price', 85);
+      sellOrder.quotePriceCheck();
+      expect(sellOrder).not.toBeUndefined();
+    });
+
+    it("doesn't buy or sell if the requirement isn't met", () => {
+      buyOrder.quotePriceCheck();
+      expect(buyOrder).toBeDefined();
+
+      sellOrder.quotePriceCheck();
+      expect(sellOrder).toBeDefined();
+    });
+
   });
 });
