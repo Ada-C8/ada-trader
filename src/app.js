@@ -41,6 +41,7 @@ $(document).ready(function() {
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
+    tradesTemplate: _.template($('#trade-template').html()),
     el: 'main'
   });
 
