@@ -12,7 +12,8 @@ import QuoteList from './collections/quote_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
-import OpenOrdersView from './views/open_orders_view';
+import OrderView from './views/order_view';
+import OrderListView from './views/order_list_view';
 
 const quoteData = [
   {
@@ -67,13 +68,14 @@ $(document).ready( () => {
     el: '.trades'
   });
 
-  const openOrdersView = new OpenOrdersView({
-    bus: bus,
+  const orderListView = new OrderListView({
+    el: '.orders-list-container',
+    model: orderList,
     template: orderTemplate,
-    el: '.orders'
+    bus: bus,
   });
 
-  openOrdersView.render();
+  orderListView.render();
 
   tradeHistoryView.render();
 

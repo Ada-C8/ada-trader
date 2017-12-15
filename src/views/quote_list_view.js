@@ -25,12 +25,12 @@ render(){
     }); // end quoteView const
     this.$('.quotes').append(quoteView.render().$el);
 
-    this.$('select').append('<option>' + quote.get('symbol') + '</option>');
+    // this.$('select').append('<option>' + quote.get('symbol') + '</option>');
 
 
       let x = document.getElementById("symbol");
       let option = document.createElement("option");
-      option.text = "kiwi";
+      option.text = quote.get('symbol');
       x.add(option, x[0]);
 
 

@@ -9,7 +9,7 @@ const Quote = Backbone.Model.extend({
   //   this.template = params.template;
   //   this.bus = params.bus;
   //
-  //   // this.listentTo(this.model, 'change', this.render);
+  //   this.listentTo(this.model, 'change', this.render);
   },
 
   buy() {
