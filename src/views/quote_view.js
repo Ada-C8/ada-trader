@@ -34,7 +34,10 @@ const QuoteView = Backbone.View.extend({
     this.model.sell();
   },
 
-  render(event) {
+  render() {
+    // TRIGGER WHEN THE PRICE OF THE QUOTE CHANGES
+    this.bus.trigger('checkQuotePrice', this.model);
+    // console.log('How many times does this view render');
     // JSON to make the view into the proper object format
     const compiledTemplate = this.template(this.model.toJSON());
 

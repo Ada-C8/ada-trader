@@ -8,13 +8,16 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
 
     // SEE CHECK VALIDATION METHOD FOR THE .ADD TO THE COLLECTION FOR TRIGGERED EVENT
-    this.listenTo(this.model, 'update', this.renderOpenOrders);
+    this.listenTo(this.model, 'update', this.render);
 
     // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
     this.listenTo(this.bus, 'append_symbols', this.renderDropDown);
 
     // SEE QUOTE_LIST_VIEW submittedOrderPRICE FOR TRIGGER
     this.listenTo(this.bus, 'checkValidations', this.checkValidations);
+
+    // SEE QUOTE VIEW LIST VIEW
+    this.listenTo(this.bus, 'checkQuotePrice', this.checkQuotePrice);
   },
 
   events: {
@@ -22,6 +25,8 @@ const OrderListView = Backbone.View.extend({
     'click form button.btn-buy': 'createBuyOrder',
     'click form button.btn-sell': 'createSellOrder',
   },
+
+  // TODO: use the render() method which is it's own method that can be used with this
 
   renderDropDown(quotes) {
     let $selectOptions = this.$('select[name=symbol]');
@@ -42,7 +47,7 @@ const OrderListView = Backbone.View.extend({
 
     const order = new Order({
       symbol: orderData['symbol'],
-      targetPrice: parseInt(orderData['targetPrice']),
+      targetPrice: parseFloat(orderData['targetPrice']),
       buy: true,
     });
 
@@ -60,8 +65,8 @@ const OrderListView = Backbone.View.extend({
 
     const order = new Order({
       symbol: orderData['symbol'],
-      targetPrice: parseInt(orderData['targetPrice']),
-      buy: false,
+      targetPrice: parseFloat(orderData['targetPrice']),
+      // buy: false,
     });
 
     this.bus.trigger('compareToMarketPrice', order);
@@ -78,18 +83,20 @@ const OrderListView = Backbone.View.extend({
 
   //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
 
-  renderOpenOrders(event) {
+  render() {
     // Append the last order only
-    const lastOrder = this.model.at(this.model.length - 1);
-    const orderView = new OrderView({
-      model: lastOrder,
-      template: this.template,
-      tagName: 'li',
-      className: 'order',
-      bus: this.bus,
-    });
+    if (this.model.length > 0) {
+      const lastOrder = this.model.at(this.model.length - 1);
+      const orderView = new OrderView({
+        model: lastOrder,
+        template: this.template,
+        tagName: 'li',
+        className: 'order',
+        bus: this.bus,
+      });
 
-    this.$('#orders').append(orderView.render().$el);
+      this.$('#orders').append(orderView.render().$el);
+    }
   },
 
   ////////////////////////// ERROR DISPLAY ////////////////////////
@@ -122,6 +129,30 @@ const OrderListView = Backbone.View.extend({
   clearFormData() {
     this.$('form input[name=price-target]').val('');
     this.$('form-errors').empty();
+  },
+
+  /////////////// CHECK PRICE OF ORDERS TO QUOTES ///////////////////
+
+  checkQuotePrice(quote) {
+    const orders = this.model.where({symbol: quote.get('symbol')});
+
+    // console.log(orders.length);
+    // console.log(orders);
+    if (orders.length > 0) {
+      orders.forEach((order) => {
+        // if (quote.get('price') < order.get('targetPrice')) {
+          // How do we access the view of a model that already exists?
+          order.destroy();
+          this.model.remove(order);
+          // order.destroy();
+          // console.log('This is the model: ' + this.model);
+          // console.log('This is the order: ' + order.get('symbol'));
+          // // order.remove({silent: true});
+          // // order.destroy({silent: true});
+          // console.log("This model does not exist" + order);
+      });
+      console.log(this.model.length);
+    }
   },
 });
 

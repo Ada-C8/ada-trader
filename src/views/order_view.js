@@ -5,7 +5,6 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
-    // this.listenTo(this.model, 'change', this.render);
   },
 
   events: {
@@ -18,12 +17,16 @@ const OrderView = Backbone.View.extend({
     const compiledTemplate = this.template(this.model.toJSON());
     // console.log(compiledTemplate);
     this.$el.html(compiledTemplate);
+
+    // SEE QUOTE LIST VIEW FOR LISTEN TO EVENT
+    // console.log(this.model);
     return this;
   },
 
   cancelOrder(event) {
     // TRIGGERS ORDER LIST VIEW TO RE RENDER
     // console.log('why does this button not work')
+    // TODO: HOW TO RERENDER THE VIEW WHEN THERE IS NO MODEL?
     this.remove({silent: true});
     this.model.destroy({silent: true});
     // console.log('Model is destroyed');
