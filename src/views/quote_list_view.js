@@ -9,7 +9,6 @@ const QuoteListView = Backbone.View.extend({
     this.bus = params.bus,
 
     this.listenTo(this.model, 'update', this.render);
-    // this.listenTo(this.bus, 'addTrade', this.addTrade);
   },
   render() {
     // clear unordered list

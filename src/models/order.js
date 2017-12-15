@@ -5,7 +5,6 @@ const Order = Backbone.Model.extend({
     this.bus = params.bus;
     this.quotes = params.quotes;
 
-    // this.listenTo(this.bus, `check${this.get('symbol')}`, this.checkPrice)
     this.listenTo(this.bus, `check${params.symbol}`, this.checkPrice)
   },
 
@@ -23,13 +22,11 @@ const Order = Backbone.Model.extend({
     if (buy && targetPrice >= quote.get('price')) {
       this.bus.trigger(`buy${quote.get('symbol')}`);
 
-      // this.removeOrder();
       this.destroy();
 
     } else if (!buy && targetPrice <= quote.get('price')) {
       this.bus.trigger(`sell${quote.get('symbol')}`);
 
-      // this.removeOrder();
       this.destroy();
     }
   },
@@ -38,18 +35,26 @@ const Order = Backbone.Model.extend({
     const marketPrice = this.getCurrentPrice();
     const symbols = this.quotes.map(quote => quote.get('symbol'));
 
-    if (!symbols.includes(attributes.symbol)) {
+    // confirm presence
+    if (!attributes.symbol) {
+      errors['symbol'] = ['Cannot be blank'];
+      // confirm valid symbol
+    } else if (!symbols.includes(attributes.symbol)) {
       errors['symbol'] = ['Is not in the list'];
     }
 
-    if (!attributes.symbol) {
-      errors['symbol'] = ['Cannot be blank'];
-    }
-    
+    // confirm presence
     if (!attributes.targetPrice) {
       errors['targetPrice'] = ['Cannot be blank'];
+      // confirm it's a number
+    } else if (isNaN(attributes.targetPrice)) {
+      errors['targetPrice'] = ['Must be a number'];
+      // confirm number > 0
+    } else if (attributes.targetPrice < 0) {
+      errors['targetPrice'] = ['Must be greater than 0'];
     }
 
+    // confirm limit order behavior
     if (attributes.buy && attributes.targetPrice > marketPrice) {
       errors['targetPrice'] = ['Cannot exceed market price'];
     }
