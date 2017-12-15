@@ -27,14 +27,6 @@ const TradeListView = Backbone.View.extend({
   },
   addNewTrade(trade) {
     this.model.add(trade);
-    // const tradeView = new TradeView({
-    //   model: trade,
-    //   template: this.template,
-    //   bus: this.bus,
-    //   tagName: 'li',
-    //   className: 'trade',
-    // });
-    // this.$('#trades').prepend(tradeView.render().$el);
   }
 });
 
