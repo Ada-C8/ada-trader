@@ -3,5 +3,9 @@ import Order from '../models/order';
 import _ from 'underscore';
 
 const OrderList = Backbone.Collections.extend({
+  model: Order
+  
 
 });
+
+export default OrderList;

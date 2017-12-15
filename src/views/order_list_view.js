@@ -5,3 +5,5 @@ import _ from 'underscore';
 const OrderListView = Backbone.View.extend({
 
 })
+
+export default OrderListView;

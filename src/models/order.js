@@ -5,6 +5,14 @@ const Order = Backbone.Model.extend({
     symbol: 'UNDEF',
     setPrice: 0.00,
     actualPrice: 0.00
+  },
+
+  initalize(params) {
+
+  }
+
+  validate() {
+    
   }
 
 });

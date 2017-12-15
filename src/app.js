@@ -58,9 +58,4 @@ $(document).ready(() => {
 
   quoteListView.render()
   simulator.start();
-
-  // const openOrderTemplate = _.template($('#order-template').html());
-  // $('.order-entry-form').submit(function(){
-  //   console.log('CLICK!')
-
 });
