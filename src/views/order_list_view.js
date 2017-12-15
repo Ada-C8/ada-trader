@@ -6,7 +6,7 @@ const OrderListView = Backbone.View.extend({
 
   initialize(params){
     this.template = params.template;
-    this.quotes = params.quotes;
+    this.quoteList = params.quoteList;
     this.listenTo(this.model, 'update', this.render);
   },
 
@@ -26,8 +26,7 @@ const OrderListView = Backbone.View.extend({
           className: 'order'
         });
 
-        const correspondingQuote = this.quotes.findWhere({symbol: order.get('symbol')});
-        this.listenTo(correspondingQuote, 'change', orderView.fulfillOrder, correspondingQuote);
+        //listen?
         this.$('#orders').append(orderView.render().$el);
     });
     return this;
@@ -52,6 +51,8 @@ const OrderListView = Backbone.View.extend({
     if (targetPrice != '') {
       orderData['targetPrice'] = parseFloat(targetPrice);
     }
+    const correspondingQuote = this.quoteList.findWhere({symbol: orderData['symbol']});
+    orderData['quote'] = correspondingQuote;
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
