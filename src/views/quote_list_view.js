@@ -13,6 +13,7 @@ const QuoteListView = Backbone.View.extend({
     this.$('#quotes').empty();
     this.model.each((quote) => {
       const quoteView = new QuoteView ({
+        bus: this.bus, 
         model: quote,
         template: this.template,
         tagName: 'li',

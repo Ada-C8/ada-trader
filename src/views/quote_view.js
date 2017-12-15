@@ -5,6 +5,7 @@ import _ from 'underscore';
 const QuoteView = Backbone.View.extend({
   initialize(params){
     this.template = params.template,
+    this.bus = this.bus,
     this.listenTo(this.model, 'change', this.render)
   },
 
