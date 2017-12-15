@@ -8,17 +8,25 @@ const Quote = Backbone.Model.extend({
 
   buy() {
     // Implement this function to increase the price by $1.00
-    const originalPrice = this.get('price');
-    this.set('price', originalPrice + 1.00);
-    this.set('buy', true);
+    this.makeTransaction((this.get('price') + 1.00), true);
   },
 
   sell() {
     // Implement this function to decrease the price by $1.00
-    const originalPrice = this.get('price');
-    this.set('price', originalPrice - 1.00);
-    this.set('buy', false);
+    this.makeTransaction((this.get('price') - 1.00), false);
   },
+
+  makeTransaction(newQuoteValue, isBuy){
+    //attributes quote has
+    const tradeData = {
+      buy: isBuy,
+      symbol: this.get('symbol'),
+      price: this.get('price')
+    }
+
+    this.set('price', newQuoteValue);
+    this.trigger('addTrade', tradeData); //QLV
+  }
 });
 
 export default Quote;
