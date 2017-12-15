@@ -22,7 +22,6 @@ const OrderListView = Backbone.View.extend({
         tagName: 'li',
         className: 'order',
       });
-      // this.orderViews.push(orderView);
       this.$('#orders').append(orderView.render().$el);
     });
     return this;

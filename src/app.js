@@ -67,19 +67,11 @@ $(document).ready(function() {
   quoteListView.render();
   addOptions();
 
-
-  // const orderFormView = new OrderFormView({
-  //   quotes: quotes,
-  //   bus: bus,
-  //   el: '.order-entry-form',
-  // });
-
   const orderListView = new OrderListView({
     model: orders,
     quotes: quotes,
     bus: bus,
     template: _.template($('#order-template').html()),
-    // el: '.orders-container',
     el: '#order-workspace',
   });
   orderListView.render();

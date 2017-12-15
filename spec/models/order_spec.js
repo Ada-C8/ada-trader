@@ -1,5 +1,7 @@
+import Backbone from 'backbone';
+import _ from 'underscore';
+
 import Order from 'models/order';
-import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 
 describe('Order spec', () => {
@@ -7,11 +9,15 @@ describe('Order spec', () => {
   let quotes;
   let invalidOrder;
   let mktPrice = 100.00;
+  let bus;
 
   beforeEach(() => {
+    bus = {};
+    bus = _.extend(bus, Backbone.Events);
+
     quotes = new QuoteList([
       {
-        symbol: 'HELLO',
+        symbol: 'CLOTH',
         price: mktPrice,
       },
       {
@@ -22,9 +28,10 @@ describe('Order spec', () => {
 
     order = new Order({
       quotes: quotes,
-      symbol: 'HELLO',
+      symbol: 'CLOTH',
       buy: true,
       targetPrice: 90.00,
+      bus: bus,
     });
 
     invalidOrder = new Order({
@@ -141,5 +148,119 @@ describe('Order spec', () => {
     });
   });
 
+  describe('checkPrice function', () => {
+    let quote;
+    let targetPrice;
+    let mockQuoteView;
+    let buyQuote;
+    let sellQuote;
 
+    beforeEach(() => {
+      targetPrice = order.get('targetPrice');
+      quote = quotes.findWhere({symbol: order.get('symbol')});
+
+      mockQuoteView = {
+        model: quote,
+        bus: bus,
+        buyQuote() {
+          this.model.buy();
+        },
+        sellQuote() {
+          this.model.sell();
+        }
+      };
+
+      buyQuote = `buy${quote.get('symbol')}`;
+      sellQuote = `sell${quote.get('symbol')}`;
+
+      mockQuoteView = _.extend(mockQuoteView, Backbone.Events);
+
+      mockQuoteView.listenTo(bus, buyQuote, mockQuoteView.buyQuote);
+      mockQuoteView.listenTo(bus, sellQuote, mockQuoteView.sellQuote);
+
+      spyOn(quote, 'buy');
+      spyOn(quote, 'sell');
+      spyOn(order, 'destroy');
+      // spyOn(bus, 'trigger');
+      // spyOn(bus, sellQuote);
+    });
+
+    it('triggers buy() on quote model if buying and market price == target price', () => {
+      // confirm target price less than market price
+      expect(targetPrice).toBeLessThan(mktPrice);
+
+      // confirm no calls to event if market price hasn't reached target price
+      order.checkPrice(quote);
+
+      expect(quote.buy.calls.count()).toEqual(0);
+      // expect(bus.trigger).toHaveBeenCalledWith(buyQuote);
+
+      // trigger call when market price == target price
+      quote.set('price', targetPrice);
+
+      expect(quote.get('price')).toEqual(targetPrice);
+      order.checkPrice(quote);
+
+      expect(quote.buy.calls.count()).toEqual(1);
+    });
+
+    it('triggers buy() on quote model if buying and market price < target price', () => {
+      expect(targetPrice).toBeLessThan(mktPrice);
+      order.checkPrice(quote);
+
+      expect(quote.buy.calls.count()).toEqual(0);
+      quote.set('price', targetPrice - 1);
+
+      expect(quote.get('price')).toEqual(targetPrice - 1);
+      order.checkPrice(quote);
+
+      expect(quote.buy.calls.count()).toEqual(1);
+    });
+
+    it('triggers sell() on quote model if selling and market price == target price', () => {
+      // set up valid order to sell
+      quote.set('price', targetPrice - 1);
+      order.set('buy', false);
+
+      expect(quote.get('price')).toEqual(targetPrice - 1);
+      expect(order.get('buy')).toEqual(false);
+      expect(quote.sell.calls.count()).toEqual(0);
+
+      quote.set('price', targetPrice);
+
+      expect(quote.get('price')).toEqual(targetPrice);
+
+      order.checkPrice(quote);
+
+      expect(quote.sell.calls.count()).toEqual(1);
+    });
+
+    it('triggers sell() on quote model if selling and market price > target price', () => {
+      // set up valid order to sell
+      quote.set('price', targetPrice - 1);
+      order.set('buy', false);
+
+      expect(quote.get('price')).toEqual(targetPrice - 1);
+      expect(order.get('buy')).toEqual(false);
+      expect(quote.sell.calls.count()).toEqual(0);
+
+      quote.set('price', targetPrice + 1);
+
+      expect(quote.get('price')).toEqual(targetPrice + 1);
+
+      order.checkPrice(quote);
+
+      expect(quote.sell.calls.count()).toEqual(1);
+    });
+
+    it('destroys itself (the order model) after executing', () => {
+      quote.set('price', targetPrice);
+
+      expect(order.destroy.calls.count()).toEqual(0);
+      expect(quote.get('price')).toEqual(targetPrice);
+      order.checkPrice(quote);
+
+      expect(order.destroy.calls.count()).toEqual(1);
+    });
+  });
 });

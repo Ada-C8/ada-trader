@@ -8,7 +8,7 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    // console.log('buy model');
+    console.log('buy model');
 
     this.set('buy', true);
     this.set('prevPrice', this.get('price'));
@@ -16,7 +16,7 @@ const Quote = Backbone.Model.extend({
   },
 
   sell() {
-    // console.log('sell model');
+    console.log('sell model');
 
     this.set('buy', false);
     this.set('prevPrice', this.get('price'));
