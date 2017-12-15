@@ -1,10 +1,11 @@
+import Backbone from 'backbone';
+import _ from 'underscore';
+
 import Order from 'models/order';
 import Quote from 'models/quote';
-import QuoteList from 'collections/quote_list';
 
 describe('model validations', () => {
   let quote;
-  let quoteList;
   let buyOrder;
   let sellOrder;
   beforeEach(() => {
@@ -12,7 +13,6 @@ describe('model validations', () => {
       symbol: 'HELLO',
       price: 100.00,
     });
-    quoteList = new QuoteList(quote);
     buyOrder = new Order({
       symbol: 'HELLO',
       targetPrice: 99.00,
@@ -30,7 +30,6 @@ describe('model validations', () => {
   });
 
   it('valid buy order will initialize', () => {
-    // console.log(buyOrder.isValid())
     expect(buyOrder.isValid()).toEqual(true);
   });
 
@@ -77,4 +76,53 @@ describe('model validations', () => {
     sellOrder.set('targetPrice', 100.00);
     expect(sellOrder.isValid()).toEqual(false);
   });
+});
+
+describe('model custom methods', () => {
+ let testOrder1;
+ let testOrder2;
+ let bus;
+  beforeEach(() => {
+  bus = {};
+  bus = _.extend(bus, Backbone.Events);
+
+  const quote = new Quote({
+    symbol: 'HELLO',
+    price: 100.00,
+  });
+
+  const buyOrderData = {
+    symbol: 'HELLO',
+    targetPrice: 99.00,
+    buy: true,
+    bus: bus,
+    activeQuote: quote,
+    symbolList: ['HELLO']
+  }
+
+  const sellOrderData = {
+    symbol: 'HELLO',
+    targetPrice: 99.00,
+    buy: false,
+    bus: bus,
+    activeQuote: quote,
+    symbolList: ['HELLO']
+  }
+
+  testOrder1 = new Order(buyOrderData);
+  testOrder2 = new Order(sellOrderData);
+});
+
+  it('valid buy order triggers bus', () => {
+    const spy = spyOn(bus, 'trigger');
+    testOrder1.quote.set('price', 50.00);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('valid sell order triggers bus', () => {
+    const spy = spyOn(bus, 'trigger');
+    testOrder2.quote.set('price', 101.00);
+    expect(spy).toHaveBeenCalled();
+  });
+
 });
