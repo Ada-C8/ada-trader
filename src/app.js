@@ -12,6 +12,10 @@ import QuoteListView from 'views/quote_list_view';
 import TradeList from 'collections/trade_list';
 import TradeView from 'views/trade_view';
 import TradeListView from 'views/trade_list_view';
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
+import OrderView from 'views/order_view';
+import OrderListView from 'views/order_list_view';
 
 
 // Create a bus
@@ -64,6 +68,15 @@ $(document).ready(function() {
     bus: bus,
   })
  tradeListView.render();
+
+  const orderList = new OrderList();
+  const orderListView = new OrderListView({
+   model: orderList,
+   template: _.template($('#order-template').html()),
+   el: '#orders-container',
+   bus: bus,
+  })
+  orderListView.render();
 
 
   simulator.start();
