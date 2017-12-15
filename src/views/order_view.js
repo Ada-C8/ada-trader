@@ -20,6 +20,17 @@ const OrderView = Backbone.View.extend({
     return this
 
     //SOMETHING IS WRONG WITH THE TEMPLATE
+  },
+
+  events: {
+    'click button.btn-cancel': 'cancelOrder'
+  },
+
+
+  cancelOrder(e) {
+    e.preventDefault();
+    this.remove()
+    this.model.destroy();
   }
 });
 

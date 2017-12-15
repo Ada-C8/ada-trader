@@ -30,7 +30,8 @@ const OrderListView = Backbone.View.extend({
 
   events: {
     'click button.btn-buy': 'buyOrder',
-    'click button.btn-sell': 'sellOrder'
+    'click button.btn-sell': 'sellOrder',
+    'click button.btn-cancel': 'cancelOrder'
   },
 
   buyOrder(e){
@@ -58,8 +59,7 @@ const OrderListView = Backbone.View.extend({
     console.log(order)
     this.model.add(order);
     console.log(this.model)
-    this.render();
-  }
+  },
 
 })
 
