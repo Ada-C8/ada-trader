@@ -5,14 +5,14 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from 'models/simulator';
-import Quote from 'models/quote'
-import QuoteView from 'views/quote_view'
+import Quote from 'models/quote';
+import QuoteView from 'views/quote_view';
 import QuoteList from 'collections/quote_list';
-import QuoteListView from 'views/quote_list_view'
-import Order from 'models/order'
-import OrderList from 'collections/order_list'
-import OrderView from 'views/order_view'
-import OrderListView from 'views/order_list_view'
+import QuoteListView from 'views/quote_list_view';
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
+import OrderView from 'views/order_view';
+import OrderListView from 'views/order_list_view.js';
 
 
 const quoteData = [
@@ -60,10 +60,13 @@ $(document).ready(() => {
 
   const orderListView = new OrderListView({
     model: orderList,
+    template: _.template($('#order-template').html()),
     el: 'main',
-    template: orderTemplate,
+    gobble: "hello"
 
   });
+
+  console.log(orderListView);
 
   orderListView.render()
   quoteListView.render()
