@@ -62,8 +62,7 @@ $(document).ready(() => {
     model: orderList,
     template: _.template($('#order-template').html()),
     el: 'main',
-    gobble: "hello"
-
+    quotes: quoteList
   });
 
   console.log(orderListView);

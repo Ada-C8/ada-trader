@@ -7,7 +7,7 @@ import _ from 'underscore';
 const OrderListView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
-    this.gobble = params
+    this.quotes = params.quotes
     console.log("hello?")
     // this.listenTo(this.model, "change", this.render);
     this.listenTo(this.model, "update", this.render);
@@ -36,15 +36,12 @@ const OrderListView = Backbone.View.extend({
 
   buyOrder(e){
     e.preventDefault();
-    // this.trigger(this, 'appendOrder')
-    console.log("Trying to buy!")
     this.appendOrder(true);
 
   },
 
   sellOrder(e) {
     e.preventDefault();
-    console.log("Trying to sell!")
     this.appendOrder(false)
   },
 
@@ -55,10 +52,10 @@ const OrderListView = Backbone.View.extend({
 
     orderData.symbol = this.$(`[name='symbol']`).val();
     orderData.targetPrice = parseFloat(this.$(`[name='price-target']`).val());
+    orderData.quote = this.quotes.findWhere({symbol: orderData.symbol})
     const order = new Order(orderData);
-    console.log(order)
     this.model.add(order);
-    console.log(this.model)
+    console.log(order);
   },
 
 })
