@@ -1,21 +1,34 @@
 import QuoteList from 'collections/quote_list';
+import Quote from 'models/quote';
 
-describe('Quote spec', () => {
-  // let quote;
+describe('QuoteList spec', () => {
+  let quoteList;
   beforeEach(() => {
-    // quote = new Quote({
-    //   symbol: 'HELLO',
-    //   price: 100.00,
-    // });
+    quoteList = new QuoteList([
+        {
+          symbol: 'ANDERS',
+          price: 90.01,
+        },
+        {
+          symbol: 'CHEN',
+          price: 73.45,
+        },
+      ]);
+    });
+    console.log('$$$$$$$$');
+    console.log(quoteList);
+
+  describe('QuoteList', () => {
+    it('should be a list of Quote models', () => {
+      console.log('************');
+      console.log(quoteList);
+      expect(quoteList.get('symbol')).toEqual('ANDERS');
+    });
   });
 
-  describe('Buy function', () => {
-    it('increases the price by $1.00', () => {
-      // const startPrice = quote.get('price');
-      //
-      // quote.buy();
-      // 
-      // expect(quote.get('price')).toEqual(startPrice + 1.00);
+  describe('allSymbols function', () => {
+    it('should return an Array of strings', () => {
+      expect(quoteList.allSymbols()).toEqual(['ANDERS', 'CHEN']);
     });
   });
 });

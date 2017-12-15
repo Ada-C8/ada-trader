@@ -10,6 +10,7 @@ const Order = Backbone.Model.extend({
 
   validate(attributes) {
     const errors = {};
+    console.log('in validate');
 
     //TODO: validate for specific symbols?
     if (!attributes.symbol) { //all orders require a symbol
