@@ -2,11 +2,14 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import Order from '../models/order';
 import OrderView from '../views/order_view';
+import QuoteList from 'collections/quote_list';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.quoteList = params.quoteList;
+    console.log('ORDERLIST VIEW FOR QUOTES');
+    console.log(this.quoteList);
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
@@ -42,9 +45,12 @@ const OrderListView = Backbone.View.extend({
     };
 
     const newOrder= new Order(orderData);
-    // console.log(newOrder);
+    console.log('INSIDE BUYORDER FUNCTION');
+
+    // console.log(newOrder.matchedQuote);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      newOrder.listenTo(newOrder.get('matchedQuote'), 'change', newOrder.priceCheck);
     } else {
       this.updateStatusMessageFrom(newOrder.validationError);
     }
@@ -64,6 +70,7 @@ const OrderListView = Backbone.View.extend({
     console.log(newOrder);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
+      newOrder.listenTo(newOrder.get('matchedQuote'), 'change', newOrder.priceCheck);
     } else {
       this.updateStatusMessageFrom(newOrder.validationError);
     }
