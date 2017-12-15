@@ -13,7 +13,13 @@ const OpenOrderView = Backbone.View.extend({
     return this
   },
 
+  events: {
+    'click button.btn-cancel': 'deleteOrderView',
+  },
 
+  deleteOrderView(){
+    this.model.destroy();
+  },
 });
 
 export default OpenOrderView;

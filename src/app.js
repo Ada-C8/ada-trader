@@ -16,6 +16,7 @@ import OpenOrderList from 'collections/open_order_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeListView from './views/trade_list_view';
+import OpenOrderView from './views/open_order_view';
 import OpenOrderListView from './views/open_order_list_view';
 
 // let quoteTemplate;
@@ -29,14 +30,14 @@ const quoteData = [
     symbol: 'CLOTH',
     price: 81.70,
   },
-  {
-    symbol: 'HABIT',
-    price: 98.00,
-  },
-  {
-    symbol: 'SUPER',
-    price: 83.10,
-  },
+  // {
+  //   symbol: 'HABIT',
+  //   price: 98.00,
+  // },
+  // {
+  //   symbol: 'SUPER',
+  //   price: 83.10,
+  // },
 ];
 
 
@@ -53,10 +54,15 @@ $(document).ready(function() {
 
   const quotes = new QuoteList(quoteData);
   const openOrderList = new OpenOrderList()
-  const openOrder = new OpenOrder()
+  // const openOrder = new OpenOrder()
   const simulator = new Simulator({
     quotes: quotes,
   });
+
+  const openOrder = new OpenOrder ({
+    bus: bus,
+  });
+
 
   // openOrderList.add(new OpenOrder({symbol: "WTF", price: "100"}));
   // console.log('what is my openOrderList')
@@ -88,6 +94,13 @@ $(document).ready(function() {
     template: orderTemplate,
     bus: bus,
   });
+
+  // const openOrderView = new OpenOrderView({
+  //   bus: bus,
+  // });
+
+
+
 
 
   quoteListView.render();

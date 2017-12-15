@@ -6,13 +6,9 @@ const QuoteListView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.bus = params.bus;
-    // this.template = params.template;
-
   },
   render() {
     console.log('I am in quoteListView render');
-    // const $quoteList = $('#quotes');
-    // $quoteList.empty();
     this.$('#quotes').empty();
     let symbol_array = [];
     this.model.each((quote) => {

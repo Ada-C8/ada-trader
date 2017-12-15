@@ -6,11 +6,6 @@ const TradeListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus
     this.listenTo(this.bus, 'addTrade', this.addTrade);
-    // this.template = params.template;
-  },
-
-  render() {
-    console.log('I am in quoteListView render')
   },
 
   addTrade(trade_data) {
