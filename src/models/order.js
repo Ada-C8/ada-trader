@@ -4,7 +4,6 @@ const Order = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
     targetPrice: 0.00,
-    // buy: false
   },
 
   initialize(attributes) {

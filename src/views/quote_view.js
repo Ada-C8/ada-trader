@@ -36,6 +36,8 @@ const QuoteView = Backbone.View.extend({
 
     // SEE TRADE VIEW FOR LISTENER
     this.bus.trigger('add_quote', currentTrade);
+    
+    // Decreases stock price by one
     this.model.sell();
   },
 
