@@ -11,7 +11,9 @@ const Order = Backbone.Model.extend({
 
   getCurrentPrice() {
     const quote = this.quotes.findWhere({symbol: this.get('symbol')});
-    return quote.get('price');
+
+    if (quote) return quote.get('price');
+    return undefined;
   },
 
   checkPrice(quote) {
@@ -38,6 +40,10 @@ const Order = Backbone.Model.extend({
 
     if (!symbols.includes(attributes.symbol)) {
       errors['symbol'] = ['Is not in the list'];
+    }
+
+    if (!attributes.symbol) {
+      errors['symbol'] = ['Cannot be blank'];
     }
     
     if (!attributes.targetPrice) {

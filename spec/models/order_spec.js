@@ -5,6 +5,8 @@ import QuoteList from 'collections/quote_list';
 describe('Order spec', () => {
   let order;
   let quotes;
+  let invalidOrder;
+
   beforeEach(() => {
     quotes = new QuoteList([
       {
@@ -15,12 +17,44 @@ describe('Order spec', () => {
         symbol: 'HUMOR',
         price: 85.00,
       }
-    ])
+    ]);
+
     order = new Order({
       quotes: quotes,
       symbol: 'HELLO',
       buy: true,
       targetPrice: 90.00,
+    });
+
+    invalidOrder = new Order({
+      quotes: quotes,
+      symbol: 'BAD',
+      buy: false,
+      targetPrice: 85.00,
+    });
+  });
+
+  describe('Validations', () => {
+    it('is invalid if the symbol is not in the quote list', () => {
+      expect(invalidOrder.isValid()).toEqual(false);
+      expect(order.isValid()).toEqual(true);
+    });
+
+    it('requires a symbol to be valid', () => {
+      // testing undefined
+      invalidOrder.set('symbol', undefined);
+
+      expect(invalidOrder.get('symbol')).toBeUndefined();
+      expect(invalidOrder.isValid()).toEqual(false);
+
+      // testing empty string
+      invalidOrder.set('symbol', '');
+
+      expect(invalidOrder.get('symbol')).toEqual('');
+
+      // testing null
+      invalidOrder.set('symbol', null)
+
     });
   });
 
@@ -31,24 +65,11 @@ describe('Order spec', () => {
       expect(mktPrice).toEqual(100.00);
       expect(order.getCurrentPrice()).toEqual(mktPrice);
     });
+
+    it('returns undefined if the quote does not exist', () => {
+      expect(invalidOrder.getCurrentPrice()).toBeUndefined();
+    });
   });
-  // describe('Buy function', () => {
-  //   it('increases the price by $1.00', () => {
-  //     const startPrice = quote.get('price');
-  //
-  //     quote.buy();
-  //
-  //     expect(quote.get('price')).toEqual(startPrice + 1.00);
-  //   });
-  // });
-  //
-  // describe('Sell function', () => {
-  //   it('decreases the price by $1.00', () => {
-  //     const startPrice = quote.get('price');
-  //
-  //     quote.sell();
-  //
-  //     expect(quote.get('price')).toEqual(startPrice - 1.00);
-  //   });
-  // });
+
+
 });

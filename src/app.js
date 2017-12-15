@@ -10,7 +10,6 @@ import QuoteList from 'collections/quote_list';
 import OrderList from 'collections/order_list';
 
 import QuoteListView from './views/quote_list_view';
-import OrderFormView from './views/order_form_view';
 import OrderListView from './views/order_list_view';
 
 const quoteData = [
@@ -69,17 +68,19 @@ $(document).ready(function() {
   addOptions();
 
 
-  const orderFormView = new OrderFormView({
-    quotes: quotes,
-    bus: bus,
-    el: '.order-entry-form',
-  });
+  // const orderFormView = new OrderFormView({
+  //   quotes: quotes,
+  //   bus: bus,
+  //   el: '.order-entry-form',
+  // });
 
   const orderListView = new OrderListView({
     model: orders,
+    quotes: quotes,
     bus: bus,
     template: _.template($('#order-template').html()),
-    el: '.orders-container',
+    // el: '.orders-container',
+    el: '#order-workspace',
   });
   orderListView.render();
 
