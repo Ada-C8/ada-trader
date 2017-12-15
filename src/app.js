@@ -41,23 +41,25 @@ const quoteData = [
   },
 ];
 
-// const orderData = [
-//   {
-//     symbol: 'HUMOR',
-//     targetPrice: 88.50,
-//     buy: buy,
-//   },
-//   {
-//     symbol: 'CLOTH',
-//     targetPrice: 81.70,
-//     buy: buy,
-//   },
-//
-// ];
+const orderData = [
+  {
+    symbol: 'HUMOR',
+    targetPrice: 88.50,
+    buy: true,
+  },
+  {
+    symbol: 'CLOTH',
+    targetPrice: 81.70,
+    buy: false,
+  },
+
+];
 
 
 const quoteList = new QuoteList(quoteData);
-const orderList = new OrderList();
+const orderList = new OrderList(orderData);
+console.log("here's the order list")
+console.log(orderList);
 
 let quoteTemplate;
 let tradeTemplate;
@@ -67,7 +69,7 @@ $(document).ready( () => {
 
   let bus = {}; //can trigger/subscribe to BB events
   bus = _.extend(bus, Backbone.Events);
-  console.log("bus is " + bus);
+
 
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
@@ -93,17 +95,19 @@ $(document).ready( () => {
   });
 
   const orderListView = new OrderListView({
-    el: '.orders-list-container',
+    el: '#orders-container',
     model: orderList,
     template: orderTemplate,
     bus: bus,
   });
 
-  orderListView.render();
+
 
   tradeHistoryView.render();
 
   quoteListView.render();
+
+  orderListView.render();
 
   simulator.start();
 
@@ -112,9 +116,7 @@ $(document).ready( () => {
 
 
 
-// const tradeHistoryView = new TradeHistoryView({
-//   el: '#trades-container',
-//   model: quoteList,
-//   template: tradeTemplate,
-//   bus: bus,
-// });
+
+
+
+//

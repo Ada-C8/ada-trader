@@ -31,7 +31,7 @@ render(){
       let x = document.getElementById("symbol");
       let option = document.createElement("option");
       option.text = quote.get('symbol');
-      x.add(option, x[0]);
+      x.add(option);
 
 
 

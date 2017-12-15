@@ -6,19 +6,24 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
+
+    this.listenTo(this.model, 'change', this.render);
   },
 
   render(){
-    const compiledTemplate =
-    this.template(this.model.toJSON());
+    console.log("In the render function for order view");
+    const compiledTemplate = this.template(this.model.toJSON());
+    console.log("Compiled the template");
     this.$el.html(compiledTemplate);
     console.log("This is an order!");
     return this;
   },
 
-  events: {
 
-  },
+
+  // events: {
+  //
+  // },
 
   // define events
 

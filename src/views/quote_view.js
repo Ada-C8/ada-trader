@@ -1,6 +1,7 @@
 import Backbone from 'backbone';
 import Quote from '../models/quote';
 
+
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
@@ -11,8 +12,8 @@ const QuoteView = Backbone.View.extend({
   }, //init
 
   render() {
-    const compiledTemplate =
-    this.template(this.model.toJSON());
+    console.log("In the quote view render function");
+    const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
 
     return this;
@@ -21,10 +22,8 @@ const QuoteView = Backbone.View.extend({
   }, //render
 
   events: {
-    // 'click button.btn-buy': 'recordTrade',
     'click button.btn-sell': 'sell',
     'click button.btn-buy': 'buy',
-    // 'click button.btn-sell': 'record_trade',
   },
 
 
@@ -32,13 +31,11 @@ const QuoteView = Backbone.View.extend({
     console.log("You clicked buy");
     console.log(event);
     this.recordTrade(true)
-    // this.bus.trigger('record_trade', this.model);
     this.model.buy();
   },
   sell(event) {
     console.log("You clicked Sell");
     console.log(event);
-    // this.bus.trigger('record_trade', this.model);
     this.recordTrade(false)
     this.model.sell();
   },

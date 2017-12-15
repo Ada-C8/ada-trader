@@ -25,7 +25,7 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
         bus: this.bus,
       }); // end orderView const
-
+    
       this.$('.orders').append(orderView.render().$el);
 
     }); // end each
