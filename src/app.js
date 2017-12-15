@@ -48,6 +48,19 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
+  // fill in order form with symbols
+  // default empty selector value
+  $("select[name='symbol']").append($('<option disabled selected value>'));
+
+  const currentSymbols = quoteData.map( quote => quote.symbol );
+
+  currentSymbols.forEach((symbol) => {
+    $("select[name='symbol']").append($('<option>', {
+      value: symbol,
+      text: symbol})
+    );
+  });
+
   const quoteListView = new QuoteListView({
     // setting model to quotes, not new QuoteListView- might run into problems later??
     model: quotes,
@@ -67,7 +80,7 @@ $(document).ready(function() {
     el: '#trades-container',
     bus: bus,
   })
- tradeListView.render();
+  tradeListView.render();
 
   const orderList = new OrderList();
   const orderListView = new OrderListView({
