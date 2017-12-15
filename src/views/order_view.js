@@ -20,15 +20,27 @@ const OrderView = Backbone.View.extend({
   },
 
 
+  events: {
+    'click button.btn-cancel': 'cancelOrder',
+    'click button.btn-buy': 'createOrder'
+  },
 
-  // events: {
-  //
-  // },
+  cancelOrder(event) {
+    console.log("You clicked the cancel button");
+    console.log(event);
+    this.model.cancelOrder();
+  },
+
+  createOrder(event) {
+    console.log("you clicked buy button");
+    this.model.createOrder();
+  }
 
   // define events
 
 
 
-}); // end quote view
+
+}); // end order view
 
 export default OrderView

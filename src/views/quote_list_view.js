@@ -13,6 +13,7 @@ initialize(params) {
 
 },
 render(){
+  console.log("IN the quote list view render function");
   this.$('.quotes').empty();
 
   this.model.each((quote) => {

@@ -13,10 +13,12 @@ const Order = Backbone.Model.extend({
   //   // this.listentTo(this.model, 'change', this.render);
   },
 
-  makeLimitOrder() {
+  createOrder() {
+    console.log("We're creating your order!");
   },
 
-  cancelLimitOrder() {
+  cancelOrder() {
+    console.log("we're cancelling your order!");
   },
 });
 
