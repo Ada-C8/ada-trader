@@ -4,9 +4,9 @@ const Order = Backbone.Model.extend({
   validate: function(attributes) {
     let error = '';
 
-    if (attributes.buy && (attributes.targetPrice > attributes.quote[0]['attributes']['price'])) {
+    if (attributes.buy && (attributes.targetPrice > attributes.quote['attributes']['price'])) {
       error = 'Price higher than market price!';
-    } else if (!attributes.buy && (attributes.targetPrice < attributes.quote[0]['attributes']['price'])) {
+    } else if (!attributes.buy && (attributes.targetPrice < attributes.quote['attributes']['price'])) {
       error = 'Price lower than market price!';
     } else if (isNaN(attributes.targetPrice)) {
       error = 'Invalid Target Price';

@@ -16,7 +16,7 @@ describe('Order spec', () => {
         symbol: 'CLOTH',
         targetPrice: 80.00,
         buy: true,
-        quote: [quote],
+        quote: quote,
       })
 
       expect(order.isValid()).toEqual(true);
@@ -27,7 +27,7 @@ describe('Order spec', () => {
         symbol: 'CLOTH',
         targetPrice: 'hello',
         buy: false,
-        quote: [quote],
+        quote: quote,
       })
 
       expect(order.isValid()).toEqual(false);
@@ -38,7 +38,7 @@ describe('Order spec', () => {
         symbol: 'CLOTH',
         targetPrice: 180.00,
         buy: true,
-        quote: [quote],
+        quote: quote,
       })
 
       expect(order.isValid()).toEqual(false);
@@ -49,42 +49,10 @@ describe('Order spec', () => {
         symbol: 'CLOTH',
         targetPrice: 8.00,
         buy: false,
-        quote: [quote],
+        quote: quote,
       })
 
       expect(order.isValid()).toEqual(false);
     })
   });
-
-
-
-
-
-  // let order;
-  // beforeEach(() => {
-  //   quote = new Quote({
-  //     symbol: 'HELLO',
-  //     price: 100.00,
-  //   });
-  // });
-  //
-  // describe('Buy function', () => {
-  //   it('increases the price by $1.00', () => {
-  //     const startPrice = quote.get('price');
-  //
-  //     quote.buy();
-  //
-  //     expect(quote.get('price')).toEqual(startPrice + 1.00);
-  //   });
-  // });
-  //
-  // describe('Sell function', () => {
-  //   it('decreases the price by $1.00', () => {
-  //     const startPrice = quote.get('price');
-  //
-  //     quote.sell();
-  //
-  //     expect(quote.get('price')).toEqual(startPrice - 1.00);
-  //   });
-  // });
 });

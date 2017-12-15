@@ -6,7 +6,7 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
-    this.quote = this.model.attributes.quote[0];
+    this.quote = this.model.get('quote');
     this.listenTo(this.quote, 'change', this.checkPrice);
   },
   render() {
@@ -19,12 +19,12 @@ const OrderView = Backbone.View.extend({
   },
   checkPrice() {
     // Better to trigger a cancelOrder from here or from the quoteview??
-    if (this.model.attributes.buy) {
-      if (this.model.attributes.targetPrice >= this.quote.attributes.price) {
+    if (this.model.get('buy')) {
+      if (this.model.get('targetPrice') >= this.quote.get('price')) {
         this.bus.trigger('buyOrder', this);
       }
     } else {
-      if (this.model.attributes.targetPrice <= this.quote.attributes.price) {
+      if (this.model.get('buy') <= this.quote.get('price')) {
         this.bus.trigger('sellOrder', this);
       }
     }

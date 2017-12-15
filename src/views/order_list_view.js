@@ -7,10 +7,9 @@ import Order from '../models/order';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.listenTo(this.model, 'update', this.render);
     this.quotes = params.quotes;
     this.bus = params.bus;
-    this.listenTo(this.bus, 'removeOrder', this.removeOrder);
+    this.listenTo(this.model, 'update', this.render);
     this.listenTo(this.bus, 'removeOrder', this.removeOrder);
   },
   render() {
@@ -40,7 +39,7 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),
     };
 
-    orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
+    orderData['quote'] =  this.quotes.find({symbol: orderData['symbol']});
 
     const newOrder = new Order(orderData);
 
@@ -60,7 +59,7 @@ const OrderListView = Backbone.View.extend({
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),
     };
 
-    orderData['quote'] =  this.quotes.where({symbol: orderData['symbol']});
+    orderData['quote'] =  this.quotes.find({symbol: orderData['symbol']});
 
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
