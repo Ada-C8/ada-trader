@@ -5,17 +5,12 @@ import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import Simulator from 'models/simulator';
-import Quote from 'models/quote';
-import Order from 'models/order';
-import OpenOrders from 'collections/open_orders';
+import OrderList from 'collections/order_list';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
-import QuoteView from './views/quote_view';
-import OrderView from './views/order_view';
 import TradeListView from './views/trade_list_view';
 import OrderFormView from './views/order_form_view';
-import OpenOrderView from './views/open_orders_view';
-
+import OrderListView from './views/order_list_view';
 
 const quoteData = [
   {
@@ -39,34 +34,20 @@ const quoteData = [
 let bus = {};
 bus = _.extend(bus, Backbone.Events);
 
-
 $(document).ready(function() {
+  // Populate the Quote collection
   const quotes = new QuoteList(quoteData);
 
+  // Initiates the Quote List view, gives it the Quote collection as a model & renders it
   const quoteListView = new QuoteListView({
-    model: quotes,
+    model: quotes, // Quote collection
     template: _.template($('#quote-template').html()),
     el: '.quotes-list-container',
     bus: bus,
   });
   quoteListView.render();
 
-  const openOrders = new OpenOrders();
-  const orderFormView = new OrderFormView({
-    model: openOrders,
-    bus: bus,
-    el: '.order-entry-form',
-  });
-  orderFormView.render(quotes);
-
-  const openOrderView = new OpenOrderView({
-    template: _.template($('#order-template').html()),
-    el: '.orders-list-container',
-    bus: bus,
-    model: openOrders,
-  });
-  openOrderView.render();
-
+  // Initiates the trade history view & renders it
   const tradeListView = new TradeListView({
     template: _.template($('#trade-template').html()),
     el: '.trades-list-container',
@@ -74,9 +55,29 @@ $(document).ready(function() {
   });
   tradeListView.render();
 
+  // Initiates a new Order collection
+  const orderList = new OrderList();
+
+  // Initiates an Order Form View, gives it the empty Order collection as model (so that e can add newly created orders to the OrderList collection) & renders it (will passing it the quotes to populate the select button)
+  const orderFormView = new OrderFormView({
+    model: orderList,
+    bus: bus,
+    el: '.order-entry-form',
+  });
+  orderFormView.render(quotes);
+
+  // Initiates a new Open orders view, gives it the empty Order collection as model & renders it
+  const orderListView = new OrderListView({
+    model: orderList,
+    template: _.template($('#order-template').html()),
+    el: '.orders-list-container',
+    bus: bus,
+  });
+  orderListView.render();
+
+  // Initiates the simulator & starts it
   const simulator = new Simulator({
     quotes: quotes,
   });
   simulator.start();
-
 });

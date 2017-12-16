@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import OrderView from '../views/order_view';
 
-const OpenOrderView = Backbone.View.extend({
+const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
@@ -22,4 +22,4 @@ const OpenOrderView = Backbone.View.extend({
   }
 });
 
-export default OpenOrderView;
+export default OrderListView;
