@@ -1,5 +1,6 @@
-import Backbone from 'backbone';
 import _ from 'underscore';
+import Backbone from 'backbone';
+
 import QuoteView from '../views/quote_view';
 import Quote from '../models/quote';
 
