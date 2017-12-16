@@ -4,7 +4,7 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import Quote from '../models/quote';
 
-const tradeTemplate = _.template($('#trade-template').html());
+
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
