@@ -36,13 +36,14 @@ const OrderListView = Backbone.View.extend({
 
   renderOrderForm() {
     // add symbols to dropdown menu in the form
-    const quoteData = this.quotes.map( x => x.get('symbol'))
+    const quoteData = this.quotes.map( x => x.get('symbol'));
     quoteData.forEach((symbol) => {
       const option = `<option value="${symbol}">${symbol}</option>`;
       this.$('form select').append(option);
     });
   },
 
+  // function that gets called when buy or sell button in view get clicked on, will validate and add an order or make a call to show user error messages
   addOrder(event){
     console.log('inside addOrder method');
     event.preventDefault();
@@ -76,7 +77,6 @@ const OrderListView = Backbone.View.extend({
     // get the current price of the quote
     // this doesnt exactly fit in this method but it is cleaner than having it in the addOrder method
     orderData['quotePrice'] = this.quotes.findWhere({'symbol': orderData['symbol']}).get('price');
-
 
     return orderData;
   },
