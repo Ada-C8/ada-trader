@@ -43,7 +43,7 @@ const orderData = [
   },
   {
     buy: false,
-    currentPrice: quotes.findWhere(),
+    currentPrice: quotes.findWhere({symbol: 'CLOTH'}).get('price'),
     targetPrice: 120.4,
     symbol: 'CLOTH',
   },
@@ -70,7 +70,8 @@ $(document).ready(function() {
   const orderListView = new OrderListView ({
     model: orders,
     orderTemplate: _.template($('#order-template').html()),
-    el: '.orders-list-container',
+    el: '#order-workspace',
+    quotes: quotes,
   });
 
   orderListView.render();

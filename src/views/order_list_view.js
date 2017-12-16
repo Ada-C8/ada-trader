@@ -1,10 +1,12 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
 import OrderView from '../views/order_view';
+import Order from '../models/order';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.orderTemplate = params.orderTemplate;
+    this.quotes = params.quotes;
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
@@ -22,15 +24,46 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
   events: {
-    'click .order-entry-form .btn-buy': 'buyOrder',
-    'click .order-entry-form .btn-sell': 'sellOrder',
+    'click button.btn-buy': 'addOrder',
+    'click button.btn-sell': 'addOrder',
   },
-  buyOrder: function(event) {
-    console.log('in buyOrder');
+  addOrder: function(event) {
+    event.preventDefault();
+
+    const newOrder = new Order({
+      symbol: this.$('.order-entry-form [name=symbol]').val(),
+      targetPrice: Number(this.$('.order-entry-form [name=price-target]').val()),
+      quote: this.quotes.findWhere({symbol: this.$('.order-entry-form select').val()}),
+    });
+    if (event.target.innerHTML === 'Buy') {
+      newOrder.set('buy', true);
+    } else {
+      newOrder.set('buy', false)
+    }
+    newOrder.set('currentPrice', this.quotes.findWhere({symbol: this.$('.order-entry-form select').val()}).attributes['price']);
+
+    console.log(newOrder);
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+      this.updateStatusMessageWith(`New order for ${newOrder.get('symbol')} has been saved.`)
+    } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
+    }
   },
-  sellOrder: function(event) {
-    console.log('in sellOrder');
+  updateStatusMessageFrom: function(messageHash) {
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    _.each(messageHash, (messageType) => {
+      messageType.forEach((message) => {
+        statusMessagesEl.append(`<p>${message}</p>`);
+      });
+    });
   },
+  updateStatusMessageWith: function(message) {
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    statusMessagesEl.append(`<p>${message}</p>`);
+  }
 });
 
 export default OrderListView;
