@@ -37,8 +37,6 @@ const quoteData = [
   },
 ];
 
-const symbolData = quoteData.map( x => x.symbol )
-
 let quoteTemplate;
 let tradeTemplate;
 let orderTemplate
@@ -81,7 +79,7 @@ $(document).ready(function() {
     model: orders,
     template: orderTemplate,
     bus: bus,
-    symbols: symbolData,
+    quotes: quotes,
   });
 
   orderListView.render();

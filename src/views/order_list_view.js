@@ -4,10 +4,10 @@ import OrderView  from './order_view';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
-    // add template, bus, and symbols array
+    // add template, bus, and quotes
     this.template = params.template;
     this.bus = params.bus;
-    this.symbols = params.symbols;
+    this.quotes = params.quotes;
 
     // listens for changes in our template
     this.listenTo(this.model, 'update', this.render);
@@ -36,7 +36,8 @@ const OrderListView = Backbone.View.extend({
 
   renderOrderForm() {
     // add symbols to dropdown menu in the form
-    this.symbols.forEach((symbol) => {
+    const quoteData = this.quotes.map( x => x.get('symbol'))
+    quoteData.forEach((symbol) => {
       const option = `<option value="${symbol}">${symbol}</option>`;
       this.$('form select').append(option);
     });
@@ -46,20 +47,36 @@ const OrderListView = Backbone.View.extend({
     console.log('inside addOrder method');
     event.preventDefault();
     // get form data
-    const fromData = this.getFormData();
-    // new instance of OrderView using form fromData
-    // const newOrder = new Task(formData);
+    const formData = this.getFormData();
+
+    // new instance of OrderView using form formData
+    const newOrder = new Order(formData);
+
+    console.log(newOrder);
+    this.clearFormData();
   },
-  // helper function to get form data
+
+  // helper function to get symbol and target price from the form
   getFormData() {
     console.log('in getFormData method');
     let orderData = {};
 
     orderData['symbol'] = this.$(`#order-form select[name="symbol"]`).val();
-    // orderData['quote'] = this.quotes.where({symbol: orderData['symbol']})[0];
     orderData['targetPrice'] = Number(this.$('#order-form input[name="price-target"]').val());
 
-    console.log(orderData);
+    // get the current price of the quote
+    // this doesnt exactly fit in this method but it is cleaner than having it in the addOrder method
+    orderData['quotePrice'] = this.quotes.findWhere({'symbol': orderData['symbol']}).get('price');
+
+    return orderData;
+  },
+
+  // function to clear form
+  clearFormData() {
+    console.log('in clearFormData');
+    // reset to the first quotes symbol and clear price value
+    this.$(`#order-form select[name="symbol"]`).val(this.quotes.models[0].get('symbol'));
+    this.$('#order-form input[name="price-target"]').val('');
   },
 
   // events object
