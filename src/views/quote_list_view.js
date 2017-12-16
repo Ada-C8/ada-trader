@@ -23,8 +23,8 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
   trade: function(quoteView) {
-    const compiledTradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
-    this.$('#trades').prepend(compiledTradeTemplate);
+    const tradeTemplate = this.tradeTemplate(quoteView.model.toJSON());
+    this.$('#trades').prepend(tradeTemplate);
   },
 });
 

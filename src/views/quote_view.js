@@ -4,6 +4,7 @@ import Quote from '../models/quote';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
   },
   render() {
@@ -24,7 +25,15 @@ const QuoteView = Backbone.View.extend({
     this.model.set('buy', false);
     this.trigger('quoteAction', this);
     this.model.sell();
-  }
+  },
+  checkOrders() {
+    const symbol = this.model.get('symbol');
+    this.bus.trigger(`check${symbol}`, this.model);
+  },
+  // addTrade() {
+  //   const tradeTemplate = this.tradeTemplate(this.model.toJSON());
+  //   $('#trades').prepend(tradeTemplate);
+  // },
 });
 
 export default QuoteView;
