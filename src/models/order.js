@@ -17,6 +17,19 @@ const Order = Backbone.Model.extend({
     } else {
       return false
     }
+  },
+  shouldTrade() {
+    const targetPrice = this.get('targetPrice');
+    const quotePrice = this.get('quote').get('price');
+    const buy = this.get('buy');
+
+    if (buy && (targetPrice >= quotePrice)) {
+      return 'buy'
+    } else if (!buy && (targetPrice <= quotePrice)) {
+      return 'sell'
+    } else {
+      return false
+    }
   }
 });
 
