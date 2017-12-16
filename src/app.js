@@ -66,6 +66,12 @@ $(document).ready(function() {
 
   quoteListView.render();
 
+  // new simulator, will start it updating the quotes at second intervals
+  const simulator = new Simulator({
+    quotes: quotes,
+  });
+  simulator.start();
+
   // new orderList instance
   const orders = new OrderList();
 
@@ -88,9 +94,5 @@ $(document).ready(function() {
     bus: bus,
   });
 
-  // new simulator, will start it updating the quotes at second intervals
-  const simulator = new Simulator({
-    quotes: quotes,
-  });
-  simulator.start();
+
 });
