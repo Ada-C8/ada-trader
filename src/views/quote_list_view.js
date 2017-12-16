@@ -1,20 +1,28 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
-import Quote from 'models/quote';
+import Quote from '../models/quote';
+import QuoteView from '../views/quote_view';
 
 const QuoteListView = Backbone.View.extend ({
 initialize(params) {
-  this.template = params.template;
+  this.quoteTemplate = params.quoteTemplate;
+  this.listenTo(this.model, 'update', this.render);
 },
 render() {
+  this.$('#quotes').empty();
   //use the template
-  const quoteHTML = this.template({
-    symbol: this.model.get('symbol'),
-    price: this.model.get('price'),
+  this.model.each((quote) => {
+    const quoteView = new QuoteView({
+      model: quote,
+      template: this.quoteTemplate,
+      tagName: 'li',
+      className: 'quote',
+    });
+    this.$('#quotes').append(quoteView.render().$el);
   });
 
+
   //append template to html
-  this.$
   return this;
 },
 });
