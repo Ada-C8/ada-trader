@@ -1,10 +1,18 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+import Backbone from 'backbone';
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
+
+// import Quote from './models/quote'
+import QuoteList from './collections/quote_list'
+import QuoteListView from './views/quote_list_view'
+
+import OrderList from './collections/order_list'
+import OrderListView from './views/order_list_view'
 
 const quoteData = [
   {
@@ -25,11 +33,38 @@ const quoteData = [
   },
 ];
 
+const quoteList = new QuoteList(quoteData);
+const orderList = new OrderList();
+
+let bus = {};
+bus = _.extend(bus, Backbone.Events);
+
 $(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
-    quotes: quotes,
+    quotes: quoteList,
   });
+
+  const quoteListView = new QuoteListView({
+    model: quoteList,
+    template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
+    bus: bus,
+    el: 'main',
+  })
+
+  const orderListView = new OrderListView({
+    model: orderList,
+    template: _.template($('#order-template').html()),
+    quotes: quoteList,
+    bus: bus,
+    el: '#order-workspace'
+  })
+
+  orderListView.render();
+
+  quoteListView.render();
 
   simulator.start();
 });
+
+// wave 2: add and clone into a new collection?
