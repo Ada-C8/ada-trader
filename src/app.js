@@ -11,6 +11,7 @@ import OpenOrders from 'collections/open_orders';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
 import QuoteView from './views/quote_view';
+import OrderView from './views/order_view';
 import TradeListView from './views/trade_list_view';
 import OrderFormView from './views/order_form_view';
 import OpenOrderView from './views/open_orders_view';
@@ -35,10 +36,6 @@ const quoteData = [
   },
 ];
 
-const order = Order;
-
-
-
 let bus = {};
 bus = _.extend(bus, Backbone.Events);
 
@@ -52,21 +49,29 @@ $(document).ready(function() {
     el: '.quotes-list-container',
     bus: bus,
   });
-
   quoteListView.render();
 
+  const openOrders = new OpenOrders();
   const orderFormView = new OrderFormView({
-    model: order,
+    model: openOrders,
     bus: bus,
     el: '.order-entry-form',
-  })
-  // const orderFormView = new OrderFormView();
+  });
   orderFormView.render(quotes);
+
+  // const order = new Order();
+  // const orderView = new OrderView({
+  //   template: _.template($('#order-template').html()),
+  //   el: '.orders-list-container',
+  //   model: order,
+  //   bus: bus,
+  // });
 
   const openOrderView = new OpenOrderView({
     template: _.template($('#order-template').html()),
     el: '.orders-list-container',
     bus: bus,
+    model: openOrders,
   });
   openOrderView.render();
 
@@ -74,13 +79,12 @@ $(document).ready(function() {
     template: _.template($('#trade-template').html()),
     el: '.trades-list-container',
     bus: bus,
-    hello: 'hullo',
-  })
+  });
   tradeListView.render();
 
   const simulator = new Simulator({
     quotes: quotes,
   });
-
   simulator.start();
+
 });

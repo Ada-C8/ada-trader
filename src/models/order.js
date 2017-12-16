@@ -1,37 +1,30 @@
 import Backbone from 'backbone';
+// import OpenOrders from 'collections/open_orders';
 
 const Order = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
-    price: 0.00,
+    targetPrice: 0.00,
     buy: true,
   },
-  initialize(params) {
-    // this.listenTo(this.bus, 'boughtQuote', this.addQuote);
-    // this.listenTo(this.bus, 'soldQuote', this.soldQuote);
-    // this.bus = params.bus;
-  },
   buy(event) {
-    // console.log('here');
-    // console.log(this.bus);
     this.set('symbol', event.target.form[0].value);
-    this.set('price', event.target.form[1].value);
-    // this.set('buy', true);
-    // this.save();
+    this.set('targetPrice', event.target.form[1].value);
     this.bus.trigger('listOrder', this);
     // console.log(this);
     return this;
   },
-
-  sell() {
+  sell(event) {
     this.set('symbol', event.target.form[0].value);
-    this.set('price', event.target.form[1].value);
+    this.set('targetPrice', event.target.form[1].value);
     this.set('buy', false);
     this.bus.trigger('listOrder', this);
-    // this.save();
-    // this.bus.trigger('sellOrder', this);
+    // console.log(this);
     return this;
-  }
+  },
+  // remove() {
+  //
+  // }
 });
 
 export default Order;

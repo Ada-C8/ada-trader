@@ -1,6 +1,8 @@
-import QuoteList from 'collections/quote_list';
+// import QuoteList from 'collections/quote_list';
 import Backbone from 'backbone';
 import Order from '../models/order';
+import OpenOrders from 'collections/open_orders';
+
 
 // const quoteList = QuoteList;
 
@@ -21,14 +23,18 @@ const OrderFormView = Backbone.View.extend({
   },
   buyOrder: function(event) {
     event.preventDefault();
-    const order = new Order;
-    order.bus = this.bus;
-    order.buy(event);
+    const order = new Order();
+    order.attributes.symbol = event.target.form[0].value;
+    order.attributes.targetPrice = parseFloat(event.target.form[1].value);
+    this.model.add(order);
   },
   sellOrder: function(event) {
     event.preventDefault();
-    const order = new Order;
-    order.sell(event);
+    const order = new Order();
+    order.attributes.symbol = event.target.form[0].value;
+    order.attributes.targetPrice = parseFloat(event.target.form[1].value);
+    order.attributes.buy = false;
+    this.model.add(order);
   }
 });
 
