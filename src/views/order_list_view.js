@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import _ from 'underscore';
 import OrderView from '../views/order_view';
 import Order from '../models/order';
 
@@ -55,11 +56,25 @@ const OrderListView = Backbone.View.extend({
     orderData['quote'] = correspondingQuote;
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
+      this.$('.form-errors').empty();
       this.model.add(newOrder);
       newOrder.listenTo(newOrder.get('quote'), 'change', newOrder.quotePriceCheck);
+    } else {
+      this.displayErrorsFromOrder(newOrder.validationError);
     }
   },
 
+  displayErrorsFromOrder(messageHash) {
+    console.log(messageHash);
+    const statusMessagesEl = this.$('.form-errors');
+    statusMessagesEl.empty();
+    _.each(messageHash, (messageType) => {
+      messageType.forEach((message) => {
+        statusMessagesEl.append(`<h3>${message}</h3>`);
+      })
+    });
+    statusMessagesEl.show();
+  }
 });
 
 export default OrderListView;

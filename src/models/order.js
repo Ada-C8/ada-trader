@@ -13,7 +13,7 @@ const Order = Backbone.Model.extend({
     const errors = {};
 
     if (attributes.targetPrice <= 0.00) {
-      errors['targetPrice'] = ['Target price must be a valid decimal above 0.'];
+      errors['targetPrice'] = ['Invalid target price.'];
     }
 
     if (attributes.symbol === 'UNDEF' || attributes.symbol === undefined){
@@ -49,13 +49,13 @@ const Order = Backbone.Model.extend({
     // "check current price of quote" validations
     if(attributes.quote !== undefined &&
        attributes.buy === true &&
-       attributes.targetPrice > attributes.quote.get('price')) {
+       attributes.targetPrice >= attributes.quote.get('price')) {
       errors['targetPrice'] = ['Price must be lower than market price'];
     }
 
     if(attributes.quote !== undefined &&
        attributes.buy === false &&
-       attributes.targetPrice < attributes.quote.get('price')){
+       attributes.targetPrice <= attributes.quote.get('price')){
       errors['targetPrice'] = ['Price must be higher than market price'];
     }
 
@@ -67,27 +67,18 @@ const Order = Backbone.Model.extend({
 
   },
 
-  buy(){
-    this.set('buy', true);
-  },
-
-  sell(){
-    this.set('buy', false);
-  },
-
   quotePriceCheck(){
     // if buy, check if the price is lower or equal
-    console.log('in QuotePriceCheck');
+    console.log('in quote price check');
     const quote = this.get('quote');
-    if(this.get('buy') === true && (this.get('targetPrice') >= quote.get('price'))){
-      console.log('in buy at quotePriceCheck at order model');
+    if(this.get('buy') === true && (this.get('targetPrice') > quote.get('price'))){
+      console.log('gonna destroy this model');
+      this.destroy();
       quote.buy();
-      this.destroy();
     // if sell, check if the price is higher or equal
-    } else if(this.get('buy') === false && (this.get('targetPrice') <= quote.get('price'))){
-      console.log('in sold at quotePriceCheck at order model');
-      quote.sell();
+    } else if(this.get('buy') === false && (this.get('targetPrice') < quote.get('price'))){
       this.destroy();
+      quote.sell();
     }
   }
 
