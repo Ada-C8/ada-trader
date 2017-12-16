@@ -37,6 +37,8 @@ const quoteData = [
   },
 ];
 
+const symbolData = quoteData.map( x => x.symbol )
+
 let quoteTemplate;
 let tradeTemplate;
 let orderTemplate
@@ -49,24 +51,34 @@ $(document).ready(function() {
   // Underscore templates
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
 
   // new quoteList instance
   const quotes = new QuoteList(quoteData);
 
-  // new simulator, will start it updating the quotes at second intervals
-  const simulator = new Simulator({
-    quotes: quotes,
-  });
-  simulator.start();
-
-  // makes a quote list view, render it
+  // makes a quote list view and then renders it
   const quoteListView = new QuoteListView ({
     el: '#quotes-container',
     model: quotes,
     template: quoteTemplate,
     bus: bus,
   });
+
   quoteListView.render();
+
+  // new orderList instance
+  const orders = new OrderList();
+
+  // makes a quote list view and then renders it
+  const orderListView = new OrderListView({
+    el: '#order-workspace',
+    model: orders,
+    template: orderTemplate,
+    bus: bus,
+    symbols: symbolData,
+  });
+
+  orderListView.render();
 
   // Creates an instance of TradesView that it will show all of the trade histories
   // include the bus so it can listen and emit messages with the other views in the app
@@ -75,4 +87,10 @@ $(document).ready(function() {
     template: tradeTemplate,
     bus: bus,
   });
+
+  // new simulator, will start it updating the quotes at second intervals
+  const simulator = new Simulator({
+    quotes: quotes,
+  });
+  simulator.start();
 });

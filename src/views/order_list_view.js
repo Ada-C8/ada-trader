@@ -3,17 +3,32 @@ import Order from '../models/order';
 import OrderView  from './order_view';
 
 const OrderListView = Backbone.View.extend({
-  nitialize(params) {
+  initialize(params) {
     // save template
     this.template = params.template;
     // add bus
     this.bus = params.bus;
+
+    // add symbols
+    this.symbols = params.symbols;
 
     // listens for changes in our template
     this.listenTo(this.model, 'update', this.render);
   },
 
   render() {
+    console.log('inside order list view render function');
+    console.log(this.symbols);
+
+    this.$('#order-from select').html('');
+    this.symbols.forEach((symbol) => {
+      const option = `<option value="${symbol}">${symbol}</option>`;
+      console.log(option);
+      this.$('form select[name="symbol"]').append(option);
+    });
+
+
+
     // Clear the DOM Elements so we can redraw them
     this.$('#orders').empty();
 
@@ -31,6 +46,9 @@ const OrderListView = Backbone.View.extend({
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
+
+    // add sybols to the form
+
   },
 });
 
