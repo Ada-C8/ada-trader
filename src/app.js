@@ -63,6 +63,7 @@ $(document).ready(function() {
     model: orderList,
     bus: bus,
     el: '.order-entry-form',
+    quotes: quotes,
   });
   orderFormView.render(quotes);
 
