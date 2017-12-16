@@ -28,19 +28,17 @@ const OrderListView = Backbone.View.extend({
     'click button.btn-buy': 'createOrder',
     'click button.btn-sell': 'createOrder'
   },
-  getFormData() {
-    const formData = {};
-    ['symbol', 'price'].forEach((field) => {
-      const val = this.$(`.order-entry-form input[name=${field}]`).val();
-      if (val !== '') {
-        formData[field] = val;
-      }
-    });
+  getFormData: function() {
+    const formData = {
+      symbol: this.$('select option:selected').text(),
+      price: this.$('input').val(),
+    };
     return formData;
   },
   createOrder: function(e) {
     e.preventDefault();
   console.log('in createOrder sucka!');
+  this.getFormData();
   }
 
 });
