@@ -12,8 +12,19 @@ const OpenOrderListView = Backbone.View.extend({
     this.listenTo(this.bus, 'quote_symbols', this.symbolDropdown);
     this.listenTo(this.bus, 'quote_change', this.checkOpenOrders);
 
+    // list for current quote list
+    this.listenTo(this.bus, 'current_quote_list', this.getQuoteList);
+
     // when the quotelist changes, the checkOpenOrders function will check if orders should be purchased or sold
     // this.listenTo(this.bus, 'updated_quote_list', this.checkOpenOrders);
+    // this.listenTo(this.bus, 'updated_quote_list', this.checkOpenOrders);
+
+
+  },
+  getQuoteList(quoteList) {
+    this.quoteList = quoteList;
+    console.log('the quote list !!')
+    console.log(this.quoteList);
 
   },
   render() {
@@ -29,13 +40,6 @@ const OpenOrderListView = Backbone.View.extend({
       });
       // render returns the taskview which (this) which allows you to append
       this.$('#orders').append(openOrderView.render().$el);
-      // this.$('#orders').append(openOrderView.render().$el);
-
-      // at this point want to start listening for things
-      // this list view is going to listen to task view for edit me events
-      // now any time anyone clicks the edit button on a task view it will call
-      // TODO LISTEN FOR CANCEL BUTTON AND FOR TARGET PRICE
-      // this.listenTo(taskView, 'edit_me', this.editTask);
     });
     return this;
   },
@@ -163,6 +167,8 @@ addBuyOpenOrder(event) {
   console.log(formData);
 
   formData['buy'] = true;
+  let correctQuote = this.quoteList.findWhere({symbol: formData['symbol']})
+  formData['quote'] = correctQuote;
   console.log(formData);
   const newOpenOrder = new OpenOrder(formData);
   if (newOpenOrder.isValid()) {
@@ -182,6 +188,12 @@ addSellOpenOrder(event) {
   console.log(formData);
 
   formData['buy'] = false;
+  // .where({symbol: quote.get('symbol')});
+  console.log('form data the symbol');
+  console.log(formData['symbol']);
+  let correctQuote = this.quoteList.findWhere({symbol: formData['symbol']})
+  formData['quote'] = correctQuote;
+  console.log('formData after adding the correct quote');
   console.log(formData);
   const newOpenOrder = new OpenOrder(formData);
   // if is valid add newTask and clearformdata

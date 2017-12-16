@@ -30,6 +30,8 @@ const QuoteListView = Backbone.View.extend({
       console.log('in quotelistview render after quote models loop');
       this.$('#quotes').append(quoteView.render().$el);
       console.log('after quoteview is appended');
+      // pass the quotelist to the open order view
+      this.bus.trigger('current_quote_list', this.model)
 
     });
     //TODO: check passing
@@ -42,12 +44,13 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
   //currentQuoteList triggers an updated_quote_list event which the openOrderListView will listen for
-  currentQuoteList() {
-    console.log('in currentQuoteList');
-    console.log(this.model);
-    let quoteList = this.model
-    this.bus.trigger('updated_quote_list',quoteList);
-  },
+  // TODO: delete?
+  // currentQuoteList() {
+  //   console.log('in currentQuoteList');
+  //   console.log(this.model);
+  //   let quoteList = this.model
+  //   this.bus.trigger('updated_quote_list',quoteList);
+  // },
 });
 // const TaskListView = Backbone.View.extend({
 //   initialize(params) {
