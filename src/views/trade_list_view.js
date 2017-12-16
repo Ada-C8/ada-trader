@@ -1,4 +1,4 @@
-import Backbone from 'Backbone';
+import Backbone from 'backbone';
 import _ from 'underscore';
 import Quote from '../models/quote';
 
@@ -11,7 +11,7 @@ const TradeListView = Backbone.View.extend({
     this.listenTo(this.bus, 'makeTrade', this.addTrade);
   },
   render() {
-    
+
   },
     addTrade(trade) {
       console.log('trade connection');

@@ -9,6 +9,7 @@ import QuoteList from './collections/quote_list';
 
 import QuoteListView from './views/quote_list_view';
 import TradeListView from './views/trade_list_view';
+import OrderFormView from './views/order_form_view';
 
 const quoteData = [
   {
@@ -33,13 +34,14 @@ quoteData.forEach(function(quote) {
   $('#dropdown').append(`<option>${quote.symbol}</option>`)
 })
 
+
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
 
-  // $('#')
   simulator.start();
 
   let bus = {};
@@ -59,6 +61,11 @@ $(document).ready(function() {
     template: tradeTemplate,
     bus: bus,
   })
+  const orderFormView = new OrderFormView({
+    // quoteData: quoteData,
+    el: '.order-entry-form'
+  });
+
   quoteListView.render();
 
 });
