@@ -22,17 +22,20 @@ const OrderFormView = Backbone.View.extend({
     const order = new Order();
     this.getAttributes(event, order);
     this.checkValidity(order);
-  },
+    // TO DO: Reset form after submission
+    },
   sellOrder: function(event) {
     event.preventDefault();
     const order = new Order();
     this.getAttributes(event, order);
     order.attributes.buy = false;
     this.checkValidity(order);
+    // TO DO: Reset form after submission
   },
   checkValidity: function(order) {
     if (order.isValid()) {
       this.$('.form-errors').empty();
+      this.$('input').empty();
       this.model.add(order);
     } else {
       this.$('.form-errors').empty();
