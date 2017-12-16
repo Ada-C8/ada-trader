@@ -48,7 +48,7 @@ const OrderListView = Backbone.View.extend({
     event.preventDefault();
     // get form data
     const formData = this.getFormData();
-
+    formData['buy'] = event.target.classList === "btn-buy" ? true : false;
     // new instance of OrderView using form formData
     const newOrder = new Order(formData);
 
@@ -67,6 +67,7 @@ const OrderListView = Backbone.View.extend({
     // get the current price of the quote
     // this doesnt exactly fit in this method but it is cleaner than having it in the addOrder method
     orderData['quotePrice'] = this.quotes.findWhere({'symbol': orderData['symbol']}).get('price');
+
 
     return orderData;
   },

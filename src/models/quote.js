@@ -8,7 +8,7 @@ const Quote = Backbone.Model.extend({
 
   buy() {
     // get trade data before we change price and make tradeData object
-    let tradeData = this.makeTradeData(this, 'bought')
+    let tradeData = this.makeTradeData(this, true)
 
     // Get price at time of purchase
     const buyPrice = this.get('price')
@@ -25,7 +25,7 @@ const Quote = Backbone.Model.extend({
 
   sell() {
     // get trade data before we change price and make tradeData object
-    let tradeData = this.makeTradeData(this, 'sold')
+    let tradeData = this.makeTradeData(this, false)
 
     // Get price at time of sell
     const sellPrice = this.get('price')
