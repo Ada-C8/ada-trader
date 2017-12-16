@@ -19,6 +19,7 @@ describe('Quote spec', () => {
     it('increases the price by $1.00', () => {
       const startPrice = quote.get('price');
       quote.buy();
+
       expect(quote.get('price')).toEqual(startPrice + 1.00);
     });
 
@@ -34,6 +35,7 @@ describe('Quote spec', () => {
     it('decreases the price by $1.00', () => {
       const startPrice = quote.get('price');
       quote.sell();
+
       expect(quote.get('price')).toEqual(startPrice - 1.00);
     });
 
