@@ -11,6 +11,7 @@ import Quote from 'models/quote';
 const Order = Backbone.Model.extend({
   initialize: function(attributes) {
   },
+
 });
 
 export default Order;
