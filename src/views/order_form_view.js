@@ -62,6 +62,9 @@ const OrderFormView = Backbone.View.extend({
       // console.log("you added a new order")
       // console.log(this.orderList.at(0));
     }
+    else {
+      console.log("Not a valid order: " + newOrder.validationError);
+    }
     //   updateStatusMessageWith(`New order added: ${newTask.get('task_name')}`);
     // } else {
     //   updateStatusMessageFrom(newTask.validationError);
