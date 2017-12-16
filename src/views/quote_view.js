@@ -33,6 +33,9 @@ const QuoteView = Backbone.View.extend({
   },
 
   sellQuote: function() {
+    this.model.set('buy', false);
+   let tradeTemplate = _.template($('#trade-template').html());
+   $('#trades').prepend(tradeTemplate(this.model.attributes));
     this.model.sell();
   },
 
