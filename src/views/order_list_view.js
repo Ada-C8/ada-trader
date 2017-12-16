@@ -43,7 +43,6 @@ const OrderListView = Backbone.View.extend({
 
   addToOrders: function(event, isBuy){
     event.preventDefault();
-    console.log('in addToOrders function at OrderListView');
 
     const orderData = {};
     orderData['symbol'] = this.$('select[name=symbol] option:selected').val();
@@ -65,7 +64,6 @@ const OrderListView = Backbone.View.extend({
   },
 
   displayErrorsFromOrder(messageHash) {
-    console.log(messageHash);
     const statusMessagesEl = this.$('.form-errors');
     statusMessagesEl.empty();
     _.each(messageHash, (messageType) => {

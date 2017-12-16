@@ -68,14 +68,10 @@ const Order = Backbone.Model.extend({
   },
 
   quotePriceCheck(){
-    // if buy, check if the price is lower or equal
-    console.log('in quote price check');
     const quote = this.get('quote');
     if(this.get('buy') === true && (this.get('targetPrice') > quote.get('price'))){
-      console.log('gonna destroy this model');
       this.destroy();
       quote.buy();
-    // if sell, check if the price is higher or equal
     } else if(this.get('buy') === false && (this.get('targetPrice') < quote.get('price'))){
       this.destroy();
       quote.sell();

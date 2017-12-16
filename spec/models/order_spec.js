@@ -119,7 +119,6 @@ describe('Order Spec', () => {
       sellOrder.get('quote').set('price', 88.50);
       sellOrder.quotePriceCheck();
       expect(sellOrder).toBeDefined();
-
     });
 
   });

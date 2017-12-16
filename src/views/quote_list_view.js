@@ -31,7 +31,6 @@ const QuoteListView = Backbone.View.extend({
   },
 
   addToTradeHistory: function(tradeData){
-    console.log('add to trade history');
     const compiledTemplate = this.tradeTemplate(tradeData);
     this.$('#trades').prepend(compiledTemplate);
   },
