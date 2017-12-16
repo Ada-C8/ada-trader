@@ -27,41 +27,21 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
   events: {
-    'click .btn-buy': 'addBuyOrder',
-    'click .btn-sell': 'addSellOrder'
+    'click .btn-buy': 'addOrder',
+    'click .btn-sell': 'addOrder'
   },
-  addBuyOrder: function(event) {
+  addOrder: function(event) {
     event.preventDefault();
 
     const orderData = {
-      buy: true,
+      buy: this.$(event.currentTarget).data('buy'),
       symbol: this.$('select[name=symbol]').val(),
+      quote: this.quotes.find({symbol: this.$('select[name=symbol]').val()}),
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),
     };
 
-    orderData['quote'] =  this.quotes.find({symbol: orderData['symbol']});
-
     const newOrder = new Order(orderData);
 
-    if (newOrder.isValid()) {
-      this.model.add(newOrder);
-      this.$('.form-errors').empty();
-    } else {
-      this.$('.form-errors').html(`<h3>${newOrder.validationError}</h3>`)
-    }
-  },
-  addSellOrder: function(event) {
-    event.preventDefault();
-
-    const orderData = {
-      buy: false,
-      symbol: this.$('select[name=symbol]').val(),
-      targetPrice: parseFloat(this.$('input[name=price-target]').val()),
-    };
-
-    orderData['quote'] =  this.quotes.find({symbol: orderData['symbol']});
-
-    const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       this.$('.form-errors').empty();
