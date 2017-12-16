@@ -5,25 +5,10 @@ import QuoteList from 'collections/quote_list';
 describe('Order spec', () => {
   describe('validations', () => {
     let order;
-    const quoteData = [
-      {
-        symbol: 'HUMOR',
-        price: 88.50,
-      },
-      {
-        symbol: 'CLOTH',
-        price: 81.70,
-      },
-      {
-        symbol: 'HABIT',
-        price: 98.00,
-      },
-      {
-        symbol: 'HELLO',
-        price: 99.00,
-      },
-    ];
-    const quotes = new QuoteList(quoteData);
+    const quotes = new QuoteList({
+      symbol: 'HELLO',
+      price: 99.00,
+    });
     beforeEach(() => {
       order = new Order({
         symbol: 'HELLO',
@@ -33,49 +18,61 @@ describe('Order spec', () => {
       });
     });
 
-    it('creates an order', () => {
+    it('creates a valid order', () => {
       expect(order.isValid()).toEqual(true);
     });
 
     it('requires a symbol', () => {
+      order.set('symbol', null)
+
+      expect(order.isValid()).toEqual(false);
+
       order.set('symbol', '')
 
       expect(order.isValid()).toEqual(false);
     });
 
-    it('requires a targetPrice', () => {
-      order = new Order({
-        symbol: 'HELLO',
-      });
+    it('requires a symbol that exists in the quote data', () => {
+      order.set('symbol', 'SEEYA')
 
-      expect(expect(order).toBeDefined()).toEqual(undefined);
+      expect(order.isValid()).toEqual(false);
+    });
+
+    it('requires a targetPrice', () => {
+      order.set('targetPrice', '')
+
+      expect(order.isValid()).toEqual(false);
     });
 
     it('requires a targetPrice to be a number', () => {
-      order = new Order({
-        symbol: 'HELLO',
-        targetPrice: 'cats',
-      });
+      order.set('targetPrice', 'cats')
 
-      expect(expect(order).toBeDefined()).toEqual(undefined);
+      expect(order.isValid()).toEqual(false);
     });
 
-    it('will not let you buy if quote price is lower than target price', () => {
-      order = new Order({
-        symbol: 'HELLO',
-      });
+    it('requires a targetPrice to be a number larger than 0', () => {
+      order.set('targetPrice', 0.00)
 
-      expect(expect(order).toBeDefined()).toEqual(undefined);
+      expect(order.isValid()).toEqual(false);
     });
 
-    it('will not let you sell if quote price is higher than target price', () => {
-      order = new Order({
-        symbol: 'HELLO',
-      });
+    it('requires a targetPrice to be a positive number', () => {
+      order.set('targetPrice', -4.00)
 
-      expect(expect(order).toBeDefined()).toEqual(undefined);
+      expect(order.isValid()).toEqual(false);
     });
 
+    it('will not let you create a new buy if quote price is lower than target price', () => {
+      order.set('targetPrice', 120.00)
+
+      expect(order.isValid()).toEqual(false);
+    });
+
+    it('will not let you create new sell if quote price is higher than target price', () => {
+      order.set('buy', false)
+      order.set('targetPrice', 40.00)
+
+      expect(order.isValid()).toEqual(false);
+    });
   });
-
 });
