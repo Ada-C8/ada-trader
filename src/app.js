@@ -71,12 +71,12 @@ $(document).ready(function() {
   simulator.start();
 
   // new orderList instance
-  const orders = new OrderList();
+  const ordersList = new OrderList();
 
   // makes a quote list view and then renders it
   const orderListView = new OrderListView({
     el: '#order-workspace',
-    model: orders,
+    model: ordersList,
     template: orderTemplate,
     bus: bus,
     quotes: quotes,

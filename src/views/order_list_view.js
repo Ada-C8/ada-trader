@@ -21,7 +21,7 @@ const OrderListView = Backbone.View.extend({
     this.model.each((order) => {
       // create a new OrderView with the model and template
       const orderView = new OrderView({
-        model: Order,
+        model: order,
         template: this.template,
         tagName: 'li',
         className: 'order',
@@ -30,7 +30,7 @@ const OrderListView = Backbone.View.extend({
       // Then render the Order and append the resulting HTML to the document
       this.$('#orders').append(orderView.render().$el);
     });
-    this.renderOrderForm()
+    this.renderOrderForm();
     return this;
   },
 
@@ -48,12 +48,21 @@ const OrderListView = Backbone.View.extend({
     event.preventDefault();
     // get form data
     const formData = this.getFormData();
-    formData['buy'] = event.target.classList === "btn-buy" ? true : false;
+    formData['buy'] = event.target.classList[0] === ("btn-buy")  ? true : false;
+    // console.log(`formData[buy]: ${formData['buy']}`);
     // new instance of OrderView using form formData
     const newOrder = new Order(formData);
 
-    console.log(newOrder);
-    this.clearFormData();
+    if (newOrder.isValid()){
+      // add order and clear form formData
+      console.log('new order is valid!');
+      this.model.add(newOrder);
+      this.clearFormData();
+    } else {
+      console.log('new order is invalid!');
+      // get rid of task and provide error handling
+      newOrder.destroy();
+    }
   },
 
   // helper function to get symbol and target price from the form
