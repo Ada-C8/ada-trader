@@ -57,16 +57,11 @@ const OrderListView = Backbone.View.extend({
   orderBuy: function(event) {
     event.preventDefault();
     const buyData = {};
-    ['symbol', 'targetPrice'].forEach( (field) => {
-      const val = $(`#${field}`).val();
-      if (field == 'targetPrice') {
-        buyData[field] = parseInt(val);
-      }
-      else {
-        buyData[field] = val;
-      }
-    });
+    buyData['symbol'] = this.$('#order-form-symbols').val();
+    let val = $(`#targetPrice`).val();
+    buyData['targetPrice'] = parseInt(val);
     buyData['buy'] = true;
+
     let newOrder = new Order(buyData);
     newOrder.set('quotes', this.quotes);
     if (newOrder.isValid()) {
@@ -80,19 +75,15 @@ const OrderListView = Backbone.View.extend({
   orderSell: function(event) {
     event.preventDefault();
     const buyData = {};
-    ['symbol', 'targetPrice'].forEach( (field) => {
-      if (field == 'targetPrice') {
-        let val = $(`#${field}`).val();
-        buyData[field] = parseInt(val);
-      }
-      else {
-        let val = $(`#${field}`).val();
-        buyData[field] = val;
-      }
-    });
+
+    buyData['symbol'] = this.$('#order-form-symbols').val();
+    let val = $(`#targetPrice`).val();
+    buyData['targetPrice'] = parseInt(val);
     buyData['buy'] = false;
+
     const newOrder = new Order(buyData);
     newOrder.set('quotes', this.quotes);
+
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       this.updateStatusMessageWith(`New order added for ${newOrder.get('symbol')}`);

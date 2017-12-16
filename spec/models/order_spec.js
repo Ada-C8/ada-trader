@@ -1,24 +1,46 @@
 import Order from 'models/order';
+import QuoteList from 'collections/quote_list';
+
 
 describe('Order spec', () => {
-  let order;
-
   describe('validations', () => {
-    it('creates a quote', () => {
+    let order;
+    const quoteData = [
+      {
+        symbol: 'HUMOR',
+        price: 88.50,
+      },
+      {
+        symbol: 'CLOTH',
+        price: 81.70,
+      },
+      {
+        symbol: 'HABIT',
+        price: 98.00,
+      },
+      {
+        symbol: 'HELLO',
+        price: 99.00,
+      },
+    ];
+    const quotes = new QuoteList(quoteData);
+    beforeEach(() => {
       order = new Order({
         symbol: 'HELLO',
-        targetPrice: 100.00,
+        targetPrice: 85.00,
+        buy: true,
+        quotes: quotes,
       });
+    });
 
-      expect(order).toBeDefined();
+    it('creates an order', () => {
+      expect(order.isValid()).toEqual(true);
     });
 
     it('requires a symbol', () => {
-      order = new Order({
-        targetPrice: 100.00,
-      });
+      order.set('symbol', '')
 
-      expect(expect(order).toBeDefined()).toEqual(undefined);
+      expect(order.isValid()).toEqual(false);
     });
 
     it('requires a targetPrice', () => {
