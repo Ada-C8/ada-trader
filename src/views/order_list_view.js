@@ -8,6 +8,7 @@ import OrderView from 'views/order_view';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.listenTo(this.model, 'update', this.render);
   },
   render() {
     this.$('#orders').empty();
@@ -30,16 +31,23 @@ const OrderListView = Backbone.View.extend({
   },
   getFormData: function() {
     const formData = {
+      buy: false,
       symbol: this.$('select option:selected').text(),
-      price: this.$('input').val(),
+      targetPrice: parseFloat(this.$('input').val()),
     };
+    console.log(formData);
     return formData;
   },
   createOrder: function(e) {
     e.preventDefault();
-  console.log('in createOrder sucka!');
-  this.getFormData();
-  }
+
+    const newOrder = new Order(this.getFormData());
+
+    console.log('in createOrder sucka!');
+    this.getFormData();
+    this.model.add(newOrder);
+
+  },
 
 });
 
