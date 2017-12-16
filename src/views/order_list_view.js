@@ -67,7 +67,7 @@ const OrderListView = Backbone.View.extend({
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       this.updateStatusMessageWith(`New order added for ${newOrder.get('symbol')}`);
-      $('#order-form').reset();
+      this.$el.find('form').trigger('reset');
     } else {
       this.updateStatusMessageFrom(newOrder.validationError);
     }
@@ -87,7 +87,7 @@ const OrderListView = Backbone.View.extend({
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       this.updateStatusMessageWith(`New order added for ${newOrder.get('symbol')}`);
-      $('#order-form').render();
+      this.$el.find('form').trigger('reset');
     } else {
       this.updateStatusMessageFrom(newOrder.validationError);
     }
@@ -104,13 +104,11 @@ const OrderListView = Backbone.View.extend({
         statusMessagesEl.append(`<li>${message}</li>`);
       })
     });
-    statusMessagesEl.show();
   },
   updateStatusMessageWith: function(message) {
     const statusMessagesEl = this.$('.form-errors');
     statusMessagesEl.empty();
     statusMessagesEl.append(`<li>${message}</li>`);
-    statusMessagesEl.show();
   }
 });
 
