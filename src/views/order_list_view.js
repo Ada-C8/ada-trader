@@ -23,12 +23,14 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
       })
       this.$('#orders').append(orderView.render().$el);
-    })
+    });
+    this.quotes.each((quote) => {
+      this.$('select[name=symbol]').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
+    });
     return this;
   },
   events: {
-    'click .btn-buy': 'addOrder',
-    'click .btn-sell': 'addOrder'
+    'click .button': 'addOrder',
   },
   addOrder: function(event) {
     event.preventDefault();

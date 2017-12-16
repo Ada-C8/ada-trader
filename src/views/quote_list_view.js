@@ -21,7 +21,6 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'task',
       })
-      this.$('select[name=symbol]').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
       this.listenTo(quoteView, 'showTrade', this.showTrade)
       this.$('#quotes').append(quoteView.render().$el);
     });
