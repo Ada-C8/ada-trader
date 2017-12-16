@@ -42,6 +42,15 @@ $(document).ready(function() {
     el: 'main'
   });
 
+  quotes.each((quote) => {
+    $('select').append(`<option>${quote.get('symbol')}</option>`);
+  })
+
+  // const formView = new FormView({
+  //   model: order,
+  //   template:  _.template($('#quote-template').html()),
+  // });
+
   quoteListView.renderQuote();
   simulator.start();
 });
