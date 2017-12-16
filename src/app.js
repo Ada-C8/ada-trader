@@ -33,9 +33,9 @@ const quoteData = [
     price: 83.10,
   },
 ];
-
-let bus = {}
-bus = _.extend(bus, Backbone.Events)
+//
+// let bus = {}
+// bus = _.extend(bus, Backbone.Events)
 
 const quoteList = new QuoteList(quoteData)
 const orderList = new OrderList();
@@ -55,7 +55,7 @@ $(document).ready(() => {
     tradeTemplate: tradeTemplate,
     // orderTemplate: orderTemplate,
     el: 'main',
-    bus: bus
+    // bus: bus
   });
 
   const orderListView = new OrderListView({
