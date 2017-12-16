@@ -1,8 +1,7 @@
-import Quote from 'models/quote';
-import Order from 'models/order';
 import Backbone from 'backbone';
 import _ from 'underscore';
-import OrderList from 'models/order';
+import Quote from 'models/quote';
+import Order from 'models/order';
 
 describe('Order Spec', () => {
   let buyOrder;
@@ -131,7 +130,7 @@ describe('Order Spec', () => {
     it("doesn't sell if the quote's price changes but the requirements aren't met", () => {
       sellOrder.get('quote').set('price', 88.50);
       sellOrder.quotePriceCheck();
-      
+
       expect(sellOrder).toBeDefined();
     });
 

@@ -17,13 +17,13 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote'
   },
 
-  buyQuote: function(event){
+  buyQuote: function(){
     this.model.set('buy', true);
     this.trigger('addTrade', this);
     this.model.buy();
   },
 
-  sellQuote: function(event){
+  sellQuote: function(){
     this.model.set('buy', false);
     this.trigger('addTrade', this);
     this.model.sell();

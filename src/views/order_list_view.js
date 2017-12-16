@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
-import OrderView from '../views/order_view';
 import Order from '../models/order';
+import OrderView from '../views/order_view';
 
 const OrderListView = Backbone.View.extend({
 
