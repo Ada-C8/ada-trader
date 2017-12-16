@@ -90,7 +90,9 @@ describe('Order Spec', () => {
       });
       buyOrder.get('quote').set('price', 85); // original quote price = 87 | target price = 86
       buyOrder.quotePriceCheck();
-      // expect(buyOrder).toBeUndefined(); //Backbone is weird, not really destroying instance
+      //Backbone is weird, it's not really 'destroying' instance
+      // instance is still defined in below test
+      // expect(buyOrder).toBeUndefined();
     });
 
     it("can sell a quote if the quote is higher order's targetPrice", () => {
