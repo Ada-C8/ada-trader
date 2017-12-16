@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-// import OpenOrders from 'collections/open_orders';
 
 const Order = Backbone.Model.extend({
   defaults: {

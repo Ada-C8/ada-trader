@@ -1,10 +1,5 @@
-// import QuoteList from 'collections/quote_list';
 import Backbone from 'backbone';
 import Order from '../models/order';
-import OpenOrders from 'collections/open_orders';
-
-
-// const quoteList = QuoteList;
 
 const OrderFormView = Backbone.View.extend({
   initialize(params) {

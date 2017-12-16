@@ -1,8 +1,5 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
-// import OpenOrders from 'collections/open_orders';
 import OrderView from '../views/order_view';
-
 
 const OpenOrderView = Backbone.View.extend({
   initialize(params) {

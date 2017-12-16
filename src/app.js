@@ -59,14 +59,6 @@ $(document).ready(function() {
   });
   orderFormView.render(quotes);
 
-  // const order = new Order();
-  // const orderView = new OrderView({
-  //   template: _.template($('#order-template').html()),
-  //   el: '.orders-list-container',
-  //   model: order,
-  //   bus: bus,
-  // });
-
   const openOrderView = new OpenOrderView({
     template: _.template($('#order-template').html()),
     el: '.orders-list-container',

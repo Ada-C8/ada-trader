@@ -1,5 +1,4 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
 
 const OrderView = Backbone.View.extend({
   initialize(params) {
