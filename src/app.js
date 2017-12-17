@@ -34,6 +34,7 @@ const quoteData = [
 
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
+  const orders = new OrderList();
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -44,8 +45,15 @@ $(document).ready(function() {
     el: '#quotes-container'
 
   });
-
-  simulator.start();
   quoteListView.render();
 
+
+  const orderListView = new OrderListView({
+    model: orders,
+    template: _.template($('#order-template').html()),
+    el: 'main'
+  });
+  orderListView.render();
+
+  simulator.start();
 });
