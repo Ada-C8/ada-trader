@@ -7,6 +7,7 @@ const Order = Backbone.Model.extend({
     this.price = params.price;
     this.buy = params.buy;
     this.template = params.template;
+    // this.quote = params.quote;
   },
 });
 

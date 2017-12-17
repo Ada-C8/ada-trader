@@ -7,7 +7,10 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model,'update', this.render);
-    this.listenTo(this.bus, 'newOrder', this.addNewOrder);
+  },
+  events: {
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder',
   },
   render() {
     const currentOpenOrders = this.$('#orders-list-container');
@@ -24,9 +27,17 @@ const OrderListView = Backbone.View.extend({
     });
     return this;
   },
-  addNewOrder(order) {
-    this.model.add(order);
-  }
+  buyOrder(event) {
+    // this.model.add(order);
+    event.preventDefault();
+    console.log('buying this order');
+    console.log(event);
+  },
+  sellOrder(event) {
+    event.preventDefault();
+    console.log('selling this order');
+    console.log(event);
+  },
 });
 
 export default OrderListView;

@@ -86,7 +86,7 @@ $(document).ready(function() {
   const orderListView = new OrderListView({
    model: orderList,
    template: _.template($('#order-template').html()),
-   el: '#orders-container',
+   el: '#order-workspace',
    bus: bus,
   })
   orderListView.render();
