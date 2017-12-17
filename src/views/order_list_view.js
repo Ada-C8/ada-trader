@@ -13,6 +13,11 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
   },
 
+  // events object
+  events:{
+    'click button.btn-buy, button.btn-sell': 'addOrder',
+  },
+
   render() {
     console.log('inside order list view render function');
     // Clear the DOM Elements so we can redraw them
@@ -34,6 +39,7 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
 
+  // function to draw the order form dropdown selection options
   renderOrderForm() {
     // add symbols to dropdown menu in the form
     const quoteData = this.quotes.map( x => x.get('symbol'));
@@ -58,10 +64,15 @@ const OrderListView = Backbone.View.extend({
       // add order and clear form formData
       console.log('new order is valid!');
       this.model.add(newOrder);
+      const action = newOrder.get('buy') ? 'buy' : 'sell';
+      this.updateStatusMessage(`Successfully added a ${action} open order for ${newOrder.get('symbol')}`);
       this.clearFormData();
     } else {
       console.log('new order is invalid!');
-      // get rid of task and provide error handling
+      // get rid of task and give user feedback on error handling
+      // console.log('order validation error');
+      // console.log(newOrder.validationError);
+      this.updateStatusMessage(newOrder.validationError)
       newOrder.destroy();
     }
   },
@@ -75,7 +86,6 @@ const OrderListView = Backbone.View.extend({
     orderData['targetPrice'] = Number(this.$('#order-form input[name="price-target"]').val());
 
     // get the current price of the quote
-    // this doesnt exactly fit in this method but it is cleaner than having it in the addOrder method
     orderData['quotePrice'] = this.quotes.findWhere({'symbol': orderData['symbol']}).get('price');
 
     return orderData;
@@ -89,10 +99,16 @@ const OrderListView = Backbone.View.extend({
     this.$('#order-form input[name="price-target"]').val('');
   },
 
-  // events object
-  events:{
-    'click button.btn-buy, button.btn-sell': 'addOrder',
+  // method to show validation error messages or success messages to the user based on their form input
+  updateStatusMessage(message) {
+    // jQuery select spot where we want to add messages
+    const $statusMessages = this.$('.form-errors');
+    // clear the messages
+    $statusMessages.empty();
+    // append the message to the DOM
+    $statusMessages.append(`<p>${message}</p>`);
   },
+
 });
 
 export default OrderListView;
