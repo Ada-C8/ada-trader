@@ -6,6 +6,8 @@ const QuoteView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.bus, 'buyOrder', this.buyQuote);
+    this.listenTo(this.bus, 'sellOrder', this.sellQuote);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());

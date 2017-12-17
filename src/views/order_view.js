@@ -23,6 +23,8 @@ const OrderView = Backbone.View.extend({
   tradeOrder() {
     if (this.model.get('buy')) {
       if (this.model.get('quote').get('price') <= this.model.get('targetPrice')) {
+        console.log(this);
+        this.bus.trigger('buyOrder', this);
         this.cancelOrder();
       }
     } else {
