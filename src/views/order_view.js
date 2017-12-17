@@ -14,6 +14,9 @@ const OrderView = Backbone.View.extend({
     this.$el.html(compiledTemplate);
     return this;
   },
+  events: {
+    'click button.btn-cancel': 'cancelOrder',
+  },
   executeTrade() {
     const quotePrice = this.quote.get('price');
     const target = this.order.get('priceTarget');
@@ -27,7 +30,11 @@ const OrderView = Backbone.View.extend({
       this.quote.buy();
       this.order.destroy();
     }
-  }
+  },
+  cancelOrder() {
+    this.stopListening().remove();
+    this.order.destroy();
+  },
 });
 
 export default OrderView;
