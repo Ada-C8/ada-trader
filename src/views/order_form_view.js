@@ -22,6 +22,7 @@ const OrderFormView = Backbone.View.extend({
     const order = new Order();
     this.getAttributes(event, order);
     this.checkValidity(order);
+    // console.log(order);
     // TO DO: Reset form after submission
     },
   sellOrder: function(event) {
@@ -53,8 +54,10 @@ const OrderFormView = Backbone.View.extend({
   getAttributes: function(event, order) {
     order.attributes.symbol = event.target.form[0].value;
     order.attributes.targetPrice = parseFloat(event.target.form[1].value);
+    order.bus = this.bus;
     const currentQuotePrice = this.quotes.where({symbol: order.attributes.symbol})[0].attributes.price;
     order.attributes.currentQuotePrice = currentQuotePrice;
+
   }
 });
 

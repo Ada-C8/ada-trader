@@ -4,6 +4,8 @@ import _ from 'underscore';
 const Simulator = Backbone.Model.extend({
   initialize(params) {
     this.quotes = params.quotes;
+    this.bus = params.bus
+
   },
 
   start() {
@@ -32,6 +34,7 @@ const Simulator = Backbone.Model.extend({
       // Actually trigger the change
       const oldPrice = quote.get('price');
       quote.set('price', oldPrice + change);
+      this.bus.trigger('changeQuote', quote);
     });
   },
 });

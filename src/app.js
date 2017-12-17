@@ -79,6 +79,7 @@ $(document).ready(function() {
   // Initiates the simulator & starts it
   const simulator = new Simulator({
     quotes: quotes,
+    bus: bus,
   });
   simulator.start();
 });
