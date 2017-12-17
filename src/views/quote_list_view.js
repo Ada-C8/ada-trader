@@ -4,8 +4,6 @@ import QuoteView from './quote_view';
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    // this.trades = params.trades;
-    // this.orders = params.orders;
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
   },
