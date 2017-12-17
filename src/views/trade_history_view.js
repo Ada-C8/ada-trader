@@ -9,18 +9,12 @@ const TradeHistoryView = Backbone.View.extend( {
     this.bus = params.bus;
     this.listenTo(this.bus, 'selected_trade', this.render);
   },
-  // setModel(model) {
-  //   this.model = model;
-  //   this.render();
-  // },
-  render(details) {
-    // if (this.model) {
-    //   console.log(this.model.toJSON());
 
+  render(details) {
       const compiledTemplate = this.template(details);
       this.$el.prepend(compiledTemplate);
       return this;
-    // }
+  
   },
 });
 export default TradeHistoryView;

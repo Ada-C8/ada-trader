@@ -8,7 +8,6 @@ const QuoteListView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.bus = params.bus;
-    // this.listenTo(this.model, 'update', this.render);
   },
   render() {
       this.$('#quotes').empty();

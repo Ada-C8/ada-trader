@@ -108,11 +108,6 @@ const OrderListView = Backbone.View.extend({
     $messages.empty();
     $messages.append(`<p>${message}</p>`);
   },
-  // sell(event) {
-  //   console.log('selling');
-  //   this.model.sell();
-  //   this.bus.trigger('update', this.model);
-  // },
 });
 
 export default OrderListView;

@@ -23,7 +23,6 @@ const OrderView = Backbone.View.extend({
     console.log('cancelling');
     this.model.destroy();
     this.remove();
-    // this.bus.trigger('selected_trade', this.model);
   },
 
 });
