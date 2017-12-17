@@ -37,8 +37,6 @@ const OrderEntryView = Backbone.View.extend({
     const newOrder = new Order(orderData);
     this.model.orders.add(newOrder);
   },
-  // TODO: Make an order list view that listens for updates,
-  // can my order get matching quote model, everytime time it updates check the price, since it has model it can execute trade and remove itself. order model with have listener.
 });
 
 export default OrderEntryView;

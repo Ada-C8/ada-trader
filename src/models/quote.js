@@ -6,19 +6,19 @@ const Quote = Backbone.Model.extend({
     price: 0.00,
     bus: null,
   },
-  initialize() {
-    this.bus = this.get('bus'); // NOTE: Because bus doesn't change
+  initialize() { // NOTE: Because bus and symbol doesn't change
+    this.bus = this.get('bus');
     this.symbol = this.get('symbol');
   },
-  changePrice(newPrice, isBuy) {
-    this.set('price', newPrice);
-    this.bus.trigger('trade', {symbol: this.symbol, price: newPrice, buy: isBuy})
-  },
   buy() {
-    this.changePrice(this.get('price') + 1, true);
+    const price = this.get('price');
+    this.bus.trigger('trade', {symbol: this.symbol, price: price, buy: true});
+    this.set('price', price + 1);
   },
   sell() {
-    this.changePrice(this.get('price') - 1, false);
+    const price = this.get('price') - 1;
+    this.bus.trigger('trade', {symbol: this.symbol, price: price, buy: false});
+    this.set('price', price - 1);
   },
 });
 
