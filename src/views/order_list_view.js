@@ -69,7 +69,13 @@ const OrderListView = Backbone.View.extend({
     } else {
       const errors = order.validationError;
       console.log('the new order is invalid');
-      console.log(errors);
+      const errorSection = this.$('.form-errors');
+      Object.keys(errors).forEach((errorType) => {
+        errors[errorType].forEach((error) => {
+          const html = `<p class="error-msg">${errorType}: ${error}</p>`;
+          errorSection.append(html);
+        });
+      });
     }
   },
 });
