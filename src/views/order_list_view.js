@@ -67,7 +67,6 @@ const OrderListView = Backbone.View.extend({
     }
     const newOrder = new Order(formData);
     console.log(formData);
-    // seriously need to do some status messaging...
     if (!newOrder.isValid()) {
       newOrder.destroy();
       this.updateUser(newOrder.validationError);

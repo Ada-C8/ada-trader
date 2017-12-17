@@ -9,13 +9,13 @@ const Quote = Backbone.Model.extend({
 
   buy() {
     let price = this.get('price');
-    this.set({price: (price-1)});
+    this.set({price: (price+1)});
     // this.set({buy: true});
     return price;
   },
   sell() {
     let price = this.get('price');
-    this.set({price: (price+1)});
+    this.set({price: (price-1)});
     // this.set({buy: false});
     return price;
   },
