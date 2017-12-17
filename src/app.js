@@ -85,6 +85,7 @@ $(document).ready(function() {
   const orderList = new OrderList();
   const orderListView = new OrderListView({
    model: orderList,
+   quotes: quotes,
    template: _.template($('#order-template').html()),
    el: '#order-workspace',
    bus: bus,

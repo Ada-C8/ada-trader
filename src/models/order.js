@@ -2,12 +2,12 @@ import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
   initialize(params) {
-    this.target = params.target;
+    this.targetPrice = params.targetPrice;
     this.symbol = params.symbol;
-    this.price = params.price;
+    // this.price = params.price;
     this.buy = params.buy;
-    this.template = params.template;
-    // this.quote = params.quote;
+    // this.template = params.template;
+    this.quote = params.quote;
   },
 });
 
