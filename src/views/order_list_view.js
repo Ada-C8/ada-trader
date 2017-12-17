@@ -6,22 +6,25 @@ import Order from '../models/order';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.quotes = params.quotes;
     this.bus = this.bus;
     this.listenTo(this.model, 'update', this.render);
 
   },
 
   render() {
-    this.$('#orders').empty();
+    const list = this.$('#orders');
+    list.empty();
+    console.log('render');
     this.model.each((order) => {
+      console.log('html');
+      console.log(order);
       const orderView = new OrderView({
         model: order,
         template: this.template,
         tagName: 'li',
         className: 'order',
       });
-      this.$('#orders').append(orderView.render().$el);
+      list.append(orderView.render().$el);
     });
     return this;
   },
@@ -32,22 +35,21 @@ const OrderListView = Backbone.View.extend({
     'click .btn-sell': 'sellOrder',
   },
 
-  newOrder(buyOrSell) {
+  newOrder(buy) {
     event.preventDefault();
-    console.log('it clicked!');
-    const orderData = {buy: true};
-    ['symbol', 'target-price'].forEach( (field) => {
+    const orderData = {buy};
+  ///// REFACTOR THIS - PRICE NEEDS TO BE IN /////
+    ['symbol', 'targetPrice'].forEach((field) => {
       const val = this.$(`#order-entry-form  [name=${field}]`).val();
       console.log(val);
       orderData[field] = val;
     });
-    const newOrder = new Order(orderData);
-    console.log(orderData);
+    return new Order(orderData);
   },
 
   buyOrder: function(event) {
     event.preventDefault();
-    const order = this.newOrder({buy: true});
+    const order = this.newOrder(true);
     console.log('buy click');
     console.log(order);
 
@@ -55,7 +57,7 @@ const OrderListView = Backbone.View.extend({
 
   sellOrder: function(event) {
     event.preventDefault();
-    const order = this.newOrder({buy: false});
+    const order = this.newOrder(false);
     console.log('sell click');
     console.log(order);
   },

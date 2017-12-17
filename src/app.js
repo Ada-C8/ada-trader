@@ -64,7 +64,7 @@ $(document).ready(function() {
     quotes: quotes,
   });
 
-///// quote list view /////
+  ///// quote list view /////
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
@@ -75,7 +75,7 @@ $(document).ready(function() {
   });
   quoteListView.render();
 
-///// trade list view /////
+  ///// trade list view /////
   const tradeListView = new TradeListView({
     model: tradeList,
     template: _.template($('#trade-template').html()),
@@ -92,7 +92,7 @@ $(document).ready(function() {
     }));
   });
 
-///// order list view /////
+  ///// order list view /////
   const orderListView = new OrderListView({
     model: orderList,
     quotes: quotes,
@@ -102,6 +102,6 @@ $(document).ready(function() {
   });
   orderListView.render();
 
-///// simulator /////
+  ///// simulator /////
   simulator.start();
 });

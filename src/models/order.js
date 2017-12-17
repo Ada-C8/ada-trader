@@ -1,14 +1,16 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
+  defaults: {
+    symbol: 'UNDEF',
+    targetPrice: 0.00
+  },
   buy() {
-    // Implement this function to increase the price by $1.00
-    this.set('price-target', this.get('price-target'));
+    this.set('targetPrice', this.get('targetPrice'));
   },
 
   sell() {
-    // Implement this function to decrease the price by $1.00
-    this.set('price-target', this.get('price-target'));
+    this.set('targetPrice', this.get('targetPrice'));
   },
 });
 

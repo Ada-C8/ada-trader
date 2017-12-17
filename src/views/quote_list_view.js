@@ -19,7 +19,6 @@ const QuoteListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'quote',
-        // trades: this.trades,
         bus: this.bus,
       });
       list.append(quoteView.render().$el);
