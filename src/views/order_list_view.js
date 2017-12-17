@@ -26,8 +26,20 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
 
-// Need logic for buy, sell, cancel.
+  events: {
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'sellOrder'
+  },
 
-});
+  buyOrder: function(event) {
+    event.preventDefault();
+  
+    };
 
-export default OrderListView;
+
+  }
+
+
+  });
+
+  export default OrderListView;
