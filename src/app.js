@@ -49,6 +49,8 @@ $(document).ready(function() {
   tradeTemplate = _.template($('#trade-template').html());
   orderTemplate = _.template($('#order-template').html());
 
+  tradeTemplate = _.template($('#trade-template').html());
+
   const quotes = new QuoteList(quoteData);
 
   const simulator = new Simulator({

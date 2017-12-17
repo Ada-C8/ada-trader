@@ -31,7 +31,7 @@ const OrderView = Backbone.View.extend({
           };
 
           this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
-          this.stopListening(); ///destroy alone doesn't stop the listener
+          this.stopListening(); //destroy alone doesn't stop the listener
           this.model.destroy();
         }
       } else {
