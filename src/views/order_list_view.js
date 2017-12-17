@@ -4,6 +4,7 @@ import OrderView from '../views/order_view';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.quoteTemplate = params.quoteTemplate
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
     this.model = params.model;
@@ -13,7 +14,6 @@ const OrderListView = Backbone.View.extend({
   },
   render() {
     this.$('#orders').empty();
-    // console.log(this);
     this.model.each((order) => {
       const orderView = new OrderView({
         model: order,
@@ -30,23 +30,23 @@ const OrderListView = Backbone.View.extend({
     if (this.model.models.length > 0) {
       let length = this.model.models.length;
       for (let i = 0; i < length ; i += 1) {
-        let targetPrice = this.model.models[i].attributes.targetPrice;
-        let symbol = this.model.models[i].attributes.symbol;
-        let quoteSymbol = quote.attributes.symbol;
-        let currentPrice = quote.attributes.price;
-        if (quoteSymbol == symbol && currentPrice <= targetPrice) {
-          const quoteView = new QuoteView({
-            model: quote,
-            bus: this.bus,
-            template: this.template,
-            tagName: 'li',
-            className: 'quote',
-          });
-          this.bus.trigger('eraseQuote', this);
-        }
+        const buy = this.model.models[i].attributes.buy;
+        const trigger = buy ? 'boughtLimitOrder' : 'soldLimitOrder';
+        this.trade(quote, i, trigger, buy);
       }
     }
   },
+  trade(quote, i, trigger, buy) {
+    const targetPrice = this.model.models[i].attributes.targetPrice;
+    const symbol = this.model.models[i].attributes.symbol;
+    const quoteSymbol = quote.attributes.symbol;
+    const currentPrice = quote.attributes.price;
+    const trade = buy ? currentPrice <= targetPrice : currentPrice >= targetPrice;
+    if (quoteSymbol == symbol && trade) {
+      this.bus.trigger(trigger, this.model.models[i]);
+      this.bus.trigger('eraseQuote', this);
+    }
+  }
 });
 
 export default OrderListView;

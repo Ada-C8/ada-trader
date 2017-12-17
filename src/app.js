@@ -71,6 +71,7 @@ $(document).ready(function() {
   const orderListView = new OrderListView({
     model: orderList,
     template: _.template($('#order-template').html()),
+    quoteTemplate: _.template($('#quote-template').html()),
     el: '.orders-list-container',
     bus: bus,
   });

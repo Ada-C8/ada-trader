@@ -1,9 +1,7 @@
 import Backbone from 'backbone';
-import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
-    // console.log(params);
     this.template = params.template;
     this.listenTo(this.model, 'change', this.render);
     this.bus = params.bus;
