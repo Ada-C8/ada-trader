@@ -80,8 +80,7 @@ const OrdersView = Backbone.View.extend({
     }
   },
 
-
-  //TODO: consolidate addBuyOrder and addSellOrder
+  //TODO: consolidate addBuyOrder and addSellOrder into one function 
   addBuyOrder(event){
     event.preventDefault();
     console.log('In addBuyOrder');

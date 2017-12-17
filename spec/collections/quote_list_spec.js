@@ -18,7 +18,6 @@ describe('QuoteList spec', () => {
 
   describe('QuoteList', () => {
     it('should be a list of Quote models', () => {
-      console.log('************');
 
       let quoteList2 = new QuoteList();
       let quote = new Quote ({

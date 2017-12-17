@@ -19,6 +19,7 @@ const QuoteView = BackBone.View.extend({
     this.bus.trigger('price_change', this.model);
   },
 
+  //TODO: pull some of this out into separate function
   checkPriceTarget(orderData) {
     console.log('In checkPriceTarget');
     console.log(orderData);
@@ -50,6 +51,7 @@ const QuoteView = BackBone.View.extend({
     }
   },
 
+  //TODO: consolidate buyQuote and sellQuote into one function
   buyQuote(event) {
     console.log('In buyQuote');
     console.log(event);
