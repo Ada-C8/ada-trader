@@ -6,7 +6,6 @@ import OrderView from './order_view';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-
     this.quotes = params.symbols;
     this.orderEntryForm(params.symbols.models);
 
