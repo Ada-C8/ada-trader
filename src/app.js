@@ -17,9 +17,6 @@ import OpenOrder from './models/open_order';
 import OpenOrderView from './views/open_order_view';
 import OpenOrderListView from './views/open_order_list_view';
 
-
-
-
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -39,7 +36,6 @@ const quoteData = [
   },
 ];
 
-// const quoteList = new QuoteList();
 const openOrderList = new OpenOrderList();
 
 let quoteTemplate;
@@ -48,7 +44,7 @@ let orderTemplate;
 
 $(document).ready(function() {
   let bus = {};
-  // need to import backbone
+
   bus = _.extend(bus, Backbone.Events);
   quoteTemplate = _.template($('#quote-template').html());
   orderTemplate = _.template($('#order-template').html());
@@ -73,7 +69,6 @@ $(document).ready(function() {
   const tradelistView = new TradeListView({
     el: '#trades-container',
     bus: bus,
-    // model: quotes,
     template: tradeTemplate,
   });
 
@@ -87,7 +82,5 @@ $(document).ready(function() {
 
   quoteListView.render();
 
-  // wave 3
-  // any time the stock "changes" change event on model
   simulator.start();
 });

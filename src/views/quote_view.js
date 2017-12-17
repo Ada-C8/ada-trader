@@ -4,10 +4,8 @@ import Quote from '../models/quote';
 const QuoteView = Backbone.View.extend({
 
   initialize(params) {
-    // use #quote-template
     this.template = params.template;
     this.bus = params.bus;
-    // any time the stock "changes" change event on model
     this.listenTo(this.model, 'change', this.render);
   },
   events: {
@@ -15,7 +13,6 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sellQuote',
   },
   buyQuote() {
-    // this.bus.trigger('selected_task', this.model);
 
     let tradeObject = {
       price: this.model.get('price'),
@@ -37,9 +34,8 @@ const QuoteView = Backbone.View.extend({
   },
   render() {
     let quote = this.model;
-    this.bus.trigger('quote_change', quote);
     // trigger quote_change event which quotelist view will listen for
-    // this.bus.trigger('quote_change');
+    this.bus.trigger('quote_change', quote);
     console.log(this.model);
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
