@@ -9,6 +9,16 @@ describe('Quote spec', () => {
     });
   });
 
+  describe('Quote defaults', () => {
+    it('is created with a default symbol and price', () => {
+      const order = new Quote();
+
+      expect(order.get('price')).toEqual(0);
+      expect(order.get('symbol')).toEqual('UNDEF');
+      expect(order.get('buy')).toEqual(false);
+    });
+  });
+
   describe('Buy function', () => {
     it('increases the price by $1.00', () => {
       const startPrice = quote.get('price');

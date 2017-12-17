@@ -2,16 +2,17 @@ import Order from 'models/order';
 
 describe('Order spec', () => {
   describe('Order defaults', () => {
-    it('is created with a symbol and a price', () => {
+    it('is created with a default symbol and price', () => {
       const order = new Order();
 
       expect(order.get('price')).toEqual(0);
       expect(order.get('symbol')).toEqual('UNDEF');
+      expect(order.get('buy')).toEqual(false);
     });
   });
 
   describe('Order Validations', () => {
-    it('returns no errors valid order parameters', () => {
+    it('returns no errors for valid submitted parameters', () => {
       const order = new Order({
         symbol: 'UNDEF',
         price: 15.00,
@@ -30,7 +31,7 @@ describe('Order spec', () => {
       });
 
       expect(order.isValid()).toBeFalsy();
-      expect(order.validationError).toEqual({symbol: ["You must select a symbol!"]});
+      expect(order.validationError).toEqual({symbol: "You must select a symbol!"});
     });
 
     it('returns an error if a price is blank', () => {
@@ -41,7 +42,7 @@ describe('Order spec', () => {
       });
 
       expect(order.isValid()).toBeFalsy();
-      expect(order.validationError).toEqual({price: ["Your target price cannot be blank!"]});
+      expect(order.validationError).toEqual({price: "Your target price cannot be blank!"});
     });
 
     it('returns an error if a price is zero', () => {
@@ -52,9 +53,8 @@ describe('Order spec', () => {
       });
 
       expect(order.isValid()).toBeFalsy();
-      expect(order.validationError).toEqual({price: ["Please enter a number higher than 0!"]});
+      expect(order.validationError).toEqual({price: "Please enter a number higher than 0!"});
     });
 
-    // TODO: Do I need to test the initialize of attributes???
   }); // INNER DESCRIBE BLOCK
 }); // OUTER DESCRIBE BLOCK

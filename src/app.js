@@ -44,11 +44,26 @@ const quoteData = [
   },
 ];
 
-const quotes = new QuoteList(quoteData);
+const quotes = new QuoteList();
 const orders = new OrderList();
 const simulator = new Simulator({
   quotes: quotes,
 });
+
+// If quoteData was not hardcoded, would need validation on the data prior to adding to the collection
+const checkQuotes = (quoteData) => {
+  quoteData.forEach((quote) => {
+    const newQuote = new Quote(quote);
+    if (newQuote.isValid()) {
+      quotes.add(newQuote);
+    } else {
+      let errors = newQuote.validationError
+      Object.keys(errors).forEach((key) => {
+        $('#quote-errors').append(`<p>${errors[key]}</p>`);
+      });
+    }
+  });
+};
 
 $(document).ready(function() {
   let bus = {};
@@ -57,6 +72,8 @@ $(document).ready(function() {
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
   orderTemplate = _.template($('#order-template').html());
+
+  checkQuotes(quoteData);
 
   const orderListView = new OrderListView({
     el: '#order-workspace',
