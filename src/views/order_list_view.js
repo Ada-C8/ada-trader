@@ -33,7 +33,7 @@ const OrderListView = Backbone.View.extend({
         const buy = this.model.models[i].attributes.buy;
         const trigger = buy ? 'boughtLimitOrder' : 'soldLimitOrder';
         const orderModel = this.model.models[i];
-        orderModel.trade(quote, i, trigger, buy);
+        orderModel.trade(quote, trigger);
       }
     }
   },

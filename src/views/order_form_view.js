@@ -55,8 +55,9 @@ const OrderFormView = Backbone.View.extend({
     order.attributes.symbol = event.target.form[0].value;
     order.attributes.targetPrice = parseFloat(event.target.form[1].value);
     order.bus = this.bus;
+    order.legalQuotes = this.quotes.models;
     const currentQuotePrice = this.quotes.where({symbol: order.attributes.symbol})[0].attributes.price;
-    order.attributes.currentQuotePrice = currentQuotePrice;
+    order.currentQuotePrice = currentQuotePrice;
 
   }
 });

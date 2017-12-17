@@ -8,13 +8,30 @@ const Order = Backbone.Model.extend({
   },
   validate: function(attributes) {
     const errors = {};
+
+    const legalQuotes = this.legalQuotes;
+
+    let legalQuotesArray = [];
+    for (let i = 0; i < legalQuotes.length; i += 1) {
+
+      legalQuotesArray.push(legalQuotes[i].attributes.symbol)
+    }
+
+    if (!(legalQuotesArray.includes(attributes.symbol))) {
+      errors['symbol'] = ['Invalid symbol'];
+    }
+
+    if (typeof(attributes.buy) != "boolean") {
+      errors['buy'] = ['Invalid buy value (must be boolean)'];
+    }
+
     if (!attributes.targetPrice) {
       errors['targetPrice'] = ['Invalid target price'];
     } else if (isNaN(attributes.targetPrice)) {
       errors['targetPrice'] = ['Invalid target price'];
-    } else if (attributes.buy == true && attributes.targetPrice >= attributes.currentQuotePrice) {
+    } else if (attributes.buy == true && attributes.targetPrice >= this.currentQuotePrice) {
       errors['targetPrice'] = ['Price higher than market price!'];
-    }  else if (attributes.buy == false && attributes.targetPrice <= attributes.currentQuotePrice) { errors['targetPrice'] = ['Price lower than market price!'];
+    }  else if (attributes.buy == false && attributes.targetPrice <= this.currentQuotePrice) { errors['targetPrice'] = ['Price lower than market price!'];
     }
 
     // Return false if it's valid,
@@ -25,14 +42,14 @@ const Order = Backbone.Model.extend({
       return false;
     }
   },
-  trade(quote, i, trigger, buy) {
-    const targetPrice = this.model.models[i].attributes.targetPrice;
-    const symbol = this.model.models[i].attributes.symbol;
+  trade(quote, trigger) {
+    const targetPrice = this.attributes.targetPrice;
+    const symbol = this.attributes.symbol;
     const quoteSymbol = quote.attributes.symbol;
     const currentPrice = quote.attributes.price;
-    const trade = buy ? currentPrice <= targetPrice : currentPrice >= targetPrice;
+    const trade = this.attributes.buy ? currentPrice <= targetPrice : currentPrice >= targetPrice;
     if (quoteSymbol == symbol && trade) {
-      this.bus.trigger(trigger, this.model.models[i]);
+      this.bus.trigger(trigger, this);
       this.bus.trigger('eraseQuote', this);
     }
   }
