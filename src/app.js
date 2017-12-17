@@ -34,27 +34,6 @@ const quoteData = [
   },
 ];
 
-////////////// TEMPORARY
-const fakeOrderData = [
-  {
-    symbol: 'HUMOR',
-    price: 108.50,
-  },
-  {
-    symbol: 'CLOTH',
-    price: 61.70,
-  },
-  {
-    symbol: 'HABIT',
-    price: 78.00,
-  },
-  {
-    symbol: 'SUPER',
-    price: 103.10,
-  },
-];
-///////////////////////
-
 $(document).ready(function() {
   const bus = _.extend({}, Backbone.Events);
   const quotes = new QuoteList(quoteData);
@@ -69,8 +48,6 @@ $(document).ready(function() {
     model: quotes,
     template: _.template($('#quote-template').html()),
     el: 'main',
-    // trades: tradeList,
-    // orders: orderList,
     bus: bus,
   });
   quoteListView.render();

@@ -6,7 +6,7 @@ import Order from '../models/order';
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.bus = this.bus;
+    this.quotes = params.quotes;
     this.listenTo(this.model, 'update', this.render);
   },
 
@@ -19,12 +19,12 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'order',
+        quotes: this.quotes,
       });
       list.prepend(orderView.render().$el);
     });
     return this;
   },
-
 
   events: {
     'click .btn-buy': 'buyOrder',
@@ -40,6 +40,7 @@ const OrderListView = Backbone.View.extend({
       targetPrice,
       symbol,
     };
+    console.log(orderData);
     const newOrder = new Order(orderData);
     this.model.add(newOrder);
     return newOrder;
