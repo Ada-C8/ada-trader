@@ -35,6 +35,15 @@ describe('Order spec', () => {
       expect(order.get('buy')).toBe(true);
     });
 
+    it('fires a custom event when the state changes.', () => {
+      let spy = jasmine.createSpy('-change event callback-');
+      let order = new Order();
+      order.on('change', spy);
+      order.set({symbol: 'CLOTH'});
+
+      expect(spy).toHaveBeenCalled();
+    });
+
     it('will set passed attributes to the model instance when created (sell)', () => {
       let order = new Order({
         symbol: 'CLOTH',
@@ -45,15 +54,6 @@ describe('Order spec', () => {
       expect(order.get('symbol')).toBe('CLOTH');
       expect(order.get('targetPrice')).toBe(100);
       expect(order.get('buy')).toBe(false);
-    });
-
-    it('fires a custom event when the state changes.', () => {
-      let spy = jasmine.createSpy('-change event callback-');
-      let order = new Order();
-      order.on('change', spy);
-      order.set({symbol: 'CLOTH'});
-
-      expect(spy).toHaveBeenCalled();
     });
   });
 
@@ -129,55 +129,60 @@ describe('Order spec', () => {
 
       expect(order.validationError.symbol[0]).toBe('Invalid symbol');
     });
+
+    it('targetPrice as to be lower than the quote\'s price for buy', () => {
+
+      let order = new Order({
+        symbol: 'CLOTH',
+        targetPrice: 500,
+        buy: true,
+      });
+
+      let quote = new Quote({
+        symbol: 'CLOTH',
+        price: 100.00,
+      });
+
+      order.legalQuotes = [quote]
+      order.currentQuotePrice = quote.attributes.price;
+
+      order.isValid();
+
+      expect(order.validationError).toBeDefined();
+
+      expect(order.validationError.targetPrice).toBeDefined();
+
+      expect(order.validationError.targetPrice[0]).toBe('Price higher than market price!');
+    });
+
+    it('targetPrice as to be higher than the quote\'s price for sell', () => {
+
+      let order = new Order({
+        symbol: 'CLOTH',
+        targetPrice: 5,
+        buy: false,
+      });
+
+      let quote = new Quote({
+        symbol: 'CLOTH',
+        price: 100.00,
+      });
+
+      order.legalQuotes = [quote]
+      order.currentQuotePrice = quote.attributes.price;
+
+      order.isValid();
+
+      expect(order.validationError).toBeDefined();
+
+      expect(order.validationError.targetPrice).toBeDefined();
+
+      expect(order.validationError.targetPrice[0]).toBe('Price lower than market price!');
+    });
   });
 
-  it('targetPrice as to be lower than the quote\'s price for buy', () => {
-
-    let order = new Order({
-      symbol: 'CLOTH',
-      targetPrice: 500,
-      buy: true,
-    });
-
-    let quote = new Quote({
-      symbol: 'CLOTH',
-      price: 100.00,
-    });
-
-    order.legalQuotes = [quote]
-    order.currentQuotePrice = quote.attributes.price;
-
-    order.isValid();
-
-    expect(order.validationError).toBeDefined();
-
-    expect(order.validationError.targetPrice).toBeDefined();
-
-    expect(order.validationError.targetPrice[0]).toBe('Price higher than market price!');
+  describe('trade function', () => {
+    // TO DO
   });
 
-  it('targetPrice as to be higher than the quote\'s price for sell', () => {
-
-    let order = new Order({
-      symbol: 'CLOTH',
-      targetPrice: 5,
-      buy: false,
-    });
-
-    let quote = new Quote({
-      symbol: 'CLOTH',
-      price: 100.00,
-    });
-
-    order.legalQuotes = [quote]
-    order.currentQuotePrice = quote.attributes.price;
-
-    order.isValid();
-
-    expect(order.validationError).toBeDefined();
-
-    expect(order.validationError.targetPrice).toBeDefined();
-
-    expect(order.validationError.targetPrice[0]).toBe('Price lower than market price!');
-  });
 });

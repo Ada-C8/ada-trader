@@ -18,11 +18,7 @@ const OrderView = Backbone.View.extend({
   cancelOrder() {
     this.model.destroy();
     this.remove();
-  },
-  // checkLimitOrder() {
-  //   console.log('hello');
-  //   console.log(this.model);
-  // },
+  }
 });
 
 export default OrderView;
