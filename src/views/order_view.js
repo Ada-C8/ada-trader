@@ -15,16 +15,17 @@ const OrderView = Backbone.View.extend({
     return this;
   },
   executeTrade() {
-    if (this.quote.get('price') >= this.order.get('priceTarget') && !this.order.get('buy')) { // TODO: Figure out why it sells below selling price. ex: sell @ 90, sold @ 89.7
-      this.stopListening();
+    const quotePrice = this.quote.get('price');
+    const target = this.order.get('priceTarget');
+    const isBuy = this.order.get('buy');
+    if (quotePrice >= target && !isBuy) {
+      this.stopListening().remove();
       this.quote.sell();
       this.order.destroy();
-      this.remove();
-    } else if (this.quote.get('price') <= this.order.get('priceTarget') && this.order.get('buy')) {
-      this.stopListening();
+    } else if (quotePrice <= target && isBuy) {
+      this.stopListening().remove();
       this.quote.buy();
       this.order.destroy();
-      this.remove();
     }
   }
 });

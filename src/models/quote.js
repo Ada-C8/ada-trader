@@ -16,7 +16,7 @@ const Quote = Backbone.Model.extend({
     this.set('price', price + 1);
   },
   sell() {
-    const price = this.get('price') - 1;
+    const price = this.get('price');
     this.bus.trigger('trade', {symbol: this.symbol, price: price, buy: false});
     this.set('price', price - 1);
   },
