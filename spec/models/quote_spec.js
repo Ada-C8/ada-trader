@@ -29,5 +29,10 @@ describe('Quote spec', () => {
     });
   });
 
+  describe('makeTradeData', () => {
+    it('creates and returns object with the data from the model', () => {
+
+    });
+  });
   // TODO: write tests for makeTradeData method
 });

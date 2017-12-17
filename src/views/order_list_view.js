@@ -67,6 +67,7 @@ const OrderListView = Backbone.View.extend({
       const action = newOrder.get('buy') ? 'buy' : 'sell';
       this.updateStatusMessage(`Successfully added a ${action} open order for ${newOrder.get('symbol')}`);
       this.clearFormData();
+      console.log(newOrder);
     } else {
       console.log('new order is invalid!');
       // get rid of task and give user feedback on error handling
