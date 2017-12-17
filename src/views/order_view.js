@@ -5,7 +5,7 @@ import QuoteList from 'collections/quote_list';
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    this.listenTo(this.model, 'deleteOrder', this.deleteOrder);
+    this.listenTo(this, 'deleteOrder', this.deleteOrder);
     this.listenTo(params.quotes, 'change', this.placeOrder);
     this.quotes = params.quotes;
     console.log(params);
@@ -24,10 +24,11 @@ const OrderView = Backbone.View.extend({
     this.remove();
   },
   placeOrder() {
+    console.log('placeOrder');
     const matchingQuote = this.quotes.bySymbol(this.model.symbol);
     if (this.model.buy && this.model.targetPrice >= matchingQuote.attributes.price) {
-      this.trigger('deleteOrder');
       matchingQuote.buy();
+      this.trigger('deleteOrder');
     } //else if ((this.model.buy === false) && (this.targetPrice <= Quote.model.get('price'))) {
     //   this.trigger('deleteOrder');
     //   Quote.sell();
