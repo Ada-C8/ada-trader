@@ -12,7 +12,6 @@ const QuoteListView = Backbone.View.extend({
   },
 
   render() {
-    let symbols = [];
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
@@ -22,9 +21,7 @@ const QuoteListView = Backbone.View.extend({
         bus: this.bus,
       });
 
-      // quoteView.render() returns back the jquery object from the quoteView
-      // Selects the el tag of the current quotelistview in this case it is the main?
-      this.$('#quotes').append(quoteView.render().$el); // TODO: PLEASE BREAK DOWN WHAT $EL IS. THE JQUERY OBJECT? WHY CAN IT GO AT THE END?
+      this.$('#quotes').append(quoteView.render().$el);
     });
 
     // SEE THE ORDER LIST VIEW FOR THE LISTEN TO RENDER MESSAGE
@@ -32,7 +29,6 @@ const QuoteListView = Backbone.View.extend({
     return this;
   },
 
-  // TODO: move this into validations???
   checkSubmittedOrderPrice(order) {
     const quote = this.model.findWhere({symbol: order.get('symbol')});
     const $errorDisplay = this.$('.form-errors');
@@ -43,7 +39,7 @@ const QuoteListView = Backbone.View.extend({
     }
 
     if (order.get('price') >= parseFloat(quote.get('price')) || (order.get('price') < 0)) {
-      $errorDisplay.append(`<p>Your must be less than the current market price and greater than 0!</p>`);
+      $errorDisplay.append(`<p>Your order must be less than the current market price and greater than 0!</p>`);
     } else {
       this.bus.trigger('checkValidations', order);
     }

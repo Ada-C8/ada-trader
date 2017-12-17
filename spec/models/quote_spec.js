@@ -11,11 +11,56 @@ describe('Quote spec', () => {
 
   describe('Quote defaults', () => {
     it('is created with a default symbol and price', () => {
-      const order = new Quote();
+      const quote = new Quote();
 
-      expect(order.get('price')).toEqual(0);
-      expect(order.get('symbol')).toEqual('UNDEF');
-      expect(order.get('buy')).toEqual(false);
+      expect(quote.get('price')).toEqual(0);
+      expect(quote.get('symbol')).toEqual('UNDEF');
+    });
+  });
+
+  describe('Quote validations', () => {
+    it('returns no errors for valid submitted parameters', () => {
+      const quote = new Quote({
+        symbol: 'UNDEF',
+        price: 15.00,
+        buy: true,
+      });
+
+      expect(quote.isValid()).toBeTruthy();
+      expect(quote.validationError).toBeNull();
+    });
+
+    it('returns an error if a symbol is blank', () => {
+      const quote = new Quote({
+        symbol: '',
+        price: 15.00,
+        buy: true,
+      });
+
+      expect(quote.isValid()).toBeFalsy();
+      expect(quote.validationError).toEqual({symbol: "Symbol cannot be blank!"});
+    });
+
+    it('returns an error if a price is blank', () => {
+      const quote = new Quote({
+        symbol: 'HUMOR',
+        price: '', // Blank evaluates to blank
+        buy: true,
+      });
+
+      expect(quote.isValid()).toBeFalsy();
+      expect(quote.validationError).toEqual({price: "Your starting quote price cannot be blank!"});
+    });
+
+    it('returns an error if a price is zero', () => {
+      const quote = new Quote({
+        symbol: 'HUMOR',
+        price: 0,
+        buy: true,
+      });
+
+      expect(quote.isValid()).toBeFalsy();
+      expect(quote.validationError).toEqual({price: "Market price must be greater than 0!"});
     });
   });
 

@@ -36,8 +36,6 @@ const QuoteView = Backbone.View.extend({
 
     // SEE TRADE VIEW FOR LISTENER
     this.bus.trigger('add_quote', currentTrade);
-    
-    // Decreases stock price by one
     this.model.sell();
   },
 
@@ -48,10 +46,6 @@ const QuoteView = Backbone.View.extend({
     // JSON to make the view into the proper object format
     const compiledTemplate = this.template(this.model.toJSON());
 
-    // Selects the li element that was defined when the QuoteView was created
-    // el is where all the event binding takes place
-    // $el returns a jquery object that can be modified using jquery methods
-    // Renders the li and then appends it to the page
     this.$el.html(compiledTemplate);
     return this;
   },

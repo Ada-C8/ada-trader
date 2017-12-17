@@ -15,13 +15,10 @@ const OrderView = Backbone.View.extend({
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
-
-    // SEE QUOTE LIST VIEW FOR LISTEN TO EVENT
     return this;
   },
 
   cancelOrder(event) {
-    // TRIGGERS ORDER LIST VIEW TO RE RENDER
     this.remove();
     this.model.destroy(); // This triggers update in the order list view and not this model bubbles up to the collection
   },

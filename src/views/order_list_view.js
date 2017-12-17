@@ -7,10 +7,10 @@ const OrderListView = Backbone.View.extend({
     this.bus = params.bus;
     this.template = params.template;
 
-    // SEE CHECK VALIDATION METHOD FOR THE .ADD TO THE COLLECTION FOR TRIGGERED EVENT
+    // SEE CHECK VALIDATION METHOD FOR THE .ADD TO THE COLLECTION FOR TRIGGER
     this.listenTo(this.model, 'update', this.render);
 
-    // SEE QUOTE_LIST_VIEW RENDER() FOR THE TRIGGER
+    // SEE QUOTE_LIST_VIEW RENDER() FOR TRIGGER
     this.listenTo(this.bus, 'append_symbols', this.renderDropDown);
 
     // SEE QUOTE_LIST_VIEW submittedOrderPRICE FOR TRIGGER
@@ -24,8 +24,6 @@ const OrderListView = Backbone.View.extend({
     'click form button.btn-buy': 'sellOrBuy',
     'click form button.btn-sell': 'sellOrBuy',
   },
-
-  //////////// RENDER ORDERS AFTER ADDING TO THE COLLECTION //////////////
 
   render() {
     this.$('#orders').empty();
@@ -48,22 +46,21 @@ const OrderListView = Backbone.View.extend({
 
   renderDropDown(quotes) {
     let $selectOptions = this.$('select[name=symbol]');
-
+    
     quotes.forEach((quote) => {
       $selectOptions.append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
     });
   },
 
-  ////////////////////////// CREATE BUY ORDER ////////////////////////
+  ////////////////////// CREATE BUY ORDER ////////////////////////
 
-  // TODO: MAKE THIS INTO ONE FUNCTION
   sellOrBuy(event) {
     event.preventDefault();
-    this.$('.form-errors').empty(); // TODO: Do I need this?
+    this.$('.form-errors').empty();
 
     const orderData = this.getFormData();
     const sellOrBuy = event.target.classList.value;
-    
+
     let trueOrFalse;
     if (sellOrBuy === 'btn-sell alert button') {
       trueOrFalse = false;
@@ -88,7 +85,7 @@ const OrderListView = Backbone.View.extend({
     return order;
   },
 
-  ////////////////////////// FORM DATA ////////////////////////
+  //////////////////////// FORM DATA ////////////////////////
 
   getFormData() {
     const data = {};
@@ -102,7 +99,7 @@ const OrderListView = Backbone.View.extend({
     this.$('form-errors').empty();
   },
 
-  ////////////////////////// ERROR DISPLAY ////////////////////////
+  /////////////////////// ERROR DISPLAY ////////////////////////
 
   displayOrderErrors(errors) {
     const $errorDisplay = this.$('.form-errors');
@@ -114,7 +111,7 @@ const OrderListView = Backbone.View.extend({
     });
   },
 
-  ////////////// CHECK VALIDATIONS AND TRIGGER UPDATE ///////////////
+  ///////// CHECK VALIDATIONS AND ADD TO THE COLLECTION ///////////
 
   checkValidations(order) {
     if (order.isValid()) {
@@ -128,7 +125,7 @@ const OrderListView = Backbone.View.extend({
     }
   },
 
-  ///////////////// CHECK PRICE OF ORDERS TO QUOTES ///////////////////
+  ////////////// CHECK PRICE OF ORDERS TO QUOTES ///////////////////
 
   checkQuotePrice(quote) {
     const orders = this.model.where({symbol: quote.get('symbol')});

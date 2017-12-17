@@ -11,14 +11,11 @@ const Quote = Backbone.Model.extend({
 
     if (!attributes.symbol) {
       errors['symbol'] = "Symbol cannot be blank!";
-    } // TODO: Do I need to test this if the form has no option for an empty option?
-
-    if (!attributes.price) {
-      errors['price'] = "Your starting quote price cannot be blank!";
     }
-
-    if (attributes.price === 0) {
-      errors['price'] = "Market price cannot be less than 0!";
+    if (attributes.price === '') { // '' false !attributes --> true
+      errors['price'] = "Your starting quote price cannot be blank!";
+    } else if (attributes.price <= 0) { // true '' == 0
+      errors['price'] = "Market price must be greater than 0!";
     }
 
     if ( Object.keys(errors).length > 0 ) {
@@ -29,13 +26,11 @@ const Quote = Backbone.Model.extend({
   },
 
   buy() {
-    const currentPrice = this.get('price');
-    this.set('price', currentPrice + 1.00);
+    this.set('price', this.get('price') + 1.00);
   },
 
   sell() {
-    const currentPrice = this.get('price');
-    this.set('price', currentPrice - 1.00);
+    this.set('price', this.get('price') - 1.00);
   },
 });
 
