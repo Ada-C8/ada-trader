@@ -51,39 +51,37 @@ const QuoteView = BackBone.View.extend({
     }
   },
 
-  //TODO: consolidate buyQuote and sellQuote into one function
-  buyQuote(event) {
-    console.log('In buyQuote');
-    console.log(event);
+  buySellQuote(event){
+    console.log('In buySellQuote');
+    console.log(event.target.innerHTML);
 
-    const objectForTradeHistory = {
-      model: this.model,
-      buy: true,
-      price: this.model.get('price'),
-      symbol: this.model.get('symbol'),
-    };
-    this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
+    if (event.target.innerHTML === 'Buy') {
+      const objectForTradeHistory = {
+        model: this.model,
+        buy: true,
+        price: this.model.get('price'),
+        symbol: this.model.get('symbol'),
+      };
+      this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
 
-    this.model.buy();
-  },
+      this.model.buy();
+    } else if (event.target.innerHTML === 'Sell') {
+      const objectForTradeHistory = {
+        model: this.model,
+        buy: false,
+        price: this.model.get('price'),
+        symbol: this.model.get('symbol'),
+      };
+      this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
 
-  sellQuote(event) {
-    console.log('In sellQuote');
+      this.model.sell();
+    }
 
-    const objectForTradeHistory = {
-      model: this.model,
-      buy: false,
-      price: this.model.get('price'),
-      symbol: this.model.get('symbol'),
-    };
-    this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
-
-    this.model.sell();
   },
 
   events: {
-    'click button.btn-buy': 'buyQuote',
-    'click button.btn-sell': 'sellQuote',
+    'click button.btn-buy': 'buySellQuote',
+    'click button.btn-sell': 'buySellQuote',
   },
 
   render() {
