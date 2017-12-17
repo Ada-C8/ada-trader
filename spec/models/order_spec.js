@@ -1,16 +1,27 @@
 import Order from 'models/order';
 
 describe('validate', () => {
-  it ('requires target price', () => {
-    const order = new Order();
-    expect(order.isValid()).toBeFalsy();
+
+  it('will create a valid instance of Order', () => {
+    const order = new Order({
+      symbol: 'LAUREN',
+      targetPrice: 100,
+      action: 'Buy',
+    });
+    let result = order.isValid();
+    expect(result).toBeTruthy();
   });
 
-  it ('rejects empty words', () => {
-    const order = new Order({ text: '' });
-
-    expect(order.isValid()).toBeFalsy();
+  it ('rejects an empty price', () => {
+    const order = new Order({
+      symbol: 'LAUREN',
+      targetPrice: '',
+      action: 'Buy',
+    });
+    let result = order.isValid();
+    expect(result).toBeFalsy();
   });
+
 
   it ('rejects non-integer inputs', () => {
     const order = new Order({ text: 'eebeb' });
