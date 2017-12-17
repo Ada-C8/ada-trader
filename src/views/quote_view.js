@@ -22,7 +22,6 @@ const QuoteView = Backbone.View.extend({
 
   buyQuote() {
     this.model.buy();
-    console.log('bought!');
     const trade = new Trade({
       symbol: this.model.get('symbol'),
       buy: true,
@@ -34,7 +33,6 @@ const QuoteView = Backbone.View.extend({
 
   sellQuote() {
     this.model.sell();
-    console.log('sold!');
     const trade = new Trade({
       symbol: this.model.get('symbol'),
       buy: false,
