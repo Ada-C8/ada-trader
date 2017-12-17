@@ -31,6 +31,7 @@ describe('openOrder spec', () => {
         quote: quote100,
         buy: true
       });
+
       expect(openOrder.isValid()).toEqual(false)
       expect(openOrder.validationError['Symbol']).toEqual(['Validate failed: Symbol is required'])
     });
@@ -42,6 +43,7 @@ describe('openOrder spec', () => {
         quote: quote100,
         buy: true
       });
+
       expect(openOrder.isValid()).toEqual(false)
       expect(openOrder.validationError['targetPrice']).toEqual(['Validate failed: Price is required'])
     });
@@ -54,6 +56,7 @@ describe('openOrder spec', () => {
         targetPrice: 110.00,
         buy: true
       });
+
       expect(openOrder.isValid()).toEqual(false)
       expect(openOrder.validationError['buyPrice']).toEqual(['Validate failed: Target price is greater than the current price'])
     });
@@ -66,6 +69,7 @@ describe('openOrder spec', () => {
         targetPrice: 90.00,
         buy: false
       });
+
       expect(openOrder.isValid()).toEqual(false)
       expect(openOrder.validationError['sellPrice']).toEqual(['Validate failed: Target price is less than than the current price'])
     });
@@ -80,6 +84,7 @@ describe('openOrder spec', () => {
         quote: quote90,
         buy: true,
       });
+
       expect(openOrder.validTransaction()).toEqual('buy')
     });
 
@@ -91,6 +96,7 @@ describe('openOrder spec', () => {
         quote: quote100,
         buy: true,
       });
+
       expect(openOrder.validTransaction()).toEqual('hold')
     });
 
@@ -102,6 +108,7 @@ describe('openOrder spec', () => {
         quote: quote90,
         buy: false,
       });
+
       expect(openOrder.validTransaction()).toEqual('hold')
     });
 
@@ -113,6 +120,7 @@ describe('openOrder spec', () => {
         quote: quote100,
         buy: false,
       });
+      
       expect(openOrder.validTransaction()).toEqual('sell')
     });
   });
