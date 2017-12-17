@@ -9,28 +9,28 @@ const QuoteView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
   },
   events: {
-    'click button.btn-buy': 'buyQuote',
-    'click button.btn-sell': 'sellQuote',
+
+    'click button.btn-buy': 'buyOrSellQuote',
+    'click button.btn-sell': 'buyOrSellQuote',
   },
-  buyQuote() {
+  buyOrSellQuote(event) {
 
     let tradeObject = {
       price: this.model.get('price'),
       symbol: this.model.get('symbol'),
-      buy: true,
     }
 
-    this.bus.trigger('add_trade', tradeObject)
-    this.model.buy();
-  },
-  sellQuote() {
-    let tradeObject = {
-      price: this.model.get('price'),
-      symbol: this.model.get('symbol'),
-      buy: false,
+    if (event.currentTarget.innerHTML === 'Buy') {
+      tradeObject['buy'] = true;
+      console.log(tradeObject);
+
+      this.bus.trigger('add_trade', tradeObject)
+      this.model.buy();
+    } else {
+      tradeObject['buy'] = false;
+      this.bus.trigger('add_trade', tradeObject)
+      this.model.sell();
     }
-    this.bus.trigger('add_trade', tradeObject)
-    this.model.sell();
   },
   render() {
     let quote = this.model;
