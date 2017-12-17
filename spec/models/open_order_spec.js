@@ -6,6 +6,7 @@ describe('OpenOrder spec', () => {
   let currentQuote;
   let OrderAtQuotePrice;
   let OrderAboveQuotePrice;
+  let OrderBelowQuotePrice;
 
   beforeEach(() => {
     currentQuote = new Quote({
@@ -22,6 +23,13 @@ describe('OpenOrder spec', () => {
 
     OrderAboveQuotePrice = new OpenOrder({
       targetPrice: 99.0,
+      symbol: 'HUMOR',
+      quote: currentQuote,
+      buy: true,
+    })
+
+    OrderBelowQuotePrice = new OpenOrder({
+      targetPrice: 83.0,
       symbol: 'HUMOR',
       quote: currentQuote,
       buy: true,
@@ -43,27 +51,18 @@ describe('OpenOrder spec', () => {
 
     // buy order validations
     it ('does not allow for buy orders where target price is equal to the quote', () => {
+
       expect(OrderAtQuotePrice.isValid()).toBeFalsy();
     });
+
     it ('does not allow for buy orders where target price is greater than the quote', () => {
 
-      // const invalidBuyOrder = new OpenOrder({
-      //   targetPrice: 99.0,
-      //   symbol: 'HUMOR',
-      //   quote: currentQuote,
-      //   buy: true,
-      // })
       expect(OrderAboveQuotePrice.isValid()).toBeFalsy();
     });
+
     it ('allows for buy orders where target price is less than the quote', () => {
 
-      const invalidBuyOrder = new OpenOrder({
-        targetPrice: 83.0,
-        symbol: 'HUMOR',
-        quote: currentQuote,
-        buy: true,
-      })
-      expect(invalidBuyOrder.isValid()).toBeTruthy(`error: ${invalidBuyOrder.validationError}`);
+      expect(OrderBelowQuotePrice.isValid()).toBeTruthy(`error: ${OrderBelowQuotePrice.validationError}`);
     });
 
     // sell order validations
@@ -75,21 +74,14 @@ describe('OpenOrder spec', () => {
     });
 
     it ('does not allow for sell orders where target price is less than the quote', () => {
-      const invalidSellOrder = new OpenOrder({
-        targetPrice: 83.0,
-        symbol: 'HUMOR',
-        quote: currentQuote,
-        buy: false,
-      })
-      expect(invalidSellOrder.isValid()).toBeFalsy();
+
+      OrderBelowQuotePrice.set('buy', false);
+
+      expect(OrderBelowQuotePrice.isValid()).toBeFalsy();
     });
+
     it ('allows for sell orders where target price is greater than the quote', () => {
-      // const invalidSellOrder = new OpenOrder({
-      //   targetPrice: 99.0,
-      //   symbol: 'HUMOR',
-      //   quote: currentQuote,
-      //   buy: false,
-      // })
+
       OrderAboveQuotePrice.set('buy', false)
 
       expect(OrderAboveQuotePrice.isValid()).toBeTruthy(`error: ${OrderAboveQuotePrice.validationError}`);
