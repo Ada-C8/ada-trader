@@ -6,12 +6,31 @@ const Quote = Backbone.Model.extend({
     price: 0.00
   },
 
+  validate(attributes) {
+    const errors = {}
+
+    if (!attributes.symbol) {
+      errors['symbol'] = "Symbol cannot be blank!";
+    }
+    if (attributes.price === '') { // '' false !attributes --> true
+      errors['price'] = "Your starting quote price cannot be blank!";
+    } else if (attributes.price <= 0) { // true '' == 0
+      errors['price'] = "Market price must be greater than 0!";
+    }
+
+    if ( Object.keys(errors).length > 0 ) {
+      return errors;
+    } else {
+      return false;
+    }
+  },
+
   buy() {
-    // Implement this function to increase the price by $1.00
+    this.set('price', this.get('price') + 1.00);
   },
 
   sell() {
-    // Implement this function to decrease the price by $1.00
+    this.set('price', this.get('price') - 1.00);
   },
 });
 

@@ -18,6 +18,8 @@
         <div class="columns large-8 small-12">
 
           <div id="quotes-container" class="quotes-container columns small-10 small-offset-1 end">
+            <div id="quote-errors">
+            </div>
             <h2>Quotes</h2>
             <div class="quotes-list-container">
               <ul id="quotes" class="quotes">
@@ -49,6 +51,7 @@
            <h2>Open Orders</h2>
            <div class="orders-list-container">
              <ul id="orders" class="orders">
+<!-- THIS IS WHERE MY OPEN ORDERS WILL GO -->
              </ul>
            </div>
          </div>
@@ -110,7 +113,7 @@
       <div class="detail">
         <span class="action"><%- buy ? 'buy' : 'sell' %></span>
         at
-        <span class="price">$<%- targetPrice.toFixed(2) %></span>
+        <span class="price">$<%- price.toFixed(2) %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
     </script>
