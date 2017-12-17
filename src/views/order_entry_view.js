@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
+import _ from 'underscore';
 import Order from '../models/order';
 
 const OrderEntryView = Backbone.View.extend({
@@ -9,6 +10,7 @@ const OrderEntryView = Backbone.View.extend({
   },
   renderForm() {
     this.$('select[name="symbol"]').empty();
+    // this.$('input[name="price-target"]').empty();
     this.model.quotes.each((quote) => {
       this.$('select[name="symbol"]').append(this.template(quote));
     })
@@ -35,8 +37,19 @@ const OrderEntryView = Backbone.View.extend({
     orderData.quote = this.model.quotes.where({symbol: orderData.symbol});
 
     const newOrder = new Order(orderData);
-    this.model.orders.add(newOrder);
+    if (newOrder.isValid()) {
+      this.model.orders.add(newOrder);
+      this.renderForm();
+    } else {
+      this.renderValidationFailure(newOrder.validationError);
+    }
   },
+  renderValidationFailure(errorsHash) {
+    this.$('.form-errors ul').empty();
+    for (const key in errorsHash) {
+      this.$('.form-errors ul').append(`<li><strong>${key}:</strong> ${errorsHash[key]}</li>`);
+    }
+  }
 });
 
 export default OrderEntryView;
