@@ -76,9 +76,14 @@ $(document).ready( () => {
   orderTemplate = _.template($('#order-template').html());
 
   const quotes = new QuoteList(quoteData);
+  // const orders = new OrderList();
 
   const simulator = new Simulator({
     quotes: quotes,
+  });
+
+  const order = new Order ({
+    bus: bus,
   });
 
   const quoteListView = new QuoteListView({

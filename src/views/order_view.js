@@ -7,7 +7,7 @@ const OrderView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
 
-    this.listenTo(this.model, 'change', this.render);
+    // this.listenTo(this.model, 'change', this.render);
   },
 
   render(){
@@ -22,19 +22,16 @@ const OrderView = Backbone.View.extend({
 
   events: {
     'click button.btn-cancel': 'cancelOrder',
-    'click button.btn-buy': 'createOrder'
   },
 
   cancelOrder(event) {
     console.log("You clicked the cancel button");
     console.log(event);
     this.model.cancelOrder();
+    console.log("This method is working fine!")
   },
 
-  createOrder(event) {
-    console.log("you clicked buy button");
-    this.model.createOrder();
-  }
+
 
   // define events
 

@@ -11,6 +11,8 @@ const OrderListView = Backbone.View.extend({
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
 
+
+
   },
   render(){
     this.$('.orders').empty();
@@ -25,7 +27,7 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
         bus: this.bus,
       }); // end orderView const
-    
+
       this.$('.orders').append(orderView.render().$el);
 
     }); // end each
@@ -33,7 +35,27 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
 
-}); //end quotelistview
+  events: {
+    'click button.btn-buy': 'createBuyOrder',
+    'click button.btn-sell': 'createSellOrder'
+  },
+
+
+// adding to quote list here? 
+
+  createBuyOrder(event) {
+    event.preventDefault();
+    console.log("you clicked the buy button");
+    // this.model.createOrder();
+    // this.addOpenOrder(true)
+  },
+
+  createSellOrder(event) {
+    event.preventDefault();
+    console.log("you clicked the sell button");
+  }
+
+}); //end orderlistview
 
 
 
