@@ -33,13 +33,22 @@ const OrderListView = Backbone.View.extend({
 
   buyOrder: function(event) {
     event.preventDefault();
-  
+    const orderData = {
+      buy: true,
+      symbol: this.$('select[name=symbol]').val(),
+      targetPrice: parseFloat(this.$('input[name=price-target]').val()),
     };
 
+    const newOrder = new Order(orderData);
 
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+    } else {
+      console.log( 'Invalid Order!' );
+    }
   }
 
+  // sell
+});
 
-  });
-
-  export default OrderListView;
+export default OrderListView;

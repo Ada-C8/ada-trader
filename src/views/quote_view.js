@@ -23,8 +23,8 @@ const QuoteView = Backbone.View.extend({
   events: {
     'click button.btn-buy': 'buyQuote',
     'click button.btn-sell': 'sellQuote',
-
   },
+
   buyQuote: function() {
     this.model.set('buy', true);
    let tradeTemplate = _.template($('#trade-template').html());
