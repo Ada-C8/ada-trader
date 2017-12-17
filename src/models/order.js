@@ -24,6 +24,17 @@ const Order = Backbone.Model.extend({
     } else {
       return false;
     }
+  },
+  trade(quote, i, trigger, buy) {
+    const targetPrice = this.model.models[i].attributes.targetPrice;
+    const symbol = this.model.models[i].attributes.symbol;
+    const quoteSymbol = quote.attributes.symbol;
+    const currentPrice = quote.attributes.price;
+    const trade = buy ? currentPrice <= targetPrice : currentPrice >= targetPrice;
+    if (quoteSymbol == symbol && trade) {
+      this.bus.trigger(trigger, this.model.models[i]);
+      this.bus.trigger('eraseQuote', this);
+    }
   }
 });
 
