@@ -10,15 +10,19 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
 
+    this.listenTo(this.model, 'update', this.render)
+
     this.listenTo(this.bus, 'newOrder', this.addOrder);
     this.listenTo(this.bus, 'newOrder', this.render);
+    // this.listenTo(this.bus, 'cancelOrder', cancelOrder)
+
   },
   render(orderObject) {
     this.$('#orders').empty();
-    console.log('render order_list_view');
-    console.log(this.model);
+    // console.log('render order_list_view');
+    // console.log(this.model);
     this.model.each((order) => {
-      console.log(order);
+      // console.log(order);
       const orderView = new OrderView({
         model: order,
         template: this.template,
@@ -26,17 +30,13 @@ const OrderListView = Backbone.View.extend({
         className: 'order',
         bus: this.bus,
       });
-      console.log(orderView);
+      // console.log(orderView);
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
   },
   addOrder(orderObject) {
-    console.log(orderObject);
-    // this.quoteList.each((quote) => {
-    //   if (orderObject['symbol'] == quote.get('symbol'))
-    //   orderObject['quote'] = quote
-    // })
+    // console.log(orderObject);
     const newOrder = new Order(orderObject);
     if (newOrder.isValid()) {
       console.log('I am a valid order')
