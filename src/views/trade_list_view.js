@@ -5,7 +5,6 @@ import Quote from '../models/quote';
 
 const TradeListView = Backbone.View.extend({
   initialize(params) {
-    console.log(params);
     this.template = params.template
     this.bus = params.bus
 

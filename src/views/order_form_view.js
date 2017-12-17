@@ -42,10 +42,7 @@ const OrderFormView = Backbone.View.extend({
     event.preventDefault();
     console.log('test click order');
     let orderObject = this.readOrderFormData(true)
-    console.log(orderObject);
-
-    let order = new Order(orderObject)
-    console.log(order);
+    
     this.bus.trigger('newOrder', orderObject)
   },
 
