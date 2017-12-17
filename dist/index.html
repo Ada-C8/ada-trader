@@ -43,7 +43,7 @@
 
       <div id="order-workspace" class="order-workspace row">
 
-       <div class="columns large-8 small-12">
+       <div id="orders-container" class="columns large-8 small-12">
          <div class="orders-container columns large-10 large-offset-1">
            <h2>Open Orders</h2>
            <div class="orders-list-container">
@@ -109,7 +109,7 @@
       <div class="detail">
         <span class="action"><%- buy ? 'buy' : 'sell' %></span>
         at
-        <span class="price">₩<%- targetPrice.toFixed(2) %></span>
+        <span class="price">₩<%- targetPrice %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
     </script>

@@ -1,7 +1,8 @@
 import Backbone from 'backbone';
 
-const orderFIELDS = ['symbol', 'price-target'];
-const orderFieldSelector = ['select', 'input']
+import Order from '../models/order';
+
+
 
 
 const OrderFormView = Backbone.View.extend({
@@ -13,14 +14,14 @@ const OrderFormView = Backbone.View.extend({
   //   $('#dropdown').append(`<option>${quote.symbol}</option>`);
   // }),
 
-  readOrderFormData() {
+  readOrderFormData(type) {
     const orderData = {};
 
-    const $inputSymbolValue = this.$(`select[name="symbol"]`).val();;
+    const $inputSymbolValue = this.$(`select[name="symbol"]`).val();
     const $inputPriceTargert = this.$(`input[name="price-target"]`)
 
 
-    const priceValue = $inputPriceTargert.val();
+    const priceValue = parseFloat($inputPriceTargert.val()).toFixed(2);
     console.log(`priceValue = ${priceValue}`);
 
     // Don't take empty strings, so that Backbone can
@@ -29,17 +30,30 @@ const OrderFormView = Backbone.View.extend({
     if (priceValue != '') {
       orderData['targetPrice'] = priceValue;
     }
+    orderData['buy'] = type
     $inputPriceTargert.val('');
     return orderData;
   },
   events: {
-    'click button.btn-buy': 'orderBuy',
+    'click button.btn-buy': 'buyOrder',
+    'click button.btn-sell': 'orderSell',
   },
-  orderBuy(event) {
+  buyOrder(event) {
     event.preventDefault();
-    console.log('test click orderBuy');
-    let orderObject = this.readOrderFormData()
+    console.log('test click order');
+    let orderObject = this.readOrderFormData(true)
     console.log(orderObject);
+
+    let order = new Order(orderObject)
+    console.log(order);
+    this.bus.trigger('newOrder', orderObject)
+  },
+
+  orderSell(event) {
+    event.preventDefault();
+    console.log('test click orderSell');
+    let orderObject = this.readOrderFormData(false);
+    this.bus.trigger('newOrder', orderObject)
   }
 
 });

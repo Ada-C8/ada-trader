@@ -3,13 +3,16 @@ import 'css/app.css';
 
 import $ from 'jquery';
 import _ from 'underscore';
-
+ 
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
+import Order from './models/order'
+import OrderList from './collections/order_list'
 
 import QuoteListView from './views/quote_list_view';
 import TradeListView from './views/trade_list_view';
 import OrderFormView from './views/order_form_view';
+import OrderListView from './views/order_list_view';
 
 const quoteData = [
   {
@@ -41,18 +44,21 @@ $(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
+  const orders = new OrderList();
 
   simulator.start();
 
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
 
+  let template = _.template($('#quote-template').html());
   let tradeTemplate = _.template($('#trade-template').html());
+  let orderTemplate = _.template($('#order-template').html());
 
   const quoteListView = new QuoteListView({
-    el: 'main',
+    el: '#quotes-container',
     model: quotes,
-    template: _.template($('#quote-template').html()),
+    template: template,
     bus: bus,
   });
 
@@ -63,9 +69,22 @@ $(document).ready(function() {
   })
   const orderFormView = new OrderFormView({
     // quoteData: quoteData,
-    el: '.order-entry-form'
+    el: '.order-entry-form',
+    bus: bus,
   });
 
+  const order = new Order({
+    bus: bus,
+  })
+
+  const orderListView = new OrderListView({
+    el: '.orders-list-container',
+    model: orders,
+    template: orderTemplate,
+    bus: bus,
+  });
+
+  orderListView.render();
   quoteListView.render();
 
 });
