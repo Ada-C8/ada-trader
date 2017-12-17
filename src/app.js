@@ -43,6 +43,7 @@ const prices = quoteData.map(info => info.price);
 
 // Define some variables
 let quoteTemplate;
+let tradeTemplate;
 
 // -------------------------------------------------------
 
@@ -52,12 +53,11 @@ $(document).ready(function() {
   // EVENT BUS
   // listen to buy and sell events in quote.js
   // append #trade-templates for each; parse datas
-  // let bus = {};
-  // bus = _.extend(bus, Backbone.Events);
-  // const tradeView = new TradeView({bus: bus});
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
 
   quoteTemplate = _.template($('#quote-template').html());
-  // tradeTemplate = _.template($('#trade-template').html());
+  tradeTemplate = _.template($('#trade-template').html());
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -72,11 +72,20 @@ $(document).ready(function() {
 
   simulator.start();
 
+  // Render quote list view
   const quoteListView = new QuoteListView({
-    el: 'main',
+    el: $('#quotes-container'),
     model: quotes,
     template: quoteTemplate,
+    bus: bus,
   });
 
   quoteListView.render();
+
+  // Render trade history view
+  const tradeView = new TradeView({
+    template: tradeTemplate,
+    el: $('#trades-container'),
+    bus: bus,
+  })
 });
