@@ -10,6 +10,9 @@ import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
 
+import OrderList from 'collections/order_list';
+import OrderListView from './views/order_list_view';
+
 const quoteData = [
   {
     symbol: 'HUMOR',
