@@ -6,7 +6,6 @@ const OrderView = Backbone.View.extend({
   initialize(params)  {
     console.log("Initializing in OrderView")
     this.template = params.template;
-    // this.bus = this.bus;
     this.listenTo(this.model, 'change', this.render)
   },
 

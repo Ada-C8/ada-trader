@@ -9,7 +9,6 @@ const Quote = Backbone.Model.extend({
   buy() {
     const data = {
     }
-
     data.buy = true;
     data.symbol = this.get('symbol');
     data.price = this.get('price')
@@ -23,7 +22,6 @@ const Quote = Backbone.Model.extend({
   sell() {
     const data = {
     }
-
     data.buy = false;
     data.symbol = this.get('symbol');
     data.price = this.get('price')

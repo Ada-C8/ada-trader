@@ -53,9 +53,7 @@ $(document).ready(() => {
     model: quoteList,
     quoteTemplate: quoteTemplate,
     tradeTemplate: tradeTemplate,
-    // orderTemplate: orderTemplate,
     el: 'main',
-    // bus: bus
   });
 
   const orderListView = new OrderListView({

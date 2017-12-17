@@ -5,7 +5,6 @@ import Quote from '../models/quote'
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
-    // this.bus = params.bus,
     this.quoteTemplate = params.quoteTemplate,
     this.tradeTemplate = params.tradeTemplate,
     this.listenTo(this.model, "change", this.render)
@@ -17,13 +16,11 @@ const QuoteListView = Backbone.View.extend({
     this.$('#quotes').empty();
     this.model.each((quote) => {
       const quoteView = new QuoteView ({
-        // bus: this.bus,
         model: quote,
         template: this.quoteTemplate,
         tagName: 'li',
         className: 'quote'
       })
-      // this.listenTo(this.bus, 'appendTrade', this.appendTrade)
       console.log("IN RENDER QUOTE LIST VIEW")
       this.$('#quotes').append(quoteView.render().$el);
     })

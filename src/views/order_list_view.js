@@ -6,11 +6,8 @@ import _ from 'underscore';
 
 const OrderListView = Backbone.View.extend({
   initialize(params){
-    // this.bus = params.bus;
     this.template = params.template;
     this.quotes = params.quotes;
-    console.log("hello?")
-    // this.listenTo(this.model, "change", this.render);
     this.listenTo(this.model, "update", this.render);
   },
 
@@ -18,7 +15,6 @@ const OrderListView = Backbone.View.extend({
     this.$('#orders').empty();
     this.model.each((order) => {
       const orderView = new OrderView({
-        // bus: this.bus,
         model: order,
         template: this.template,
         tagName: 'li',
@@ -57,9 +53,6 @@ const OrderListView = Backbone.View.extend({
     this.model.add(order);
     console.log(order);
   },
-
-
-
 })
 
 export default OrderListView;
