@@ -13,7 +13,6 @@ describe('Trade spec', () => {
     });
 
     it('must have a price', () => {
-
       let trade = new Trade({
         symbol: "HELLO",
         price: null

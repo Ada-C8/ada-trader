@@ -11,7 +11,7 @@ const Trade = Backbone.Model.extend({
   },
 
   validate(params) {
-    
+
     const errors = {};
     if (!params.symbol) {
       errors['symbol'] = ["Symbol required."]
