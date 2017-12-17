@@ -1,9 +1,14 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-  defaults: {
-    symbol: 'UNDEF',
-  },
+  validate(attributes) {
+    const errors = {};
+
+    if(!attributes.price) {
+      errors['price'] = ['Price is required'];
+    }
+
+  }
 });
 
 export default Order;

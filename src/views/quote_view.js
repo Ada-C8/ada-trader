@@ -26,13 +26,9 @@ const QuoteView = Backbone.View.extend({
     this.trigger('quoteAction', this);
     this.model.sell();
   },
-  checkOrders() {
-    const symbol = this.model.get('symbol');
-    this.bus.trigger(`check${symbol}`, this.model);
-  },
-  // addTrade() {
-  //   const tradeTemplate = this.tradeTemplate(this.model.toJSON());
-  //   $('#trades').prepend(tradeTemplate);
+  // checkOrders() {
+  //   const symbol = this.model.get('symbol');
+  //   this.bus.trigger(`check${symbol}`, this.model);
   // },
 });
 

@@ -18,9 +18,6 @@ import QuoteListView from 'views/quote_list_view';
 import OrderView from 'views/order_view';
 import OrderListView from 'views/order_list_view';
 
-let bus = {};
-bus = _.extend(bus, Backbone.Events);
-
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -40,22 +37,24 @@ const quoteData = [
   },
 ];
 
-$(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
+const quotes = new QuoteList(quoteData);
+const orders = new OrderList();
 
+let bus = {};
+bus = _.extend(bus, Backbone.Events);
+
+$(document).ready(function() {
   const simulator = new Simulator({
     quotes: quotes,
   });
-  simulator.start();
 
   const quoteListView = new QuoteListView({
     model: quotes,
     template: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
-    el: 'main',
-    bus: bus
+    bus: bus,
+    el: 'main'
   });
-  quoteListView.render();
 
   const formSelect = function formSelect () {
     quotes.each((quote) => {
@@ -63,16 +62,17 @@ $(document).ready(function() {
       $('select[name="symbol"]').append(`<option value="${symbol}">${symbol}</option>`);
     });
   };
-  formSelect();
-
-  const orders = new OrderList();
 
   const orderListView = new OrderListView({
     model: orders,
-    symbols: quotes,
+    quotes: quotes,
     template: _.template($('#order-template').html()),
-    el: '#order-workspace',
-    bus: bus
+    bus: bus,
+    el: '#order-workspace'
   });
+
+  simulator.start();
+  quoteListView.render();
+  formSelect();
   orderListView.render();
 });
