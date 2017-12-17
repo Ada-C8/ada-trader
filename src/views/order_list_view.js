@@ -15,7 +15,7 @@ const OrderListView = Backbone.View.extend({
     'click button.btn-sell': 'sellOrder',
   },
   render() {
-    const currentOpenOrders = this.$('#orders-list-container');
+    const currentOpenOrders = this.$('.orders-list-container');
     currentOpenOrders.empty();
     this.model.each((order) => {
       const orderView = new OrderView({
@@ -25,7 +25,7 @@ const OrderListView = Backbone.View.extend({
         tagName: 'li',
         className: `order ${order.get('classStatus')}`,
       });
-      this.$('#orders-list-container').prepend(orderView.render().$el);
+      this.$('.orders-list-container').prepend(orderView.render().$el);
     });
     return this;
   },
@@ -44,6 +44,7 @@ const OrderListView = Backbone.View.extend({
       bus: this.bus,
     });
     // console.log(newOrder);
+    this.validateOrder(newOrder);
   },
   buyOrder(event) {
     // this.model.add(order);
@@ -57,6 +58,19 @@ const OrderListView = Backbone.View.extend({
     // console.log('selling this order');
     // console.log(event);
     this.createOrderFromForm(event, false);
+  },
+  validateOrder(order) {
+    console.log(' in the validate order method');
+    if (order.isValid()) {
+      console.log('the new order is valid');
+      this.model.add(order);
+      // clear form after an order is made
+      this.$el.find('form').trigger('reset');
+    } else {
+      const errors = order.validationError;
+      console.log('the new order is invalid');
+      console.log(errors);
+    }
   },
 });
 
