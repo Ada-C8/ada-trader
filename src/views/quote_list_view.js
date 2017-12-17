@@ -26,7 +26,7 @@ const QuoteListView = Backbone.View.extend({
       this.bus.trigger('current_quote_list', this.model)
 
     });
-    // symbols is a custom function in the collection that returns an array of models' symbols
+    // symbols() is a custom function in the collection that returns an array of models' symbols
     let quotes = this.model.symbols();
     this.bus.trigger('quote_symbols', quotes);
     return this;
