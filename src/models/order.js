@@ -40,7 +40,7 @@ const Order = Backbone.Model.extend({
     if (this.attributes.buy && (this.attributes.targetPrice >= this.attributes.matchedQuote.get('price')) ) {
       // alert('hey buy!');
       const matchedQuoteCopy = this.attributes.matchedQuote;
-      // debugger;
+
       this.destroy();
       matchedQuoteCopy.buy();
     }
@@ -49,7 +49,7 @@ const Order = Backbone.Model.extend({
     if (!this.attributes.buy && (this.attributes.targetPrice <= this.attributes.matchedQuote.get('price')) ) {
       // alert('hey sell!');
       const matchedQuoteCopy = this.attributes.matchedQuote;
-      // debugger;
+      
       this.destroy();
       matchedQuoteCopy.sell();
     }
