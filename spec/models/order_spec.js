@@ -81,20 +81,49 @@ describe('Order spec', () => {
     describe('priceCheck', () => {
       describe('buyOrder', () => {
         it('executes a buy when quote price drops below targetPrice', () => {
+          order.set('buy', true);
+          order.set('targetPrice', 99.00);
 
+          quote.set('price', 98.99);
+          order.priceCheck();
+
+          expect(quote.get('price')).toBe(99.99);
         });
 
         it('does not execute order until price drops below target', () => {
+
+          order.set('buy', true);
+          order.set('targetPrice', 99.00);
+
+          quote.set('price', 99.01);
+          order.priceCheck();
+
+          expect(quote.get('price')).toBe(99.01);
 
         });
       });
 
       describe('sellOrder', () => {
         it('executes order when quote exceeds targetPrice', () => {
-          
+          order.set('buy', false);
+          order.set('targetPrice', 99.00);
+
+          quote.set('price', 99.01);
+          order.priceCheck();
+
+          expect(quote.get('price')).toBe(98.01);
+
         });
 
         it('does not execute order until quote exceeds targetPrice', () => {
+          order.set('buy', false);
+          order.set('targetPrice', 99.00);
+
+          quote.set('price', 98.99);
+          order.priceCheck();
+
+          expect(quote.get('price')).toBe(98.99);
+
 
         })
       })
