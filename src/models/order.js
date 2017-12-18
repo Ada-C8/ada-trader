@@ -9,8 +9,12 @@ const Order = Backbone.Model.extend({
   initialize(attributes) {
   },
 
-  createOrder() {
-    console.log("We're creating your order!");
+  createBuyOrder() {
+    console.log("BUY!");
+  },
+
+  createSellOrder(){
+    console.log("SELL!");
   },
 
   cancelOrder() {

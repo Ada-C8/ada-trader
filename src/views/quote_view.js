@@ -15,10 +15,21 @@ const QuoteView = Backbone.View.extend({
   render() {
     console.log("In the quote view render function");
     const compiledTemplate = this.template(this.model.toJSON());
-    // will fill the template with data from the model instance. It will fit within an <li>
-    this.$el.html(compiledTemplate); //will set the html in the quotes-container (currently a div that contains a heading and the ul for #quotes) to be that of the template. //then back to quoteListview where it will be rattached to the quotes
-  
+    // will fill the template with data from the model instance. It will fit within an <li> with class quote (we sedt this when we called new);
+    this.$el.html(compiledTemplate); //will set the html in the root element, which I think is just an empty div right now? to be the filled template for the instance, and return it 
+
     return this;
+
+    // <li class="quote">
+    // <div class="row small-12 columns">
+    //   <h3 class="symbol"><%- symbol %></h3>
+    //   <h3 class="price">$<%- price.toFixed(2) %></h3>
+    //   <div class="quote-actions">
+    //     <button class="btn-buy alert button">Buy</button>
+    //     <button class="btn-sell success button">Sell</button>
+    //   </div>
+    // </div>
+    // </li>
 
 
   }, //render

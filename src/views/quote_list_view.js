@@ -18,7 +18,7 @@ initialize(params) {
 render(){
   // console.log("IN the quote list view render function");
   this.$('.quotes').empty();
-// for this model (quoteList), take each quote and create a quote view instance by sending in these params. Our model here is quote.
+// for this model (quoteList), take each quote and create a quote view instance by sending in these params. Our model here is quote. assign each view instance an li tag and class of quote
   this.model.each((quote) => {
     const quoteView = new QuoteView({
       model: quote,
@@ -27,20 +27,34 @@ render(){
       className: 'quote',
       bus: this.bus,
     }); // end quoteView const
-    console.log("Created quoteView for " + quoteView);
-    this.$('.quotes').append(quoteView.render().$el);
-    console.log("appended the rendered view")
 
+    console.log("appending");
+    this.$('.quotes').append(quoteView.render().$el);
+
+    // call render on the quote view instance
+    // then grab the root dom element for quote view, which is quotes-container
+    // then append the div with class quote that we got back from the quote list render function to the ul with class quotes .
+
+    // to be the quotes-container (currently a div that contains a heading and the ul for #quotes) to be that of the template. //then back to quoteListview where it will be rattached to the quotes
+    // console.log("appended the rendered view")
+    // <div id="quotes-container" class="quotes-container columns small-10 small-offset-1 end">
+    //   <h2>Quotes</h2>
+    //   <div class="quotes-list-container">
+    //     <ul id="quotes" class="quotes">
+    //       <!--  Where quotes will be displayed as lis -->
+    //     </ul>
+    //   </div>
+    // </div>
     // console.log(quote.get('symbol'));
 
     // this.$('#symbol').append('<option>' + quote.get('symbol') + '</option>');
 
-    // this.$('h3#testings').append('I am the greatest of all time!!!');
 
-      // let x = document.getElementById("symbol");
-      // let option = document.createElement("option");
-      // option.text = quote.get('symbol');
-      // x.add(option);
+
+      let x = document.getElementById("symbol");
+      let option = document.createElement("option");
+      option.text = quote.get('symbol');
+      x.add(option);
 
   }); // end each
   return this;

@@ -55,14 +55,24 @@ const OrderListView = Backbone.View.extend({
   createBuyOrder(event) {
     event.preventDefault();
     console.log("you clicked the buy button");
-    // this.model.createOrder();
-    // this.addOpenOrder(true)
+    this.createOrder(true);
+
   },
 
   createSellOrder(event) {
     event.preventDefault();
     console.log("you clicked the sell button");
-  }
+    this.createOrder(false);
+  },
+
+  createOrder(buy) {
+    console.log("We're triggering the create order event!");
+    // this.bus.trigger('createOrder', order_data);
+  },
+
+
+
+
 
 }); //end orderlistview
 
