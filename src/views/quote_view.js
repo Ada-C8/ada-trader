@@ -9,6 +9,9 @@ const QuoteView = Backbone.View.extend({
 
     // listens for change events on models and calls render to redraw the view. Any time the model changes it triggers a change event
     this.listenTo(this.model, 'change', this.render);
+
+    // listens to the bus and waits for a message from the orderListView to tell us that and order should be converted to a buy or sell action, when it hears the message it calles buyOrSellStock which determines which action takes place
+    this.listenTo(this.bus, 'orderExecute', this.buyOrSellStock);
   },
 
   // Events Ojects
@@ -20,10 +23,15 @@ const QuoteView = Backbone.View.extend({
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
+
+    // send a quotePriceUpdate message on the bus each time the quoteView gets redrawn, which happens when a quote price gets updated by the simulator
+    // the orderListView will be listening and will determine if the price change triggers a buy or sell action
+    this.bus.trigger('quotePriceUpdate', this.model);
+
     return this;
   },
 
-  buyStock(event) {
+  buyStock() {
     const tradeData = this.model.buy();
     console.log('in buyStock method in quote view, here is trade data object');
     console.log(tradeData);
@@ -31,13 +39,19 @@ const QuoteView = Backbone.View.extend({
     this.bus.trigger('buyOrSell', tradeData);
   },
 
-  sellStock(event) {
+  sellStock() {
     const tradeData = this.model.sell();
     console.log('in sellStock method in quote view, here is trade data object');
     console.log(tradeData);
 
     this.bus.trigger('buyOrSell', tradeData);
   },
+
+  buyOrSellStock(info) {
+    // this method should figure out which method to buy or sell stock to call once the orderExecute
+    console.log('inside buyOrSellStock');
+  },
+
 });
 
 export default QuoteView;

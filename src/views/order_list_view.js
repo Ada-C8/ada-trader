@@ -11,6 +11,9 @@ const OrderListView = Backbone.View.extend({
 
     // listens for changes in our template
     this.listenTo(this.model, 'update', this.render);
+
+    // listens for quotePriceUpdate message on bus that is being sent from the quote view, if it hears that call it calls method orderToQuote which decides what happens based on the quote prices
+    this.listenTo(this.bus, 'quotePriceUpdate', this.orderToQuote);
   },
 
   // events object
@@ -108,6 +111,19 @@ const OrderListView = Backbone.View.extend({
     $statusMessages.empty();
     // append the message to the DOM
     $statusMessages.append(`<p>${message}</p>`);
+  },
+
+  // this gets called when prices are updated. It will check if the price change reaches a point where it should trigger buying or selling a quote, as well as removing the order
+
+  orderToQuote(quote){
+    // console.log(`inside orderToQuote method`);
+    // get all of the orders from the quotelist that match the quote passed into the method
+
+    // for each of those orders figure out if the marketPrice should trigger actions
+
+    // if so send send a orderExecute trigger over the bus, quote view will be listening. Remove that order from the orderList
+
+    this.bus.trigger('orderExecute');
   },
 
 });
