@@ -25,7 +25,7 @@ describe('Order spec', () => {
 
 
     it('buy price is not >= to the current market price', () => {
-      const prices = [100,1000];
+      const prices = [100, 1000];
 
       prices.forEach((price)=> {
         const order = new Order({

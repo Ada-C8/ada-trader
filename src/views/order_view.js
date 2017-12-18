@@ -35,16 +35,18 @@ const OrderView = Backbone.View.extend({
     // bySymbol is custom filter created in quote_list
     const matchingQuote = this.quotes.bySymbol(this.model.symbol);
 
-    if (this.model.buy && this.model.targetPrice >= matchingQuote.attributes.price) {
-      matchingQuote.buy();
-      this.bus.trigger('addTrade', trade); // newTrade() in trade_list_view
-      this.trigger('deleteOrder'); // deleteOrder() above ^^
-
-    } else if (!this.model.buy && this.model.targetPrice <= matchingQuote.attributes.price) {
-
-      matchingQuote.sell();
-      this.bus.trigger('addTrade', trade); // newTrade() in trade_list_view
-      this.trigger('deleteOrder'); // deleteOrder() above ^^
+    if (this.model.buy) {
+      if (this.model.targetPrice < matchingQuote.attributes.price) {
+        matchingQuote.buy();
+        this.bus.trigger('addTrade', trade); // newTrade() in trade_list_view
+        this.trigger('deleteOrder'); // deleteOrder() above ^^
+      }
+    } else if (!this.model.buy) {
+      if (this.model.targetPrice > matchingQuote.attributes.price) {
+        matchingQuote.sell();
+        this.bus.trigger('addTrade', trade); // newTrade() in trade_list_view
+        this.trigger('deleteOrder'); // deleteOrder() above ^^
+      }
     }
   },
 });

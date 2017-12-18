@@ -53,10 +53,9 @@ const OrderListView = Backbone.View.extend({
       this.errorMessage(newOrder.validationError);
     }
   },
-  
+
   errorMessage(errors) {
     Object.entries(errors).forEach((error)=> {
-      // errors come in an array where 0 is the type and 1 is the message
       $('.form-errors').prepend(`<h3>${error[1]}</h3>`);
     })
   },
