@@ -32,19 +32,18 @@ const OrderView = Backbone.View.extend({
       price: this.model.targetPrice,
       symbol: this.model.symbol,
     });
-    // console.log(trade);
 
     const matchingQuote = this.quotes.bySymbol(this.model.symbol);
 
     if (this.model.buy && this.model.targetPrice >= matchingQuote.attributes.price) {
       matchingQuote.buy();
-      // console.log(this.bus);
       this.bus.trigger('addTrade', trade);
       this.trigger('deleteOrder');
-    } //else if ((this.model.buy === false) && (this.targetPrice <= Quote.model.get('price'))) {
-    //   this.trigger('deleteOrder');
-    //   Quote.sell();
-    // }
+    } else if (!this.model.buy && this.model.targetPrice <= matchingQuote.attributes.price) {
+      matchingQuote.sell();
+      this.bus.trigger('addTrade', trade);
+      this.trigger('deleteOrder');
+    }
   },
 });
 
