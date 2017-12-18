@@ -37,22 +37,24 @@ const OrderListView = Backbone.View.extend({
     const stringTargetPrice = this.$(`input[name=price-target]`).val();
     orderData['targetPrice'] = parseFloat(stringTargetPrice);
     let quote = this.quoteList.where({symbol: orderData['symbol']})[0].attributes
-    console.log(quote)
-    // while (orderData['targetPrice'] > quote.price) {
-    //   console.log("bad buy")
-    // }
-    const newOrder = new Order(orderData);
-    if (newOrder.isValid()) {
-      this.model.add(newOrder);
-      newOrder.listenTo(this.bus, 'priceChange', newOrder.executeOrder);
-      this.$('.order-entry-form [name=price-target]').val("");
-      this.$('.form-errors').empty();
+    if (orderData['buy'] && orderData['targetPrice'] > quote.price) {
+      this.$('.form-errors').append(`<p>Invalid target price: must be less than current market price for buy order</p>`);
+    } else if (!orderData['buy'] && orderData['targetPrice'] < quote.price) {
+      this.$('.form-errors').append(`<p>Invalid target price: must be greater than current market price for sell order</p>`);
     } else {
-      this.$('.form-errors').empty();
-      for(let key in newOrder.validationError) {
-        newOrder.validationError[key].forEach((error) => {
-          this.$('.form-errors').append(`<p>${key}: ${error}</p>`);
-        })
+      const newOrder = new Order(orderData);
+      if (newOrder.isValid()) {
+        this.model.add(newOrder);
+        newOrder.listenTo(this.bus, 'priceChange', newOrder.executeOrder);
+        this.$('.order-entry-form [name=price-target]').val("");
+        this.$('.form-errors').empty();
+      } else {
+        this.$('.form-errors').empty();
+        for(let key in newOrder.validationError) {
+          newOrder.validationError[key].forEach((error) => {
+            this.$('.form-errors').append(`<p>${key}: ${error}</p>`);
+          })
+        }
       }
     }
   },
