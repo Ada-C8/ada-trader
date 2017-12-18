@@ -16,11 +16,6 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.bus, 'quotePriceUpdate', this.orderToQuote);
   },
 
-  // events object
-  events:{
-    'click button.btn-buy, button.btn-sell': 'addOrder',
-  },
-
   render() {
     console.log('inside order list view render function');
     // Clear the DOM Elements so we can redraw them
@@ -43,6 +38,11 @@ const OrderListView = Backbone.View.extend({
     // console.log(this.model);
     return this;
   },
+  
+  // events object
+  events:{
+    'click button.btn-buy, button.btn-sell': 'addOrder',
+  },
 
   // function to draw the order form dropdown selection options
   renderOrderForm() {
@@ -61,7 +61,7 @@ const OrderListView = Backbone.View.extend({
     // get form data
     const formData = this.getFormData();
     formData['buy'] = event.target.classList[0] === ("btn-buy")  ? true : false;
-    // console.log(`formData[buy]: ${formData['buy']}`);
+
     // new instance of OrderView using form formData
     const newOrder = new Order(formData);
 
@@ -117,13 +117,11 @@ const OrderListView = Backbone.View.extend({
 
   orderToQuote(quote){
     let orders;
-    // console.log(`inside orderToQuote method`);
 
     // get all of the orders from the orderList that match the quote passed into the method
     orders = this.model.where({symbol: `${quote.get('symbol')}`});
 
     // for each order figure out if price change should trigger action
-    // console.log(orders);
     orders.forEach((order) => {
       if (order.get('buy') && (quote.get('price') <= order.get('targetPrice'))) {
         // buy - if the updated quote price is less than or equal to the order target price
@@ -137,7 +135,6 @@ const OrderListView = Backbone.View.extend({
 
   triggerAndRemove(order, buy){
     console.log('inside triggerAndRemove method');
-    console.log(`${order.get('symbol')}`);
     // if so send send a orderExecute trigger over the bus, quote view will be listening. Remove that order from the orderList
     // console.log('order list before');
     // console.log(this.model);

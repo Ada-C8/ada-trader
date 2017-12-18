@@ -91,6 +91,4 @@ $(document).ready(function() {
     template: tradeTemplate,
     bus: bus,
   });
-
-
 });

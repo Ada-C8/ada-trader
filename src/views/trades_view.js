@@ -11,8 +11,8 @@ const TradesView = Backbone.View.extend({
 
   addTradeHistory(tradeData) {
     console.log('inside addTradeHistory method');
-    console.log('tradeData');
-    console.log(tradeData);
+    // console.log('tradeData');
+    // console.log(tradeData);
     const compiledTemplate = this.template(tradeData);
     this.$el.prepend(compiledTemplate);
     return this;

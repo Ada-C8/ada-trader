@@ -5,8 +5,6 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
-
-    // this.listenTo();
   },
 
   render() {
@@ -26,13 +24,12 @@ const OrderView = Backbone.View.extend({
     // get rid of order
     this.model.destroy({
       success: function() {
-        console.log(`Successfully cancelled market order for  ${symbol}`);
+        console.log(`Successfully cancelled market order for ${symbol}`);
       }
     });
     // remove is probably unneccesary but it tells it to remove itself from the DOM
     this.remove();
   },
-
 });
 
 export default OrderView;

@@ -1,8 +1,7 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-
-// add validations and messaging to the user here
+  // add validations and messaging to the user here
   validate(attributes) {
     let errors;
     const marketPrice = attributes.quotePrice;
@@ -23,7 +22,6 @@ const Order = Backbone.Model.extend({
         errors = "When Buying - Target Price must be less than the current market price.";
       }
     }
-
 
     if (errors) {
       return errors;

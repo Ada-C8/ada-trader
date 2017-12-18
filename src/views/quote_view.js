@@ -34,7 +34,7 @@ const QuoteView = Backbone.View.extend({
   buyStock() {
     const tradeData = this.model.buy();
     console.log('in buyStock method in quote view, here is trade data object');
-    console.log(tradeData);
+    // console.log(tradeData);
 
     this.bus.trigger('buyOrSell', tradeData);
   },
@@ -42,7 +42,7 @@ const QuoteView = Backbone.View.extend({
   sellStock() {
     const tradeData = this.model.sell();
     console.log('in sellStock method in quote view, here is trade data object');
-    console.log(tradeData);
+    // console.log(tradeData);
 
     this.bus.trigger('buyOrSell', tradeData);
   },
@@ -60,10 +60,7 @@ const QuoteView = Backbone.View.extend({
     } else {
       console.log('no match do nothing');
     }
-    // console.log(this.model.get('symbol'));
-    // console.log(info);
   },
-
 });
 
 export default QuoteView;
