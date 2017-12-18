@@ -55,16 +55,13 @@ const OrderListView = Backbone.View.extend({
 
     if (!order.validate()) {
       this.model.add(order);
-      // return order;
+    } else {
+      for (let errors in order.validate()) {
+        order.validate()[errors].forEach((error) => {
+          this.$('.form-errors').append(error)
+        })
+      }
     }
-    // } else {
-    //   for (let errors in order.validate()) {
-    //     order.validate()[errors].forEach((error) => {
-    //       this.$('.form-errors').append(error)
-    //     })
-    //   }
-    // }
-    console.log(order);
   },
 })
 

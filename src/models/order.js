@@ -30,7 +30,7 @@ const Order = Backbone.Model.extend({
       errors.price = ['Invalid Price!']
     }
 
-    if (errors.keys().length > 0){
+    if (Object.keys(errors).length > 0) {
       return errors
     } else {
       return false
