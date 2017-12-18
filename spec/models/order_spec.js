@@ -54,7 +54,7 @@ describe('Order spec', () => {
       it('Symbol must not be empty', () => {
         order.set('symbol', '')
         order.set('targetPrice', 99.00)
-        
+
         expect(order.invalid()).toEqual({symbol: [ 'Invalid Symbol']});
       });
     })
@@ -77,5 +77,27 @@ describe('Order spec', () => {
         expect(order.invalid()).toEqual({price: [ 'Target Price at or below Market Price!'] });
       });
     })
-  })
+
+    describe('priceCheck', () => {
+      describe('buyOrder', () => {
+        it('executes a buy when quote price drops below targetPrice', () => {
+
+        });
+
+        it('does not execute order until price drops below target', () => {
+
+        });
+      });
+
+      describe('sellOrder', () => {
+        it('executes order when quote exceeds targetPrice', () => {
+          
+        });
+
+        it('does not execute order until quote exceeds targetPrice', () => {
+
+        })
+      })
+    });
+  });
 });
