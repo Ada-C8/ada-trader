@@ -18,42 +18,42 @@ const Order = Backbone.Model.extend({
       errors.symbol = ['You must select a valid symbol'];
     }
 
-    if (this.get('buy') && this.get('quote').get('price') < this.get('targetPrice')) {
-      errors.price = ['The current price is lower than your target price. You wasting yo money.' ]
+    if (this.get('buy') && this.get('quote').get('price') <= this.get('targetPrice')) {
+      errors.price = ['Target Price higher than Market Price!' ]
+    }
+
+    if (!this.get('buy') && this.get('quote').get('price') >= this.get('targetPrice')) {
+      errors.price = ['Target Price lower than Market Price!' ]
     }
 
     if (isNaN(this.get('targetPrice')) || this.get('targetPrice') <= 0) {
-      errors.price = ['Target Price must be a number greater than 0']
+      errors.price = ['Invalid Price!']
     }
 
-    if (errors) {
-      $('errors').empty()
-      for (let error in errors) {
-        $('#errors').append(`${error}`)
-      }
+    if (errors.keys().length > 0){
+      return errors
+    } else {
       return false
     }
+
   },
 
   priceCheck() {
     let toBuy = this.get('quote')
-
-    if (this.validate) {
-      if (this.get('buy') && this.get('quote').get('price') <= this.get('targetPrice')) {
-        this.set('buy', true)
-        this.trigger('appendTade', this.get('quote'))
-        this.destroy()
-        toBuy.buy();
-      }
-
-      if (!this.get('buy') && this.get('quote').get('price') >= this.get('targetPrice')) {
-        this.model.set('buy', false)
-        this.trigger('appendTrade', this)
-        this.destroy()
-        toBuy.sell();
-      }
+    if (this.get('buy') && this.get('quote').get('price') <= this.get('targetPrice')) {
+      this.set('buy', true)
+      this.trigger('appendTade', this.get('quote'))
+      this.destroy()
+      toBuy.buy();
     }
+
+    if (!this.get('buy') && this.get('quote').get('price') >= this.get('targetPrice')) {
+      this.model.set('buy', false)
+      this.trigger('appendTrade', this)
+      this.destroy()
+      toBuy.sell();
     }
+  }
 });
 
 export default Order;

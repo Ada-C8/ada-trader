@@ -42,6 +42,7 @@ const OrderListView = Backbone.View.extend({
   },
 
   appendOrder(isBuy) {
+    this.$('.form-errors').empty();
     let orderData = {
       buy: isBuy
     }
@@ -49,8 +50,20 @@ const OrderListView = Backbone.View.extend({
     orderData.symbol = this.$(`[name='symbol']`).val();
     orderData.targetPrice = parseFloat(this.$(`[name='price-target']`).val());
     orderData.quote = this.quotes.findWhere({symbol: orderData.symbol})
+
     const order = new Order(orderData);
-    this.model.add(order);
+
+    if (!order.validate()) {
+      this.model.add(order);
+      // return order;
+    }
+    // } else {
+    //   for (let errors in order.validate()) {
+    //     order.validate()[errors].forEach((error) => {
+    //       this.$('.form-errors').append(error)
+    //     })
+    //   }
+    // }
     console.log(order);
   },
 })
