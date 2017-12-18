@@ -69,12 +69,6 @@ $(document).ready(function() {
   });
   const orders = new OrderList();
 
-  // Populate the form with options and prices
-  let selectBox = $('.order-entry-form form select[name="symbol"]');
-  for (name of names) {
-    selectBox.append(`<option value="${name}">${name}</option>`);
-  }
-
   // Render quote list view
   const quoteListView = new QuoteListView({
     el: $('#quotes-container'),
@@ -96,10 +90,10 @@ $(document).ready(function() {
     model: orders,
     template: orderTemplate,
     quoteList: quotes,
+    bus: bus,
   });
 
   quoteListView.render();
   orderListView.render();
   simulator.start();
-
 });
