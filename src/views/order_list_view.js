@@ -1,6 +1,7 @@
 import Backbone from 'backbone';
 // import _ from 'underscore';
 // import OrderList from '../collections/order_list';
+import $ from 'jquery';
 import OrderView from './order_view';
 import Order from '../models/order';
 
@@ -20,6 +21,7 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         bus: this.bus,
         tagName: 'li',
+        quotes: this.quotes,
         className: 'order',
       });
       this.$('#orders').append(orderView.render().$el);
@@ -32,13 +34,13 @@ const OrderListView = Backbone.View.extend({
   },
   createOrder(value) {
     this.$('.form-errors').empty();
-    
+
     const orderData = {
       buy: value.buy,
       symbol: this.$('select[name=symbol]').val(),
       quote: this.quotes.find({symbol: this.$('select[name=symbol]').val()}),
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),
-      bus: this.bus,
+      bus: this.bus
     };
     return new Order(orderData);
   },

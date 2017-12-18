@@ -37,13 +37,13 @@ const quoteData = [
   },
 ];
 
-const quotes = new QuoteList(quoteData);
-const orders = new OrderList();
-
-let bus = {};
-bus = _.extend(bus, Backbone.Events);
-
 $(document).ready(function() {
+  const quotes = new QuoteList(quoteData);
+  const orders = new OrderList();
+
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
+
   const simulator = new Simulator({
     quotes: quotes,
   });
@@ -71,8 +71,9 @@ $(document).ready(function() {
     el: '#order-workspace'
   });
 
-  simulator.start();
+
   quoteListView.render();
   formSelect();
   orderListView.render();
+  simulator.start();
 });

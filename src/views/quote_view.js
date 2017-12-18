@@ -1,13 +1,12 @@
 import Backbone from 'backbone';
-// import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.bus, 'buyOrder', this.buyQuote);
-    this.listenTo(this.bus, 'sellOrder', this.sellQuote);
+    this.listenTo(this.bus, 'buyOrder', this.buyOrder);
+    this.listenTo(this.bus, 'sellOrder', this.sellOrder);
   },
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
@@ -28,6 +27,16 @@ const QuoteView = Backbone.View.extend({
     this.trigger('quoteAction', this);
     this.model.sell();
   },
+  buyOrder: function(orderQuote) {
+    if(orderQuote.model.get('symbol') === this.model.get('symbol')){
+      this.buyQuote();
+    }
+  },
+  sellOrder: function(orderQuote) {
+    if(orderQuote.model.get('symbol') === this.model.get('symbol')){
+      this.sellQuote();
+    }
+  }
 });
 
 export default QuoteView;
