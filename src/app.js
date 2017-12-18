@@ -3,12 +3,14 @@ import 'css/app.css';
 import QuoteView from './views/quote_view';
 import TraderListView from './views/trader_list_view';
 import QuoteListView from './views/quote_list_view';
+import OrderListView from './views/order_list_view';
 
 import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 
 const quoteData = [
   {
@@ -55,9 +57,11 @@ $(document).ready(function() {
     });
     quoteView.render();
     $('.quotes').append(quoteView.$el);
-    $('#option').append(`<option value= "${quote.get('symbol')}"> "${quote.get('symbol')}"</option> `);
+    $('#option').append(`<option>${quote.get('symbol')}</option>`);
 
   });
+
+  const orderList = new OrderList();
 
   const traderListView = new TraderListView({
     template: _.template($('#trade-template').html()),
@@ -65,6 +69,13 @@ $(document).ready(function() {
     bus: bus
   });
 
+  const orderListView = new OrderListView({
+    model: orderList,
+    el: '#order-workspace',
+    template: _.template($('#order-template').html())
+  });
+
+  orderListView.renderOrders()
 
 
 

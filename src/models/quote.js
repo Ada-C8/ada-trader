@@ -9,22 +9,16 @@ const Quote = Backbone.Model.extend({
   buy() {
     const newPrice = this.get('price') + 1.0
     this.set('price',  newPrice);
-    // TODO trigger costume event
-    // this.bus.trigger('buy', {
-    //   price: this.get('price'),
-    //   symbol: this.get('symbol'),
-    //   buy: true
-    // });
   },
 
   sell() {
     const newPrice = this.get('price') - 1.0
     this.set('price', newPrice)
-    this.trigger('sell', {
-      price: this.get('price'),
-      symbol: this.get('symbol'),
-      buy: false
-    });
+    // this.trigger('sell', {
+    //   price: this.get('price'),
+    //   symbol: this.get('symbol'),
+    //   buy: false
+    // });
     // Implement this function to decrease the price by $1.00
   },
 });
