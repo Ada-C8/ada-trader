@@ -4,64 +4,78 @@ import OrderList from 'collections/order_list'
 
 describe('Order spec', () => {
   let quote;
+  let order;
   beforeEach(() => {
     quote = new Quote({
       symbol: 'HELLO',
       price: 100.00,
     });
-  });
 
-  let orderList;
-  beforeEach(() => {
-    orderList = new OrderList()
-  })
-
-  describe('Create a buy order', () => {
-    it('Creates a buy order when given a valid symbol and price', () => {
-      const order = new Order({
+    order = new Order({
+        quote: quote,
         buy: true,
         symbol: 'HELLO',
-        targetPrice: 99.00,
-        quote: quote,
-      });
+        targetPrice: 100.00,
+      })
+  });
 
-    //returning false means validaiton passed
-    expect(order.invalid()).toEqual(false);
+  describe('Create a valid order', () => {
+    it('Creates a buy order when given a valid symbol and price', () => {
 
-    })
+      order.set('targetPrice', 99.00)
+
+      expect(order.invalid()).toEqual(false);
+    });
 
     it('Creates a sell order when given a valid symbol and price', () => {
-      expect(orderList.length).toEqual(0);
 
-      const order = new Order({
-        buy: false,
-        symbol: 'HELLO',
-        targetPrice: 101.00,
-        quote: quote,
-      });
+      order.set('buy', false);
+      order.set('targetPrice', 101.00)
 
-      orderList.add(order)
-      expect(orderList.length).toEqual(1);
+      expect(order.invalid()).toEqual(false);
     })
   })
 
-  // describe('Buy function', () => {
-  //   // it('increases the price by $1.00', () => {
-  //   //   const startPrice = quote.get('price');
-  //   //
-  //   //   quote.buy();
-  //   //
-  //   //   expect(quote.get('price')).toEqual(startPrice + 1.00);
-  //   // });
-  // });
-  //
-  // describe('Sell function', () => {
-  //   // it('decreases the price by $1.00', () => {
-  //   //   const startPrice = quote.get('price');
-  //   //
-  //   //   quote.sell();
-  //   //
-  //   //   expect(quote.get('price')).toEqual(startPrice - 1.00);
-  //   // });
-  // });
+  describe('Validating Orders', () => {
+    describe('Invalid Orders', () => {
+      it('Price must be a number', () => {
+        order.set('targetPrice', 'cool')
+
+        expect(order.invalid()).toEqual({price: [ 'Invalid Price!'] });
+      });
+
+      it('Price must be greater than 0', () => {
+        order.set('targetPrice', 0)
+
+        expect(order.invalid()).toEqual({price: [ 'Invalid Price!']});
+      });
+
+
+      it('Symbol must not be empty', () => {
+        order.set('symbol', '')
+        order.set('targetPrice', 99.00)
+        
+        expect(order.invalid()).toEqual({symbol: [ 'Invalid Symbol']});
+      });
+    })
+
+    describe('Buy Orders', () => {
+      it('targetPrice must be lower than market price', () => {
+
+      expect(order.invalid()).toEqual({price: [ 'Target Price higher than Market Price!'] });
+
+      });
+    })
+
+    describe('Sell Orders', () => {
+      beforeEach(() => {
+        order.set('buy', false)
+      });
+
+      it('targetPrice must be higher than marketPrice', () => {
+        order.set('targetPrice', 99);
+        expect(order.invalid()).toEqual({price: [ 'Target Price at or below Market Price!'] });
+      });
+    })
+  })
 });

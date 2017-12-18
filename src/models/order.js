@@ -14,8 +14,8 @@ const Order = Backbone.Model.extend({
 
   invalid() {
     let errors = {}
-    if (this.symbol === "" || this.symbol === "UNEF") {
-      errors.symbol = ['You must select a valid symbol'];
+    if (this.get('symbol') === "" || this.get('symbol') === "UNEF") {
+      errors.symbol = ['Invalid Symbol'];
     }
 
     if (this.get('buy') && this.get('quote').get('price') <= this.get('targetPrice')) {
@@ -23,7 +23,7 @@ const Order = Backbone.Model.extend({
     }
 
     if (!this.get('buy') && this.get('quote').get('price') >= this.get('targetPrice')) {
-      errors.price = ['Target Price lower than Market Price!' ]
+      errors.price = ['Target Price at or below Market Price!' ]
     }
 
     if (isNaN(this.get('targetPrice')) || this.get('targetPrice') <= 0) {
