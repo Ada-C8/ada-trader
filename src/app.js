@@ -3,7 +3,7 @@ import 'css/app.css';
 
 import $ from 'jquery';
 import _ from 'underscore';
- 
+
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
 import Order from './models/order'
@@ -40,13 +40,7 @@ quoteData.forEach(function(quote) {
 
 
 $(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
-  const simulator = new Simulator({
-    quotes: quotes,
-  });
-  const orders = new OrderList();
 
-  simulator.start();
 
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
@@ -54,6 +48,12 @@ $(document).ready(function() {
   let template = _.template($('#quote-template').html());
   let tradeTemplate = _.template($('#trade-template').html());
   let orderTemplate = _.template($('#order-template').html());
+
+  const quotes = new QuoteList(quoteData);
+  const simulator = new Simulator({
+    quotes: quotes,
+  });
+  const orders = new OrderList();
 
   const quoteListView = new QuoteListView({
     el: '#quotes-container',
@@ -71,6 +71,8 @@ $(document).ready(function() {
     // quoteData: quoteData,
     el: '.order-entry-form',
     bus: bus,
+    orderList: orders,
+    quoteList: quotes,
   });
 
   const order = new Order({
@@ -84,7 +86,11 @@ $(document).ready(function() {
     bus: bus,
   });
 
+
   orderListView.render();
   quoteListView.render();
+
+  simulator.start();
+
 
 });

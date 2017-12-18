@@ -17,10 +17,11 @@ const QuoteView = Backbone.View.extend({
   events: {
     'click button.btn-buy': 'buyQuote',
     'click button.btn-sell': 'sellQuote',
+    'update this.model': 'makeTradeObject'
   },
   buyQuote(event) {
     console.log('clicked into buyQuote')
-    // this.trigger('makeTrade', makeTradeObject);
+    console.log(this.model);
     this.makeTradeObject(true),
     this.model.buy()
   },
@@ -40,6 +41,9 @@ const QuoteView = Backbone.View.extend({
     console.log(trade);
     this.bus.trigger('makeTrade', trade);
   },
+  checkQuote() {
+    this.bus.trigger('change', this.model)
+  }
 });
 
 export default QuoteView;

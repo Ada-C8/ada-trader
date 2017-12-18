@@ -1,8 +1,9 @@
 import Backbone from 'backbone';
 
+import Quote from '../models/quote';
 import Order from '../models/order';
-
-
+import OrderList from '../collections/order_list';
+import QuoteList from '../collections/quote_list';
 
 
 const OrderFormView = Backbone.View.extend({
@@ -31,6 +32,9 @@ const OrderFormView = Backbone.View.extend({
       orderData['targetPrice'] = priceValue;
     }
     orderData['buy'] = type
+    console.log(this.quote);
+    orderData['quote'] = this.quote.find({symbol: orderData['symbol']});
+
     $inputPriceTargert.val('');
     return orderData;
   },
@@ -42,7 +46,7 @@ const OrderFormView = Backbone.View.extend({
     event.preventDefault();
     console.log('test click order');
     let orderObject = this.readOrderFormData(true)
-    
+
     this.bus.trigger('newOrder', orderObject)
   },
 

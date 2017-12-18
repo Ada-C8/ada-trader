@@ -7,7 +7,7 @@ const Simulator = Backbone.Model.extend({
   },
 
   start() {
-    // setInterval(() => this._tick(), 1000);
+    setInterval(() => this._tick(), 1000);
   },
 
   // PRIVATE FUNCTIONS \\
@@ -20,7 +20,7 @@ const Simulator = Backbone.Model.extend({
 
     this.quotes.forEach((quote) => {
       // Calculate a random price movement
-      const maxChange = 1.00;
+      const maxChange = 0.10;
       const minChange = 0.00;
       let change = _.random(minChange * 10, maxChange * 10) / 10;
 

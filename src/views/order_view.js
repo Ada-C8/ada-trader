@@ -9,6 +9,8 @@ const OrderView = Backbone.View.extend({
     this.bus = params.bus;
 
     this.listenTo(this.bus, 'cancelOrder', this.cancelOrder)
+    this.listenTo(this.model.get('quote'), 'change', this.executeOrder);
+
   },
   render() {
     // console.log('render order_view');
@@ -26,7 +28,25 @@ const OrderView = Backbone.View.extend({
     console.log(this);
     this.model.destroy();
 
-  }
+  },
+  executeOrder() {
+    console.log('execute order is being called');
+    let quote = this.model.get('quote');
+
+    if (this.model.get('buy')) {
+      if (this.model.get('targetPrice') >= quote.get('price')) {
+        quote.buy();
+        this.model.destroy();
+        this.remove();
+      }
+    } else {
+      if (this.model.get('targetPrice') <= quote.get('price')) {
+        quote.sell();
+        this.model.destroy();
+        this.remove();
+      }
+    }
+  },
 
 })
 

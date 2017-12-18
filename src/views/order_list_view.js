@@ -14,7 +14,7 @@ const OrderListView = Backbone.View.extend({
 
     this.listenTo(this.bus, 'newOrder', this.addOrder);
     this.listenTo(this.bus, 'newOrder', this.render);
-    // this.listenTo(this.bus, 'cancelOrder', cancelOrder)
+    // this.listenTo(this.bus, 'update', this.completeOrder)
 
   },
   render(orderObject) {
@@ -35,6 +35,21 @@ const OrderListView = Backbone.View.extend({
     });
     return this;
   },
+  updateStatusMessageFrom(messageHash) {
+    const $statusMessages = this.$('#status-messages');
+    $statusMessages.empty();
+    Object.keys(messageHash).forEach((messageType) => {
+      messageHash[messageType].forEach((message) => {
+        $statusMessages.append(`<li>${message}</li>`);
+      });
+    });
+    $statusMessages.show();
+  },
+  updateStatusMessage(message) {
+    this.updateStatusMessageFrom({
+      'order': [message],
+    });
+  },
   addOrder(orderObject) {
     // console.log(orderObject);
     const newOrder = new Order(orderObject);
@@ -42,13 +57,14 @@ const OrderListView = Backbone.View.extend({
       console.log('I am a valid order')
       this.model.add(newOrder);
       // this.clearFormData();
+      this.updateStatusMessage(`${newOrder.get('symbol')} Created!`);
+
+    } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
+      newOrder.destroy();
     }
-    // else {
-    //   this.updateStatusMessageFrom(newOpenOrder.validationError);
-    //   newOpenOrder.destroy();
-    // }
   },
-  renderORDER(orderObject) {
+  completeOrder() {
     console.log('renderORDER connection');
     console.log(orderObject);
   }

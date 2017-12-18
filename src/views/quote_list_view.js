@@ -24,6 +24,12 @@ const QuoteListView = Backbone.View.extend({
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
+  },
+  events: {
+    'update this': 'checkQuote',
+  },
+  checkQuote() {
+    this.bus.trigger('completeOrder', this)
   }
 });
 
