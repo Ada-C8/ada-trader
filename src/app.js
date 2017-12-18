@@ -9,7 +9,6 @@ import _ from 'underscore';
 // Imports
 import Simulator from './models/simulator';
 import QuoteList from './collections/quote_list';
-import Trade from './models/trade';
 
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
@@ -50,15 +49,15 @@ let tradeTemplate;
 // jQuery Ready
 $(document).ready(function() {
 
-  // EVENT BUS
-  // listen to buy and sell events in quote.js
-  // append #trade-templates for each; parse datas
+  // Event Bus
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
 
+  // Templates
   quoteTemplate = _.template($('#quote-template').html());
   tradeTemplate = _.template($('#trade-template').html());
 
+  // Default - simulator
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
