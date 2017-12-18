@@ -24,9 +24,12 @@ const OrderListView = Backbone.View.extend({
       })
       this.$('#orders').append(orderView.render().$el);
     });
-    this.quotes.each((quote) => {
-      this.$('select[name=symbol]').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
-    });
+    // Populate selection dropdown for orders from quotes symbols
+    // this.quotes.each((quote) => {
+    //   console.log(quote);
+    //   console.log(quote.get('symbol'));
+    //   this.$('select[name=symbol]').append(`<option value="${quote.get('symbol')}">${quote.get('symbol')}</option>`);
+    // });
     return this;
   },
   events: {
