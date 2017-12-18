@@ -4,8 +4,6 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import Quote from '../models/quote';
 
-
-
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
@@ -38,6 +36,20 @@ const QuoteView = Backbone.View.extend({
    $('#trades').prepend(tradeTemplate(this.model.attributes));
     this.model.sell();
   },
+
+  buyOrder: function(orderView) {
+   if (orderView.quote == this.model) {
+     this.buyQuote();
+
+   }
+ },
+
+ sellOrder: function(orderView) {
+   if (orderView.quote == this.model) {
+     this.sellQuote();
+
+   }
+ },
 
 });
 

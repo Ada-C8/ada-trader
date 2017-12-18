@@ -9,6 +9,7 @@ import Order from '../models/order'
 const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    this.quoteList = params.quoteList;
     this.listenTo(this.model, 'update', this.render);
   },
 
@@ -44,10 +45,10 @@ const OrderListView = Backbone.View.extend({
     if (newOrder.isValid()) {
       this.model.add(newOrder);
     } else {
-      console.log( 'Invalid Order!' );
+      console.log('Invalid Order!');
     }
   },
-  
+
   sellOrder: function(event) {
     event.preventDefault();
 
@@ -62,7 +63,7 @@ const OrderListView = Backbone.View.extend({
     if (newOrder.isValid()) {
       this.model.add(newOrder);
     } else {
-      console.log( 'Invalid Order!' );
+      console.log('Invalid Order!');
     }
   }
 });
