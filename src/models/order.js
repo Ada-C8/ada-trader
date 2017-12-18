@@ -26,15 +26,15 @@ const Order = Backbone.Model.extend({
     }
   },
   attemptTrade(price) {
-    if (this.get('buy')) {
-      if (parseFloat(price) <= this.get('targetPrice')) {
-        this.completeTrade(price);
-      }
-    } else {
-      if (this.get('targetPrice') <= parseFloat(price)) {
-        this.completeTrade(price);
-      }
+    if (this.isValidBuy(price) || this.isValidSell(price)) {
+      this.completeTrade(price);
     }
+  },
+  isValidBuy(price) {
+    return this.get('buy') && parseFloat(price) <= this.get('targetPrice');
+  },
+  isValidSell(price) {
+    return !this.get('buy') && this.get('targetPrice') <= parseFloat(price);
   },
   completeTrade(price) {
     this.stopListening();
