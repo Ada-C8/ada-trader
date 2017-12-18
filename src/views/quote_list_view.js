@@ -31,6 +31,13 @@ render(){
     console.log("appending");
     this.$('.quotes').append(quoteView.render().$el);
 
+    let x = document.getElementById("symbol");
+    let option = document.createElement("option");
+    option.name = "symbol-name";
+    // option.value = quote.get('symbol');
+    option.text = quote.get('symbol');
+    x.add(option);
+
     // call render on the quote view instance
     // then grab the root dom element for quote view, which is quotes-container
     // then append the div with class quote that we got back from the quote list render function to the ul with class quotes .
@@ -51,10 +58,7 @@ render(){
 
 
 
-      let x = document.getElementById("symbol");
-      let option = document.createElement("option");
-      option.text = quote.get('symbol');
-      x.add(option);
+
 
   }); // end each
   return this;

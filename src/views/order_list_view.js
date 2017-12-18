@@ -67,13 +67,13 @@ const OrderListView = Backbone.View.extend({
 
   getOrderData() {
     const orderData = {};
-    ['symbol', 'price-target'].forEach((field) => {
-      const val = this.$(`#order-entry-form input[name=${field}]`).val();
-      // get the value of the element
-      if (val !== ''){
-        orderData[field] = val;
-      }
-    });
+
+    console.log()
+
+    orderData["symbol"] = this.$(`#order-entry-form #symbol option:checked`).val();
+    orderData["targetPrice"] = this.$(`#order-entry-form input[name=price-target]`).val();
+    // orderData["buy"] = buy;
+
 
     return orderData;
   },
