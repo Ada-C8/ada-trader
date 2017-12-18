@@ -53,12 +53,7 @@ const OrdersView = Backbone.View.extend({
     orderData.targetPrice = selectedPrice;
 
     //get buy/sell
-    const tradeType = buySell;
-    if (tradeType === 'buy') {
-      orderData.buy = true;
-    } else if (tradeType === 'sell') {
-      orderData.buy = false;
-    }
+    orderData.buy = buySell;
 
     return orderData;
   },
@@ -80,32 +75,30 @@ const OrdersView = Backbone.View.extend({
     }
   },
 
-  //TODO: consolidate addBuyOrder and addSellOrder into one function 
-  addBuyOrder(event){
+  addBuySellOrder(event) {
     event.preventDefault();
-    console.log('In addBuyOrder');
+    console.log('In addBuySellOrder');
 
-    const buy = 'buy';
+    if (event.target.innerHTML === 'Buy') {
+      const buy = true;
 
-    const formData = this.getFormData(buy);
-    console.log('Back in addBuyOrder:');
+      const formData = this.getFormData(buy);
+      console.log('Back in addBuyOrder:');
 
-    this.bus.trigger('add_order_request', formData)
-  },
+      this.bus.trigger('add_order_request', formData)
 
-  addSellOrder(event){
-    event.preventDefault();
-    console.log('In addSellOrder');
+    } else if (event.target.innerHTML === 'Sell') {
+      const buy = false;
+      const formData = this.getFormData(buy);
 
-    const buy = 'sell';
-    const formData = this.getFormData(buy);
+      this.bus.trigger('add_order_request', formData);
+    }
 
-    this.bus.trigger('add_order_request', formData);
   },
 
   events: {
-    'click button.btn-buy': 'addBuyOrder',
-    'click button.btn-sell': 'addSellOrder',
+    'click button.btn-buy': 'addBuySellOrder',
+    'click button.btn-sell': 'addBuySellOrder',
   },
 
   render() {

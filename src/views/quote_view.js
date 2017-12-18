@@ -19,7 +19,7 @@ const QuoteView = BackBone.View.extend({
     this.bus.trigger('price_change', this.model);
   },
 
-  //TODO: pull some of this out into separate function
+  //TODO: pull some of this out into separate function?
   checkPriceTarget(orderData) {
     console.log('In checkPriceTarget');
     console.log(orderData);
@@ -51,6 +51,7 @@ const QuoteView = BackBone.View.extend({
     }
   },
 
+  //TODO: This could use some more refactoring
   buySellQuote(event){
     console.log('In buySellQuote');
     console.log(event.target.innerHTML);
@@ -63,8 +64,8 @@ const QuoteView = BackBone.View.extend({
         symbol: this.model.get('symbol'),
       };
       this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
-
       this.model.buy();
+
     } else if (event.target.innerHTML === 'Sell') {
       const objectForTradeHistory = {
         model: this.model,
@@ -73,10 +74,8 @@ const QuoteView = BackBone.View.extend({
         symbol: this.model.get('symbol'),
       };
       this.bus.trigger('add_me_to_trade_hist', objectForTradeHistory);
-
       this.model.sell();
     }
-
   },
 
   events: {
