@@ -28,6 +28,8 @@ const quoteData = [
 ];
 
 $(document).ready(function() {
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
 
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
@@ -40,6 +42,7 @@ $(document).ready(function() {
     model: quotes,
     quoteTemplate: quoteTemp,
     el: 'main',
+    bus: bus,
   });
 
   quoteListView.render();
