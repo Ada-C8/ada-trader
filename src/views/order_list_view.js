@@ -21,7 +21,6 @@ const OrderListView = Backbone.View.extend({
         bus: this.bus
       });
       this.$('#orders').append(orderView.render().$el);
-      // orderView.listenTo(this.bus, 'priceChange', orderView.executeOrder);
     });
     return this;
   },

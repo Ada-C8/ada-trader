@@ -7,10 +7,14 @@ const Order = Backbone.Model.extend({
       errors['Price'] = ['cannot be blank'];
     } else if (isNaN(attributes.targetPrice)) {
       errors['Price'] = ['must be a number - leave off $'];
+    } else if (attributes.targetPrice <= 0){
+      errors['Price'] = ['must be greater than 0']
     } else if (attributes.buy && attributes.targetPrice > attributes.marketPrice) {
-      errors['Price'] = ['cannot be higher than market price to buy'];
+      errors['Price'] = ['cannot be higher than market price for buy orders'];
     } else if (!attributes.buy && attributes.targetPrice < attributes.marketPrice) {
-      errors['Price'] = ['cannot be lower than market price to sell'];
+      errors['Price'] = ['cannot be lower than market price for sell orders'];
+    } else if (!attributes.symbol) {
+      errors['Symbol'] = ['cannot be blank'];
     }
     if (Object.keys(errors).length > 0) {
       return errors;
