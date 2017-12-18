@@ -5,16 +5,11 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from 'models/simulator';
-import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
-import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
 import TradeList from 'collections/trade_list';
-import TradeView from 'views/trade_view';
 import TradeListView from 'views/trade_list_view';
-import Order from 'models/order';
 import OrderList from 'collections/order_list';
-import OrderView from 'views/order_view';
 import OrderListView from 'views/order_list_view';
 
 

@@ -43,34 +43,25 @@ const OrderListView = Backbone.View.extend({
       quote: desiredQuote,
       bus: this.bus,
     });
-    // console.log(newOrder);
     this.validateOrder(newOrder);
   },
   buyOrder(event) {
-    // this.model.add(order);
     event.preventDefault();
-    // console.log('buying this order');
-    // console.log(event);
     this.createOrderFromForm(event, true);
   },
   sellOrder(event) {
     event.preventDefault();
-    // console.log('selling this order');
-    // console.log(event);
     this.createOrderFromForm(event, false);
   },
   validateOrder(order) {
     this.$('.form-errors').empty();
-    // console.log(' in the validate order method');
     if (order.isValid()) {
-      // console.log('the new order is valid');
       this.model.add(order);
       // clear form after an order is made
       this.$el.find('form').trigger('reset');
     } else {
       order.destroy();
       const errors = order.validationError;
-      // console.log('the new order is invalid');
       const errorSection = this.$('.form-errors');
       Object.keys(errors).forEach((errorType) => {
         errors[errorType].forEach((error) => {
