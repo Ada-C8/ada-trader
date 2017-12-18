@@ -24,18 +24,18 @@ describe('Order spec', () => {
     });
 
 
-    it('buy price is not >= to the current market price', () => {
-      const prices = [100,1000];
-
-      prices.forEach((price)=> {
-        const order = new Order({
-          targetPrice: price,
-          buy: true,
-        });
-
-        expect(order.isValid()).toBeFalsy();
-      });
-    });
+    // it('buy price is not >= to the current market price', () => {
+    //   const prices = [100,1000];
+    //
+    //   prices.forEach((price)=> {
+    //     const order = new Order({
+    //       targetPrice: price,
+    //       buy: true,
+    //     });
+    //
+    //     expect(order.isValid()).toBeFalsy();
+    //   });
+    // });
 
 
   });
