@@ -10,10 +10,7 @@ const Order = Backbone.Model.extend({
     if (!attributes.symbol) {
       errors['symbol'] = ['symbol cannot be blank'];
     }
-    if (!attributes.targetPrice || attributes.targetPrice == null) {
-      errors['price-target'] = ['price-target cannot be blank'];
-    }
-    if (attributes.targetPrice <= 0) {
+    if (attributes.targetPrice <= 0 || attributes.targetPrice == null) {
       errors['price-target'] = ['price-target cannot be blank or less than 1'];
     }
     // buy is true: if $ > than matchedQuote
@@ -42,7 +39,7 @@ const Order = Backbone.Model.extend({
         const store = this.attributes.matchedQuote;
         this.destroy();
         store.buy();
-        alert('open buy order has been removed');
+        // alert('open buy order has been removed');
       }
     }
 
@@ -52,7 +49,7 @@ const Order = Backbone.Model.extend({
       const store = this.attributes.matchedQuote;
       this.destroy();
       store.sell();
-      alert('open sell order has been removed');
+      // alert('open sell order has been removed');
       }
     }
   },
