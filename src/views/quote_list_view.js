@@ -20,7 +20,6 @@ const QuoteListView = Backbone.View.extend({
         bus: this.bus,
       });
       this.$('#quotes').append(quoteView.render().$el);
-      // console.log(quoteView);
     });
 
     return this;

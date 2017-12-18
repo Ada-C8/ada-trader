@@ -19,7 +19,8 @@ const OrderView = Backbone.View.extend({
 
   cancel(event) {
     this.model.destroy();
-  }
+  },
+
 });
 
 export default OrderView;

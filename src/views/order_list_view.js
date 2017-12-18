@@ -9,6 +9,7 @@ const OrderListView = Backbone.View.extend({
     this.quotes = params.quoteList;
 
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.bus, 'quote_change', this.buyOrSellOrder);
 
     this.displayOrderForm();
   },
@@ -57,15 +58,15 @@ const OrderListView = Backbone.View.extend({
     this.$('.order-entry-form input[name="price-target"]').val('');
   },
 
-  buyOrder: function(event){
+  buyOrder(event) {
     this.addOrder(event, 'buy');
   },
 
-  sellOrder: function(event){
+  sellOrder(event) {
     this.addOrder(event, 'sell');
   },
 
-  addOrder: function(event, action){
+  addOrder(event, action) {
     event.preventDefault();
 
     const formData = this.getFormData(action);
@@ -74,6 +75,34 @@ const OrderListView = Backbone.View.extend({
     this.model.add(newOrder);
     this.clearFormData();
   },
+
+  buyOrSellOrder(quote) {
+    let currentOrders = this.model.where({symbol: quote.get('symbol')});
+    currentOrders.forEach((order) => {
+
+      if (order.get('buy') == 'buy' && order.get('targetPrice') >= quote.get('price'))  {
+        let tradeItem = {
+          price: order.get('targetPrice'),
+          symbol: order.get('symbol'),
+          buy: 'bought',
+        }
+        this.bus.trigger('boughtOrSold', tradeItem);
+        order.destroy();
+        quote.buy();
+      }
+
+      else if (order.get('buy') == 'sell' && order.get('targetPrice') <= quote.get('price')) {
+        let tradeItem = {
+          price: order.get('targetPrice'),
+          symbol: order.get('symbol'),
+          buy: 'sold',
+        }
+        this.bus.trigger('boughtOrSold', tradeItem)
+        order.destroy();
+        quote.sell();
+      }
+    });
+  }
 });
 
 export default OrderListView;
