@@ -13,7 +13,7 @@ initialize(params) {
   this.template = params.template;
   this.bus = params.bus;
   this.listenTo(this.model, 'update', this.render);
-
+  this.listenTo(this.bus, 'get_quote', this.getQuote)
 },
 render(){
   // console.log("IN the quote list view render function");
@@ -33,8 +33,6 @@ render(){
 
     let x = document.getElementById("symbol");
     let option = document.createElement("option");
-    // option.name = "symbol-name";
-    // option.value = quote.get('symbol');
     option.text = quote.get('symbol');
     x.add(option);
 
@@ -63,6 +61,15 @@ render(){
   }); // end each
   return this;
 },
+
+getQuote(){
+  console.log("It's teh get quote method!!!");
+  // let currentPrice = this.model.
+},
+// setModel(trade_data) {
+//   this.data = trade_data;
+//   this.render();
+// },
 
 }); //end quotelistview
 

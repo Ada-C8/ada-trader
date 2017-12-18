@@ -46,7 +46,6 @@ const OrderListView = Backbone.View.extend({
     event.preventDefault();
     console.log("you clicked the buy button");
     this.createOrder(true);
-
   },
 
   createSellOrder(event) {
@@ -62,6 +61,7 @@ const OrderListView = Backbone.View.extend({
     const newOrder = new Order(orderData);
     this.model.add(newOrder);
     console.log("instance was added");
+    this.clearFormData();
     // this.bus.trigger('createOrder', order_data);
   },
 
@@ -72,10 +72,26 @@ const OrderListView = Backbone.View.extend({
     let stringPrice = this.$(`#order-entry-form input[name=price-target]`).val();
     orderData["targetPrice"] = parseFloat(stringPrice);
     orderData["buy"] = buy;
-
+    this.bus.trigger('get_quote', orderData[symbol]);
+    // trigger getQuote
 
     return orderData;
   },
+
+  // getQuote(stock){
+  //
+  // },
+
+  clearFormData() {
+    this.$(`#order-entry-form input[name=price-target]`).val('');
+},
+
+  // validateOrderData {
+  //   if (orderData[targetPrice] === '' || orderData[targetPrice] >= currentprice) {
+  //
+  //   },
+
+
 
 
 

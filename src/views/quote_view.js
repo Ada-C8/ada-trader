@@ -10,6 +10,7 @@ const QuoteView = Backbone.View.extend({
 
     this.listenTo(this.model, 'change', this.render);
 
+
   }, //init
 
   render() {
@@ -42,8 +43,6 @@ const QuoteView = Backbone.View.extend({
   },
   recordTrade(buy) {
     console.log("We're triggering the record trade event!");
-    // console.log("bus is " + this.bus);
-    // console.log(this.model.get('symbol'));
     const trade_data = {
       symbol: this.model.get('symbol'),
       price: this.model.get('price'),
@@ -51,9 +50,8 @@ const QuoteView = Backbone.View.extend({
     };
     console.log(trade_data);
     this.bus.trigger('record_trade', trade_data);
-    // this.model.recordTrade();
-    // this.bus.trigger('record_trade', this.model, {symbol: this.get('symbol'), price: this.get('price'), buy: buy});
   },
+
 
 
 
