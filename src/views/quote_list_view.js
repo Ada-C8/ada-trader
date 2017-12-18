@@ -12,6 +12,7 @@ const QuoteListView = Backbone.View.extend({
   },
   render() {
     this.$('#quotes').empty();
+    this.$('select').empty();
     this.model.each((quote) => {
       const quoteView = new QuoteView({
         model: quote,
@@ -28,6 +29,9 @@ const QuoteListView = Backbone.View.extend({
       this.listenTo(quoteView, 'priceChange', this.alertPriceChange);
 
       this.$('#quotes').append(quoteView.render().$el);
+
+      this.$('select').append(`<option>${quote.get('symbol')}</option>`)
+
 
     });
     return this;
