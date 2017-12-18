@@ -24,7 +24,9 @@ const OrderEntryView = Backbone.View.extend({
       buy: true
     };
 
-    orderData.symbol = this.$('#orderForm select').val();
+    let symbol = this.$('#add-order-form select').val();
+    console.log('the symbol is ' + symbol);
+    orderData.symbol = symbol;
     let targetPrice = parseFloat(this.$('#target-price').val());
     console.log('the target price is ' + targetPrice);
     orderData.targetPrice = targetPrice;
@@ -46,7 +48,7 @@ const OrderEntryView = Backbone.View.extend({
       buy: false
     };
 
-    orderData.symbol = this.$('#orderForm select').val();
+    orderData.symbol = this.$('#add-order-form select').val();
     orderData.targetPrice = parseFloat(this.$('#target-price').val());
 
 
