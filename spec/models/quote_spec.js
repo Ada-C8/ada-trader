@@ -28,4 +28,18 @@ describe('Quote spec', () => {
       expect(quote.get('price')).toEqual(startPrice - 1.00);
     });
   });
+
+  describe('makeTradeData', () => {
+    it('creates and returns object with the data from the model', () => {
+      let tradeData = {
+        symbol: 'HELLO',
+        price: 100.00,
+        buy: true
+      };
+
+      let returnData = quote.makeTradeData(quote, true);
+      
+      expect(returnData).toEqual(tradeData);
+    });
+  });
 });
