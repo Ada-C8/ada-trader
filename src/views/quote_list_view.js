@@ -8,6 +8,7 @@ const QuoteListView = Backbone.View.extend ({
     this.template = params.template;
     this.listenTo(this.model, 'update', this.render);
   },
+
   render() {
     this.$('#quotes').empty();
     this.model.each((quote) => {
@@ -17,10 +18,17 @@ const QuoteListView = Backbone.View.extend ({
         tagName: 'li',
         className: 'quote',
       });
+
       this.$('#quotes').append(quoteView.render().$el);
+      // Add symbol dropdown list using js
+        let getSymbol = document.getElementById("symbol");
+           let option = document.createElement("option");
+           option.text = quote.get('symbol');
+           getSymbol.add(option);
     });
     return this;
   }
+
 });
 
 export default QuoteListView;

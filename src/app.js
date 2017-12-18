@@ -7,10 +7,14 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
+import Order from 'models/order';
+import OrderList from 'collections/order_list';
 
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
-import TradeListView from './views/trade_list_view';
+import TradeHistoryView from './views/trade_history_view';
+import OrderListView from './views/order_list_view';
+import OrderEntryView from './views/order_entry_view';
 
 const quoteData = [
   {
@@ -48,6 +52,7 @@ const quoteData = [
 
 let quoteTemplate;
 let tradeTemplate;
+const bus = _.extend({}, Backbone.Events);
 
 $(document).ready(function() {
   // Quotes
@@ -71,14 +76,41 @@ $(document).ready(function() {
 // Trade History
 tradeTemplate = _.template($('#trade-template').html());
 
-  const tradeListView = new TradeListView({
+  const tradeHistoryView = new TradeHistoryView({
     model: quotes,
     template: tradeTemplate,
     el: 'main',
 
   });
 
-  tradeListView.bind();
+  tradeHistoryView.bind();
+
+// Add orders
+const orders = new OrderList();
+
+  $('#orderForm').on('submit', function(event) {
+    event.preventDefault();
+  });
+
+  quotes.each((quote) => {
+    $('#orderForm select').append($('<option>', {
+      value: quote.get('symbol'),
+      text: quote.get('symbol')
+    }));
+  });
+
+  const orderEntryView = new OrderEntryView({
+    el: '.order-entry-form',
+    bus: bus,
+  });
+
+  const orderListView = new OrderListView({
+    model: orders,
+    template: _.template($('#order-template').html()),
+    el: '.orders-list-container',
+    bus: bus,
+  });
+
 
 // // render one quote
 // const $quoteList = $('#quotes');

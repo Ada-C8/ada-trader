@@ -3,7 +3,7 @@ import _ from 'underscore';
 import Quote from '../models/quote';
 import QuoteView from '../views/quote_view';
 
-const TradeListView = Backbone.View.extend ({
+const TradeHistoryView = Backbone.View.extend ({
   initialize(params) {
     this.template = params.template;
     // this.listenTo(this.model, 'change', this.render);
@@ -11,11 +11,11 @@ const TradeListView = Backbone.View.extend ({
 
     bind() {
       this.model.each((quote) => {
-        this.listenTo(quote,'trade', this.render)
+        this.listenTo(quote,'trade', this.renderHistory)
       });
     },
 
-    render(data) {
+    renderHistory(data) {
       let compiledTemplate = this.template(data)
       this.$('#trades').prepend(compiledTemplate);
 
@@ -23,4 +23,4 @@ const TradeListView = Backbone.View.extend ({
   }
 });
 
-export default TradeListView;
+export default TradeHistoryView;
