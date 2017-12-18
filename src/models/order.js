@@ -6,8 +6,6 @@ const Order = Backbone.Model.extend({
     targetPrice: 9.00,
     buy: true,
   },
-  render() {
-
-  },
 })
+
 export default Order
