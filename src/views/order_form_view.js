@@ -8,8 +8,8 @@ import QuoteList from '../collections/quote_list';
 
 const OrderFormView = Backbone.View.extend({
   initialize(params){
-    this.form = params.form;
     this.bus = params.bus;
+    this.quoteList = params.quoteList
   },
   // quoteData.each((quote) => {
   //   $('#dropdown').append(`<option>${quote.symbol}</option>`);
@@ -23,7 +23,7 @@ const OrderFormView = Backbone.View.extend({
 
 
     const priceValue = parseFloat($inputPriceTargert.val()).toFixed(2);
-    console.log(`priceValue = ${priceValue}`);
+    // console.log(`priceValue = ${priceValue}`);
 
     // Don't take empty strings, so that Backbone can
     // fill in default values
@@ -32,9 +32,9 @@ const OrderFormView = Backbone.View.extend({
       orderData['targetPrice'] = priceValue;
     }
     orderData['buy'] = type
-    console.log(this.quote);
-    orderData['quote'] = this.quote.find({symbol: orderData['symbol']});
-
+    console.log(this.quoteList);
+    console.log(orderData['symbol'])
+    orderData['quote'] = this.quoteList.find({symbol: orderData['symbol']});
     $inputPriceTargert.val('');
     return orderData;
   },

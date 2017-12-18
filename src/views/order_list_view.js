@@ -64,10 +64,6 @@ const OrderListView = Backbone.View.extend({
       newOrder.destroy();
     }
   },
-  completeOrder() {
-    console.log('renderORDER connection');
-    console.log(orderObject);
-  }
 })
 
 export default OrderListView;

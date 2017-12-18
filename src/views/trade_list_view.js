@@ -9,6 +9,7 @@ const TradeListView = Backbone.View.extend({
     this.bus = params.bus
 
     this.listenTo(this.bus, 'makeTrade', this.addTrade);
+    this.listenTo(this.bus, 'destroy', this.addTrade)
   },
   render() {
 
