@@ -22,7 +22,6 @@ const QuoteView = Backbone.View.extend({
     this.trigger('listTrades', this);
   },
   sellStock: function(e) {
-    console.log("button is clicked");
     this.model.sell();
     this.trigger('listTrades', this);
   }
