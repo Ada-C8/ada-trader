@@ -30,15 +30,15 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
   createOrderFromForm(event, buying) {
-    const selectedQuote = this.$('select option:selected').text();
+    const selectedSymbol = this.$('select option:selected').text();
     const targetPrice = parseFloat(this.$('input').val());
     const desiredQuote = this.quotes.findWhere({
-        symbol: selectedQuote
+        symbol: selectedSymbol
     });
 
     const newOrder = new Order({
       targetPrice: targetPrice,
-      symbol: selectedQuote,
+      symbol: selectedSymbol,
       buy: buying,
       quote: desiredQuote,
       bus: this.bus,
@@ -60,15 +60,17 @@ const OrderListView = Backbone.View.extend({
     this.createOrderFromForm(event, false);
   },
   validateOrder(order) {
-    console.log(' in the validate order method');
+    this.$('.form-errors').empty();
+    // console.log(' in the validate order method');
     if (order.isValid()) {
-      console.log('the new order is valid');
+      // console.log('the new order is valid');
       this.model.add(order);
       // clear form after an order is made
       this.$el.find('form').trigger('reset');
     } else {
+      order.destroy();
       const errors = order.validationError;
-      console.log('the new order is invalid');
+      // console.log('the new order is invalid');
       const errorSection = this.$('.form-errors');
       Object.keys(errors).forEach((errorType) => {
         errors[errorType].forEach((error) => {
