@@ -4,7 +4,6 @@ import Order from '../models/order';
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.orderTemplate;
-    this.listenTo(this.model, "change", this.render);
   },
   render() {
     console.log('in order_view render');

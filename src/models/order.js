@@ -1,9 +1,6 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-  defaults: {
-    is_traded: false,
-  },
   validate: function(attributes) {
     const errors = {};
 
@@ -11,7 +8,7 @@ const Order = Backbone.Model.extend({
       errors['symbol'] = ["Symbol is required"];
     }
 
-    if (!attributes.targetPrice) {
+    if (!attributes.targetPrice || attributes.targetPrice <= 0) {
       errors['price_target'] = ["Target price is required"];
     }
 
@@ -22,10 +19,13 @@ const Order = Backbone.Model.extend({
     if (!attributes.buy && attributes.targetPrice <= attributes.currentPrice) {
       errors['price_target'] = ["Sell order target price cannot be less than the current market price."]
     }
+
+    if (Object.keys(errors).length > 0) {
+      return errors;
+    } else {
+      return false;
+    }
   },
-  /*buy() {
-    this.set('currentPrice', )
-  }, */
 });
 
 export default Order;

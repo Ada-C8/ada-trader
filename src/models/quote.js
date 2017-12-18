@@ -8,10 +8,12 @@ const Quote = Backbone.Model.extend({
   buy() {
     this.set('price', this.get('price') + 1);
     this.set('buy', true);
+    this.trigger('tradeMe', this);
   },
   sell() {
     this.set('price', this.get('price') - 1);
     this.set('buy', false);
+    this.trigger('tradeMe', this);
   },
 });
 

@@ -14,7 +14,7 @@ describe('Order spec', () => {
 
     it('returns false if order is valid', () => {
 
-      expect(order.validate(order.attributes)).toBeFalsy();
+      expect(order.validate(order.attributes)).toEqual(false);
     });
 
     it('requires a symbol to be valid', () => {

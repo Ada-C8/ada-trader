@@ -35,6 +35,7 @@ const OrderListView = Backbone.View.extend({
       targetPrice: Number(this.$('.order-entry-form [name=price-target]').val()),
       quote: this.quotes.findWhere({symbol: this.$('.order-entry-form select').val()}),
     });
+    console.log(newOrder);
     if (event.target.innerHTML === 'Buy') {
       newOrder.set('buy', true);
     } else {
@@ -46,6 +47,7 @@ const OrderListView = Backbone.View.extend({
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       this.updateStatusMessageWith(`New order for ${newOrder.get('symbol')} has been saved.`)
+      this.clearForm();
     } else {
       this.updateStatusMessageFrom(newOrder.validationError);
     }
@@ -63,7 +65,10 @@ const OrderListView = Backbone.View.extend({
     const statusMessagesEl = this.$('.form-errors');
     statusMessagesEl.empty();
     statusMessagesEl.append(`<p>${message}</p>`);
-  }
+  },
+  clearForm: function() {
+    this.$('.order-entry-form input').val('')
+  },
 });
 
 export default OrderListView;

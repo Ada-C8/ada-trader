@@ -17,11 +17,9 @@ const QuoteView = Backbone.View.extend({
   },
   buyQuote: function(event) {
     this.model.buy();
-    this.trigger('tradeMe', this);
   },
   sellQuote: function(event) {
     this.model.sell();
-    this.trigger('tradeMe', this);
   },
 });
 
