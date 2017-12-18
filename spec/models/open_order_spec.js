@@ -114,7 +114,7 @@ describe('OpenOrder spec', () => {
         symbol: 'HI',
         targetPrice: 100.00,
         quote: new Quote({symbol: 'HELLO', price: 100.00 }),
-        buy: false,
+        buy: true,
         bus: bus,
       });
 
@@ -133,7 +133,33 @@ describe('OpenOrder spec', () => {
     });
 
     it('sells the quote and destroys the openOrder if the quotes is greater than or equal to the openOrder targetPrice', () => {
+      let bus = {}
+      bus = _.extend(bus, Backbone.Events)
+      const tradeList = new TradeList(bus);
+      const openOrderList = new OpenOrderList();
 
+      let tradeListLength = tradeList.length
+      let openOrderListLength = openOrderList.length
+
+      const validOpenOrder = new OpenOrder({
+        symbol: 'HI',
+        targetPrice: 100.00,
+        quote: new Quote({symbol: 'HELLO', price: 100.00 }),
+        buy: false,
+        bus: bus,
+      });
+
+      openOrderList.add(validOpenOrder)
+
+      expect(openOrderList.length).toEqual(openOrderListLength + 1)
+
+      validOpenOrder.check(validOpenOrder.quote)
+
+      let endTradeListLength = tradeList.length
+
+      expect(openOrderList.length).toEqual(openOrderListLength)
+
+      expect(endTradeListLength).toEqual(1)
     });
 
 

@@ -37,17 +37,11 @@ const OpenOrder = Backbone.Model.extend({
   check(model){
     if(this.attributes.buy) {
       if(model.attributes.price<=this.attributes.targetPrice) {
-        console.log(this.bus);
         this.bus.trigger('automatic_buy', this.quote)
-        //pass a callback third here ^^
-        //can I do this before I have confirmation that the trade has been made?
-        //maybe put a trigger on making event and a listener on orderView and if a trade has
-        //been made check to see if there is an openorder ????
         this.destroy()
       }
     }else{
       if(model.attributes.price>=this.targetPrice) {
-        console.log(this.bus);
         this.bus.trigger('automatic_sell', this.quote)
         this.destroy()
       }
