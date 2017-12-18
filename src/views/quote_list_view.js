@@ -6,6 +6,7 @@ import QuoteView from '../views/quote_view';
 const QuoteListView = Backbone.View.extend ({
 initialize(params) {
   this.quoteTemplate = params.quoteTemplate;
+  this.tradeTemplate = params.tradeTemplate;
   this.listenTo(this.model, 'update', this.render);
   this.bus = params.bus;
 },
@@ -19,6 +20,7 @@ render() {
       tagName: 'li',
       className: 'quote',
     });
+    this.listenTo(quote, 'addQuote', this.events.seeTrade);
     this.$('#quotes').append(quoteView.render().$el);
   });
 
@@ -26,6 +28,13 @@ render() {
   //append template to html
   return this;
 },
+
+events: {
+  seeTrade: function(data) {
+    const seeTradeTemp = this.tradeTemplate(data);
+    this.$('#trades').prepend(seeTradeTemp);
+  }
+}
 });
 
 export default QuoteListView;

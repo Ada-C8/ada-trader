@@ -36,11 +36,13 @@ $(document).ready(function() {
     quotes: quotes,
   });
   const quoteTemp = _.template($('#quote-template').html());
+  const tradeTemp = _.template($('#trade-template').html());
 
   //create new quote view obj
   const quoteListView = new QuoteListView({
     model: quotes,
     quoteTemplate: quoteTemp,
+    tradeTemplate: tradeTemp,
     el: 'main',
     bus: bus,
   });
