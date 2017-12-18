@@ -23,9 +23,9 @@ const Order = Backbone.Model.extend({
     const quotePrice = attributes.quote[0].attributes.price;
 
     if (!attributes.priceTarget) {
-      errors['Price'] = ['Cannot be blank'];
+      errors['Price'] = ['Price cannot be blank'];
     } else if (isNaN(attributes.priceTarget)) {
-      errors['Price'] = ['Must be a numeric value'];
+      errors['Price'] = ['Price must be a numeric value'];
     } else if (attributes.priceTarget <= quotePrice && attributes.buy === false) {
       errors['Price'] = ['Price is lower than Market Price!'];
     } else if (attributes.priceTarget >= quotePrice && attributes.buy) {

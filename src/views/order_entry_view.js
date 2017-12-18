@@ -1,6 +1,4 @@
 import Backbone from 'backbone';
-import $ from 'jquery';
-import _ from 'underscore';
 import Order from '../models/order';
 
 const OrderEntryView = Backbone.View.extend({
@@ -47,7 +45,7 @@ const OrderEntryView = Backbone.View.extend({
   renderValidationFailure(errorsHash) {
     this.$('.form-errors ul').empty();
     for (const key in errorsHash) {
-      this.$('.form-errors ul').append(`<li><strong>${key}:</strong> ${errorsHash[key]}</li>`);
+      this.$('.form-errors ul').append(`<h3>${errorsHash[key]}</h3>`);
     }
   }
 });

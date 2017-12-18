@@ -1,6 +1,4 @@
 import Backbone from 'backbone';
-import $ from 'jquery';
-import _ from 'underscore';
 
 const OrderView = Backbone.View.extend({
   initialize(params) {
