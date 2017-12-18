@@ -93,7 +93,6 @@ const OrdersView = Backbone.View.extend({
 
       this.bus.trigger('add_order_request', formData);
     }
-
   },
 
   events: {

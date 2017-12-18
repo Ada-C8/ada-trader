@@ -51,7 +51,7 @@ const QuoteView = BackBone.View.extend({
     }
   },
 
-  //TODO: This could use some more refactoring
+  //TODO: This could use some more refactoring?
   buySellQuote(event){
     console.log('In buySellQuote');
     console.log(event.target.innerHTML);
