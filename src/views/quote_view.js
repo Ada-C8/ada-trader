@@ -7,6 +7,7 @@ import Simulator from '../models/simulator';
 const QuoteView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
+    // this.listenTo(this.model,'change', this.quoteModelChange);
     this.listenTo(this.model,'change', this.render);
   },
   events: {
@@ -16,7 +17,6 @@ const QuoteView = Backbone.View.extend({
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
-    // this.$('#quotes').html(compiledTemplate);
     return this;
   },
   buyQuote: function(e) {
@@ -31,6 +31,7 @@ const QuoteView = Backbone.View.extend({
     this.model.set('price', this.model.sell());
     this.model.set('buy', false);
     this.trigger('addTrade', this);
+    console.log('sold trade added');
   }
 });
 

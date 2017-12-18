@@ -6,7 +6,9 @@ import Quote from '../models/quote';
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
+    this.bus = params.bus;
     this.template = params.quotesTemplate;
+    this.listenTo(this.bus, 'tradeMe', this.tradeOrders);
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
@@ -16,16 +18,34 @@ const QuoteListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'quote',
+        bus: this.bus,
       });
       this.listenTo(quoteView, 'addTrade', this.prependTrades);
+      // this.quote_list_views.push(quoteView);
+      this.listenTo(quoteView, 'aQuoteModelChange', this.quoteChange);
       this.$('#quotes').append(quoteView.render().$el);
     });
     return this;
   },
+  quoteChange: function(event) {
+    this.trigger('quoteListViewSendsQuoteChange', this);
+  },
   prependTrades: function(quoteView){
+    console.log('in prependTrades');
     const tradeTemplate = _.template($('#trade-template').html());
     this.$('#trades').prepend(tradeTemplate(quoteView.model.attributes));
   },
+  tradeOrders(quote) {
+    console.log('in trade orders');
+    const tradeQuoteView = new QuoteView({
+      model: quote,
+      template: this.template,
+      tagName: 'li',
+      className: 'quote',
+      bus: this.bus,
+    });
+    this.prependTrades(tradeQuoteView);
+  }
 });
 
 export default QuoteListView;

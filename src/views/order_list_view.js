@@ -11,7 +11,8 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.template = params.ordersTemplate;
     this.listenTo(this.model, 'update', this.render);
-    this.quotes = params.quotes
+    this.quotes = params.quotes;
+    this.bus = params.bus;
   },
   render() {
     this.$('#orders').empty();
@@ -21,19 +22,26 @@ const OrderListView = Backbone.View.extend({
         template: this.template,
         tagName: 'li',
         className: 'order',
+        bus: this.bus,
       });
+      // this.listenTo(this.bus, 'quoteViewSendsQuoteChange', this.checkChange);
       this.$('#orders').append(orderView.render().$el);
     });
     return this;
   },
   events: {
     'click .btn-buy': 'buyOrder',
+    'click .btn-sell': 'sellOrder',
   },
   buyOrder: function(event) {
     console.log('You pressed the Buy Order button.');
     event.preventDefault();
-
     this.addToOrders(event, true);
+  },
+  sellOrder: function(event) {
+    console.log('You pressed the Sell Order button.');
+    event.preventDefault();
+    this.addToOrders(event, false);
   },
   addToOrders: function(event, buyIsTrue) {
     const orderData ={};
@@ -49,7 +57,10 @@ const OrderListView = Backbone.View.extend({
 
     //finds the current market price and adds it to the orderData hash, to be validated in the model.
     const currentQuoteModel = this.quotes.find({symbol: symbol});
+    currentQuoteModel.set('buy', buyIsTrue);
+    orderData['quote'] = currentQuoteModel;
     console.log(currentQuoteModel);
+
     const currentMarketPrice = currentQuoteModel.get('price');
     console.log(currentMarketPrice);
     orderData['marketPrice'] = currentMarketPrice;
