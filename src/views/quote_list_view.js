@@ -36,21 +36,6 @@ render(){
   return this;
 },
 
-// getQuote(order){
-//   console.log("It's the get quote method!!!");
-//   // this.symbol = symbol;
-//   console.log(this.order.get('symbol'));
-//   console.log("I just console logged order")
-//   console.log(this);
-//   console.log("i just consolelogged this")
-//   // let x = _.findWhere(this.model, {symbol = })
-//   // let currentPrice = this.model.
-// },
-// setModel(trade_data) {
-//   this.data = trade_data;
-//   this.render();
-// },
-
 }); //end quotelistview
 
 
@@ -59,12 +44,4 @@ export default QuoteListView;
 
 
 
-
-
-// const tradeHistoryView = new TradeHistoryView({
-//   bus: this.bus,
-//   template: tradeTemplate,
-//   el: '.trades'
-// });
-//
 // tradeHistoryView.render();

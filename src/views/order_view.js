@@ -6,8 +6,8 @@ const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
-  
-    // if you here the price_change, call the checkPrice method to find out the new price.
+
+    // if you hear the price_change, call the checkPrice method to find out the new price.
     this.listenTo(this.model, 'change', this.render);
   },
 
@@ -27,14 +27,7 @@ const OrderView = Backbone.View.extend({
   },
 
   // checkPrice(quote) {
-  //   if(false) {
-  //     this.cancelOrder();
-  //     this.bus.trigger('buy_order', quote); //trigger the buy event
-  //   } else if (!this.model.get('buy') && this.model.get('targetPrice') >= quote.get('price')) {
-  //     this.bus.trigger('sell_order', quote)
-  //     this.cancelOrder();
-  //   }
-  // },
+
 
 
 

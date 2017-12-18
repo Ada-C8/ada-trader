@@ -11,6 +11,7 @@ const OrderListView = Backbone.View.extend({
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
     this.listenTo(this.bus, 'send_quotes', this.getQuotes);
+    // this.listenTo(this.bus, 'price_check', this.checkPrice);
 
   },
   render(){
@@ -51,25 +52,12 @@ const OrderListView = Backbone.View.extend({
   },
 
   createOrder(buy) {
-
-
-    console.log("We're triggering the create order event!");
-
     const orderData = this.getOrderData(buy);
-
-    console.log(orderData);
-
     this.quoteList.each((quote) => {
       if (orderData['symbol'] == quote.get('symbol') ) {
         orderData['quote'] = quote;
       }
-
-      console.log(orderData['quote']);
     });
-
-
-
-
 
     const newOrder = new Order(orderData);
 
@@ -85,7 +73,6 @@ const OrderListView = Backbone.View.extend({
 
   getOrderData(buy) {
     const orderData = {};
-
     orderData["symbol"] = this.$(`#order-entry-form #symbol option:checked`).val();
     let stringPrice = this.$(`#order-entry-form input[name=price-target]`).val();
     orderData["targetPrice"] = parseFloat(stringPrice);
@@ -95,17 +82,13 @@ const OrderListView = Backbone.View.extend({
     return orderData;
   },
 
-
   clearFormData() {
     this.$(`#order-entry-form input[name=price-target]`).val('');
   },
 
   getQuotes(quotelist){
-    console.log("in get quotes");
     this.quoteList = quotelist;
-    console.log(this.quoteList);
   },
-
 
   updateStatusMessageFrom(messageHash) {
     const $formErrors = this.$('.form-errors');
@@ -114,7 +97,6 @@ const OrderListView = Backbone.View.extend({
       messageHash[messageType].forEach((message) => {
         $formErrors.append(`<li>${message}</li>`);
       });
-
     });
 
     $formErrors.show();

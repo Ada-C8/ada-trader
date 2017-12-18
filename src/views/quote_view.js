@@ -29,13 +29,12 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sell',
     'click button.btn-buy': 'buy',
   },
-// we set event listeners for clicks on either of these buttons in our view. Methods are defined in the quote.js model.
 
   buy(event) {
     console.log("You clicked buy");
     this.recordTrade(true)
     this.model.buy();
-    //
+
   },
   sell(event) {
     console.log("You clicked Sell");
