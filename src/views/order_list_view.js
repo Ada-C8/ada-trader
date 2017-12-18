@@ -45,19 +45,19 @@ const OrderListView = Backbone.View.extend({
   createBuyOrder(event) {
     event.preventDefault();
     console.log("you clicked the buy button");
-    this.createOrder();
+    this.createOrder(true);
 
   },
 
-  // createSellOrder(event) {
-  //   event.preventDefault();
-  //   console.log("you clicked the sell button");
-  //   this.createOrder(false);
-  // },
+  createSellOrder(event) {
+    event.preventDefault();
+    console.log("you clicked the sell button");
+    this.createOrder(false);
+  },
 
-  createOrder() {
+  createOrder(buy) {
     console.log("We're triggering the create order event!");
-    const orderData = this.getOrderData();
+    const orderData = this.getOrderData(buy);
     console.log(orderData);
     const newOrder = new Order(orderData);
     this.model.add(newOrder);
@@ -65,30 +65,17 @@ const OrderListView = Backbone.View.extend({
     // this.bus.trigger('createOrder', order_data);
   },
 
-  getOrderData() {
+  getOrderData(buy) {
     const orderData = {};
 
-    console.log()
-
     orderData["symbol"] = this.$(`#order-entry-form #symbol option:checked`).val();
-    orderData["targetPrice"] = this.$(`#order-entry-form input[name=price-target]`).val();
-    // orderData["buy"] = buy;
+    let stringPrice = this.$(`#order-entry-form input[name=price-target]`).val();
+    orderData["targetPrice"] = parseFloat(stringPrice);
+    orderData["buy"] = buy;
 
 
     return orderData;
   },
-
-  // <form id="order-entry-form">
-  //   <label for="symbol">Symbol</label>
-  //   <select id="symbol" name="symbol">
-  //     <!-- Option entries should be added here using JavaScript -->
-  //   </select>
-  //   <label for="price-target">Price</label>
-  //   <input type="number" name="price-target" step="0.10" min="0.00" placeholder="100.00" />
-  //   <label>Action</label>
-  //   <button id="buy-order" class="btn-buy alert button">Buy</button>
-  //   <button id="sell-order" class="btn-sell success button">Sell</button>
-  // </form>
 
 
 

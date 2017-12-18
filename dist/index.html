@@ -63,7 +63,7 @@
            <form id="order-entry-form">
              <label for="symbol">Symbol</label>
              <select id="symbol" name="symbol">
-               
+
                <!-- Option entries should be added here using JavaScript -->
              </select>
              <label for="price-target">Price</label>
@@ -114,7 +114,8 @@
       <h3>This is the open orders template</h3>
       <h3 class="symbol"><%- symbol %></h3>
       <div class="detail">
-    <!-- cut line goes here? -->
+        <span class="action"><%- buy ? 'buy' : 'sell' %></span>
+
         <span class="price">$<%- targetPrice.toFixed(2) %></span>
       </div>
       <button class="btn-cancel button secondary">Cancel</button>

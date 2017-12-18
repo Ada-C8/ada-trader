@@ -33,7 +33,7 @@ render(){
 
     let x = document.getElementById("symbol");
     let option = document.createElement("option");
-    option.name = "symbol-name";
+    // option.name = "symbol-name";
     // option.value = quote.get('symbol');
     option.text = quote.get('symbol');
     x.add(option);
