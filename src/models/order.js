@@ -48,7 +48,7 @@ const Order = Backbone.Model.extend({
     }
 
     if (!this.get('buy') && this.get('quote').get('price') >= this.get('targetPrice')) {
-      this.model.set('buy', false)
+      this.set('buy', false)
       this.trigger('appendTrade', this)
       this.destroy()
       toBuy.sell();
