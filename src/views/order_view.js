@@ -18,10 +18,20 @@ const OrderView = Backbone.View.extend({
 
   // events object
   events: {
-
+    'click button.btn-cancel': 'cancelOrder',
   },
-  // will need a destroy order function
 
+  cancelOrder() {
+    let symbol = this.model.get('symbol');
+    // get rid of order
+    this.model.destroy({
+      success: function() {
+        console.log(`Successfully cancelled market order for  ${symbol}`);
+      }
+    });
+    // remove is probably unneccesary but it tells it to remove itself from the DOM
+    this.remove();
+  },
 
 });
 
