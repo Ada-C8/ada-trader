@@ -13,6 +13,7 @@ import OrderList from 'collections/order_list';
 import QuoteView from './views/quote_view';
 import QuoteListView from './views/quote_list_view';
 import TradeHistoryView from './views/trade_history_view';
+import OrderView from './views/order_view';
 import OrderListView from './views/order_list_view';
 import OrderEntryView from './views/order_entry_view';
 
@@ -52,6 +53,7 @@ const quoteData = [
 
 let quoteTemplate;
 let tradeTemplate;
+let orderTemplate;
 const bus = _.extend({}, Backbone.Events);
 
 $(document).ready(function() {
@@ -73,8 +75,8 @@ $(document).ready(function() {
 
   quoteListView.render();
 
-// Trade History
-tradeTemplate = _.template($('#trade-template').html());
+  // Trade History
+  tradeTemplate = _.template($('#trade-template').html());
 
   const tradeHistoryView = new TradeHistoryView({
     model: quotes,
@@ -85,8 +87,8 @@ tradeTemplate = _.template($('#trade-template').html());
 
   tradeHistoryView.bind();
 
-// Add orders
-const orders = new OrderList();
+  // Add orders
+  const orders = new OrderList();
 
   $('#orderForm').on('submit', function(event) {
     event.preventDefault();
@@ -104,26 +106,27 @@ const orders = new OrderList();
     bus: bus,
   });
 
+  orderTemplate = _.template($('#order-template').html());
   const orderListView = new OrderListView({
     model: orders,
-    template: _.template($('#order-template').html()),
+    template: orderTemplate,
     el: '.orders-list-container',
     bus: bus,
   });
 
 
-// // render one quote
-// const $quoteList = $('#quotes');
-//
-//   const quoteView = new QuoteView({
-//     // el: 'ul',
-//     model: quotes.at(0),
-//     template: quoteTemplate,
-//     tagName: 'li',
-//     className: 'quote'
-//   });
-//   $('#quotes-list')quoteView.render();
-//
-        //   $quoteList.append(quoteView.render().$el);
+  // // render one quote
+  // const $quoteList = $('#quotes');
+  //
+  //   const quoteView = new QuoteView({
+  //     // el: 'ul',
+  //     model: quotes.at(0),
+  //     template: quoteTemplate,
+  //     tagName: 'li',
+  //     className: 'quote'
+  //   });
+  //   $('#quotes-list')quoteView.render();
+  //
+  //   $quoteList.append(quoteView.render().$el);
 
 });

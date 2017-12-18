@@ -26,7 +26,6 @@ const QuoteView = Backbone.View.extend({
   sell(event) {
     console.log('Make that money');
     this.model.sell();
-
   },
 });
 

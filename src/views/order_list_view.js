@@ -1,9 +1,8 @@
 import Backbone from 'backbone';
 import _ from 'underscore';
+
 import OrderView from '../views/order_view';
 import Order from '../models/order';
-// import OrderList from '../collections/order_list';
-
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
@@ -17,6 +16,7 @@ const OrderListView = Backbone.View.extend({
     // update event happened
     this.$('#orders').empty();
     this.model.each((order) => {
+      console.log('order is ' + JSON.stringify(order));
       const orderView = new OrderView({
         model: order,
         template: this.template,

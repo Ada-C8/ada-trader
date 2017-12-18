@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 import Quote from '../models/quote';
 
 const Order = Backbone.Model.extend({
-  
+
   buyit(){
     const quote = this.get('quote');
 
