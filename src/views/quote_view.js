@@ -43,7 +43,6 @@ const QuoteView = Backbone.View.extend({
       price: this.model.get('price'),
       symbol: this.model.get('symbol'),
     }
-    console.log(tradeItem);
 
     if (event.currentTarget.innerHTML == 'Buy') {
       tradeItem['buy'] = 'buy';
