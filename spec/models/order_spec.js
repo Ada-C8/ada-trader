@@ -55,15 +55,15 @@ describe('Order spec', () => {
         });
       });
 
-      xit('will not trigger addTrade event if the price is higher than the target price', () => {
+      it('will not trigger addTrade event if the price is higher than the target price', () => {
         // const spy = spyOn(eventBus, 'trigger');
         eventBus.trigger(`priceChange${order.get('symbol')}`, higherPrice);
 
         expect(spy).not.toHaveBeenCalledWith('addTrade', {
-        symbol: order.get('symbol'),
-        buy: order.get('buy'),
-        price: parseFloat(lowerPrice),
-      });
+          symbol: order.get('symbol'),
+          buy: order.get('buy'),
+          price: parseFloat(lowerPrice),
+        });
       });
     });
 
