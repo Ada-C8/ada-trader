@@ -20,8 +20,8 @@ const OpenOrderView = Backbone.View.extend({
   },
 
   cancel() {
-    this.model.destroy();
     this.remove();
+    this.model.destroy();
     //does this do enough to cancel listeners too?
   },
 
