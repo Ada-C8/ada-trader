@@ -5,11 +5,8 @@ import $ from 'jquery';
 import _ from 'underscore';
 
 import Simulator from 'models/simulator';
-import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
-import QuoteView from 'views/quote_view';
 import QuoteListView from 'views/quote_list_view';
-import Order from 'models/order'
 import OrderList from 'collections/order_list'
 import OrderListView from 'views/order_list_view';
 
@@ -57,7 +54,6 @@ $(document).ready(() => {
     model: quotes,
     template: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
-    // orderTemplate: _.template($('#order-template').html()),
     el: 'main',
   });
   quoteListView.render();

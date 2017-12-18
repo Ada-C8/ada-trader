@@ -2,7 +2,6 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import OrderView from '../views/order_view';
 import Order from '../models/order';
-import QuoteList from '../collections/quote_list';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
@@ -43,11 +42,9 @@ const OrderListView = Backbone.View.extend({
     } else {
       this.updateStatusMessageFrom(newOrder.validationError);
     }
-    console.log(newOrder);
   },
   openSellOrder: function(event) {
     event.preventDefault();
-    // console.log(this.quoteList);
     const orderData = {
       symbol: this.$(`select[name=symbol]`).val(),
       targetPrice: parseFloat(this.$('input[name=price-target]').val()),

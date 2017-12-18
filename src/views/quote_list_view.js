@@ -1,7 +1,5 @@
 import Backbone from 'backbone';
-import _ from 'underscore';
 import QuoteView from '../views/quote_view';
-import Quote from '../models/quote';
 
 const QuoteListView = Backbone.View.extend({
   initialize(params) {
@@ -18,9 +16,7 @@ const QuoteListView = Backbone.View.extend({
         tagName: 'li',
         className: 'quote',
       });
-      // this.listenTo(quoteView, 'buyUpdate', this.buy);
     this.listenTo(quote, 'addTrade', this.events.showTrade);
-
     this.$('#quotes').append(quoteView.render().$el);
   });
 

@@ -26,9 +26,6 @@ describe('Order spec', () => {
       matchedQuote: quote,
       buy: true,
     });
-    // can add a collection here too if nec.
-    // ...listenTo(whatever you're destroying, 'destroy', () =>{
-      // })
   });
 
   describe('the validate function', () => {
