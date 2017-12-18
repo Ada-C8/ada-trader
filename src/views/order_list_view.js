@@ -41,8 +41,6 @@ const OrderListView = Backbone.View.extend({
     //   //  _.template(this.$('#order-template')),
     // });
 
-    // TODO necesito algo parecido a esto en el futuro
-    // this.$('#todo-items').append(taskView.render().$el);
     this.model.add(newOrder)
     // console.log(viewOrder);
   },
@@ -51,8 +49,7 @@ const OrderListView = Backbone.View.extend({
     const orderData = {};
     // ['symbol', 'price-target'].forEach((field) => {
       const val = Number(this.$('#order-form input[name="targetPrice"]').val());
-      console.log(`this is the price ${val}`);
-      console.log(this.$('#order-form'));
+
       // this.$(`#add-task-form input[name=${field}]`).val();
       // if (val !== '') {
       orderData['targetPrice'] = val;

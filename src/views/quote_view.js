@@ -17,8 +17,8 @@ const QuoteView = Backbone.View.extend({
     console.log("inside buyQuote");
   },
   sellQuote(){
-    // console.log("inside sell");
-    this.model.sell()
+    this.model.sell(),
+    this.bus.trigger('sellQuote', this.model)
   },
   render(){
     const compiledTemplate = this.template(this.model.toJSON());

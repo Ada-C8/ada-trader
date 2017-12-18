@@ -9,6 +9,7 @@ const TraderListView = Backbone.View.extend({
     this.template = params.template;
     // Liste the but, sell event
     this.listenTo(params.bus, 'buyQuote', this.addTraderBuy);
+    this.listenTo(params.bus, 'sellQuote', this.addTraderSell);
     // this.listenTo(this.model, 'buy', this.addTraderBuy);
     // this.listenTo(this.model, 'sell', this.addTraderSell);
     // TODO to change click, I want to add the element to the list after they click buy or sellQuote
@@ -30,14 +31,43 @@ const TraderListView = Backbone.View.extend({
     console.log("inside the addTraderBuy");
   },
 
-  addTraderSell(trade){
+  addTraderSell(quote){
+
+
+    const tradesell = {
+      symbol:quote.get('symbol'),
+      price: quote.get('price'),
+      buy: false
+
+    };
+
     const traderView = new TraderView({
-      model: trade,
+      model: tradesell,
       template: this.template,
+      bus: this.bus,
     });
 
     this.$('.trades').prepend(traderView.render().$el);
-  },
+    console.log("inside the addSell");
+
+}
+
+
+
+
+
+
+
+
+
+
+  //   const traderView = new TraderView({
+  //     model: trade,
+  //     template: this.template,
+  //   });
+  //
+  //   this.$('.trades').prepend(traderView.render().$el);
+  // },
 });
 
 export default TraderListView;
