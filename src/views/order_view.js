@@ -9,10 +9,17 @@ const OrderView = Backbone.View.extend({
     // TODO: add trigger for newOrder
     this.listenTo(this.bus, 'newOrder', this.render);
   },
+  events: {
+    'click button.btn-cancel': 'cancelOrder',
+  },
   render() {
     const compiledTradeTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTradeTemplate);
     return this;
+  },
+  cancelOrder() {
+    this.model.destroy();
+    this.remove();
   }
 });
 
