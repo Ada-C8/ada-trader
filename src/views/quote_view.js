@@ -34,7 +34,7 @@ const QuoteView = Backbone.View.extend({
   },
   render() {
     let quote = this.model;
-    // trigger quote_change event which quotelist view will listen for
+    // trigger quote_change event which openOrderlist view will listen for
     this.bus.trigger('quote_change', quote);
     console.log(this.model);
     const compiledTemplate = this.template(this.model.toJSON());
