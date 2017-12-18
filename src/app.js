@@ -1,10 +1,16 @@
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
+import QuoteView from './views/quote_view';
+import TraderListView from './views/trader_list_view';
+import QuoteListView from './views/quote_list_view';
+import OrderListView from './views/order_list_view';
 
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
 
 const quoteData = [
   {
@@ -25,11 +31,53 @@ const quoteData = [
   },
 ];
 
+
+
+
+
+
+
 $(document).ready(function() {
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
+
+  const bus = _.extend({}, Backbone.Events);
+
+
+  quotes.each((quote) => {
+    _.extend(quote, Backbone.events);
+    const quoteView = new QuoteView({
+      model: quote,
+      template: _.template($('#quote-template').html()),
+      tagName: 'li',
+      className: 'quote',
+      bus: bus,
+    });
+    quoteView.render();
+    $('.quotes').append(quoteView.$el);
+    $('#option').append(`<option>${quote.get('symbol')}</option>`);
+
+  });
+
+  const orderList = new OrderList();
+
+  const traderListView = new TraderListView({
+    template: _.template($('#trade-template').html()),
+    el: "#trades-container",
+    bus: bus
+  });
+
+  const orderListView = new OrderListView({
+    model: orderList,
+    el: '#order-workspace',
+    template: _.template($('#order-template').html())
+  });
+
+  orderListView.renderOrders()
+
+
 
   simulator.start();
 });
