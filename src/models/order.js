@@ -9,7 +9,7 @@ const Order = Backbone.Model.extend({
     // create a hash for errors
 
     if(!attributes.symbol) {
-      errors['symbol'] = ['Need to know what your buying or selling'];
+      errors['symbol'] = ['Need to know what you\'re buying or selling'];
       //if there's no symbol, give this message
     }
 
