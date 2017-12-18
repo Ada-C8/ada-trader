@@ -7,9 +7,11 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import Simulator from 'models/simulator';
 
+import Quote from 'models/quote';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from './views/quote_list_view';
 
+import Order from 'models/order';
 import OrderList from 'collections/order_list';
 import OrderListView from './views/order_list_view';
 
@@ -47,11 +49,21 @@ $(document).ready(function() {
   });
   quoteListView.render();
 
+  const formDropDown = function formDropDown() {
+    const $formSelect = $('select[name=symbol]');
+
+    quotes.forEach((quote) => {
+      const quoteSymbol = quote.get('symbol');
+      $formSelect.append(`<option value=${quoteSymbol}>${quoteSymbol}</option>`);
+    });
+  };
+  formDropDown();
 
   const orderListView = new OrderListView({
     model: orders,
     template: _.template($('#order-template').html()),
-    el: 'main'
+    quoteList: quotes,
+    el: '#order-workspace'
   });
   orderListView.render();
 
