@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 
 
-const Order = Backbone.model.extend ({
+const Order = Backbone.Model.extend ({
   initialize(attributes) {
 
   },

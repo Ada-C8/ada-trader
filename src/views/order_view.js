@@ -13,4 +13,26 @@ const OrderView = Backbone.View.extend({
    this.$el.html(compiledTemplate);
    return this;
  },
- 
+ events: {
+   'click .btn-cancel': 'cancelOrder',
+ },
+ cancelOrder() {
+   this.model.destroy();
+   this.remove();
+ },
+ swapOrder() {
+   if (this.model.get('buy')) {
+     if (this.model.get('quote').get('price') <= this.model.get('setPrice')) {
+       this.bus.trigger('buyOrder', this);
+       this.cancelOrder();
+     }
+   } else {
+     if (this.model.get('quote').get('price') >= this.model.get('setPrice')) {
+       this.bus.trigger('sellOrder', this);
+       this.cancelOrder();
+     }
+   }
+ },
+});
+
+export default OrderView;
