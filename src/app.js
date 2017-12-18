@@ -22,6 +22,7 @@ import Order from 'models/order';
 import OrderList from 'collections/order_list';
 import OpenOrderView from 'views/open_order_view';
 import OpenOrderListView from 'views/open_order_list_view';
+import OrderFormView from 'views/order_form_view';
 
 const quoteData = [
   {
@@ -73,49 +74,40 @@ $(document).ready(function() {
   tradeHistoryView.bind();
 
   /////// order entry form //////
-
+  //
+  const order = new Order;
   const orders = new OrderList();
 
-  quotes.forEach(function(quote) {
-    // console.log(quote);
-    $('#select-symbol').append($('<option>', {
-      value: quote.get('symbol'),
-      text: quote.get('symbol')
-    }));
-  });
-
-  $('#order-form').on('submit', function(event) {
-    event.preventDefault();
-  });
-
-  $('#order-form .btn-buy').on('click', function(event) {
-    event.preventDefault();
-    let orderData = {
-      buy: true
-    };
-
-    orderData['symbol'] = $('#select-symbol').val();
-    orderData['targetPrice'] = parseFloat($('#order-price').val());
-
-    let order = new Order(orderData);
-    orders.push(order);
-    // console.log(orderData);
-  });
-
-
-  $('#order-form .btn-sell').on('click', function(event) {
-    event.preventDefault();
-    let orderData = {
-      buy: false
-    };
-
-    orderData['symbol'] = $('#select-symbol').val();
-    orderData['targetPrice'] = parseFloat($('#order-price').val());
-
-    let order = new Order(orderData);
-    orders.push(order);
-    // console.log(orderData);
-  });
+  // $('#order-form').on('submit', function(event) {
+  //   event.preventDefault();
+  // });
+  //
+  // $('#order-form .btn-buy').on('click', function(event) {
+  //   event.preventDefault();
+  //   let orderData = {
+  //     buy: true
+  //   };
+  //
+  //   orderData['symbol'] = $('#select-symbol').val();
+  //   orderData['targetPrice'] = parseFloat($('#order-price').val());
+  //
+  //   let order = new Order(orderData);
+  //   orders.push(order);
+  // });
+  //
+  //
+  // $('#order-form .btn-sell').on('click', function(event) {
+  //   event.preventDefault();
+  //   let orderData = {
+  //     buy: false
+  //   };
+  //
+  //   orderData['symbol'] = $('#select-symbol').val();
+  //   orderData['targetPrice'] = parseFloat($('#order-price').val());
+  //
+  //   let order = new Order(orderData);
+  //   orders.push(order);
+  // });
 
 
   let orderTemplate = _.template($('#order-template').html());
@@ -126,6 +118,13 @@ $(document).ready(function() {
     template: orderTemplate,
   });
 
+  const orderFormView = new OrderFormView({
+    el: '.order-entry-form',
+    orderList: orders,
+    quoteList: quotes,
+  });
+
   openOrderListView.render();
+  orderFormView.render();
 
 });
