@@ -7,12 +7,12 @@ const Order = Backbone.Model.extend({
   },
 
   initialize(params) {
-    if (!this.validate()) {
+    if (!this.invalid()) {
       this.listenTo(this.attributes.quote, 'change', this.priceCheck);
     }
   },
 
-  validate() {
+  invalid() {
     let errors = {}
     if (this.symbol === "" || this.symbol === "UNEF") {
       errors.symbol = ['You must select a valid symbol'];

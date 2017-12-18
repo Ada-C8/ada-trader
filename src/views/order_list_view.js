@@ -53,11 +53,11 @@ const OrderListView = Backbone.View.extend({
 
     const order = new Order(orderData);
 
-    if (!order.validate()) {
+    if (!order.invalid()) {
       this.model.add(order);
     } else {
-      for (let errors in order.validate()) {
-        order.validate()[errors].forEach((error) => {
+      for (let errors in order.invalid()) {
+        order.invalid()[errors].forEach((error) => {
           this.$('.form-errors').append(error)
         })
       }
