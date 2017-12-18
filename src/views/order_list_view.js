@@ -31,6 +31,8 @@ const OrderListView = Backbone.View.extend({
     'click .btn-sell': 'sellOrder',
   },
   createOrder(value) {
+    this.$('.form-errors').empty();
+    
     const orderData = {
       buy: value.buy,
       symbol: this.$('select[name=symbol]').val(),
@@ -51,8 +53,20 @@ const OrderListView = Backbone.View.extend({
     this.validate(order);
   },
   validate(order) {
-    this.model.add(order);
-    this.$el.find('form').trigger('reset');
+    if (order.isValid()) {
+      this.model.add(order);
+      this.$el.find('form').trigger('reset');
+    } else {
+      const errors = order.validationError;
+      const errorSection = this.$('.form-errors');
+
+      Object.keys(errors).forEach((field) => {
+        errors[field].forEach((error) => {
+          const html = `<h3>${error}</h3>`;
+          errorSection.append(html);
+        });
+      });
+    }
   },
 });
 

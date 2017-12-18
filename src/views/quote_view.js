@@ -28,10 +28,6 @@ const QuoteView = Backbone.View.extend({
     this.trigger('quoteAction', this);
     this.model.sell();
   },
-  // checkOrders() {
-  //   const symbol = this.model.get('symbol');
-  //   this.bus.trigger(`check${symbol}`, this.model);
-  // },
 });
 
 export default QuoteView;
