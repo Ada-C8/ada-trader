@@ -130,3 +130,20 @@ Foundation Overrides
   text-transform: uppercase;
   border-radius: 3px;
 }
+
+/* error messages*/
+.form-errors p {
+  margin: 0 0 1rem 0;
+  padding: 1rem;
+  border-radius: 0;
+  position: relative;
+  color: #0a0a0a;
+}
+
+.success {
+  background-color: #76F387;
+}
+
+.error {
+  background-color: #F78D5C;
+}

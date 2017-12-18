@@ -106,13 +106,15 @@
     </script>
 
     <script type="text/template" id="order-template">
-      <h3 class="symbol"><%- symbol %></h3>
-      <div class="detail">
-        <span class="action"><%- buy ? 'buy' : 'sell' %></span>
-        at
-        <span class="price">$<%- targetPrice.toFixed(2) %></span>
-      </div>
-      <button class="btn-cancel button secondary">Cancel</button>
+      <li class="order">
+        <h3 class="symbol"><%- symbol %></h3>
+        <div class="detail">
+          <span class="action"><%- buy ? 'buy' : 'sell' %></span>
+          at
+          <span class="price">$<%- targetPrice.toFixed(2) %></span>
+        </div>
+        <button class="btn-cancel button secondary">Cancel</button>
+      </li>
     </script>
 
     <script src="/app.bundle.js" charset="utf-8"></script>
