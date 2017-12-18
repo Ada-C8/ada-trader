@@ -2,9 +2,13 @@ import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
 import $ from 'jquery';
+import _ from 'underscore';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import QuoteListView from 'views/quote_list_view';
+import OrderList from 'collections/order_list'
+import OrderListView from 'views/order_list_view';
 
 const quoteData = [
   {
@@ -25,11 +29,42 @@ const quoteData = [
   },
 ];
 
-$(document).ready(function() {
+
+
+$(document).ready(() => {
   const quotes = new QuoteList(quoteData);
+  const orders = new OrderList();
+  // quoteTemplate = _.template($('#quote-template').html());
+  // append to symbol label
+  function dropdown(){
+    const $label = $(`select[name=symbol]`);
+    quotes.forEach(function(quote) {
+      let dropdownItem = `<option value= ${quote.get('symbol')}> ${quote.get('symbol')}</option>`;
+      $label.append(dropdownItem);
+    });
+  }
+  dropdown();
+
+
   const simulator = new Simulator({
     quotes: quotes,
   });
+
+  const quoteListView = new QuoteListView({
+    model: quotes,
+    template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
+    el: 'main',
+  });
+  quoteListView.render();
+
+  const orderListView = new OrderListView({
+    model: orders,
+    template: _.template($('#order-template').html()),
+    quoteList: quotes,
+    el: '#order-workspace',
+  });
+  orderListView.render();
 
   simulator.start();
 });
