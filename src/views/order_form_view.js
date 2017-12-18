@@ -42,7 +42,7 @@ const OrderFormView = Backbone.View.extend({
   addNewOrder(event) {
     console.log(event);
     event.preventDefault();
-    const orderData ={};
+    const orderData = {};
     orderData['symbol'] = $('select[name=symbol]').val();
     orderData['targetPrice'] = parseFloat($('input[name=targetPrice]').val());
     orderData['quote'] = this.quoteList.findWhere({symbol: orderData['symbol']});
