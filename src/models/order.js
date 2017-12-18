@@ -5,15 +5,18 @@ const Order = Backbone.Model.extend({
     this.buy = params.buy;
     this.targetPrice = params.targetPrice;
     this.symbol = params.symbol;
+    this.quotes = params.quotes;
   },
 
   validate(params) {
     const errors = {};
     if (!params.targetPrice) {
       errors['price'] = 'Invalid target price!';
-    } //else if (params.buy && params.targetPrice >= params.quote.get('price') {
+    }
 
-    
+    // if (params.targetPrice >= matchingQuote.attributes.price) {
+    //   errors['buy'] = 'Less than current market price'
+    // }
 
     if (Object.keys(errors).length > 0) {
       return errors;

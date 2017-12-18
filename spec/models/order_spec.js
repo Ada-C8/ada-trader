@@ -24,6 +24,7 @@ describe('Order spec', () => {
     });
 
 
+
     // it('buy price is not >= to the current market price', () => {
     //   const prices = [100,1000];
     //
@@ -36,6 +37,7 @@ describe('Order spec', () => {
     //     expect(order.isValid()).toBeFalsy();
     //   });
     // });
+
 
 
   });
