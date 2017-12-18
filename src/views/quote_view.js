@@ -4,20 +4,22 @@ import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
-    // here we're bringing in the params from the render function in quote list view, so template is still quote template, bus is same, model is same, and we also have a tag name (li) and class name (quotes) to use when we render this view.
     this.template = params.template;
     this.bus = params.bus;
 
     this.listenTo(this.model, 'change', this.render);
-
+    // this.listenTo(this.model, 'change', this.checkLimitOrders);
+    //if there's any change (including in quote price), check for orders
+    //if there's an order that meets the criteria -- buy or sell it!
+    // this.listenTo(this.bus, "buy_order", this.buy);
+    // this.listenTo(this.bus, "sell_order", this.sell);
 
   }, //init
 
   render() {
     console.log("In the quote view render function");
     const compiledTemplate = this.template(this.model.toJSON());
-    // will fill the template with data from the model instance. It will fit within an <li> with class quote (we sedt this when we called new);
-    this.$el.html(compiledTemplate); //will set the html in the root element, which I think is just an empty div right now? to be the filled template for the instance, and return it
+    this.$el.html(compiledTemplate);
 
     return this;
 
@@ -31,13 +33,12 @@ const QuoteView = Backbone.View.extend({
 
   buy(event) {
     console.log("You clicked buy");
-    console.log(event);
     this.recordTrade(true)
     this.model.buy();
+    //
   },
   sell(event) {
     console.log("You clicked Sell");
-    console.log(event);
     this.recordTrade(false)
     this.model.sell();
   },
@@ -52,7 +53,11 @@ const QuoteView = Backbone.View.extend({
     this.bus.trigger('record_trade', trade_data);
   },
 
-
+  // checkLimitOrders() {
+  //   console.log("in check limit orders");
+  //   this.bus.trigger('price_change', this.model);
+  //   // trigger a to the order view that a price has changed, and send model attributes
+  // },
 
 
 

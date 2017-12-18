@@ -1,7 +1,5 @@
 import Backbone from 'backbone';
-// import QuoteView from './quote_view';
-// import QuoteListView from './quote_list_view';
-// import Quote from '../models/quote';
+import _ from 'underscore';
 
 const TradeHistoryView = Backbone.View.extend({
 
@@ -12,7 +10,9 @@ const TradeHistoryView = Backbone.View.extend({
   },
 
   setModel(trade_data) {
+
     this.data = trade_data;
+    console.log("trade data is " + this.data);
     this.render();
   },
 

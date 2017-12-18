@@ -2,7 +2,6 @@ import Backbone from 'backbone';
 
 import OrderView from './order_view';
 import Order from '../models/order';
-// import TradeHistoryView from './trade_history_view';
 
 
 const OrderListView = Backbone.View.extend({
@@ -11,10 +10,11 @@ const OrderListView = Backbone.View.extend({
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.bus, 'send_quotes', this.getQuotes);
+
   },
   render(){
     this.$('.orders').empty();
-    console.log("In the render function for order list view")
 
     this.model.each((order) => {
 
@@ -38,10 +38,6 @@ const OrderListView = Backbone.View.extend({
     'click button.btn-sell': 'createSellOrder',
   },
 
-
-  // adding to quote list here?
-
-
   createBuyOrder(event) {
     event.preventDefault();
     console.log("you clicked the buy button");
@@ -59,10 +55,15 @@ const OrderListView = Backbone.View.extend({
     const orderData = this.getOrderData(buy);
     console.log(orderData);
     const newOrder = new Order(orderData);
-    this.model.add(newOrder);
-    console.log("instance was added");
-    this.clearFormData();
-    // this.bus.trigger('createOrder', order_data);
+
+    if (newOrder.isValid()) {
+      this.model.add(newOrder);
+      console.log("instance was added");
+      this.clearFormData();
+    } else {
+      this.updateStatusMessageFrom(newOrder.validationError);
+      newOrder.destroy();
+    }
   },
 
   getOrderData(buy) {
@@ -72,25 +73,31 @@ const OrderListView = Backbone.View.extend({
     let stringPrice = this.$(`#order-entry-form input[name=price-target]`).val();
     orderData["targetPrice"] = parseFloat(stringPrice);
     orderData["buy"] = buy;
-    this.bus.trigger('get_quote', orderData[symbol]);
+    // let stockQuote = orderData[symbol];
+    this.bus.trigger('get_quote', this.model);
     // trigger getQuote
 
     return orderData;
   },
 
-  // getQuote(stock){
-  //
-  // },
 
   clearFormData() {
     this.$(`#order-entry-form input[name=price-target]`).val('');
-},
+  },
 
+  getQuotes(quotelist){
+    console.log("in get quotes");
+    this.quoteList = quotelist;
+    console.log(this.quoteList);
+  },
+    // this.listenTo(this.bus, 'send_quotes', this.getQuotes);
   // validateOrderData {
   //   if (orderData[targetPrice] === '' || orderData[targetPrice] >= currentprice) {
   //
   //   },
-
+  updateStatusMessageFrom(messageHash) {
+    const $formErrors = this.$('.form-errors');
+  }
 
 
 

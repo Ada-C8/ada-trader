@@ -2,6 +2,7 @@ import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
 
+// need to do validations
   initialize(attributes) {
   },
 
