@@ -34,12 +34,12 @@ const OrderListView = Backbone.View.extend({
     'click .btn-sell': 'sellOrder',
   },
   buyOrder: function(event) {
-    console.log('You pressed the Buy Order button.');
+    // console.log('You pressed the Buy Order button.');
     event.preventDefault();
     this.addToOrders(event, true);
   },
   sellOrder: function(event) {
-    console.log('You pressed the Sell Order button.');
+    // console.log('You pressed the Sell Order button.');
     event.preventDefault();
     this.addToOrders(event, false);
   },
@@ -51,7 +51,7 @@ const OrderListView = Backbone.View.extend({
 
     const price = parseFloat(this.$('input[name=price-target]').val());
     orderData['targetPrice'] = price;
-    console.log(price);
+    // console.log(price);
 
     orderData['buy'] = buyIsTrue;
 
@@ -62,16 +62,16 @@ const OrderListView = Backbone.View.extend({
     console.log(currentQuoteModel);
 
     const currentMarketPrice = currentQuoteModel.get('price');
-    console.log(currentMarketPrice);
+    // console.log(currentMarketPrice);
     orderData['marketPrice'] = currentMarketPrice;
 
-    console.log(orderData);
+    // console.log(orderData);
 
     //TODO - need to add a validation
     const newOrder = new Order(orderData)
     if (newOrder.isValid()) {
       this.model.add(newOrder);
-      console.log('order is valid');
+      // console.log('order is valid');
       // console.log(newOrder);
       this.updateStatusMessageWith(`New order added: ${newOrder.get('symbol')} for ${newOrder.get('targetPrice')}`);
     } else {

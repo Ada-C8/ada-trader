@@ -23,22 +23,23 @@ const OrderView = Backbone.View.extend({
     return this;
   },
   cancelOrder: function(event) {
-    console.log('You pressed the Cancel button');
+    // console.log('Cancelled order');
     this.stopListening(this.model.get('quote'), 'change');
     this.model.destroy();
   },
   evaluateOrder: function(event) {
-    console.log('in evaluateOrder');
+    // console.log('in OrderView: evaluateOrder');
     if (this.quote.get('buy')) {
       if(this.quote.get('price') <= this.model.get('targetPrice')) {
-        console.log('im ready to tradeMe (buying)');
+        // console.log('im ready to tradeMe (buying)');
         this.bus.trigger('tradeMe', this.quote);
         this.cancelOrder();
       }
     }
-    if (this.quote.get('sell')) {
+    else if (!this.quote.get('buy')) {
+      // console.log('in else if statement')
       if(this.quote.get('price') >= this.model.get('targetPrice')) {
-        console.log('im ready to tradeMe (selling)');
+        // console.log('im ready to tradeMe (selling)');
         this.bus.trigger('tradeMe', this.quote);
         this.cancelOrder();
       }

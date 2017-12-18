@@ -20,18 +20,18 @@ const QuoteView = Backbone.View.extend({
     return this;
   },
   buyQuote: function(e) {
-    console.log('You pressed the buy button in the Quote view')
+    // console.log('You pressed the buy button in the Quote view')
     this.model.set('price', this.model.buy());
     this.model.set('buy', true);
     //triggers an event that the quotelistview is listening for:
     this.trigger('addTrade', this);
-    console.log('trade added');
+    // console.log('trade added');
   },
   sellQuote: function(e) {
     this.model.set('price', this.model.sell());
     this.model.set('buy', false);
     this.trigger('addTrade', this);
-    console.log('sold trade added');
+    // console.log('sold trade added');
   }
 });
 
