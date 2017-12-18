@@ -39,6 +39,8 @@ const OrderListView = Backbone.View.extend({
       this.$('#orders').append(orderView.render().$el);
     });
     this.renderOrderForm();
+    // console.log(`show orderlist`);
+    // console.log(this.model);
     return this;
   },
 
@@ -70,12 +72,10 @@ const OrderListView = Backbone.View.extend({
       const action = newOrder.get('buy') ? 'buy' : 'sell';
       this.updateStatusMessage(`Successfully added a ${action} open order for ${newOrder.get('symbol')}`);
       this.clearFormData();
-      console.log(newOrder);
+      // console.log(newOrder);
     } else {
       console.log('new order is invalid!');
       // get rid of task and give user feedback on error handling
-      // console.log('order validation error');
-      // console.log(newOrder.validationError);
       this.updateStatusMessage(newOrder.validationError)
       newOrder.destroy();
     }
@@ -116,16 +116,41 @@ const OrderListView = Backbone.View.extend({
   // this gets called when prices are updated. It will check if the price change reaches a point where it should trigger buying or selling a quote, as well as removing the order
 
   orderToQuote(quote){
+    let orders;
     // console.log(`inside orderToQuote method`);
-    // get all of the orders from the quotelist that match the quote passed into the method
 
-    // for each of those orders figure out if the marketPrice should trigger actions
+    // get all of the orders from the orderList that match the quote passed into the method
+    orders = this.model.where({symbol: `${quote.get('symbol')}`});
 
-    // if so send send a orderExecute trigger over the bus, quote view will be listening. Remove that order from the orderList
-
-    this.bus.trigger('orderExecute');
+    // for each order figure out if price change should trigger action
+    // console.log(orders);
+    orders.forEach((order) => {
+      if (order.get('buy') && (quote.get('price') <= order.get('targetPrice'))) {
+        // buy - if the updated quote price is less than or equal to the order target price
+        this.triggerAndRemove(order, true);
+      } else if (!order.get('buy') && (quote.get('price') >= order.get('targetPrice'))) {
+        // sell - if the updated quote price is greater than or equal to the order target price
+        this.triggerAndRemove(order, false);
+      }
+    });
   },
 
+  triggerAndRemove(order, buy){
+    console.log('inside triggerAndRemove method');
+    console.log(`${order.get('symbol')}`);
+    // if so send send a orderExecute trigger over the bus, quote view will be listening. Remove that order from the orderList
+    // console.log('order list before');
+    // console.log(this.model);
+    let orderInfo = {
+      buy: buy,
+      symbol: `${order.get('symbol')}`,
+    };
+
+    this.bus.trigger('orderExecute', orderInfo);
+    this.model.remove(order);
+    // console.log('order list after we remove the order');
+    // console.log(this.model);
+  },
 });
 
 export default OrderListView;

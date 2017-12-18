@@ -47,9 +47,21 @@ const QuoteView = Backbone.View.extend({
     this.bus.trigger('buyOrSell', tradeData);
   },
 
-  buyOrSellStock(info) {
+  buyOrSellStock(orderInfo) {
+    console.log('inside buyOrSellStock, orderExecute message recieved');
     // this method should figure out which method to buy or sell stock to call once the orderExecute
-    console.log('inside buyOrSellStock');
+
+    // all 4 instances of quote recieve this message and this method gets triggered
+    // if the order symbol matches the quote symbol call buy or sell stock otherwise do nothing
+
+    if (orderInfo.symbol === this.model.get('symbol')){
+      console.log('order and quote symbol match');
+      orderInfo.buy ? this.buyStock() : this.sellStock();
+    } else {
+      console.log('no match do nothing');
+    }
+    // console.log(this.model.get('symbol'));
+    // console.log(info);
   },
 
 });
