@@ -4,12 +4,6 @@ import OrderView from './order_view';
 import Order from '../models/order';
 // import TradeHistoryView from './trade_history_view';
 
-// params:   const orderListView = new OrderListView({
-  //   el: '#orders-container',
-  //   model: orderList,
-  //   template: orderTemplate,
-  //   bus: bus,
-  // });
 
 const OrderListView = Backbone.View.extend({
 
@@ -42,35 +36,59 @@ const OrderListView = Backbone.View.extend({
   events: {
     'click button.btn-buy': 'createBuyOrder',
     'click button.btn-sell': 'createSellOrder',
-    'mouseover': 'testthis',
   },
 
 
-// adding to quote list here?
-  testthis(event) {
-    event.preventDefault();
-    // alert("This is where the el is!");
-  },
+  // adding to quote list here?
+
 
   createBuyOrder(event) {
     event.preventDefault();
     console.log("you clicked the buy button");
-    this.createOrder(true);
+    this.createOrder();
 
   },
 
-  createSellOrder(event) {
-    event.preventDefault();
-    console.log("you clicked the sell button");
-    this.createOrder(false);
-  },
+  // createSellOrder(event) {
+  //   event.preventDefault();
+  //   console.log("you clicked the sell button");
+  //   this.createOrder(false);
+  // },
 
-  createOrder(buy) {
+  createOrder() {
     console.log("We're triggering the create order event!");
+    const orderData = this.getOrderData();
+    console.log(orderData);
+    const newOrder = new Order(orderData);
+    this.model.add(newOrder);
+    console.log("instance was added");
     // this.bus.trigger('createOrder', order_data);
   },
 
+  getOrderData() {
+    const orderData = {};
+    ['symbol', 'price-target'].forEach((field) => {
+      const val = this.$(`#order-entry-form input[name=${field}]`).val();
+      // get the value of the element
+      if (val !== ''){
+        orderData[field] = val;
+      }
+    });
 
+    return orderData;
+  },
+
+  // <form id="order-entry-form">
+  //   <label for="symbol">Symbol</label>
+  //   <select id="symbol" name="symbol">
+  //     <!-- Option entries should be added here using JavaScript -->
+  //   </select>
+  //   <label for="price-target">Price</label>
+  //   <input type="number" name="price-target" step="0.10" min="0.00" placeholder="100.00" />
+  //   <label>Action</label>
+  //   <button id="buy-order" class="btn-buy alert button">Buy</button>
+  //   <button id="sell-order" class="btn-sell success button">Sell</button>
+  // </form>
 
 
 

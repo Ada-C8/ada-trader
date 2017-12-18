@@ -13,8 +13,10 @@ const OrderView = Backbone.View.extend({
   render(){
     console.log("In the render function for order view");
     const compiledTemplate = this.template(this.model.toJSON());
+
     console.log("Compiled the template");
     this.$el.html(compiledTemplate);
+
     console.log("This is an order!");
     return this;
   },
