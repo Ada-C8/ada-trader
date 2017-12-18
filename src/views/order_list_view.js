@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-
+import $ from 'jquery';
 import OrderView from './order_view';
 import Order from '../models/order';
 
@@ -33,8 +33,9 @@ const OrderListView = Backbone.View.extend({
     'click .btn-sell': 'sellOrder',
   },
 
-  newOrder(buy) {
+  createOrder(buy) {
     event.preventDefault();
+    $('.form-errors').empty();
     const symbol = this.$(`[name=symbol]`).val();
     const targetPrice = parseFloat(this.$(`[name=target-price]`).val());
     const orderData = {
@@ -44,17 +45,28 @@ const OrderListView = Backbone.View.extend({
     };
     const newOrder = new Order(orderData);
     this.model.add(newOrder);
-    return newOrder;
+
+    if (newOrder.isValid()) {
+      return newOrder;
+    } else {
+      newOrder.destroy();
+      this.errorMessage(newOrder.validationError);
+    }
+  },
+  errorMessage(errors) {
+    Object.entries(errors).forEach((error)=> {
+      $('.form-errors').prepend(`<h3>${error[1]}</h3>`);
+    })
   },
 
   buyOrder: function(event) {
     event.preventDefault();
-    const order = this.newOrder(true);
+    const order = this.createOrder(true);
   },
 
   sellOrder: function(event) {
     event.preventDefault();
-    const order = this.newOrder(false);
+    const order = this.createOrder(false);
   },
 });
 
