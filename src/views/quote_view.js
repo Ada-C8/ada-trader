@@ -36,21 +36,6 @@ const QuoteView = Backbone.View.extend({
    $('#trades').prepend(tradeTemplate(this.model.attributes));
     this.model.sell();
   },
-
-  buyOrder: function(orderView) {
-   if (orderView.quote == this.model) {
-     this.buyQuote();
-
-   }
- },
-
- sellOrder: function(orderView) {
-   if (orderView.quote == this.model) {
-     this.sellQuote();
-
-   }
- },
-
 });
 
 export default QuoteView;
