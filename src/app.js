@@ -7,6 +7,7 @@ import _ from 'underscore';
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
 import QuoteListView from 'views/quote_list_view';
+import OrderList from 'collections/order_list';
 
 const quoteData = [
   {
@@ -32,6 +33,7 @@ $(document).ready(function() {
   bus = _.extend(bus, Backbone.Events);
 
   const quotes = new QuoteList(quoteData);
+  const orders = new OrderList();
   const simulator = new Simulator({
     quotes: quotes,
   });

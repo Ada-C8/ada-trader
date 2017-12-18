@@ -10,13 +10,13 @@ const Order = Backbone.model.extend ({
     if (!attributes.symbol) {
       errors['symbol'] = ["You must specify a symbol"];
     }
-    if (!attributes.price) {
+    if (!attributes.setPrice) {
       errors['price'] = ["You must specify price."];
     }
-    if (this.get('buy') && attributes.price >= this.get('quote').get('price')) {
+    if (this.get('buy') && attributes.setPrice >= this.get('quote').get('price')) {
       errors['price'] = ["The buy price needs to be less than the current price."]
     }
-    if (this.get('buy') && attributes.price <= this.get('quote').get('price')) {
+    if (this.get('buy') && attributes.setPrice <= this.get('quote').get('price')) {
       errors['price'] = ["The sell price needs to be greater than the current price."]
     }
     if ( Object.keys(errors).length > 0 ) {
