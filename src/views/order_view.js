@@ -53,7 +53,7 @@ const OrderView = Backbone.View.extend({
       // it can be triggered again by the next price change. As far as I
       // can tell, by changing the value of 'triggered' within this method,
       // it reacts quickly enough to prevent that double-fire.
-      // What more elegant solutions could there be?
+      // What would be a more elegant solution?
       if (!this.model.get('triggered')) {
         this.model.set('triggered', true);
         this.executeOrder(quote, true);
