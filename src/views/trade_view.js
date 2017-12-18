@@ -9,6 +9,9 @@ const TradeView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render)
 
   },
+  events:{
+    // 'click button.btn-cancel': 'cancelLimitOrder',
+  },
   render(){
     const compiledTemplate =  this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
@@ -19,10 +22,10 @@ const TradeView = Backbone.View.extend({
     this.model.newTrade(event);
     return this;
   },
-  // events:{
-  //   'click button.btn-buy': this.buyQuote(),
-  //   'click button.btn-sell': this.sellQuote(),
-  // },
+  cancelLimitOrder(){
+    this.model.destroy();
+  }
+
   // buyQuote(event){
   //   this.model.buy();
   // },

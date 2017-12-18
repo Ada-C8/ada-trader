@@ -19,21 +19,15 @@ const LimitOrderView = Backbone.View.extend({
     return this;
   },
   events:{
+      'click button.btn-cancel': 'cancelLimitOrder',
     // 'click form button.btn-buy': 'order_purchase',
     // 'click form button.btn-sell': 'order_sell',
   },
-  // buyQuote(){
-  //   console.log('banana');
-  //   this.model.buy();
-  //   this.hamRadio.trigger('sold_quote', this.model);
-  //   return this;
-  // },
-  // sellQuote(){
-  //   this.model.sell();
-  //   this.hamRadio.trigger('bought_quote', this.model);
-  //   console.log(this.model);
-  //   return this;
-  // },
+  cancelLimitOrder(){
+    console.log('banana');
+    this.model.destroy();
+  },
+
 
 });
 

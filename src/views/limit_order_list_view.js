@@ -17,10 +17,12 @@ const LimitOrderListView = Backbone.View.extend({
     this.listenTo(this, 'order_purchase', this.addLimitOrder);
     this.listenTo(this, 'order_sell', this.addLimitOrder);
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.model, 'deleteOrder', this.deleteOrder)
   },
   events:{
     'click form button.btn-buy': 'addLimitOrder',
     'click form button.btn-sell': 'addLimitOrder',
+    // 'click button.btn-cancel': 'cancelLimitOrder',
   },
   updateStatusMessageFrom(messageHash) {
     const $statusMessages = this.$('#status-messages');
@@ -37,33 +39,7 @@ const LimitOrderListView = Backbone.View.extend({
       'Limit Order': [message],
     });
   },
-  renderOrderPurchase(buyBoolean){
-    console.log('banana nut bread');
-    const newLimitOrder = new LimitOrder({symbol: model.attributes.symbol, price: model.attributes.price, buy: buyBoolean[buy]});
 
-    if(newLimitOrder.isValid()){
-      this.model.add(newLimitOrder);
-      this.updateStatusMessage(`${newLimitOrder.get('symbol')} Created!`);
-    }else{
-      console.log('Something went wrong!');
-      this.updateStatusMessageFrom(newLimitOrder.validationError);
-    }
-    return newTrade;
-  },
-  renderOrderSale(){
-
-    const limitOrder = new LimitOrder({symbol: model.attributes.symbol, price: model.attributes.price});
-    console.log(limitOrder);
-
-    if(limitOrder.isValid()){
-      this.model.add(limitOrder);
-      this.updateStatusMessage(`${limitOrder.get('symbol')} Created!`);
-    }else{
-      console.log('Something went wrong!');
-      this.updateStatusMessageFrom(limitOrder.validationError);
-    }
-    return limitOrder;
-  },
   render() {
 
     this.$('#orders').empty();
@@ -118,7 +94,10 @@ const LimitOrderListView = Backbone.View.extend({
   clearFormData() {
     this.$(`#create-order input[name="price-target"]`).val('');
   },
+  cancelLimitOrder(event){
+    console.log(event);
 
+  },
   addLimitOrder(event) {
     event.preventDefault();
     console.log('cake');
@@ -131,14 +110,19 @@ const LimitOrderListView = Backbone.View.extend({
       console.log(newLimitOrder);
       console.log('that is a new limit order ');
       this.updateStatusMessage(`${newLimitOrder.get('symbol')} Limit Order Created!`);
+      this.hamRadio.trigger('add_listener', this.model);
     }
     else {
       console.log('ERROR');
       this.updateStatusMessageFrom(newTask.validationError);
       newTask.destroy();
     }
+    return this;
   },
-
+  deleteOrder() {
+    this.model.destroy();
+    this.remove();
+  },
 });
 
 export default LimitOrderListView
