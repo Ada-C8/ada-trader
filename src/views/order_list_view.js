@@ -26,25 +26,31 @@ const OrderListView = Backbone.View.extend({
     return this;
   },
   events: {
-    'click button.btn-buy': 'createOrder',
-    'click button.btn-sell': 'createOrder'
+    'click button.btn-buy': 'newBuy',
+    'click button.btn-sell': 'newSell'
   },
   getFormData: function() {
     const formData = {
-      buy: false,
+      // buy: false,
       symbol: this.$('select option:selected').text(),
       targetPrice: parseFloat(this.$('input').val()),
     };
     console.log(formData);
     return formData;
   },
-  createOrder: function(e) {
+  newBuy: function(e) {
     e.preventDefault();
+    this.createOrder(true);
+  },
+  newSell: function(e) {
+    e.preventDefault();
+    this.createOrder(false);
+  },
+  createOrder: function(buy) {
 
-    const newOrder = new Order(this.getFormData());
-
-    console.log('in createOrder sucka!');
-    this.getFormData();
+    let formData = this.getFormData();
+    formData.buy = buy;
+    const newOrder = new Order(formData);
     this.model.add(newOrder);
 
   },

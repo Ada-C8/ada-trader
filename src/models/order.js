@@ -11,6 +11,11 @@ import Quote from 'models/quote';
 const Order = Backbone.Model.extend({
   initialize: function(attributes) {
   },
+  validate: function(attributes) {
+    const errors = {};
+
+    console.log(attributes);
+  },
 
 });
 
