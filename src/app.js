@@ -3,6 +3,7 @@ import 'css/app.css';
 
 import $ from 'jquery';
 import _ from 'underscore';
+import Backbone from 'backbone';
 
 import Simulator from './models/simulator';
 //import Quote from './models/quote';
@@ -49,7 +50,10 @@ const orderData = [
   },
 ]
 
-const orders = new OrderList(orderData);
+const orders = new OrderList();
+
+let bus = {};
+bus = _.extend(bus, Backbone.Events);
 
 $(document).ready(function() {
 
@@ -63,6 +67,7 @@ $(document).ready(function() {
     quoteTemplate: _.template($('#quote-template').html()),
     tradeTemplate: _.template($('#trade-template').html()),
     el: 'main',
+    bus: bus,
   });
 
   quoteListView.render();
@@ -72,6 +77,7 @@ $(document).ready(function() {
     orderTemplate: _.template($('#order-template').html()),
     el: '#order-workspace',
     quotes: quotes,
+    bus: bus,
   });
 
   orderListView.render();

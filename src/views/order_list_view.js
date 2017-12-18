@@ -7,10 +7,10 @@ const OrderListView = Backbone.View.extend({
   initialize(params) {
     this.orderTemplate = params.orderTemplate;
     this.quotes = params.quotes;
+    this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
   },
   render() {
-    console.log('in order_list_view render');
     this.$('#orders').empty();
     this.model.each((order) => {
       const orderView = new OrderView({
@@ -18,6 +18,7 @@ const OrderListView = Backbone.View.extend({
         orderTemplate: this.orderTemplate,
         tagName: 'li',
         className: 'order',
+        bus: this.bus,
       });
       this.$('#orders').append(orderView.render().$el);
     });
@@ -29,21 +30,20 @@ const OrderListView = Backbone.View.extend({
   },
   addOrder: function(event) {
     event.preventDefault();
-
+    let symbol = this.$('.order-entry-form [name=symbol]').val();
     const newOrder = new Order({
-      symbol: this.$('.order-entry-form [name=symbol]').val(),
+      symbol: symbol,
       targetPrice: Number(this.$('.order-entry-form [name=price-target]').val()),
-      quote: this.quotes.findWhere({symbol: this.$('.order-entry-form select').val()}),
+      quote: this.quotes.findWhere({symbol: symbol}),
     });
-    console.log(newOrder);
+
     if (event.target.innerHTML === 'Buy') {
       newOrder.set('buy', true);
     } else {
       newOrder.set('buy', false)
     }
-    newOrder.set('currentPrice', this.quotes.findWhere({symbol: this.$('.order-entry-form select').val()}).attributes['price']);
+    newOrder.set('currentPrice', this.quotes.findWhere({symbol: symbol}).attributes['price']);
 
-    console.log(newOrder);
     if (newOrder.isValid()) {
       this.model.add(newOrder);
       this.updateStatusMessageWith(`New order for ${newOrder.get('symbol')} has been saved.`)
