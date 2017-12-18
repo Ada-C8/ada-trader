@@ -51,9 +51,26 @@ const OrderListView = Backbone.View.extend({
   },
 
   createOrder(buy) {
+
+
     console.log("We're triggering the create order event!");
+
     const orderData = this.getOrderData(buy);
+
     console.log(orderData);
+
+    this.quoteList.each((quote) => {
+      if (orderData['symbol'] == quote.get('symbol') ) {
+        orderData['quote'] = quote;
+      }
+
+      console.log(orderData['quote']);
+    });
+
+
+
+
+
     const newOrder = new Order(orderData);
 
     if (newOrder.isValid()) {
@@ -73,9 +90,7 @@ const OrderListView = Backbone.View.extend({
     let stringPrice = this.$(`#order-entry-form input[name=price-target]`).val();
     orderData["targetPrice"] = parseFloat(stringPrice);
     orderData["buy"] = buy;
-    // let stockQuote = orderData[symbol];
     this.bus.trigger('get_quote', this.model);
-    // trigger getQuote
 
     return orderData;
   },
@@ -90,16 +105,20 @@ const OrderListView = Backbone.View.extend({
     this.quoteList = quotelist;
     console.log(this.quoteList);
   },
-    // this.listenTo(this.bus, 'send_quotes', this.getQuotes);
-  // validateOrderData {
-  //   if (orderData[targetPrice] === '' || orderData[targetPrice] >= currentprice) {
-  //
-  //   },
+
+
   updateStatusMessageFrom(messageHash) {
     const $formErrors = this.$('.form-errors');
-  }
+    $formErrors.empty();
+    Object.keys(messageHash).forEach((messageType) => {
+      messageHash[messageType].forEach((message) => {
+        $formErrors.append(`<li>${message}</li>`);
+      });
 
+    });
 
+    $formErrors.show();
+  },
 
 
 }); //end orderlistview
