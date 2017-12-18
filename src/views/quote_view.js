@@ -9,7 +9,6 @@ const QuoteView = Backbone.View.extend({
   },
 
   render() {
-    // why JSON?
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
     return this;
@@ -22,10 +21,11 @@ const QuoteView = Backbone.View.extend({
 
   buyQuote() {
     const trade = new Trade({
-      symbol: this.model.get('symbol'),
       buy: true,
       price: this.model.get('price'),
+      symbol: this.model.get('symbol'),
     });
+
     this.bus.trigger('addTrade', trade);
     this.model.buy();
   },
@@ -36,6 +36,7 @@ const QuoteView = Backbone.View.extend({
       price: this.model.get('price'),
       symbol: this.model.get('symbol'),
     });
+
     this.bus.trigger('addTrade', trade);
     this.model.sell();
   },

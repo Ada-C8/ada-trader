@@ -1,17 +1,19 @@
 import Backbone from 'backbone';
 
 const Order = Backbone.Model.extend({
-  initialize(attributes) {
-    this.buy = attributes.buy;
-    this.targetPrice = attributes.targetPrice;
-    this.symbol = attributes.symbol;
+  initialize(params) {
+    this.buy = params.buy;
+    this.targetPrice = params.targetPrice;
+    this.symbol = params.symbol;
   },
 
-  validate(attributes) {
+  validate(params) {
     const errors = {};
-    if (!attributes.targetPrice) {
+    if (!params.targetPrice) {
       errors['price'] = 'Invalid target price!';
-    }
+    } //else if (params.buy && params.targetPrice >= params.quote.get('price') {
+
+    
 
     if (Object.keys(errors).length > 0) {
       return errors;

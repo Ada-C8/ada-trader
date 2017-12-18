@@ -23,7 +23,7 @@ const TradeListView = Backbone.View.extend({
     });
     return this;
   },
-  
+
   newTrade(trade) {
     this.model.add(trade);
   },

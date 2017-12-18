@@ -5,7 +5,7 @@ const Trade = Backbone.Model.extend({
     this.symbol = params.symbol;
     this.buy = params.buy;
     this.price = params.price;
-  }
+  },
 });
 
 export default Trade;

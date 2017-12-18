@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
-import OrderView from './order_view';
 import Order from '../models/order';
+import OrderView from './order_view';
 
 const OrderListView = Backbone.View.extend({
   initialize(params) {
@@ -35,26 +35,28 @@ const OrderListView = Backbone.View.extend({
 
   createOrder(buy) {
     event.preventDefault();
-    $('.form-errors').empty();
+    $('.form-errors').empty(); // clear errors when new order is placed
     const symbol = this.$(`[name=symbol]`).val();
     const targetPrice = parseFloat(this.$(`[name=target-price]`).val());
     const orderData = {
-      buy,
-      targetPrice,
-      symbol,
+      buy, // buy: buy
+      targetPrice, // targetPrice: targetPrice
+      symbol, // symbol: symbol
     };
+
     const newOrder = new Order(orderData);
-    this.model.add(newOrder);
 
     if (newOrder.isValid()) {
-      return newOrder;
+      this.model.add(newOrder); // add to order list
     } else {
       newOrder.destroy();
       this.errorMessage(newOrder.validationError);
     }
   },
+  
   errorMessage(errors) {
     Object.entries(errors).forEach((error)=> {
+      // errors come in an array where 0 is the type and 1 is the message
       $('.form-errors').prepend(`<h3>${error[1]}</h3>`);
     })
   },
