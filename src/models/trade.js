@@ -7,7 +7,6 @@ const Trade = Backbone.Model.extend({
     this.symbol = params.symbol;
     this.price = params.price;
     this.buy = params.buy;
-    this.template = params.template;
   },
 });
 

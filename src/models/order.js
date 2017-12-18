@@ -4,11 +4,10 @@ const Order = Backbone.Model.extend({
   initialize(params) {
     this.targetPrice = params.targetPrice;
     this.symbol = params.symbol;
-    // this.price = params.price;
     this.bus = params.bus
     this.buy = params.buy;
-    // this.template = params.template;
     this.quote = params.quote;
+    this.listenTo(this.quote, 'change', this.completeOrder);
   },
   validate(attributes) {
    const errors = {};
@@ -35,7 +34,31 @@ const Order = Backbone.Model.extend({
      return errors;
    }
    return false;
- },
+  },
+  completeOrder() {
+    if (this.buy && (this.quote.get('price') <= this.targetPrice)) {
+      this.convertOrderToTrade();
+      this.quote.buy();
+    } else if (!this.buy && (this.quote.get('price') >= this.targetPrice)) {
+      this.convertOrderToTrade();
+      this.quote.sell();
+    }
+  },
+  convertOrderToTrade() {
+    // make sure the order is closed and doesn't trigger again
+    this.stopListening();
+
+    const trade = {
+      symbol: this.symbol,
+      buy: this.buy,
+      price: parseFloat(this.quote.get('price')),
+    };
+
+    // remove from collection and from order list view
+    this.destroy();
+    // add to Trade History
+    this.bus.trigger('newTrade', trade);
+  },
 });
 
 export default Order;
