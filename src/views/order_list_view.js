@@ -8,6 +8,7 @@ const OrderListView = Backbone.View.extend({
     this.listenTo(this.model, 'update', this.render);
     this.quoteListView = params.quoteListView;
     this.bus = params.bus;
+    this.quoteList = params.quoteList;
   },
   render() {
     this.$('#orders').empty();
@@ -35,6 +36,11 @@ const OrderListView = Backbone.View.extend({
     orderData['symbol'] = this.$('select :selected').text();
     const stringTargetPrice = this.$(`input[name=price-target]`).val();
     orderData['targetPrice'] = parseFloat(stringTargetPrice);
+    let quote = this.quoteList.where({symbol: orderData['symbol']})[0].attributes
+    console.log(quote)
+    // while (orderData['targetPrice'] > quote.price) {
+    //   console.log("bad buy")
+    // }
     const newOrder = new Order(orderData);
     if (newOrder.isValid()) {
       this.model.add(newOrder);

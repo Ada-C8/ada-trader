@@ -64,6 +64,7 @@ $(document).ready(function() {
     model: orderList,
     template: _.template($('#order-template').html()),
     el: 'main',
+    quoteList: quoteList,
     bus: bus
   });
 
