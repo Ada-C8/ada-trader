@@ -5,12 +5,8 @@ const Quote = Backbone.Model.extend({
     symbol: 'UNDEF',
     price: 0.00
   },
-  initialize(attributes) {
-  //   this.template = params.template;
-  //   this.bus = params.bus;
-  //
-  //   this.listentTo(this.model, 'change', this.render);
-  },
+  // initialize(attributes) {
+  // },
 
   buy() {
     // event listener, click on buy or sell button, should call this function

@@ -41,25 +41,26 @@ const quoteData = [
   },
 ];
 
-const orderData = [
-  {
-    symbol: 'HUMOR',
-    targetPrice: 88.50,
-    buy: true,
-  },
-  {
-    symbol: 'CLOTH',
-    targetPrice: 81.70,
-    buy: false,
-  },
-
-];
+// const orderData = [
+//   {
+//     symbol: 'HUMOR',
+//     targetPrice: 88.50,
+//     buy: true,
+//   },
+//   {
+//     symbol: 'CLOTH',
+//     targetPrice: 81.70,
+//     buy: false,
+//   },
+//
+// ];
 
 
 const quoteList = new QuoteList(quoteData);
-const orderList = new OrderList(orderData);
+const orderList = new OrderList();
+// const orderList = new OrderList(orderData);
 console.log("here's the order list")
-console.log(orderList);
+// console.log(orderList);
 
 let quoteTemplate;
 let tradeTemplate;
@@ -82,9 +83,12 @@ $(document).ready( () => {
     quotes: quotes,
   });
 
-  const order = new Order ({
-    bus: bus,
-  });
+  // const order = new Order ({
+  //   bus: bus,
+  // });
+
+// I'm making an instance of quoteListView and I'm saying that el is the quotes-container, the model to use is quoteList, which I've filled with some data, the template to use is the quote Template and the bus to use is bus (that was set up at top of document ready. )
+
 
   const quoteListView = new QuoteListView({
     el: '#quotes-container',
@@ -95,12 +99,13 @@ $(document).ready( () => {
 
   const tradeHistoryView = new TradeHistoryView({
     bus: bus,
+    // can I just tell it to use the quoteList here?
     template: tradeTemplate,
     el: '.trades'
   });
 
   const orderListView = new OrderListView({
-    el: '#orders-container',
+    el: '#order-workspace',
     model: orderList,
     template: orderTemplate,
     bus: bus,

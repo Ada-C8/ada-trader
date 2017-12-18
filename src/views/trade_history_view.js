@@ -25,7 +25,7 @@ const TradeHistoryView = Backbone.View.extend({
       const compiledTemplate =
       this.template(this.data);
       this.$el.prepend(compiledTemplate);
-
+      console.log("Trade history view");
     };
     return this;
   }

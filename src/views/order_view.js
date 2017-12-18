@@ -22,6 +22,7 @@ const OrderView = Backbone.View.extend({
 
   events: {
     'click button.btn-cancel': 'cancelOrder',
+
   },
 
   cancelOrder(event) {

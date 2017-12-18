@@ -4,6 +4,7 @@ import Quote from '../models/quote';
 
 const QuoteView = Backbone.View.extend({
   initialize(params) {
+    // here we're bringing in the params from the render function in quote list view, so template is still quote template, bus is same, model is same, and we also have a tag name (li) and class name (quotes) to use when we render this view.
     this.template = params.template;
     this.bus = params.bus;
 
@@ -14,8 +15,9 @@ const QuoteView = Backbone.View.extend({
   render() {
     console.log("In the quote view render function");
     const compiledTemplate = this.template(this.model.toJSON());
-    this.$el.html(compiledTemplate);
-
+    // will fill the template with data from the model instance. It will fit within an <li>
+    this.$el.html(compiledTemplate); //will set the html in the quotes-container (currently a div that contains a heading and the ul for #quotes) to be that of the template. //then back to quoteListview where it will be rattached to the quotes
+  
     return this;
 
 
@@ -25,7 +27,7 @@ const QuoteView = Backbone.View.extend({
     'click button.btn-sell': 'sell',
     'click button.btn-buy': 'buy',
   },
-
+// we set event listeners for clicks on either of these buttons in our view. Methods are defined in the quote.js model.
 
   buy(event) {
     console.log("You clicked buy");

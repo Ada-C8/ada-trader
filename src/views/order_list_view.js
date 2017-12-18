@@ -4,15 +4,19 @@ import OrderView from './order_view';
 import Order from '../models/order';
 // import TradeHistoryView from './trade_history_view';
 
+// params:   const orderListView = new OrderListView({
+  //   el: '#orders-container',
+  //   model: orderList,
+  //   template: orderTemplate,
+  //   bus: bus,
+  // });
+
 const OrderListView = Backbone.View.extend({
 
   initialize(params) {
     this.template = params.template;
     this.bus = params.bus;
     this.listenTo(this.model, 'update', this.render);
-
-
-
   },
   render(){
     this.$('.orders').empty();
@@ -37,11 +41,16 @@ const OrderListView = Backbone.View.extend({
 
   events: {
     'click button.btn-buy': 'createBuyOrder',
-    'click button.btn-sell': 'createSellOrder'
+    'click button.btn-sell': 'createSellOrder',
+    'mouseover': 'testthis',
   },
 
 
-// adding to quote list here? 
+// adding to quote list here?
+  testthis(event) {
+    event.preventDefault();
+    // alert("This is where the el is!");
+  },
 
   createBuyOrder(event) {
     event.preventDefault();
