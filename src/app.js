@@ -40,6 +40,14 @@ $(document).ready(function() {
   });
   const quoteTemp = _.template($('#quote-template').html());
   const tradeTemp = _.template($('#trade-template').html());
+  const orderTemp = _.template($('#order-template').html());
+
+  const dropdown = function dropdown() {
+    quotes.each((quote) => {
+      const symbol = quote.get('symbol');
+      $('select[name="symbol"]').append(`<option value="${symbol}">${symbol}</option>`);
+    });
+  };
 
   //create new quote view obj
   const quoteListView = new QuoteListView({
@@ -50,6 +58,16 @@ $(document).ready(function() {
     bus: bus,
   });
 
+  const orderListView = new OrderListView({
+    model: orders,
+    quotes: quotes,
+    template: orderTemp,
+    bus: bus,
+    el: '#order-workspace'
+  });
+
+  dropdown();
+  orderListView.render();
   quoteListView.render();
 
   simulator.start();

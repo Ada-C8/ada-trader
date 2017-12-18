@@ -17,6 +17,7 @@ render() {
     const quoteView = new QuoteView({
       model: quote,
       template: this.quoteTemplate,
+      bus: this.bus,
       tagName: 'li',
       className: 'quote',
     });

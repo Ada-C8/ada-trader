@@ -22,12 +22,12 @@ const OrderView = Backbone.View.extend({
  },
  swapOrder() {
    if (this.model.get('buy')) {
-     if (this.model.get('quote').get('price') <= this.model.get('setPrice')) {
+     if (this.model.get('quote').get('price') <= this.model.get('targetPrice')) {
        this.bus.trigger('buyOrder', this);
        this.cancelOrder();
      }
    } else {
-     if (this.model.get('quote').get('price') >= this.model.get('setPrice')) {
+     if (this.model.get('quote').get('price') >= this.model.get('targetPrice')) {
        this.bus.trigger('sellOrder', this);
        this.cancelOrder();
      }

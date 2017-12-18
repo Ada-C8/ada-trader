@@ -26,6 +26,48 @@ const OrderListView = Backbone.View.extend({
    });
    return this;
   },
+  events: {
+    'click .btn-buy': 'buyOrder',
+    'click .btn-sell': 'sellOrder',
+  },
+  makeOrder(value) {
+    this.$('.form-errors').empty();
+
+    const orderData = {
+      bus: this.bus,
+      symbol: this.$('select[name=symbol]').val(),
+      quote: this.quotes.find({symbol: this.$('select[name=symbol]').val()}),
+      buy: value.buy,
+      targetPrice: parseFloat(this.$('input[name=price-target]').val())
+    };
+    return new Order(orderData);
+  },
+  buyOrder: function(e) {
+    e.preventDefault();
+    const order = this.makeOrder({buy: true});
+    this.validate(order);
+  },
+  sellOrder: function(e) {
+    e.preventDefault();
+    const order = this.makeOrder({buy: false});
+    this.validate(order);
+  },
+  validate(order) {
+    if (order.isValid()) {
+      this.model.add(order);
+      this.$el.find('form').trigger('reset');
+    } else {
+      const errors = order.validationError;
+      const errorSection = this.$('.form-errors');
+
+      Object.keys(errors).forEach((field) => {
+        errors[field].forEach((error) => {
+          const html = `<h3>${error}</h3>`;
+          errorSection.append(html);
+        });
+      });
+    }
+  },
 });
 
 
