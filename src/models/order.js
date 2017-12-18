@@ -14,8 +14,8 @@ const Order = Backbone.Model.extend({
 
    // confirm presence of symbol
    if (!attributes.symbol) {
-     errors['symbol'] = ['Cannot be blank'];
-   } //  TODO: confirm VALID Symbol
+     errors['symbol'] = ['You must select the symbol for the stock you want to order'];
+   }
 
    // confirm presence of Target price
    if (!attributes.targetPrice) {
@@ -28,7 +28,12 @@ const Order = Backbone.Model.extend({
      errors['targetPrice'] = ['Your target price must be greater than zero. '];
    }
 
-   // TODO: Check if Price on Order form exceeds or does not meet target price based on the type of order. Would need to validate current quote Market Price against Open Order Target price
+   // check target price against market logic
+   if (attributes.buy && attributes.targetPrice >= attributes.quote.get('price')) {
+      errors['targetPrice'] = ['Your target price is higher than market price'];
+    } else if (!attributes.buy && attributes.targetPrice <= attributes.quote.get('price')) {
+      errors['targetPrice'] = ['Your target price is lower than market price'];
+    }
 
    if (Object.keys(errors).length > 0) {
      return errors;
