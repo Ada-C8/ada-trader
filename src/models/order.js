@@ -13,6 +13,10 @@ const Order = Backbone.Model.extend({
     }
 
     if (attributes.targetPrice === 0) {
+      errors.targetPrice = ["Cannot enter a zero value for the target price."];
+    }
+
+    if (NaN(attributes.targetPrice)) {
       errors.targetPrice = ["A valid price is required"];
     }
 

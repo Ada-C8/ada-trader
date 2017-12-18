@@ -38,6 +38,7 @@ $(document).ready(function() {
   let bus = {};
   bus = _.extend(bus, Backbone.Events);
 
+  //populate the quote collection
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,

@@ -59,7 +59,7 @@ const OrderListView = Backbone.View.extend({
     const currentQuoteModel = this.quotes.find({symbol: symbol});
     currentQuoteModel.set('buy', buyIsTrue);
     orderData['quote'] = currentQuoteModel;
-    console.log(currentQuoteModel);
+    // console.log(currentQuoteModel);
 
     const currentMarketPrice = currentQuoteModel.get('price');
     // console.log(currentMarketPrice);
