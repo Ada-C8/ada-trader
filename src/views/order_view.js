@@ -1,11 +1,38 @@
 import Backbone from 'backbone';
+
 import Order from '../models/order';
+import Quote from '../models/quote';
+
+import OrderList from '../collections/order_list';
+
+import $ from 'jquery';
 
 const OrderView = Backbone.View.extend({
   initialize(params) {
     this.template = params.template;
-    // this.listenTo(this.model, "change", this.render);
+    this.model = params.model;
+    this.listenTo(this.model, "change", this.render);
+    this.listenTo(this.model.get('quote'), 'change', this.closeOrder);
   },
+
+  closeOrder() {
+    let quote = this.model.get('quote');
+
+    if (this.model.get('buy')) {
+      if (this.model.get('targetPrice') >= quote.get('price')) {
+        quote.buy();
+        this.model.destroy();
+        this.remove();
+      }
+    } else {
+      if (this.model.get('targetPrice') <= quote.get('price')) {
+        quote.sell();
+        this.model.destroy();
+        this.remove();
+      }
+    }
+  },
+
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);

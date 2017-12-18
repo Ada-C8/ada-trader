@@ -94,25 +94,29 @@ $(document).ready(function() {
     event.preventDefault();
   });
 
-  quotes.each((quote) => {
-    $('#orderForm select').append($('<option>', {
-      value: quote.get('symbol'),
-      text: quote.get('symbol')
-    }));
-  });
+  // quotes.each((quote) => {
+  //   $('#orderForm select').append($('<option>', {
+  //     value: quote.get('symbol'),
+  //     text: quote.get('symbol')
+  //   }));
+  // });
 
   const orderEntryView = new OrderEntryView({
     el: '.order-entry-form',
     bus: bus,
   });
 
+  orderEntryView.render();
+
   orderTemplate = _.template($('#order-template').html());
+
   const orderListView = new OrderListView({
     model: orders,
     template: orderTemplate,
     el: '.orders-list-container',
     bus: bus,
   });
+
 
 
   // // render one quote

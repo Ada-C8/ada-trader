@@ -52,7 +52,7 @@ const OrderEntryView = Backbone.View.extend({
     orderData.targetPrice = parseFloat(this.$('#target-price').val());
 
 
-    let order = new Order(orderData);
+    let neworder = new Order(orderData);
     this.bus.trigger('newOrder', order);
   },
 });
