@@ -11,6 +11,7 @@ const OrderEntryView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.bus = params.bus;
+    this.quotesList = params.quotesList;
   },
 
   events: {
@@ -30,6 +31,7 @@ const OrderEntryView = Backbone.View.extend({
     let targetPrice = parseFloat(this.$('#target-price').val());
     console.log('the target price is ' + targetPrice);
     orderData.targetPrice = targetPrice;
+    orderData.quote = this.quotesList.findWhere({symbol: orderData.symbol});
 
     let order = new Order(orderData);
     if (!order.isValid()) {
@@ -50,6 +52,7 @@ const OrderEntryView = Backbone.View.extend({
 
     orderData.symbol = this.$('#add-order-form select').val();
     orderData.targetPrice = parseFloat(this.$('#target-price').val());
+    orderData.quote = this.quotesList.findWhere({symbol: orderData.symbol});
 
 
     let neworder = new Order(orderData);
