@@ -25,7 +25,7 @@ const Order = Backbone.Model.extend({
 // },
 //
 
-  buyit(){
+  buyStock(){
     const quote = this.get('quote');
 
     if (this.get('targetPrice') >= quote.get('price') ||
@@ -36,7 +36,7 @@ const Order = Backbone.Model.extend({
         return false;
   },
 
-  sellIt(){
+  sellStock(){
     const quote = this.get('quote');
 
     if (this.get('targetPrice') <= quote.get('price') ||

@@ -104,6 +104,7 @@ $(document).ready(function() {
   const orderEntryView = new OrderEntryView({
     el: '.order-entry-form',
     bus: bus,
+    quotesList: quotes
   });
 
   orderEntryView.render();
