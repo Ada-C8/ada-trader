@@ -16,22 +16,37 @@ const OrderView = Backbone.View.extend({
   },
 
   closeOrder() {
-    let quote = this.model.get('quote');
-
-    if (this.model.get('buy')) {
-      if (this.model.get('targetPrice') >= quote.get('price')) {
-        quote.buy();
-        this.model.destroy();
-        this.remove();
-      }
-    } else {
-      if (this.model.get('targetPrice') <= quote.get('price')) {
-        quote.sell();
+    if(this.model.get('buy')){
+      if(this.model.buyStock()){
         this.model.destroy();
         this.remove();
       }
     }
+    else{
+      if(this.model.sellStock()){
+        if(this.model.sellStock()){
+          this.model.destroy();
+          this.remove();
+        }
+      }
+    }
   },
+    // let quote = this.model.get('quote');
+//moved logic to model
+    // if (this.model.get('buy')) {
+    //   if (this.model.get('targetPrice') >= quote.get('price')) {
+    //     quote.buy();
+    //     this.model.destroy();
+    //     this.remove();
+    //   }
+    // } else {
+    //   if (this.model.get('targetPrice') <= quote.get('price')) {
+    //     quote.sell();
+    //     this.model.destroy();
+    //     this.remove();
+    //   }
+    // }
+  // },
 
   render() {
     const compiledTemplate = this.template(this.model.toJSON());
