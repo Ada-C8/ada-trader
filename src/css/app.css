@@ -130,3 +130,14 @@ Foundation Overrides
   text-transform: uppercase;
   border-radius: 3px;
 }
+
+
+/*custom styling*/
+
+.bought {
+  border: 2px solid red;
+}
+
+.sold {
+  border: 2px solid green;
+}
