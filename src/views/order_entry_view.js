@@ -55,7 +55,7 @@ const OrderEntryView = Backbone.View.extend({
     orderData.quote = this.quotesList.findWhere({symbol: orderData.symbol});
 
 
-    let neworder = new Order(orderData);
+    let order = new Order(orderData);
     this.bus.trigger('newOrder', order);
   },
 });
