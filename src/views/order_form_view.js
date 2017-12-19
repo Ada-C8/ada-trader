@@ -9,6 +9,7 @@ const OrderFormView = Backbone.View.extend({
   initialize(params){
     this.template = params.template;
     this.bus = params.bus;
+    this.quotesList = params.quotesList;
   },
 
   events: {
@@ -23,6 +24,7 @@ const OrderFormView = Backbone.View.extend({
 
     orderData.symbol = this.$('#orderForm select').val();
     orderData.targetPrice = parseFloat(this.$('#target-price').val());
+    orderData.quote = this.quotesList.findWhere({symbol: orderData.symbol});
 
     let order = new Order(orderData);
       if (!order.isValid()) {
@@ -52,6 +54,7 @@ const OrderFormView = Backbone.View.extend({
 
     orderData.symbol = this.$('#orderForm select').val();
     orderData.targetPrice = parseFloat(this.$('#target-price').val());
+    orderData.quote = this.quotesList.findWhere({symbol: orderData.symbol});
 
     let order = new Order(orderData);
     // Do validation on the order

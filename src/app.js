@@ -79,6 +79,7 @@ $(document).ready(function() {
   const orderFormView = new OrderFormView({
     el: '.order-entry-form',
     bus: bus,
+    quotesList: quotes
   });
 
   const orderListView = new OrderListView({
