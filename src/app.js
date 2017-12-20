@@ -23,7 +23,7 @@ let dropdownTemplate;
 let hamRadio = {};
 hamRadio = _.extend(hamRadio, Backbone.Events);
 
-const quoteList = new QuoteList();
+// const quoteList = new QuoteList();
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -63,6 +63,7 @@ $(document).ready(function() {
   // hamRadio.listenTo(hamRadio, 'render_order_dropdown', renderOrderDropdown);
 
   const quotes = new QuoteList(quoteData);
+
   console.log(quotes);
   console.log('those are quotes');
   const simulator = new Simulator({

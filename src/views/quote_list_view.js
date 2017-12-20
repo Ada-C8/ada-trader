@@ -9,6 +9,7 @@ const QuoteListView = Backbone.View.extend({
     // this.uniqueQuoteSymbols();
     // this.listenTo(this.model, 'change', this.uniqueQuoteSymbols);
     this.listenTo(this.model, 'update', this.render);
+    this.listenTo(this.hamRadio, 'find_quote_model', this.findQuoteBySymbol);
     // this.listenTo(this.model, 'update', this.uniqueQuoteSymbols);
 
   },
@@ -79,6 +80,19 @@ const QuoteListView = Backbone.View.extend({
     this.uniqueQuoteSymbols();
     return this;
   },
+  findQuoteBySymbol(quoteData){
+    console.log('in findQuoteBySymbol');
+    let foundQuote;
+    this.model.each((quote) => {
+      if(quote.get('symbol')=== quoteData['symbol']){
+        foundQuote = quote
+        this.hamRadio.trigger('send_quote', quote)
+        // foundQuote.listenTo('update', );
+      };
+    });
+
+    return foundQuote;
+  },
   uniqueQuoteSymbols(){
     // this.$('#quotes').empty();
     let quoteSymbols = [];
@@ -88,10 +102,8 @@ const QuoteListView = Backbone.View.extend({
         quoteSymbols.push(symbol);
       };
     });
-    console.log('apples');
     // debugger;
     this.hamRadio.trigger('render_order_dropdown', quoteSymbols);
-    console.log('jelly');
     return quoteSymbols;
   },
 

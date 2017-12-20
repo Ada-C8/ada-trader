@@ -12,12 +12,11 @@ const LimitOrderListView = Backbone.View.extend({
     this.template = params.template;
     this.hamRadio = params.hamRadio;
     this.dropdownTemplate = params.dropdownTemplate;
-    // debugger;
     this.listenTo(this.hamRadio, 'render_order_dropdown', this.renderOrderDropdown);
     this.listenTo(this, 'order_purchase', this.addLimitOrder);
     this.listenTo(this, 'order_sell', this.addLimitOrder);
     this.listenTo(this.model, 'update', this.render);
-    this.listenTo(this.model, 'deleteOrder', this.deleteOrder)
+    this.listenTo(this.hamRadio, 'deleteOrder', this.deleteOrder)
   },
   events:{
     'click form button.btn-buy': 'addLimitOrder',
@@ -102,7 +101,15 @@ const LimitOrderListView = Backbone.View.extend({
     event.preventDefault();
     console.log('cake');
     const formData = this.getFormData();
-    // formData['buy'] = event['buy'];
+    console.log(quotes);
+    const formSymbol = formData['symbol'];
+
+    // const foundQuote = quotes.findWhere({ symbol: formData['symbol'] });
+    // const foundQuote =  quotes.find(function(model) { return model.get('symbol') === formData['symbol']; });
+
+    // console.log(foundQuote);
+    // console.log('here is my found quote');
+    this.hamRadio.trigger('find_quote_model', formData);
     const newLimitOrder = new LimitOrder(formData);
     if (newLimitOrder.isValid()) {
       this.model.add(newLimitOrder);
@@ -110,6 +117,7 @@ const LimitOrderListView = Backbone.View.extend({
       console.log(newLimitOrder);
       console.log('that is a new limit order ');
       this.updateStatusMessage(`${newLimitOrder.get('symbol')} Limit Order Created!`);
+
       this.hamRadio.trigger('add_listener', this.model);
     }
     else {
@@ -119,9 +127,18 @@ const LimitOrderListView = Backbone.View.extend({
     }
     return this;
   },
-  deleteOrder() {
-    this.model.destroy();
-    this.remove();
+  deleteOrder(quote) {
+    debugger
+    let quoteName = quote.attributes.symbol;
+    let quotePrice = quote.attributes.price;
+    this.model.each((order) => {
+      if(order.attributes.symbol === quoteName && order.attributes.buy === true && quotePrice <=  order.attributes.targetPrice|| order.attributes.symbol === quoteName && quoteBuy === false && quotePrice >= order.attributes.targetPrice){
+      // this.$('#trades').prepend(tradeView.render().$el);
+      order.destroy();
+      }
+    });
+
+    // this.remove();
   },
 });
 
