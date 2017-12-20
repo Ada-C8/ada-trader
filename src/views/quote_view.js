@@ -7,13 +7,16 @@ const QuoteView = Backbone.View.extend({
     this.hamRadio = params.hamRadio;
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.hamRadio, 'add_listener', this.addListener);
-    // this.listenTo(this.model, 'limit_order', this.)
-
-    // this.listenTo(this.model, 'update', );
+    this.listenTo(this.hamRadio, `buy_${this.model.attributes.symbol}`, this.buyQuote);
+    this.listenTo(this.hamRadio, `sell_${this.model.attributes.symbol}`, this.buyQuote);
   },
   render(){
     const compiledTemplate =  this.template(this.model.toJSON());
     this.$el.html(compiledTemplate);
+    let priceObject = {symbol: this.model.attributes.symbol, price: this.model.attributes.price}
+    console.log('in quote view render');
+    this.hamRadio.trigger('update_price', priceObject);
+
     return this;
   },
   events:{
@@ -39,19 +42,18 @@ const QuoteView = Backbone.View.extend({
     let currentPrice = this.model.attributes.price;
     console.log(currentPrice);
     console.log('this price');
-    // debugger
     if (buy == true){
       console.log('pie');
       if(currentPrice <= price){
         console.log('buying quote');
         this.buyQuote();
-        this.hamRadio.trigger('deleteOrder', this.model);
+        // this.hamRadio.trigger('deleteOrder', this.model);
         console.log('deleted Order');
       }
     } else if (currentPrice >= price) {
       console.log('selling quote');
       this.sellQuote();
-      this.hamRadio.trigger('deleteOrder', this.model);
+      // this.hamRadio.trigger('deleteOrder', this.model);
     }
     // return this;
   },

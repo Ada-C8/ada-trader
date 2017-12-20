@@ -24,8 +24,8 @@ const MarketOrderView = Backbone.View.extend({
     console.log(event);
     console.log('thats the event');
     let tradeData = {symbol: model.attributes.symbol, price: model.attributes.price}
-    let btnSell = event['target'].classList.contains('btn-sell')
-    if( btnSell){
+    let btnSell = event['target'].classList.contains('btn-sell');
+    if(btnSell){
       tradeData['buy'] = false;
     }
     const newTrade = new Trade(tradeData);

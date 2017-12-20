@@ -16,7 +16,7 @@ const LimitOrderListView = Backbone.View.extend({
     this.listenTo(this, 'order_purchase', this.addLimitOrder);
     this.listenTo(this, 'order_sell', this.addLimitOrder);
     this.listenTo(this.model, 'update', this.render);
-    this.listenTo(this.hamRadio, 'deleteOrder', this.deleteOrder)
+    this.listenTo(this.hamRadio, 'deleteOrder', this.deleteOrder);
   },
   events:{
     'click form button.btn-buy': 'addLimitOrder',
@@ -51,7 +51,8 @@ const LimitOrderListView = Backbone.View.extend({
         model: order,
         template: this.template,
         tagName: 'li',
-        className: 'order'
+        className: 'order',
+        hamRadio: this.hamRadio,
       });
       this.$('#orders').prepend(limitOrderView.render().$el);
     });

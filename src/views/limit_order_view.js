@@ -10,12 +10,10 @@ const LimitOrderView = Backbone.View.extend({
     this.hamRadio = params.hamRadio;
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'update', this.checkTargetPrice);
-    this.listenTo(this.hamRadio, 'send_quote', this.addQuoteAttribute);
-    // this.listenTo(this.model.attributes.quote, 'update', this.checkTargetPrice);
+    this.listenTo(this.hamRadio, 'update_price', this.checkTargetPrice);
   },
   addQuoteAttribute(quoteModel){
     if(!this.quoteModel){
-      debugger;
     }
   },
   render(){
@@ -33,14 +31,23 @@ const LimitOrderView = Backbone.View.extend({
   cancelLimitOrder(){
     this.model.destroy();
   },
-  checkTargetPrice(){
+  checkTargetPrice(event){
+    console.log('inside check target price');
+    let thisSymbol = this.model.attributes.symbol;
+    let buyTrue = this.model.attributes.buy;
+    let targetPrice = this.model.attributes.targetPrice;
+    if(event['symbol'] == thisSymbol){
+      if(buyTrue && event['price'] <= targetPrice){
+        this.hamRadio.trigger(`buy_${thisSymbol}`);
+        this.model.destroy();
+        console.log('destroyed order');
+      }else if(!buyTrue && event['price'] >= targetPrice){
+        this.hamRadio.trigger(`sell_${thisSymbol}`);
+        his.model.destroy();
+        console.log('destroyed order');
+      }
 
-    //
-    // let listOrderAttributes = this.attributes;
-    // let thisSymbol = this.attributes.symbol;
-    // let buyTrue = this.model.attributes['buy'];
-    // let targetPrice = listOrderAttributes['targetPrice'];
-    // if(listOrderAttributes['symbol'] == thisSymbol){
+    };
     //   console.log(' in the if statement and it matches');
     //   console.log(this);
     //   console.log("inside addListener");
@@ -63,12 +70,12 @@ const LimitOrderView = Backbone.View.extend({
     //   return this;
 
   },
-  addQuoteAttribute(quote){
-    console.log('in add quote attribute');
-    if(this.get('symbol') == quote.get('symbol')){
-      this.quote = quote;
-    }
-  }
+  // addQuoteAttribute(quote){
+  //   console.log('in add quote attribute');
+  //   if(this.get('symbol') == quote.get('symbol')){
+  //     this.quote = quote;
+  //   }
+  // }
 });
 
 export default LimitOrderView;
