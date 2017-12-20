@@ -11,7 +11,7 @@ const LimitOrderView = Backbone.View.extend({
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'update', this.checkTargetPrice);
     this.listenTo(this.hamRadio, 'send_quote', this.addQuoteAttribute);
-    this.listenTo(this.model.attributes, 'update', this.checkTargetPrice);
+    // this.listenTo(this.model.attributes.quote, 'update', this.checkTargetPrice);
   },
   addQuoteAttribute(quoteModel){
     if(!this.quoteModel){

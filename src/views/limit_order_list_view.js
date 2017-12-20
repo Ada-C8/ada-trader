@@ -128,9 +128,10 @@ const LimitOrderListView = Backbone.View.extend({
     return this;
   },
   deleteOrder(quote) {
-    debugger
+    // debugger
     let quoteName = quote.attributes.symbol;
     let quotePrice = quote.attributes.price;
+    let quoteBuy = quote.attributes.buy;
     this.model.each((order) => {
       if(order.attributes.symbol === quoteName && order.attributes.buy === true && quotePrice <=  order.attributes.targetPrice|| order.attributes.symbol === quoteName && quoteBuy === false && quotePrice >= order.attributes.targetPrice){
       // this.$('#trades').prepend(tradeView.render().$el);
