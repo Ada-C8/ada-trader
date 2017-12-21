@@ -13,7 +13,7 @@
         <h1 class="logo">Ada Trader</h1>
       </header>
 
-      <div class="workspace row">
+      <div id="workspace" class="workspace row">
 
         <div class="columns large-8 small-12">
 
@@ -33,6 +33,7 @@
             <h2>Trade History</h2>
             <div class="trades-list-container">
               <ul id="trades" class="trades">
+                <!-- prepend history here -->
               </ul>
             </div>
           </div>
@@ -57,16 +58,16 @@
        <div class="columns large-4 small-12 trade-column">
          <div class="order-entry-form columns small-10 small-offset-1">
            <h3>Order Entry Form</h3>
-           <form>
+           <form id="order-entry-form">
              <label for="symbol">Symbol</label>
              <select name="symbol">
                <!-- Option entries should be added here using JavaScript -->
              </select>
-             <label for="price-target">Price</label>
-             <input type="number" name="price-target" step="0.10" min="0.00" placeholder="100.00" />
+             <label for="target-price">Price</label>
+             <input type="number" name="target-price" step="0.10" min="0.00" placeholder="100.00" />
              <label>Action</label>
-             <button class="btn-buy alert button">Buy</button>
-             <button class="btn-sell success button">Sell</button>
+             <button id="order-buy" class="btn-buy alert button">Buy</button>
+             <button id="order-sell" class="btn-sell success button">Sell</button>
            </form>
            <div class="form-errors">
            </div>
@@ -81,6 +82,8 @@
         <p class="footer-copy">&copy; 2017, Ada Developers Academy</p>
     </div>
     </footer>
+
+<!-- ////////////////////////////////////////// -->
 
     <script type="text/template" id="quote-template">
       <!-- The provided styles assume that you will insert this template
@@ -97,6 +100,8 @@
       <!-- </li> -->
     </script>
 
+<!-- ////////////////////////////////////////// -->
+
     <script type="text/template" id="trade-template">
       <li class="trade">
         <span>
@@ -104,6 +109,8 @@
         </span>
       </li>
     </script>
+
+<!-- ////////////////////////////////////////// -->
 
     <script type="text/template" id="order-template">
       <h3 class="symbol"><%- symbol %></h3>
