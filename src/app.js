@@ -7,10 +7,18 @@ import Backbone from 'backbone';
 
 import Simulator from 'models/simulator';
 import QuoteList from 'collections/quote_list';
+import OrderList from 'collections/order_list';
+
 import Quote from 'models/quote';
+import Order from 'models/order';
+
+import OpenOrderView from 'views/open_order_view';
+import OpenOrderListView from 'views/open_order_list_view';
 import QuoteListView from 'views/quote_list_view';
 import QuoteView from 'views/quote_view';
 import TradeHistoryView from 'views/history_view';
+import OrderFormView from 'views/order_form_view';
+
 
 const quoteData = [
   {
@@ -56,4 +64,25 @@ $(document).ready(function() {
       });
 
       tradeHistoryView.bind();
-});
+
+const order = new Order;
+const orders = new OrderList();
+
+  let orderTemplate = _.template($('#order-template').html());
+
+  const openOrderListView = new OpenOrderListView({
+    el: 'main',
+    model: orders,
+    template: orderTemplate,
+  });
+
+  const orderFormView = new OrderFormView({
+      el: '.order-entry-form',
+      orderList: orders,
+      quoteList: quotes,
+    });
+
+    openOrderListView.render();
+    orderFormView.render();
+
+  });
