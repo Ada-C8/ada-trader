@@ -3,15 +3,24 @@ import Backbone from 'backbone';
 const Quote = Backbone.Model.extend({
   defaults: {
     symbol: 'UNDEF',
-    price: 0.00
+    price: 0.00,
+    bus: null,
   },
-
+  initialize() { // NOTE: Because bus and symbol doesn't change
+    this.bus = this.get('bus');
+    this.symbol = this.get('symbol');
+  },
+  changePrice(newPrice, oldPrice, isBuy) {
+    this.set('price', newPrice);
+    this.bus.trigger('trade', {symbol: this.symbol, price: oldPrice, buy: isBuy});
+  },
   buy() {
-    // Implement this function to increase the price by $1.00
+    const price = this.get('price');
+    this.changePrice(price + 1, price, true);
   },
-
   sell() {
-    // Implement this function to decrease the price by $1.00
+    const price = this.get('price');
+    this.changePrice(price - 1, price, false);
   },
 });
 

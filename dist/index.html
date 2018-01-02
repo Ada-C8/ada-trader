@@ -69,6 +69,8 @@
              <button class="btn-sell success button">Sell</button>
            </form>
            <div class="form-errors">
+             <ul>
+             </ul>
            </div>
          </div>
 
@@ -85,7 +87,6 @@
     <script type="text/template" id="quote-template">
       <!-- The provided styles assume that you will insert this template
       within an element with the class "quote" applied -->
-      <!-- <li class="quote"> -->
       <div class="row small-12 columns">
         <h3 class="symbol"><%- symbol %></h3>
         <h3 class="price">$<%- price.toFixed(2) %></h3>
@@ -94,7 +95,6 @@
           <button class="btn-sell success button">Sell</button>
         </div>
       </div>
-      <!-- </li> -->
     </script>
 
     <script type="text/template" id="trade-template">
@@ -105,12 +105,16 @@
       </li>
     </script>
 
+    <script type="text/template" id="order-list-option-template">
+      <option value="<%- symbol %>"><%- symbol %></option>
+    </script>
+
     <script type="text/template" id="order-template">
       <h3 class="symbol"><%- symbol %></h3>
       <div class="detail">
         <span class="action"><%- buy ? 'buy' : 'sell' %></span>
         at
-        <span class="price">$<%- targetPrice.toFixed(2) %></span>
+        <span class="price">$<%- priceTarget.toFixed(2) %></span> <!--changed from targetPrice to match css -->
       </div>
       <button class="btn-cancel button secondary">Cancel</button>
     </script>
