@@ -1,11 +1,22 @@
+// CSS
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+// Vendor Modules
 import $ from 'jquery';
+import _ from 'underscore';
 
-import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
+// Models
+import Simulator from './models/simulator';
+import QuoteList from './collections/quote_list';
+import OrderList from './collections/order_list';
+import Bus from './models/event_bus';
 
+// Views
+import QuoteListView from './views/quote_list_view';
+import OrderListView from './views/order_list_view';
+
+// Data
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -25,11 +36,37 @@ const quoteData = [
   },
 ];
 
+
 $(document).ready(function() {
-  const quotes = new QuoteList(quoteData);
+
+  const quoteList = new QuoteList(quoteData);
+
+  const orderList = new OrderList;
+
   const simulator = new Simulator({
-    quotes: quotes,
+    quotes: quoteList,
   });
 
+  const bus = new Bus;
+
   simulator.start();
+
+  const quoteListView = new QuoteListView({
+    model: quoteList,
+    template: _.template($('#quote-template').html()),
+    tradeTemplate: _.template($('#trade-template').html()),
+    el: 'main',
+    orderList: orderList,
+    bus: bus
+  });
+
+  const orderListView = new OrderListView({
+    model: orderList,
+    template: _.template($('#order-template').html()),
+    el: 'main',
+    quoteList: quoteList,
+    bus: bus
+  });
+
+  quoteListView.render();
 });
