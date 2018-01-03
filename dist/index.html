@@ -45,7 +45,7 @@
       <div id="order-workspace" class="order-workspace row">
 
        <div class="columns large-8 small-12">
-         <div class="orders-container columns large-10 large-offset-1">
+         <div id="orders-container" class="orders-container columns large-10 large-offset-1">
            <h2>Open Orders</h2>
            <div class="orders-list-container">
              <ul id="orders" class="orders">
@@ -57,7 +57,7 @@
        <div class="columns large-4 small-12 trade-column">
          <div class="order-entry-form columns small-10 small-offset-1">
            <h3>Order Entry Form</h3>
-           <form>
+           <form id="order-form">
              <label for="symbol">Symbol</label>
              <select name="symbol">
                <!-- Option entries should be added here using JavaScript -->
@@ -65,10 +65,10 @@
              <label for="price-target">Price</label>
              <input type="number" name="price-target" step="0.10" min="0.00" placeholder="100.00" />
              <label>Action</label>
-             <button class="btn-buy alert button">Buy</button>
-             <button class="btn-sell success button">Sell</button>
+             <button type="button" class="btn-buy alert button">Buy</button>
+             <button type="button" class="btn-sell success button">Sell</button>
            </form>
-           <div class="form-errors">
+           <div id="form-errors" class="form-errors">
            </div>
          </div>
 

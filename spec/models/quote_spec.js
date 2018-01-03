@@ -1,11 +1,23 @@
 import Quote from 'models/quote';
 
-describe('Quote spec', () => {
+describe('Quote', () => {
   let quote;
   beforeEach(() => {
     quote = new Quote({
       symbol: 'HELLO',
-      price: 100.00,
+       price: 100.00,
+    });
+  });
+
+  describe('Defaults', () => {
+    it('has a default symbol of UNDEF', () => {
+      quote = new Quote();
+      expect(quote.get('symbol')).toEqual('UNDEF');
+    });
+
+    it('has a default price of 0.00', () => {
+      quote = new Quote();
+      expect(quote.get('price')).toEqual(0.00);
     });
   });
 
