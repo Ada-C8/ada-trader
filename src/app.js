@@ -1,11 +1,25 @@
+// CSS
 import 'foundation-sites/dist/foundation.css';
 import 'css/app.css';
 
+// Modules
 import $ from 'jquery';
+import _ from 'underscore';
 
-import Simulator from 'models/simulator';
-import QuoteList from 'collections/quote_list';
+// Imports
+import Simulator from './models/simulator';
+import QuoteList from './collections/quote_list';
+import OrderList from './collections/order_list';
 
+import QuoteView from './views/quote_view';
+import QuoteListView from './views/quote_list_view';
+import TradeView from './views/trade_view';
+import OrderView from './views/order_view';
+import OrderListView from './views/order_list_view';
+
+// -------------------------------------------------------
+
+// Given quotes
 const quoteData = [
   {
     symbol: 'HUMOR',
@@ -25,11 +39,61 @@ const quoteData = [
   },
 ];
 
+// Got quote names & prices into separate arrays
+const names = quoteData.map(info => info.symbol);
+const prices = quoteData.map(info => info.price);
+
+// Define some variables
+let quoteTemplate;
+let tradeTemplate;
+let orderTemplate;
+
+// -------------------------------------------------------
+
+// jQuery Ready
 $(document).ready(function() {
+
+  // Event Bus
+  let bus = {};
+  bus = _.extend(bus, Backbone.Events);
+
+  // Templates
+  quoteTemplate = _.template($('#quote-template').html());
+  tradeTemplate = _.template($('#trade-template').html());
+  orderTemplate = _.template($('#order-template').html());
+
+  // Constants
   const quotes = new QuoteList(quoteData);
   const simulator = new Simulator({
     quotes: quotes,
   });
+  const orders = new OrderList();
 
+  // Render quote list view
+  const quoteListView = new QuoteListView({
+    el: $('#quotes-container'),
+    model: quotes,
+    template: quoteTemplate,
+    bus: bus,
+  });
+
+  // Render trade history view
+  const tradeView = new TradeView({
+    el: $('#trades-container'),
+    template: tradeTemplate,
+    bus: bus,
+  })
+
+  // Render order list view
+  const orderListView = new OrderListView({
+    el: $('#order-workspace'),
+    model: orders,
+    template: orderTemplate,
+    quoteList: quotes,
+    bus: bus,
+  });
+
+  quoteListView.render();
+  orderListView.render();
   simulator.start();
 });
