@@ -26,19 +26,19 @@ hamRadio = _.extend(hamRadio, Backbone.Events);
 // const quoteList = new QuoteList();
 const quoteData = [
   {
-    symbol: 'HUMOR',
+    symbol: 'ETHEREUM',
     price: 88.50,
   },
   {
-    symbol: 'CLOTH',
+    symbol: 'ZCOIN',
     price: 81.70,
   },
   {
-    symbol: 'HABIT',
+    symbol: 'BITCOIN',
     price: 98.00,
   },
   {
-    symbol: 'SUPER',
+    symbol: 'LITECOIN',
     price: 83.10,
   },
 ];
