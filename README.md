@@ -1,12 +1,10 @@
-# Ada Trader
-In this project you will create the Ada Trader platform for real-time stock trading. All trading will happen with fake stocks that represent previous Ada capstone projects, and will be connected to a "real-time" simulation that randomly adjusts the prices for each stock over time.
+# Crypto Trader
 
-This is an individual, [stage 2](https://github.com/Ada-Developers-Academy/pedagogy/blob/master/rule-of-three.md) project.
+This was a project with the aim of learning more about event handling. Stocks, or in this case cryptocurrencies, are updated every second.  You can buy, sell, view your trade history, and set up automatic orders.  
 
-![Ada Trader](ada-trader.gif)
 
 ## Learning Goals
-This project should demonstrate your ability to:
+This project should demonstrates the ability to:
 - Create Backbone Views of Models
 - Create Backbone Views of Collections
 - Create multiple Backbone Models that relate to each other
@@ -15,16 +13,17 @@ This project should demonstrate your ability to:
 - Create Model instances from the user input in that form
 - Test model logic in a Backbone application
 
-Although real terminology is used throughout this project, and the interface design is intended to loosely mimic real-world trading platforms, having actual trading "domain knowledge" is **NOT** a learning goal. If you're unclear on any of the terminology used in this document please consult the [vocabulary section](#trading-vocabulary) for an explanation, or ask Charles / other instructional staff!
 
 ## Setup
 ### Starting project
-To get started with the Ada Trader project follow these steps:
+To get started with the Crypto Trader project follow these steps:
 
 1. Fork and clone this repository
 1. `cd` into the directory for your cloned project
-1. `npm install`
-1. `npm start`
+```
+npm install
+npm start
+```
 
 ### Project Baseline
 This project uses the same structure as BackTREK and is based on our [backbone baseline](https://github.com/AdaGold/backbone-baseline). The baseline for this project includes some models and collections that have already been implemented:
@@ -147,24 +146,3 @@ Additionally, when:
       - Each order executes, in the same manner as though the user had clicked "Buy" on the quote
       - Each order is removed from the open order list
       - Each order will never execute again
-
-### Testing
-You should have tests for any validations your models have, as well as any custom functions that you create on those models. **Optional**: Write a test which verifies that limit orders are executed and destroyed when the relevant stock reaches the order's target price.
-
-### Advice
-Before you start working on this wave, set aside time with another Adie and make a diagram to explore the flow of events, and make a plan of action. Discuss with that person where the pieces of information currently exist, and how they can flow and propagate to where they need to be.
-
-To get the list of symbols for the order entry form's drop-down, you may need to give the View that controls the form access to the quote collection.
-
-When removing a Backbone View from the page, that does not mean that the associated Model is gone! Be careful when cancelling an order, because an order that isn't shown on the page might still "hear" events that are triggered. You may observe this bug if the trade history continues to update with transactions from "lingering" orders, even if the order is not rendered within the list of open orders.
-
-The rules above for when an order can or cannot be created are a great place to use Backbone's model validation system! Make sure to include tests for those validations as well.
-
-## Trading Vocabulary
-| Term | Definition |
-|:-----|:-----------|
-| Market Order | An order to purchase or sell a particular stock at the "market" price. [More details here.](https://www.investopedia.com/terms/m/marketorder.asp) |
-| Limit Order | An order to purchase or sell a particular stock at a trader-specified "target" price. [More details here.](https://www.investopedia.com/terms/l/limitorder.asp) |
-| Market Price | The **current** price for a stock, listed with its symbol in the quote ticker. This price will change over time. |
-| Target Price | The desired price for a limit order to execute. This price is higher than "market" price if the order is to sell, and it is lower than the "market" price if the order is to buy. This price is fixed for a given order. |
-| Trade Price | The price that a stock was traded at (either buy or sell) for a given trade. This price is fixed because it represents an historical event. |
